@@ -28,7 +28,7 @@ h1 {
 	padding-right: 600px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 2000px) {
    .nav-wrapper {
       padding-left: 0;
       padding-right: 0;
@@ -136,7 +136,7 @@ h1 {
 	text-align: left;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 2000px) {
    .content-wrapper {
       padding-left: 0;
       padding-right: 0;
