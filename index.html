@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Chen-Yang Su | Home</title>
+	<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<div class="container">	
+		<div class="nav-wrapper">
+			<div class="left-side">
+				<div class="nav-link-wrapper active-nav-link">
+					<a href="index.html">Home</a>
+				</div>
+
+				<div class="nav-link-wrapper">
+					<a href="research.html">Research</a>
+				</div>
+
+				<div class="nav-link-wrapper">
+					<a href="cv.html">CV</a>
+				</div>
+
+				<div class="nav-link-wrapper">
+					<a href="personal.html">Personal</a>
+				</div>
+			</div>
+
+			<div class="right-side">
+				<div class="brand">
+					<div>Welcome to my home page!<span class="emoji emoji--home"></span></div>
+				</div>
+			</div>
+
+		</div>		
+
+		<div class="content-wrapper">
+			<div class="two-column-wrapper">
+				<div class="profile-image-wrapper">
+					<img src="images/me.jpg">
+					<h1>Chen-Yang Su</h1>
+
+					<p> <em>M.Sc. student, McGill University</em> </p>
+
+					 
+					<i class="fas fa-map-marker-alt"></i>&nbsp&nbsp&nbsp Montréal, Québec
+
+					<div class="icons">
+						<a href="mailto:chen-yang.su@mail.mcgill.ca" target="_blank"><i class="far fa-envelope"></i></i></a>
+						<a href="https://twitter.com/chenyangsu" target="_blank"><i class="fab fa-twitter-square"></i></a>
+						<a href="https://www.linkedin.com/in/chen-yang-su/" target="_blank"><i class="fab fa-linkedin"></i></i></a>
+						<a href="https://github.com/chenyangsu" target="_blank"><i class="fab fa-github"></i></i></a>
+						<a href="https://scholar.google.com.au/citations?user=KJGE-kYAAAAJ&hl=en" target="_blank"><i class="fas fa-user-graduate"></i></a>
+
+					</div>
+
+				</div>
+				<div class="profile-content-wrapper">
+
+					<h1>About Me</h1>
+
+					<p>I am an M.Sc. student in the 
+						<a href="https://www.cs.mcgill.ca/">School of Computer Science</a>
+						at
+						<a href="https://www.mcgill.ca/">McGill University</a>
+						supervised by 
+						<a href="https://www.mcgill.ca/genepi/">Brent Richards</a> and 
+						<a href="https://www.cs.mcgill.ca/~jpineau/">Joelle Pineau</a>. 
+						I currently spend my time at the 
+						<a href="http://www.ladydavis.ca/">Lady Davis Institute</a>
+						at the Jewish General Hospital as well as 						
+						<a href="https://mila.quebec/en/">Mila</a>. Previously, I completed my B.Sc. in 
+						<a href="https://www.mcgill.ca/study/2021-2022/faculties/science/undergraduate/programs/bachelor-science-bsc-major-computer-science-and-biology">Computer Science and Biology</a> at McGill University.
+					</p>
+
+					<h1>News</h1>
+					<p>
+						<ul style="list-style-type:none;">
+							 	<li>[2021-05] <strong>1st place</strong> award at the <a href="https://emgss.org/ambgc">21st Annual McGill Biomedical Graduate Conference (AMBGC)</a> for best poster presentation!</li>
+							 	<li>[2021-05] I am awarded an LDI-TD Bank Studentship!</li>
+							  	<li>[2021-01] Our paper <a href="https://openreview.net/forum?id=HgLO8yalfwc">Regularized Inverse Reinforcement Learning</a> is accepted at ICLR 2021!</li>
+							  	<li>[2021-01] Our team competing in the XPRIZE Pandemic Response challenge are selected as <a href="https://mila.quebec/en/an-interdisciplinary-team-led-by-mila-researchers-reaches-final-round-of-global-pandemic-response-challenge/">finalists!</a> </li>
+						</ul> 
+						<span id="dots">...</span>
+
+						<span id="more">
+							<ul style="list-style-type:none;">
+							 	<li>[2020-09] I begin my MSc in Computer Science working with Brent Richards and Joelle Pineau!</li>
+							  	<li>[2020-05] Graduated with a BSc in Computer Science and Biology at McGill University! (<a href="https://www.youtube.com/watch?v=xSWCIT8QJow">Spring 2020 Virtual Convocation - Science</a>)</li>
+							</ul>  
+							 
+						</span>
+					</p>
+
+					<button onclick="myFunction()" id="myBtn">Read more</button>
+        			<script type="text/javascript">
+						function myFunction() {
+						var dots = document.getElementById("dots");
+						var moreText = document.getElementById("more");
+						var btnText = document.getElementById("myBtn");
+
+						if (dots.style.display === "none") {
+						dots.style.display = "inline";
+						btnText.innerHTML = "Read more"; 
+						moreText.style.display = "none";
+						} else {
+						dots.style.display = "none";
+						btnText.innerHTML = "Read less"; 
+						moreText.style.display = "inline";
+						}
+						}
+					</script>
+					 					
+				</div>
+			</div>
+			
+
+
+		</div>
+		<div class="footer">
+			<footer> <small>&copy; Copyright 2021 Chen-Yang Su</small> </footer> 
+		</div>
+		
+	</div>
+
+</body>
+</html>
