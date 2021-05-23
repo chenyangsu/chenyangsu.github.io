@@ -28,7 +28,7 @@ h1 {
 	padding-right: 600px;
 }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1500px) {  /* to make mobile friendly don't pad */
    .nav-wrapper {
       padding-left: 0;
       padding-right: 0;
@@ -136,7 +136,7 @@ h1 {
 	text-align: left;
 }
 
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1500px) {  /* to make mobile friendly don't pad */
    .content-wrapper {
       padding-left: 0;
       padding-right: 0;
