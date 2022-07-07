@@ -1,0 +1,74 @@
+Index: index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html>\r\n<head>\r\n\t<meta charset=\"utf-8\" />\r\n\t<title>Chen-Yang Su | Home</title>\r\n\t<link href=\"https://fonts.googleapis.com/css2?family=Lato&display=swap\" rel=\"stylesheet\">\r\n\t<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.12.1/css/all.css\" crossorigin=\"anonymous\">\r\n\t<link rel=\"stylesheet\" href=\"styles.css\">\r\n </head>\r\n\r\n<body>\r\n\t<div class=\"container\">\t\r\n\t\t<div class=\"nav-wrapper\">\r\n\t\t\t<div class=\"left-side\">\r\n\t\t\t\t<div class=\"nav-link-wrapper active-nav-link\">\r\n\t\t\t\t\t<a href=\"index.html\">Home</a>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<div class=\"nav-link-wrapper\">\r\n\t\t\t\t\t<a href=\"research.html\">Research</a>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<div class=\"nav-link-wrapper\">\r\n\t\t\t\t\t<a href=\"cv.html\">CV</a>\r\n\t\t\t\t</div>\r\n\r\n\t\t\t\t<div class=\"nav-link-wrapper\">\r\n\t\t\t\t\t<a href=\"personal.html\">Personal</a>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\t\t\t<div class=\"right-side\">\r\n\t\t\t\t<div class=\"brand\">\r\n\t\t\t\t\t<div>Welcome to my home page!<span class=\"emoji emoji--home\"></span></div>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\r\n\t\t</div>\t\t\r\n\r\n\t\t<div class=\"content-wrapper\">\r\n\t\t\t\t<div class=\"profile-image-wrapper\">\r\n\t\t\t\t\t<img src=\"images/me.jpg\" class=\"center\">\r\n\t\t\t\t\t<h1>Chen-Yang Su</h1>\r\n\r\n\t\t\t\t\t<p> <em>M.Sc. student, McGill University</em> </p>\r\n\r\n\t\t\t\t\t<div class=\"map\">\r\n\t\t\t\t\t\t\t<i class=\"fas fa-map-marker-alt\"></i>&nbsp&nbsp&nbsp Montréal, Québec\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t\t<div class=\"icons\">\r\n\r\n\t\t\t\t\t\t<a href=\"mailto:chen-yang.su@mail.mcgill.ca\" target=\"_blank\"><i class=\"far fa-envelope\"></i></i></a>\r\n\t\t\t\t\t\t<a href=\"https://twitter.com/chenyangsu\" target=\"_blank\"><i class=\"fab fa-twitter-square\"></i></a>\r\n\t\t\t\t\t\t<a href=\"https://www.linkedin.com/in/chen-yang-su/\" target=\"_blank\"><i class=\"fab fa-linkedin\"></i></i></a>\r\n\t\t\t\t\t\t<a href=\"https://github.com/chenyangsu\" target=\"_blank\"><i class=\"fab fa-github\"></i></i></a>\r\n\t\t\t\t\t\t<a href=\"https://scholar.google.com.au/citations?user=KJGE-kYAAAAJ&hl=en\" target=\"_blank\"><i class=\"fas fa-user-graduate\"></i></a>\r\n\r\n\t\t\t\t\t</div>\r\n\r\n\t\t\t\t</div>\r\n\t\t\t\t<div class=\"profile-content-wrapper\">\r\n\r\n\t\t\t\t\t<p>I am an incoming PhD2 student in the\r\n\t\t\t\t\t\t<a href=\"https://www.mcgill.ca/qls/\">Quantitative Life Sciences (QLS)</a>\r\n\t\t\t\t\t\tprogram at\r\n\t\t\t\t\t\t<a href=\"https://www.mcgill.ca/\">McGill University</a>.\r\n\t\t\t\t\t\tPreviously, I was an M.Sc. student in the \r\n\t\t\t\t\t\t<a href=\"https://www.cs.mcgill.ca/\">School of Computer Science</a>\r\n\t\t\t\t\t\tat McGill University supervised by \r\n\t\t\t\t\t\t<a href=\"https://www.mcgill.ca/genepi/\">Brent Richards</a> and \r\n\t\t\t\t\t\t<a href=\"https://www.cs.mcgill.ca/~jpineau/\">Joelle Pineau</a> \r\n\t\t\t\t\t\tand was affiliated with the\r\n\t\t\t\t\t\t<a href=\"http://www.ladydavis.ca/\">Lady Davis Institute</a>\r\n\t\t\t\t\t\tat the Jewish General Hospital as well as \t\t\t\t\t\t\r\n\t\t\t\t\t\t<a href=\"https://mila.quebec/en/\">Mila</a>. \r\n\t\t\t\t\t\tI completed my B.Sc. in \r\n\t\t\t\t\t\t<a href=\"https://www.mcgill.ca/study/2021-2022/faculties/science/undergraduate/programs/bachelor-science-bsc-major-computer-science-and-biology\">Computer Science and Biology</a> at McGill University.\r\n\t\t\t\t\t</p>\r\n\r\n\t\t\t\t\t<h1>News</h1>\r\n\t\t\t\t\t<p>\r\n\t\t\t\t\t\t<ul style=\"list-style-type:none;\">\r\n\t\t\t\t\t\t\t\t<li>[2022-09] I begin my PhD in Quantitative Life Sciences!</li>\r\n                                <li>[2022-05] I begin my summer internship on the Computer Vision Science Team at <a href=\"https://www.hingehealth.com/\"> Hinge Health</a>! </li>\r\n                                <li>[2022-06] I am awarded a Doctoral Training Award ($84,000 CAD) from the \r\n                                 <a href=\"https://frq.gouv.qc.ca/en/program/formation-de-doctorat-2022-2023/\"> Fonds de recherche du Quebec – Sante (FRQS)</a>!</li>\r\n                                <li>[2022-05] Graduated with an MSc in Computer Science at McGill University!</li>\r\n\t\t\t\t\t\t</ul> \r\n\t\t\t\t\t\t<span id=\"dots\">...</span>\r\n\r\n\t\t\t\t\t\t<span id=\"more\">\r\n\t\t\t\t\t\t\t<ul style=\"list-style-type:none;\">\r\n\t\t\t\t\t\t\t\t<li>[2021-09] I get my first teaching experience as a teaching assistant for \r\n\t\t\t\t\t\t\t\t<a href=\"https://www.mcgill.ca/study/2021-2022/courses/comp-202\"> COMP 202: Foundations of Programming</a>\r\n\t\t\t\t\t\t\t\tat McGill University! </li>\r\n\t\t\t\t\t\t\t\t<li>[2021-08] Abstract accepted for a poster presentation at the <a href=\"https://www.ashg.org/\"> American Society of Human Genetics</a>! </li>\r\n                                <li>[2021-08] I will be attending the <a href=\"https://www.oxfordml.school/\">Oxford Machine Learning Summer School</a> (20-21 July; 9-20 Aug)!</li>\r\n                                <li>[2021-08] I am invited as a judge at the <a href=\"https://mcmedhacks.devpost.com/\">McMedHacks Hackathon</a> (6-8 Aug)!</li>\r\n                                <li>[2021-07] I will be attending and presenting a poster at the <a href=\"https://dlrl.ca/\">CIFAR Deep Learning & Reinforcement Learning (DLRL) Summer School</a> (26-31 Jul)!</li>\r\n                                <li>[2021-07] I will be volunteering at the <a href=\"https://icml.cc/\">International Conference on Machine Learning (ICML)</a> (18-24 Jul)!</li>\r\n                                <li>[2021-06] I will be giving a talk at the Summer <a href=\"http://rl.cs.mcgill.ca/\">Reasoning and Learning Lab</a> Mini Conference!</li>\r\n\t\t\t\t\t\t\t\t<li>[2021-06] I will be joining <a href=\"https://mcmedhacks.com/\">McMedHacks</a> as a mentor to help teach medical image analysis and deep learning in Python!</li>\r\n\t\t\t\t\t\t\t\t<li>[2021-06] I will be attending the <a href=\"https://staq.pratt.duke.edu/summer-school\">STAQ Quantum Ideas Summer School </a> hosted by Duke University (7-11 Jun)!</li>\r\n\t\t\t\t\t\t\t \t<li>[2021-05] <strong>1st place</strong> award at the <a href=\"https://emgss.org/ambgc\">21st Annual McGill Biomedical Graduate Conference (AMBGC)</a> for best poster presentation!</li>\r\n\t\t\t\t\t\t\t \t<li>[2021-05] I am awarded an LDI-TD Bank Studentship!</li>\r\n\t\t\t\t\t\t\t \t<li>[2021-03] Our team competing in the XPRIZE Pandemic Response challenge are selected as <a href=\"https://mila.quebec/en/an-interdisciplinary-team-led-by-mila-researchers-reaches-final-round-of-global-pandemic-response-challenge/\">finalists!</a> </li>\r\n\t\t\t\t\t\t\t  \t<li>[2021-01] Our paper <a href=\"https://openreview.net/forum?id=HgLO8yalfwc\">Regularized Inverse Reinforcement Learning</a> is accepted for Spotlight Presentation at ICLR 2021!</li>\r\n\t\t\t\t\t\t\t \t<li>[2020-09] I begin my MSc in Computer Science working with Brent Richards and Joelle Pineau!</li>\r\n\t\t\t\t\t\t\t  \t<li>[2020-05] Graduated with a BSc in Computer Science and Biology at McGill University! (<a href=\"https://www.youtube.com/watch?v=xSWCIT8QJow\">Spring 2020 Virtual Convocation - Science</a>)</li>\r\n\t\t\t\t\t\t\t</ul>  \r\n\t\t\t\t\t\t\t \r\n\t\t\t\t\t\t</span>\r\n\t\t\t\t\t</p>\r\n\r\n\t\t\t\t\t<button onclick=\"myFunction()\" id=\"myBtn\">Read more</button>\r\n        \t\t\t<script type=\"text/javascript\">\r\n\t\t\t\t\t\tfunction myFunction() {\r\n\t\t\t\t\t\tvar dots = document.getElementById(\"dots\");\r\n\t\t\t\t\t\tvar moreText = document.getElementById(\"more\");\r\n\t\t\t\t\t\tvar btnText = document.getElementById(\"myBtn\");\r\n\r\n\t\t\t\t\t\tif (dots.style.display === \"none\") {\r\n\t\t\t\t\t\tdots.style.display = \"inline\";\r\n\t\t\t\t\t\tbtnText.innerHTML = \"Read more\"; \r\n\t\t\t\t\t\tmoreText.style.display = \"none\";\r\n\t\t\t\t\t\t} else {\r\n\t\t\t\t\t\tdots.style.display = \"none\";\r\n\t\t\t\t\t\tbtnText.innerHTML = \"Read less\"; \r\n\t\t\t\t\t\tmoreText.style.display = \"inline\";\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t</script>\r\n\r\n\t\t\t\t\t<script type=\"text/javascript\" src=\"//counter.websiteout.net/js/36/0/0/0\">\r\n\t\t\t\t\t</script>\r\n\t\t\t\t\t \t\t\t\t\t\r\n\t\t\t\t</div>\r\n\t\t\t\r\n\r\n\r\n\t\t</div>\r\n\t\t<div class=\"footer\">\r\n\t\t\t<footer> <small>&copy; Copyright 2022 Chen-Yang Su</small> </footer> \r\n\t\t</div>\r\n\t\t\r\n\t</div>\r\n\r\n</body>\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/index.html b/index.html
+--- a/index.html	(revision 0180b7e9f442b72b6b8283981016e5729c90e305)
++++ b/index.html	(date 1657207415518)
+@@ -65,16 +65,16 @@
+ 						<a href="https://www.mcgill.ca/qls/">Quantitative Life Sciences (QLS)</a>
+ 						program at
+ 						<a href="https://www.mcgill.ca/">McGill University</a>.
+-						Previously, I was an M.Sc. student in the 
++						Previously, I was an M.Sc. student in the
+ 						<a href="https://www.cs.mcgill.ca/">School of Computer Science</a>
+-						at McGill University supervised by 
++						at McGill University supervised by
+ 						<a href="https://www.mcgill.ca/genepi/">Brent Richards</a> and 
+-						<a href="https://www.cs.mcgill.ca/~jpineau/">Joelle Pineau</a> 
++						<a href="https://www.cs.mcgill.ca/~jpineau/">Joelle Pineau</a>
+ 						and was affiliated with the
+ 						<a href="http://www.ladydavis.ca/">Lady Davis Institute</a>
+ 						at the Jewish General Hospital as well as 						
+-						<a href="https://mila.quebec/en/">Mila</a>. 
+-						I completed my B.Sc. in 
++						<a href="https://mila.quebec/en/">Mila</a>.
++						I completed my B.Sc. in
+ 						<a href="https://www.mcgill.ca/study/2021-2022/faculties/science/undergraduate/programs/bachelor-science-bsc-major-computer-science-and-biology">Computer Science and Biology</a> at McGill University.
+ 					</p>
+ 
+@@ -83,15 +83,15 @@
+ 						<ul style="list-style-type:none;">
+ 								<li>[2022-09] I begin my PhD in Quantitative Life Sciences!</li>
+                                 <li>[2022-05] I begin my summer internship on the Computer Vision Science Team at <a href="https://www.hingehealth.com/"> Hinge Health</a>! </li>
+-                                <li>[2022-06] I am awarded a Doctoral Training Award ($84,000 CAD) from the 
++                                <li>[2022-06] I am awarded a Doctoral Training Award ($84,000 CAD) from the
+                                  <a href="https://frq.gouv.qc.ca/en/program/formation-de-doctorat-2022-2023/"> Fonds de recherche du Quebec – Sante (FRQS)</a>!</li>
+                                 <li>[2022-05] Graduated with an MSc in Computer Science at McGill University!</li>
+-						</ul> 
++						</ul>
+ 						<span id="dots">...</span>
+ 
+ 						<span id="more">
+ 							<ul style="list-style-type:none;">
+-								<li>[2021-09] I get my first teaching experience as a teaching assistant for 
++								<li>[2021-09] I get my first teaching experience as a teaching assistant for
+ 								<a href="https://www.mcgill.ca/study/2021-2022/courses/comp-202"> COMP 202: Foundations of Programming</a>
+ 								at McGill University! </li>
+ 								<li>[2021-08] Abstract accepted for a poster presentation at the <a href="https://www.ashg.org/"> American Society of Human Genetics</a>! </li>
+@@ -132,16 +132,19 @@
+ 						}
+ 					</script>
+ 
+-					<script type="text/javascript" src="//counter.websiteout.net/js/36/0/0/0">
++				<p>
++					<script type="text/javascript" src="//counter.websiteout.net/js/7/0/0/0">
+ 					</script>
+-					 					
++					hits
++				</p>
++
+ 				</div>
+ 			
+ 
+ 
+ 		</div>
+ 		<div class="footer">
+-			<footer> <small>&copy; Copyright 2022 Chen-Yang Su</small> </footer> 
++			<footer> <small>&copy; Copyright 2022 Chen-Yang Su</small> </footer>
+ 		</div>
+ 		
+ 	</div>
