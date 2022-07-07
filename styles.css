@@ -236,7 +236,7 @@ background-color: #33A2FF;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #4169e1;
-  color: white;
+  background-color: white;/*#4169e1;*/
+  color: black;/*white;*/
   text-align: center;
  }
