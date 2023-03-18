@@ -163,7 +163,14 @@
 				</p>
 					 					
 				</div>
-			
+				
+				<p>Last updated: <span id="lastUpdated"></span></p>
+
+				<script>
+				  var lastUpdatedDate = new Date(document.lastModified);
+				  var options = { year: 'numeric', month: 'long', day: 'numeric' };
+				  document.getElementById("lastUpdated").innerHTML = lastUpdatedDate.toLocaleDateString('en-US', options);
+				</script>
 
 
 		</div>
