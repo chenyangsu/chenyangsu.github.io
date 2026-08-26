@@ -589,7 +589,7 @@ h3 {
 
 /* ---------- Personal section photo ---------- */
 
-.personal-photo { margin: 14px 0 6px; max-width: 560px; }
+.personal-photo { margin: 14px 0 6px; }
 .personal-photo img { width: 100%; border-radius: 8px; display: block; }
 .personal-photo figcaption { font-size: 13px; color: var(--ink-light); margin-top: 6px; }
 
@@ -677,6 +677,13 @@ h3 {
 
 .motivation-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 
+.quote-row {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 18px;
+	margin-top: 4px;
+}
+
 .quote-small {
 	margin: 12px 0 0;
 	padding: 1rem 1.5rem;
@@ -694,6 +701,7 @@ h3 {
 
 @media (max-width: 950px) {
 	.motivation-row { grid-template-columns: 1fr; }
+	.quote-row { grid-template-columns: 1fr; }
 	.quote-portrait img { width: 100px; height: 100px; }
 }
 
