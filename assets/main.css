@@ -126,6 +126,14 @@ h3 {
 
 .position { font-size: 17px; margin: 4px 0; }
 
+.tagline {
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--accent-dark);
+	letter-spacing: 0.3px;
+	margin: 6px 0 2px;
+}
+
 .location { color: var(--ink-light); font-size: 15px; margin: 4px 0 10px; }
 
 .link-row { font-size: 15px; line-height: 1.9; margin: 0; }
