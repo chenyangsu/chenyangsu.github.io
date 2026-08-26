@@ -537,6 +537,10 @@
 			var a = document.createElement('a');
 			a.href = 'mail' + 'to:' + email;
 			a.innerHTML = el.innerHTML;
+			a.className = el.className.replace('js-email', '').trim();
+			if (el.title) a.title = el.title;
+			var lbl = el.getAttribute('aria-label');
+			if (lbl) a.setAttribute('aria-label', lbl);
 			el.parentNode.replaceChild(a, el);
 		});
 	})();
