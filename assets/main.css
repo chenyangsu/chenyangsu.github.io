@@ -540,15 +540,16 @@ h3 {
 	filter: brightness(1.15);
 }
 
-/* Brand colors */
-.ic-email    { color: #d44638; }
-.ic-scholar  { color: #4285f4; }
-.ic-github   { color: #24292e; }
-.ic-x        { color: #0f1419; }
-.ic-bluesky  { color: #1185fe; }
-.ic-linkedin { color: #0a66c2; }
-.ic-orcid    { color: #a6ce39; }
-.ic-rg       { color: #00ccbb; }
+/* Monochrome by default, brand color on hover */
+.icon-row a { color: #8a8f98; }
+.ic-email:hover    { color: #d44638; }
+.ic-scholar:hover  { color: #4285f4; }
+.ic-github:hover   { color: #24292e; }
+.ic-x:hover        { color: #0f1419; }
+.ic-bluesky:hover  { color: #1185fe; }
+.ic-linkedin:hover { color: #0a66c2; }
+.ic-orcid:hover    { color: #a6ce39; }
+.ic-rg:hover       { color: #00ccbb; }
 
 .follow-row { margin: 8px 0 0; text-align: left; }
 
