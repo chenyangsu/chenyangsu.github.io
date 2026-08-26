@@ -282,12 +282,26 @@ h3 {
 
 .footer {
 	margin-top: 48px;
-	padding-top: 14px;
+	padding-top: 18px;
 	border-top: 1px solid var(--rule);
 	text-align: center;
 	color: var(--ink-light);
 	font-size: 14px;
 }
+
+.footer::before {
+	content: '';
+	display: block;
+	width: 64px;
+	height: 3px;
+	background: var(--accent);
+	margin: 0 auto 16px;
+	border-radius: 2px;
+}
+
+.footer-main { font-size: 16px; color: var(--ink); }
+.footer-main b { color: var(--accent-dark); font-weight: 900; }
+#lastUpdated { font-weight: 700; color: var(--accent); }
 
 .footer p { margin: 4px 0; }
 
@@ -679,13 +693,13 @@ h3 {
 	position: fixed;
 	right: 22px;
 	bottom: 22px;
-	width: 44px;
-	height: 44px;
+	width: 48px;
+	height: 48px;
 	border-radius: 50%;
-	border: 1px solid var(--rule);
-	background: #fff;
-	color: var(--accent-dark);
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+	border: none;
+	background: var(--accent);
+	color: #fff;
+	box-shadow: 0 4px 14px rgba(21, 88, 176, 0.45);
 	cursor: pointer;
 	display: flex;
 	align-items: center;
@@ -699,7 +713,7 @@ h3 {
 
 #backToTop.visible { opacity: 1; visibility: visible; transform: none; }
 
-#backToTop:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+#backToTop:hover { background: var(--accent-dark); transform: translateY(-3px) scale(1.06); box-shadow: 0 6px 18px rgba(13, 61, 124, 0.5); }
 
 /* ---------- Hit counter badge (same counter since 2020) ---------- */
 
