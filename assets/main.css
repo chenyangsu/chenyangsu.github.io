@@ -562,3 +562,9 @@ h3 {
 	width: auto;
 	flex: none;
 }
+
+/* ---------- Personal section photo ---------- */
+
+.personal-photo { margin: 14px 0 6px; max-width: 560px; }
+.personal-photo img { width: 100%; border-radius: 8px; display: block; }
+.personal-photo figcaption { font-size: 13px; color: var(--ink-light); margin-top: 6px; }
