@@ -42,7 +42,7 @@
 			Postdoctoral Fellow, University of Wisconsin&ndash;Madison</p>
 			<p class="location">Madison, Wisconsin, USA</p>
 			<p class="link-row">
-				<a href="mailto:chen-yang.su@mail.mcgill.ca">Email</a> /
+				<a class="js-email" href="#contact">Email</a> /
 				<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a> /
 				<a href="https://github.com/chenyangsu">GitHub</a> /
 				<a href="https://twitter.com/chenyangsu">Twitter</a> /
@@ -429,7 +429,7 @@
 	<!-- ======================== Contact ======================== -->
 	<section id="contact">
 		<h2>Contact</h2>
-		<p>The best way to reach me is by email: <a href="mailto:chen-yang.su@mail.mcgill.ca">chen-yang.su@mail.mcgill.ca</a></p>
+		<p>The best way to reach me is by email: <b><span class="js-email">csu59 [at] wisc [dot] edu</span></b></p>
 	</section>
 
 	<footer class="footer">
@@ -442,6 +442,17 @@
 </div>
 
 <script>
+	(function () {
+		var addr = ['csu59', 'wisc', 'edu'];
+		var email = addr[0] + '\u0040' + addr[1] + '.' + addr[2];
+		document.querySelectorAll('.js-email').forEach(function (el) {
+			var a = document.createElement('a');
+			a.href = 'mail' + 'to:' + email;
+			a.textContent = el.textContent;
+			el.parentNode.replaceChild(a, el);
+		});
+	})();
+
 	var lastUpdatedDate = new Date(document.lastModified);
 	var options = { year: 'numeric', month: 'long', day: 'numeric' };
 	document.getElementById("lastUpdated").innerHTML = lastUpdatedDate.toLocaleDateString('en-US', options);
