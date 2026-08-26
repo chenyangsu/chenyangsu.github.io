@@ -191,6 +191,25 @@ h3 {
 	margin-top: 3px;
 }
 
+.pub-side {
+	flex: 0 0 118px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.pub-side .venue-tag { flex: none; width: 100%; margin-top: 3px; }
+
+.pub-thumb {
+	width: 100%;
+	height: auto;
+	border-radius: 6px;
+	border: 1px solid var(--rule);
+	display: block;
+}
+
+.pub-thumb-logo { background: #fff; padding: 12px 6px; }
+
 .pub-body { flex: 1; min-width: 0; }
 .pub-body p { margin: 0 0 4px; }
 
@@ -280,6 +299,8 @@ h3 {
 	.bio p { text-align: left; }
 	.pub { flex-direction: column; gap: 6px; }
 	.venue-tag { flex: none; align-self: flex-start; padding: 4px 10px; }
+	.pub-side { flex: none; flex-direction: row; align-items: center; gap: 10px; }
+	.pub-thumb { width: 96px; }
 	.talk { flex-direction: column; gap: 2px; }
 	.talk-date { flex: none; }
 }
