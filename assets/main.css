@@ -347,7 +347,9 @@ h3 {
 
 .flag {
 	position: relative;
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
 	background: var(--tag-bg);
 	color: var(--accent-dark);
 	padding: 6px 12px;
@@ -531,4 +533,10 @@ h3 {
 	color: var(--ink-light);
 	margin-top: 6px;
 	line-height: 1.45;
+}
+
+.flag-logo {
+	height: 20px;
+	width: auto;
+	flex: none;
 }
