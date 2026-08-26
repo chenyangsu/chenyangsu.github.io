@@ -1,0 +1,274 @@
+/* ==========================================================================
+   chenyangsu.github.io — main stylesheet
+   Clean single-page academic layout: sticky top nav, hero bio, scrollable
+   news feed, venue-tagged publication cards, invited-talk list.
+   ========================================================================== */
+
+:root {
+	--accent: #1558b0;        /* links, dates, venue tags */
+	--accent-dark: #0d3d7c;   /* headings, institutions */
+	--ink: #222;              /* body text */
+	--ink-light: #555;        /* secondary text */
+	--award: #c0392b;         /* award / highlight lines */
+	--rule: #e3e7ee;          /* borders and dividers */
+	--tag-bg: #eef3fb;        /* venue tag background */
+	--paper-bg: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+
+body {
+	margin: 0;
+	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.55;
+	color: var(--ink);
+	background: var(--paper-bg);
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Top navigation ---------- */
+
+.topnav {
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: rgba(255, 255, 255, 0.97);
+	border-bottom: 1px solid var(--rule);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.topnav-inner {
+	max-width: 980px;
+	margin: 0 auto;
+	padding: 10px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 6px 16px;
+}
+
+.brand {
+	font-size: 18px;
+	font-weight: 900;
+	color: var(--accent-dark);
+	letter-spacing: 0.2px;
+}
+
+.nav-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 14px;
+	font-size: 14.5px;
+}
+
+.nav-links a { color: var(--ink-light); font-weight: 700; }
+.nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+/* ---------- Page shell ---------- */
+
+.page {
+	max-width: 980px;
+	margin: 0 auto;
+	padding: 28px 20px 40px;
+}
+
+section { margin-top: 40px; }
+
+h2 {
+	font-size: 26px;
+	font-weight: 900;
+	color: var(--accent-dark);
+	border-bottom: 2px solid var(--rule);
+	padding-bottom: 6px;
+	margin: 0 0 16px;
+}
+
+h3 {
+	font-size: 19px;
+	font-weight: 700;
+	color: var(--accent-dark);
+	margin: 26px 0 10px;
+}
+
+.fineprint { font-size: 14px; color: var(--ink-light); }
+
+/* ---------- Hero / about ---------- */
+
+.hero {
+	display: flex;
+	align-items: center;
+	gap: 34px;
+	margin-top: 12px;
+}
+
+.hero-photo img {
+	width: 230px;
+	max-width: 100%;
+	border-radius: 12px;
+	display: block;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.hero-text h1 {
+	font-size: 34px;
+	font-weight: 900;
+	margin: 0 0 6px;
+	color: var(--ink);
+}
+
+.degree { font-size: 20px; font-weight: 400; color: var(--ink-light); }
+
+.position { font-size: 17px; margin: 4px 0; }
+
+.location { color: var(--ink-light); font-size: 15px; margin: 4px 0 10px; }
+
+.link-row { font-size: 15px; line-height: 1.9; margin: 0; }
+.link-row a { font-weight: 700; }
+
+.bio { margin-top: 24px; }
+.bio p { margin: 0 0 14px; text-align: justify; }
+
+/* ---------- News ---------- */
+
+.news-box {
+	max-height: 420px;
+	overflow-y: auto;
+	border: 1px solid var(--rule);
+	border-radius: 8px;
+	padding: 6px 16px;
+	background: #fcfdff;
+}
+
+.news-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.news-list li {
+	padding: 8px 0;
+	border-bottom: 1px solid var(--rule);
+	font-size: 15px;
+}
+
+.news-list li:last-child { border-bottom: none; }
+
+.date {
+	font-weight: 900;
+	color: var(--accent);
+	white-space: nowrap;
+}
+
+/* ---------- Publications ---------- */
+
+.pub {
+	display: flex;
+	gap: 18px;
+	padding: 14px 0;
+	border-bottom: 1px solid var(--rule);
+}
+
+.pub:last-child { border-bottom: none; }
+
+.venue-tag {
+	flex: 0 0 118px;
+	align-self: flex-start;
+	text-align: center;
+	background: var(--tag-bg);
+	color: var(--accent-dark);
+	font-weight: 900;
+	font-size: 13.5px;
+	padding: 8px 6px;
+	border-radius: 6px;
+	border: 1px solid #d8e3f5;
+	margin-top: 3px;
+}
+
+.pub-body { flex: 1; min-width: 0; }
+.pub-body p { margin: 0 0 4px; }
+
+.pub-title { font-weight: 700; font-size: 16px; color: var(--ink); }
+.pub-authors { font-size: 14.5px; color: var(--ink-light); }
+.pub-authors b { color: var(--ink); }
+.pub-venue { font-size: 14.5px; }
+.pub-links { font-size: 14.5px; }
+.pub-links a { font-weight: 700; }
+
+.award {
+	font-size: 14px;
+	color: var(--award);
+	font-weight: 700;
+}
+
+/* ---------- Talks ---------- */
+
+.talk {
+	display: flex;
+	gap: 14px;
+	padding: 12px 0;
+	border-bottom: 1px solid var(--rule);
+}
+
+.talk:last-of-type { border-bottom: none; }
+
+.talk-date {
+	flex: 0 0 84px;
+	font-weight: 900;
+	color: var(--accent);
+	font-size: 15px;
+	margin-top: 1px;
+}
+
+.talk-body { flex: 1; min-width: 0; }
+.talk-body p { margin: 0 0 3px; }
+
+.talk-venue { font-weight: 900; color: var(--accent-dark); font-size: 15.5px; }
+.talk-title { font-size: 15px; }
+.talk-note { font-size: 14px; color: var(--ink-light); }
+
+/* ---------- Compact lists (awards, experience, conference talks) ---------- */
+
+.compact-list {
+	list-style: none;
+	margin: 0 0 12px;
+	padding: 0;
+}
+
+.compact-list li {
+	padding: 6px 0;
+	font-size: 15px;
+	border-bottom: 1px dashed var(--rule);
+}
+
+.compact-list li:last-child { border-bottom: none; }
+
+/* ---------- Footer ---------- */
+
+.footer {
+	margin-top: 48px;
+	padding-top: 14px;
+	border-top: 1px solid var(--rule);
+	text-align: center;
+	color: var(--ink-light);
+	font-size: 14px;
+}
+
+.footer p { margin: 4px 0; }
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 720px) {
+	.hero { flex-direction: column; align-items: flex-start; gap: 18px; }
+	.hero-photo img { width: 200px; }
+	.bio p { text-align: left; }
+	.pub { flex-direction: column; gap: 6px; }
+	.venue-tag { flex: none; align-self: flex-start; padding: 4px 10px; }
+	.talk { flex-direction: column; gap: 2px; }
+	.talk-date { flex: none; }
+}
