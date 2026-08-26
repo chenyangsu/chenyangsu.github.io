@@ -133,6 +133,7 @@ h3 {
 
 .bio { margin-top: 24px; }
 .bio p { margin: 0 0 14px; text-align: justify; }
+.bio a { font-weight: 700; }
 
 /* ---------- News ---------- */
 
