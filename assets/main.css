@@ -743,3 +743,19 @@ h3 {
 .hit-digits a { display: inline-flex; line-height: 0; }
 .hit-digits img { border: 0; border-radius: 3px; }
 .hit-label { font-weight: 700; letter-spacing: 0.2px; }
+
+/* ---------- Typographic venue tiles (placeholder covers) ---------- */
+
+.pub-tile {
+	aspect-ratio: 4 / 3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	color: #fff;
+	font-family: 'Source Serif 4', Georgia, serif;
+	font-weight: 900;
+	font-size: 26px;
+	letter-spacing: 1px;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
