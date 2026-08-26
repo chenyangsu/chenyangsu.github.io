@@ -692,7 +692,11 @@ h3 {
 	grid-template-columns: repeat(3, 1fr);
 	gap: 18px;
 	margin-top: 4px;
+	align-items: start;
 }
+
+.quote-stack { display: flex; flex-direction: column; gap: 12px; }
+.quote-stack .quote-small { margin: 0; }
 
 .quote-small {
 	margin: 12px 0 0;
