@@ -483,7 +483,24 @@ h3 {
 	margin: 8px 0 2px;
 }
 
-.icon-row a { color: #6b6b6b; line-height: 1; }
-.icon-row a:hover { color: var(--accent); text-decoration: none; }
+.icon-row a {
+	line-height: 1;
+	transition: transform 0.15s ease, filter 0.15s ease;
+}
+.icon-row a:hover {
+	text-decoration: none;
+	transform: translateY(-3px) scale(1.12);
+	filter: brightness(1.15);
+}
+
+/* Brand colors */
+.ic-email    { color: #d44638; }
+.ic-scholar  { color: #4285f4; }
+.ic-github   { color: #24292e; }
+.ic-x        { color: #0f1419; }
+.ic-bluesky  { color: #1185fe; }
+.ic-linkedin { color: #0a66c2; }
+.ic-orcid    { color: #a6ce39; }
+.ic-rg       { color: #00ccbb; }
 
 .follow-row { margin: 8px 0 0; text-align: left; }
