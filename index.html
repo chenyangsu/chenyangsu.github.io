@@ -27,9 +27,9 @@
 			<a href="#awards">Awards</a>
 			<a href="#experience">Experience</a>
 			<a href="#service">Teaching &amp; Service</a>
-			<a href="#contact">Contact</a>
 			<a href="#personal">Personal</a>
 			<a href="#motivation">Motivation</a>
+			<a href="#contact">Contact</a>
 		</div>
 	</div>
 </nav>
@@ -586,7 +586,8 @@
 	<section id="motivation">
 		<h2>Motivation</h2>
 
-		<div class="quote-section">
+		<div class="motivation-row">
+			<div class="quote-section">
 			<div class="quote-portrait">
 				<img src="images/coolidge.jpg" alt="Calvin Coolidge">
 				<div class="quote-caption"><b>Calvin Coolidge</b><br>30th U.S. President</div>
@@ -600,9 +601,7 @@
 				The slogan &lsquo;Press On&rsquo; has solved, and always will solve, the problems of the human race.&rdquo;
 				<span class="quote-attrib">&mdash; Calvin Coolidge, as recited in <i>The Founder</i> (2016)</span>
 			</blockquote>
-		</div>
-
-		<div class="video-grid motivation-grid">
+			</div>
 			<figure class="video-card">
 				<iframe src="https://www.youtube-nocookie.com/embed/YF75cLE-6hI" title="Jim Rohn &mdash; The Major Key to Your Better Future Is You" loading="lazy" allowfullscreen></iframe>
 				<figcaption><b>Jim Rohn</b> &mdash; The Major Key to Your Better Future Is You</figcaption>
@@ -632,6 +631,8 @@
 
 </div>
 
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
 <script>
 	(function () {
 		var addr = ['csu59', 'wisc', 'edu'];
@@ -645,6 +646,16 @@
 			var lbl = el.getAttribute('aria-label');
 			if (lbl) a.setAttribute('aria-label', lbl);
 			el.parentNode.replaceChild(a, el);
+		});
+	})();
+
+	(function () {
+		var btt = document.getElementById('backToTop');
+		window.addEventListener('scroll', function () {
+			btt.classList.toggle('visible', window.scrollY > 400);
+		}, { passive: true });
+		btt.addEventListener('click', function () {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		});
 	})();
 
