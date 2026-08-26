@@ -232,6 +232,16 @@ h3 {
 .talk-title { font-size: 15px; }
 .talk-note { font-size: 14px; color: var(--ink-light); }
 
+/* Flagship invited talks (Stanford, Broad, Academia Sinica, NTU) */
+.talk-flagship {
+	background: #fbf7ec;
+	border: 1px solid #eadfc0;
+	border-radius: 8px;
+	padding: 12px 14px;
+	margin: 8px 0;
+}
+.talk-flagship + .talk-flagship { border-top: 1px solid #eadfc0; }
+
 /* ---------- Compact lists (awards, experience, conference talks) ---------- */
 
 .compact-list {
