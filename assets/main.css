@@ -472,3 +472,18 @@ h3 {
 		z-index: 15;
 	}
 }
+
+/* ---------- Hero icon widgets ---------- */
+
+.icon-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+	font-size: 27px;
+	margin: 8px 0 2px;
+}
+
+.icon-row a { color: #6b6b6b; line-height: 1; }
+.icon-row a:hover { color: var(--accent); text-decoration: none; }
+
+.follow-row { margin: 8px 0 0; text-align: left; }

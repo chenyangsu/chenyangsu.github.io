@@ -8,6 +8,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="assets/main.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 </head>
 
 <body>
@@ -41,15 +43,19 @@
 			<p class="position">Incoming Postdoctoral Scholar, <b>Stanford University</b><br>
 			Postdoctoral Fellow, University of Wisconsin&ndash;Madison</p>
 			<p class="location">Madison, Wisconsin, USA</p>
-			<p class="link-row">
-				<a class="js-email" href="#contact">Email</a> /
-				<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a> /
-				<a href="https://github.com/chenyangsu">GitHub</a> /
-				<a href="https://twitter.com/chenyangsu">Twitter</a> /
-				<a href="https://bsky.app/profile/chenyangsu.bsky.social">Bluesky</a> /
-				<a href="https://www.linkedin.com/in/chen-yang-su/">LinkedIn</a> /
-				<a href="https://orcid.org/0000-0001-6071-4660">ORCID</a> /
-				<a href="https://www.researchgate.net/profile/Chen-Yang-Su">ResearchGate</a>
+			<div class="icon-row">
+				<a class="js-email" href="#contact" title="Email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+				<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en" title="Google Scholar" aria-label="Google Scholar"><i class="ai ai-google-scholar"></i></a>
+				<a href="https://github.com/chenyangsu" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
+				<a href="https://twitter.com/chenyangsu" title="X (Twitter)" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+				<a href="https://bsky.app/profile/chenyangsu.bsky.social" title="Bluesky" aria-label="Bluesky"><i class="fab fa-bluesky"></i></a>
+				<a href="https://www.linkedin.com/in/chen-yang-su/" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+				<a href="https://orcid.org/0000-0001-6071-4660" title="ORCID" aria-label="ORCID"><i class="fab fa-orcid"></i></a>
+				<a href="https://www.researchgate.net/profile/Chen-Yang-Su" title="ResearchGate" aria-label="ResearchGate"><i class="fab fa-researchgate"></i></a>
+			</div>
+			<p class="follow-row">
+				<a href="https://twitter.com/chenyangsu?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @chenyangsu</a>
+				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 			</p>
 		</div>
 	</header>
@@ -530,7 +536,7 @@
 		document.querySelectorAll('.js-email').forEach(function (el) {
 			var a = document.createElement('a');
 			a.href = 'mail' + 'to:' + email;
-			a.textContent = el.textContent;
+			a.innerHTML = el.innerHTML;
 			el.parentNode.replaceChild(a, el);
 		});
 	})();
