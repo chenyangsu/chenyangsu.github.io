@@ -69,6 +69,7 @@ a:hover { text-decoration: underline; }
 
 .nav-links a { color: var(--ink-light); font-weight: 700; }
 .nav-links a:hover { color: var(--accent); text-decoration: none; }
+.nav-links a.active { color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
 
 /* ---------- Page shell ---------- */
 

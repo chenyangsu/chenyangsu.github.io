@@ -672,6 +672,25 @@
 	})();
 
 	(function () {
+		var links = document.querySelectorAll('.nav-links a[href^="#"]');
+		var sections = [];
+		links.forEach(function (a) {
+			var sec = document.getElementById(a.getAttribute('href').slice(1));
+			if (sec) sections.push([sec, a]);
+		});
+		function spy() {
+			var pos = window.scrollY + 90;
+			var current = null;
+			sections.forEach(function (p) {
+				if (p[0].offsetTop <= pos) current = p[1];
+			});
+			links.forEach(function (a) { a.classList.toggle('active', a === current); });
+		}
+		window.addEventListener('scroll', spy, { passive: true });
+		spy();
+	})();
+
+	(function () {
 		var btt = document.getElementById('backToTop');
 		window.addEventListener('scroll', function () {
 			btt.classList.toggle('visible', window.scrollY > 400);
