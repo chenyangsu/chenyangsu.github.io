@@ -133,8 +133,6 @@ h3 {
 	color: var(--ink);
 }
 
-.degree { font-size: 20px; font-weight: 400; color: var(--ink-light); }
-
 .position { font-size: 17px; margin: 4px 0; }
 
 .tagline {
