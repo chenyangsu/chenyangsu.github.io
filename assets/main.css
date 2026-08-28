@@ -31,9 +31,9 @@ html { scroll-behavior: smooth; scroll-padding-top: 64px; }
 
 body {
 	margin: 0;
-	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
-	font-size: 16px;
-	line-height: 1.55;
+	font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 17px;
+	line-height: 1.7;
 	color: var(--ink);
 	background: var(--paper-bg);
 }
@@ -89,7 +89,10 @@ a:hover { text-decoration: underline; }
 	padding: 28px 20px 40px;
 }
 
-section { margin-top: 40px; }
+/* Long-form prose keeps a comfortable measure; cards and timelines may run wider. */
+.bio p, .fineprint, .pub-authors, #contact p, .personal-split p { max-width: 74ch; }
+
+section { margin-top: 72px; }
 
 h2 {
 	font-size: 26px;
@@ -149,19 +152,10 @@ h3 {
 .link-row a { font-weight: 700; }
 
 .bio { margin-top: 24px; }
-.bio p { margin: 0 0 14px; text-align: justify; }
+.bio p { margin: 0 0 16px; text-align: left; }
 .bio a { font-weight: 700; }
 
 /* ---------- News ---------- */
-
-.news-box {
-	max-height: 420px;
-	overflow-y: auto;
-	border: 1px solid var(--rule);
-	border-radius: 8px;
-	padding: 6px 16px;
-	background: var(--panel-bg);
-}
 
 .news-list {
 	list-style: none;
@@ -177,13 +171,87 @@ h3 {
 
 .news-list li:last-child { border-bottom: none; }
 
+/* ---------- Progressive disclosure (news, preprints) ---------- */
+
+details.news-more, details.pub-more { margin-top: 14px; }
+
+details.news-more > summary,
+details.pub-more > summary {
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 15px;
+	color: var(--accent);
+	list-style: none;
+	padding: 6px 0;
+	width: fit-content;
+}
+
+details > summary::-webkit-details-marker { display: none; }
+
+details.news-more > summary::after,
+details.pub-more > summary::after {
+	content: ' \2193';
+	display: inline-block;
+	transition: transform 0.15s ease;
+}
+
+details[open].news-more > summary::after,
+details[open].pub-more > summary::after { transform: rotate(180deg); }
+
+details.news-more > summary:hover,
+details.pub-more > summary:hover { text-decoration: underline; }
+
+details.pub-more > summary { font-size: 19px; color: var(--accent-dark); }
+
 .date {
 	font-weight: 900;
 	color: var(--accent);
 	white-space: nowrap;
 }
 
+/* ---------- Research cards ---------- */
+
+.research-cards {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+	margin-top: 22px;
+}
+
+.rcard {
+	border: 1px solid var(--rule);
+	border-radius: 10px;
+	background: var(--panel-bg);
+	padding: 20px 20px 16px;
+	display: flex;
+	flex-direction: column;
+}
+
+.rcard-icon {
+	width: 48px;
+	height: 34px;
+	color: var(--accent);
+	margin-bottom: 12px;
+	flex: none;
+}
+
+.rcard-title {
+	font-size: 16.5px;
+	font-weight: 700;
+	color: var(--accent-dark);
+	margin: 0 0 8px;
+	line-height: 1.35;
+}
+
+.rcard p { margin: 0 0 12px; font-size: 15px; line-height: 1.6; color: var(--ink-light); }
+.rcard-links { margin: auto 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+
 /* ---------- Publications ---------- */
+
+.pub-group {
+	font-size: 19px;
+	margin: 26px 0 4px;
+}
 
 .pub {
 	display: flex;
@@ -230,12 +298,32 @@ h3 {
 .pub-body { flex: 1; min-width: 0; }
 .pub-body p { margin: 0 0 4px; }
 
-.pub-title { font-weight: 700; font-size: 16px; color: var(--ink); }
+.pub-title { font-weight: 700; font-size: 16.5px; color: var(--ink); line-height: 1.4; }
+.pub-title a { color: var(--ink); }
+.pub-title a:hover { color: var(--accent); text-decoration: none; }
 .pub-authors { font-size: 14.5px; color: var(--ink-light); }
 .pub-authors b { color: var(--ink); }
 .pub-venue { font-size: 14.5px; }
-.pub-links { font-size: 14.5px; }
-.pub-links a { font-weight: 700; }
+.pub-links { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 7px; }
+
+.pill, .rcard-links a {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 500;
+	line-height: 1;
+	padding: 6px 11px;
+	border: 1px solid var(--tag-border);
+	border-radius: 999px;
+	background: var(--tag-bg);
+	color: var(--accent);
+}
+
+.pill:hover, .rcard-links a:hover {
+	background: var(--accent);
+	border-color: var(--accent);
+	color: #fff;
+	text-decoration: none;
+}
 
 .award {
 	font-size: 14px;
@@ -677,7 +765,7 @@ h3 {
 	display: block;
 	margin-top: 0.7rem;
 	font-style: normal;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 	font-weight: 700;
 	font-size: 0.82rem;
 	color: var(--gold-ink);
@@ -866,3 +954,90 @@ h3 {
 :root[data-theme="dark"] .quote-portrait img { border-color: #263041; }
 :root[data-theme="dark"] #backToTop { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5); }
 :root[data-theme="dark"] #themeToggle { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
+
+
+/* ---------- Personal split + closing line ---------- */
+
+.personal-split {
+	display: grid;
+	grid-template-columns: 1.35fr 1fr;
+	gap: 26px;
+	align-items: start;
+}
+
+.personal-split p { margin: 0; }
+.personal-split .personal-photo { margin: 0; }
+.personal-split .personal-photo img { width: 100%; border-radius: 10px; display: block; }
+
+.personal-photo figcaption {
+	font-size: 12.5px;
+	color: var(--caption-ink);
+	margin-top: 6px;
+	line-height: 1.45;
+}
+
+.closing-quote {
+	margin: 80px auto 0;
+	max-width: 74ch;
+	padding-top: 22px;
+	border-top: 1px solid var(--rule);
+	font-family: 'Source Serif 4', Georgia, serif;
+	font-style: italic;
+	font-size: 16px;
+	color: var(--serif-ink);
+	text-align: center;
+}
+
+.closing-attrib {
+	display: block;
+	font-style: normal;
+	font-size: 13px;
+	color: var(--caption-ink);
+	margin-top: 6px;
+}
+
+/* ---------- Notes page ---------- */
+
+.notes-header { margin-top: 8px; }
+.notes-header h1 { font-size: 32px; font-weight: 900; margin: 0 0 4px; color: var(--ink); }
+
+@media (max-width: 860px) {
+	.research-cards { grid-template-columns: 1fr; }
+	.personal-split { grid-template-columns: 1fr; }
+}
+
+
+/* ---------- Accessibility ---------- */
+
+/* Visible keyboard focus, without a ring on mouse clicks. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+details:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+	border-radius: 3px;
+}
+
+/* Respect a stated preference for reduced motion: no smooth scroll,
+   no hover transforms, no transitions on the quote and toggle chrome. */
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	.rcard:hover,
+	.pill:hover,
+	.quote-portrait:hover img,
+	.video-card:hover,
+	#backToTop:hover,
+	#themeToggle:hover { transform: none !important; }
+
+	details.news-more > summary::after,
+	details.pub-more > summary::after { transition: none; }
+}

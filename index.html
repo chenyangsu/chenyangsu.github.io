@@ -6,19 +6,55 @@
 	<title>Chen-Yang Su</title>
 	<link rel="icon" href="images/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" href="images/favicon.png">
-	<meta name="description" content="Chen-Yang Su — Incoming Postdoctoral Scholar at Stanford University. Evals, Agents & AI for Healthcare." />
+	<meta name="description" content="Chen-Yang Su — Incoming Postdoctoral Scholar at Stanford University. Evals, Agents & AI for Science." />
 	<link rel="canonical" href="https://chenyangsu.github.io/" />
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="Chen-Yang Su">
-	<meta property="og:description" content="Incoming Postdoctoral Scholar, Stanford University. Evals, Agents & AI for Healthcare.">
+	<meta property="og:description" content="Incoming Postdoctoral Scholar, Stanford University. Evals, Agents & AI for Science.">
 	<meta property="og:url" content="https://chenyangsu.github.io/">
-	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
-	<meta name="twitter:card" content="summary">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/og-card.png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:image:alt" content="Chen-Yang Su — Evals, Agents & AI for Science. Incoming Postdoctoral Scholar, Stanford University.">
+	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:title" content="Chen-Yang Su">
-	<meta name="twitter:description" content="Incoming Postdoctoral Scholar, Stanford University. Evals, Agents & AI for Healthcare.">
-	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta name="twitter:description" content="Incoming Postdoctoral Scholar, Stanford University. Evals, Agents & AI for Science.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/og-card.png">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"name": "Chen-Yang Su",
+		"url": "https://chenyangsu.github.io/",
+		"image": "https://chenyangsu.github.io/images/og-card.png",
+		"jobTitle": "Postdoctoral Fellow",
+		"description": "Evals, Agents & AI for Science.",
+		"identifier": "https://orcid.org/0000-0001-6071-4660",
+		"affiliation": [
+			{ "@type": "Organization", "name": "University of Wisconsin\u2013Madison", "url": "https://www.wisc.edu/" },
+			{ "@type": "Organization", "name": "Stanford University", "url": "https://dbds.stanford.edu/" }
+		],
+		"alumniOf": [
+			{ "@type": "CollegeOrUniversity", "name": "McGill University", "url": "https://www.mcgill.ca/" }
+		],
+		"knowsAbout": [
+			"AI evaluation", "LLM agents", "Human genetics", "Proteomics",
+			"Mendelian randomization", "Colocalization", "Drug target discovery",
+			"Biomedical data science"
+		],
+		"sameAs": [
+			"https://scholar.google.com/citations?user=KJGE-kYAAAAJ&hl=en",
+			"https://github.com/chenyangsu",
+			"https://orcid.org/0000-0001-6071-4660",
+			"https://www.linkedin.com/in/chen-yang-su/",
+			"https://twitter.com/chenyangsu",
+			"https://bsky.app/profile/chenyangsu.bsky.social",
+			"https://www.researchgate.net/profile/Chen-Yang-Su"
+		]
+	}
+	</script>
 	<link rel="stylesheet" href="assets/main.css">
 	<script src="assets/theme.js"></script>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css" crossorigin="anonymous">
@@ -32,6 +68,7 @@
 		<a class="brand" href="#about">Chen-Yang Su</a>
 		<div class="nav-links">
 			<a href="#about">About</a>
+			<a href="#research">Research</a>
 			<a href="#news">News</a>
 			<a href="#publications">Publications</a>
 			<a href="#talks">Talks</a>
@@ -39,7 +76,6 @@
 			<a href="#experience">Experience</a>
 			<a href="#service">Teaching &amp; Service</a>
 			<a href="#personal">Personal</a>
-			<a href="#motivation">Motivation</a>
 			<a href="#contact">Contact</a>
 		</div>
 	</div>
@@ -50,13 +86,16 @@
 	<!-- ======================== About ======================== -->
 	<header id="about" class="hero">
 		<div class="hero-photo">
-			<img src="images/me.jpg" alt="Portrait of Chen-Yang Su">
+			<picture>
+				<source srcset="images/me.webp" type="image/webp">
+				<img src="images/me.jpg" alt="Portrait of Chen-Yang Su" width="382" height="568">
+			</picture>
 		</div>
 		<div class="hero-text">
 			<h1>Chen-Yang Su</h1>
 			<p class="position">Incoming Postdoctoral Scholar, Stanford University<br>
 			Postdoctoral Fellow, University of Wisconsin&ndash;Madison</p>
-			<p class="tagline">Evals &middot; Agents &middot; AI for Healthcare</p>
+			<p class="tagline">Evals &middot; Agents &middot; AI for Science</p>
 			<p class="location">Madison, Wisconsin, USA</p>
 			<div class="icon-row">
 				<a class="js-email ic-email" href="#contact" title="Email" aria-label="Email"><i class="fas fa-envelope"></i></a>
@@ -77,58 +116,107 @@
 
 	<section class="bio">
 		<p>
-			I am an <b>incoming Postdoctoral Scholar at <a href="https://www.stanford.edu/">Stanford University</a></b>.
-			I am currently a Postdoctoral Fellow at the University of Wisconsin&ndash;Madison working with
-			<a href="https://lulab.pophealth.wisc.edu/">Prof. Tianyuan Lu</a>.
-			I completed my PhD in <a href="https://www.mcgill.ca/qls/">Quantitative Life Sciences</a> at McGill University
-			(December 2025), advised by <a href="https://szhoulab.github.io/">Prof. Sirui Zhou</a>, where I built
-			protein&ndash;disease atlases using proteogenomic approaches to identify causal proteins for complex diseases
-			and nominate drug targets. Before that, I completed my MSc in Computer Science at McGill (2022), supervised by
-			<a href="https://www.cs.mcgill.ca/~jpineau/">Prof. Joelle Pineau</a> (Meta's former Global VP of AI) and
-			<a href="https://www.mcgill.ca/genepi/richards-lab">Prof. Brent Richards</a> (CEO of 5 Prime Sciences), affiliated with
-			<a href="https://mila.quebec/en">Mila &ndash; Quebec AI Institute</a>, the <a href="https://rl.cs.mcgill.ca/">Reasoning and Learning Lab</a>, and the Lady Davis Institute, and my BSc in
-			Computer Science &amp; Biology at McGill (2020).
-		</p>
-		<p>
-			My research is supported by a <b><a href="https://doi.org/10.69777/2005819">Postdoctoral Research Scholarship from the Fonds de recherche du Qu&eacute;bec &ndash; Sant&eacute; (FRQS)</a></b> ($110,000 CAD; ranked 2nd of 15 applications in committee) and a
-			<b><a href="https://www.biswasfamilyfoundation.org/science/fast-grants">Biswas Family Foundation Fast Grant</a></b>
-			($25,000 USD) &mdash; seed funding from <a href="https://www.forbes.com/profile/sanjit-biswas/">Sanjit Biswas</a>&rsquo;s foundation for an AI-native human genetics knowledge base for
-			causal target discovery; the inaugural program funded 37 of 685 applications worldwide (5.4%).
-			My PhD was funded by a Canada Graduate Scholarship &ndash; Doctoral (CGS-D; $113,333 CAD), an FRQS Doctoral Training
-			Fellowship ($96,000 CAD), and a Lady Davis Institute / TD Bank Studentship ($20,000 CAD) &mdash; over $450K CAD in
-			total funding, alongside 56 additional honors and awards.
-		</p>
-		<p>
-			I have contributed to <b>52 publications</b> (32 research articles and 20 correspondence articles) published or
-			accepted in peer-reviewed venues including <i>ICLR</i>, <i>The New England Journal of Medicine</i>,
-			<i>Nature Genetics</i>, <i>Nature Metabolism</i>, <i>Nature Communications</i>, <i>The Lancet Haematology</i>,
-			<i>European Heart Journal</i>, <i>JAMA</i>, <i>Diabetes Care</i>, and
-			<i>Journal of Clinical Endocrinology and Metabolism</i>.
-			I have given <a href="#talks">invited talks</a> at the <b><a href="https://www.broadinstitute.org/">Broad Institute of MIT and Harvard</a></b>,
-			<b><a href="https://med.stanford.edu/">Stanford University School of Medicine</a></b>, <b><a href="https://www.sinica.edu.tw/en">Academia Sinica</a></b> (<a href="https://www.genomics.sinica.edu.tw/">Genomics Research Center</a>, Taiwan),
-			the <b><a href="https://www.ntu.edu.tw/english/">National Taiwan University</a></b>, and the <b><a href="https://www.birs.ca/">Banff International Research Station</a></b>.
+			I am an <b>incoming Postdoctoral Scholar at <a href="https://www.stanford.edu/">Stanford University</a></b>
+			in the <a href="https://dbds.stanford.edu/">Department of Biomedical Data Science</a>, and currently a
+			Postdoctoral Fellow at the University of Wisconsin&ndash;Madison working with
+			<a href="https://lulab.pophealth.wisc.edu/">Prof. Tianyuan Lu</a>. I completed my PhD in
+			<a href="https://www.mcgill.ca/qls/">Quantitative Life Sciences</a> at McGill University in December 2025,
+			advised by <a href="https://szhoulab.github.io/">Prof. Sirui Zhou</a>, and my MSc in Computer Science at
+			McGill in 2022, supervised by <a href="https://www.cs.mcgill.ca/~jpineau/">Prof. Joelle Pineau</a> and
+			<a href="https://www.mcgill.ca/genepi/richards-lab">Prof. Brent Richards</a>, affiliated with
+			<a href="https://mila.quebec/en">Mila &ndash; Quebec AI Institute</a> and the Lady Davis Institute.
 		</p>
 		<p>
 			I am a co-founder of a target discovery startup (in stealth), an elected member of the
 			<a href="https://iges.memberclicks.net/young-investigators-committee">Young Investigators Committee</a> of the
 			International Genetic Epidemiology Society, and an investment fellow at
-			<a href="https://www.halohealth.ca/">HaloHealth</a>. Previously, I was the first Canadian intern at
-			<a href="https://www.hingehealth.com/">Hinge Health</a> (since IPO'd, raising $437.3M) and a world finalist in the
-			$500K USD <a href="https://mila.quebec/en/an-interdisciplinary-team-led-by-mila-researchers-reaches-final-round-of-global-pandemic-response-challenge/">XPRIZE Pandemic Response Challenge</a>.
+			<a href="https://www.halohealth.ca/">HaloHealth</a>.
 		</p>
+	</section>
+
+	<!-- ======================== Research ======================== -->
+	<section id="research">
+		<h2>Research</h2>
+		<p class="fineprint">Three threads. The genetics work grounds the evaluation work: both ask how to tell a real
+		causal signal from a convincing artefact.</p>
+
+		<div class="research-cards">
+
+			<article class="rcard">
+				<svg class="rcard-icon" viewBox="0 0 48 34" fill="none" stroke="currentColor" stroke-width="1.6"
+				     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<rect x="1" y="10" width="13" height="12" rx="2"/>
+					<rect x="34" y="10" width="13" height="12" rx="2"/>
+					<path d="M14 16h20"/><path d="M30 12.5 34 16l-4 3.5"/>
+					<path d="M40.5 22v5.5H7.5V22"/><path d="M11 24l-3.5-2-3.5 2"/>
+					<path d="M4 4.5h7M4 7.5h5"/>
+				</svg>
+				<h3 class="rcard-title">AI Evals &amp; Agents for Biomedicine</h3>
+				<p>I build benchmarks and evaluation harnesses that test whether LLM agents are actually reliable on
+				biomedical and clinical tasks &mdash; outcome-based grading against a simulated record, repeated trials,
+				and cluster-bootstrap confidence intervals instead of a single headline score.
+				It continues the reinforcement learning work I started on how agents behave under a learned reward.</p>
+				<p class="rcard-links">
+					<a href="https://github.com/chenyangsu/clinical-agent-evals">Code</a>
+					<a href="https://openreview.net/forum?id=HgLO8yalfwc">ICLR 2021</a>
+				</p>
+			</article>
+
+			<article class="rcard">
+				<svg class="rcard-icon" viewBox="0 0 48 34" fill="none" stroke="currentColor" stroke-width="1.6"
+				     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M4 27c0-9 8-9 8-18"/><path d="M12 27c0-9-8-9-8-18"/>
+					<path d="M5.5 12.5h5M5.5 21.5h5"/>
+					<circle cx="26" cy="17" r="5.5"/>
+					<path d="M14 17h6"/><path d="M17 14.5 19.5 17 17 19.5"/>
+					<path d="M32 17h6"/><path d="M35 14.5 37.5 17 35 19.5"/>
+					<path d="M40 11.5a7 7 0 1 0 6 6"/><path d="M43.5 8.5v6h-6"/>
+				</svg>
+				<h3 class="rcard-title">Human Genetics &amp; Proteomics for Target Discovery</h3>
+				<p>Using Mendelian randomization and colocalization over plasma pQTLs, I separate proteins that plausibly
+				cause disease from the far larger set that merely correlate with it, and turn the survivors into
+				drug-target hypotheses. Most of my published work sits here, across osteoarthritis, type 2 diabetes and
+				cardiometabolic disease.</p>
+				<p class="rcard-links">
+					<a href="https://doi.org/10.1101/2025.09.23.25336398">Nat Commun paper</a>
+					<a href="#publications">Publications</a>
+				</p>
+			</article>
+
+			<article class="rcard">
+				<svg class="rcard-icon" viewBox="0 0 48 34" fill="none" stroke="currentColor" stroke-width="1.6"
+				     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<circle cx="9" cy="7" r="3"/><circle cx="9" cy="27" r="3"/><circle cx="22" cy="17" r="3"/>
+					<circle cx="35" cy="7" r="3"/><circle cx="35" cy="27" r="3"/>
+					<path d="M11.6 8.6 19.4 15.4M11.6 25.4 19.4 18.6M24.6 15.4 32.4 8.6M24.6 18.6 32.4 25.4"/>
+					<path d="M41 17h5"/><path d="M43 14.5 45.5 17 43 19.5"/>
+				</svg>
+				<h3 class="rcard-title">AI-Native Scientific Knowledge Systems</h3>
+				<p>I am building a human genetics knowledge base designed to be queried and reasoned over by agents,
+				rather than read as static supplementary tables. The aim is that evidence for a causal target stays
+				machine-checkable end to end, from variant to claim.</p>
+				<p class="rcard-links">
+					<a href="https://www.biswasfamilyfoundation.org/science/fast-grants">Biswas Fast Grant</a>
+				</p>
+			</article>
+
+		</div>
 	</section>
 
 	<!-- ======================== News ======================== -->
 	<section id="news">
 		<h2>News</h2>
-		<div class="news-box">
+		<ul class="news-list">
+			<li><span class="date">[08/2026]</span> &#127891; I will be joining <b>Stanford University</b> as a Postdoctoral Scholar!</li>
+			<li><span class="date">[08/2026]</span> &#128483;&#65039; Invited speaker at the <a href="https://gesw.genomics.sinica.edu.tw/">2026 Genomic Epidemiology Workshop</a>, <b>Academia Sinica</b>, Taiwan &mdash; a 75-minute invited lecture, "AI-Driven Integration of Multi-Omics Data: Examples and Demo" (invited by Dr. Yi-Hsiang Hsu, Harvard Medical School).</li>
+			<li><span class="date">[08/2026]</span> &#128483;&#65039; Invited research visit to the <b>Broad Institute of MIT and Harvard</b> &mdash; gave a 60-minute talk to the <a href="https://www.nealelab.is/">Benjamin Neale Lab</a> and the <a href="https://www.atgu.mgh.harvard.edu/">Analytic and Translational Genetics Unit (ATGU)</a>.</li>
+			<li><span class="date">[08/2026]</span> &#128196; Paper accepted at <i>Cardiovascular Diabetology</i>: plasma proteomic network analysis identifies physical-activity-associated protein modules potentially mediating type 2 diabetes risk.</li>
+			<li><span class="date">[07/2026]</span> &#128176; Awarded a <a href="https://www.biswasfamilyfoundation.org/science/fast-grants">Biswas Family Foundation Fast Grant</a> ($25,000 USD) for "AI-Native Human Genetics Knowledge Base for Causal Target Discovery" &mdash; the inaugural program funded 37 of 685 applications worldwide (5.4%).</li>
+			<li><span class="date">[06/2026]</span> &#128483;&#65039; Invited research talk at the <a href="https://med.stanford.edu/snyderlab/about.html">Michael P. Snyder Lab</a>, <b>Stanford University School of Medicine</b>.</li>
+		</ul>
+		<details class="news-more">
+			<summary>Older news</summary>
 			<ul class="news-list">
-				<li><span class="date">[08/2026]</span> &#127891; I will be joining <b>Stanford University</b> as a Postdoctoral Scholar!</li>
-				<li><span class="date">[08/2026]</span> &#128483;&#65039; Invited speaker at the <a href="https://gesw.genomics.sinica.edu.tw/">2026 Genomic Epidemiology Workshop</a>, <b>Academia Sinica</b>, Taiwan &mdash; a 75-minute invited lecture, "AI-Driven Integration of Multi-Omics Data: Examples and Demo" (invited by Dr. Yi-Hsiang Hsu, Harvard Medical School).</li>
-				<li><span class="date">[08/2026]</span> &#128483;&#65039; Invited research visit to the <b>Broad Institute of MIT and Harvard</b> &mdash; gave a 60-minute talk to the <a href="https://www.nealelab.is/">Benjamin Neale Lab</a> and the <a href="https://www.atgu.mgh.harvard.edu/">Analytic and Translational Genetics Unit (ATGU)</a>.</li>
-				<li><span class="date">[08/2026]</span> &#128196; Paper accepted at <i>Cardiovascular Diabetology</i>: plasma proteomic network analysis identifies physical-activity-associated protein modules potentially mediating type 2 diabetes risk.</li>
-				<li><span class="date">[07/2026]</span> &#128176; Awarded a <a href="https://www.biswasfamilyfoundation.org/science/fast-grants">Biswas Family Foundation Fast Grant</a> ($25,000 USD) for "AI-Native Human Genetics Knowledge Base for Causal Target Discovery" &mdash; the inaugural program funded 37 of 685 applications worldwide (5.4%).</li>
-				<li><span class="date">[06/2026]</span> &#128483;&#65039; Invited research talk at the <a href="https://med.stanford.edu/snyderlab/about.html">Michael P. Snyder Lab</a>, <b>Stanford University School of Medicine</b>.</li>
 				<li><span class="date">[05/2026]</span> &#128176; Awarded the <a href="https://doi.org/10.69777/2005819">FRQS Postdoctoral Research Scholarship</a> ($110,000 CAD) &mdash; ranked 2nd of 15 applications in my committee; part of a cohort of 66 fellows selected across Canada.</li>
 				<li><span class="date">[04/2026]</span> &#128196; First-author paper accepted at <i>Nature Communications</i>: Disentangling osteoarthritis-specific genetic effects from obesity to identify novel therapeutic targets. <a href="https://doi.org/10.1101/2025.09.23.25336398">[medRxiv]</a></li>
 				<li><span class="date">[04/2026]</span> Started as a Postdoctoral Fellow at the <b>University of Wisconsin&ndash;Madison</b>, working with <a href="https://lulab.pophealth.wisc.edu/">Prof. Tianyuan Lu</a>.</li>
@@ -155,171 +243,158 @@
 				<li><span class="date">[09/2020]</span> &#127891; Started my MSc in Computer Science at McGill University, supervised by Joelle Pineau and Brent Richards.</li>
 				<li><span class="date">[05/2020]</span> &#127891; Graduated with my BSc in Computer Science &amp; Biology from McGill University.</li>
 			</ul>
-		</div>
+		</details>
 	</section>
 
 	<!-- ======================== Publications ======================== -->
 	<section id="publications">
 		<h2>Selected Publications</h2>
 		<p class="fineprint">Selected first-author and co-first-author works. *Equal contribution; &para;corresponding author.
-		Full list of publications on <a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>.</p>
+		<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">View all publications on Google Scholar</a>.</p>
 
+		<h3 class="pub-group">Peer-reviewed</h3>
 		<div class="pub">
 			<div class="pub-side">
-				<div class="venue-tag">Nat Commun</div>
+			<div class="venue-tag">Nat Commun</div>
 			</div>
 			<div class="pub-body">
-				<p class="pub-title">Disentangling osteoarthritis-specific genetic effects from obesity to identify novel therapeutic targets</p>
-				<p class="pub-authors"><b>Chen-Yang Su</b>, Masashi Hasebe, Shihui Peng, Dandan Tan, Shucheng Cao, Kevin Y. H. Liang, Takayoshi Sasako, Vincent Mooser, Wenmin Zhang, Sirui Zhou, Satoshi Yoshiji, Tianyuan Lu*, Guillaume Butler-Laporte*&para;</p>
-				<p class="pub-venue"><i>Nature Communications</i>, accepted 2026</p>
-				<p class="pub-links"><a href="https://doi.org/10.1101/2025.09.23.25336398">[medRxiv]</a> <a href="https://youtu.be/6xE2DROh_30?t=2531">[Talk video]</a></p>
-				<p class="award">&#127942; Presented as an invited oral at TAGC 2025 (UW&ndash;Madison) &mdash; the only Canadian invited</p>
+			<p class="pub-title"><a href="https://doi.org/10.1101/2025.09.23.25336398">Disentangling osteoarthritis-specific genetic effects from obesity to identify novel therapeutic targets</a></p>
+			<p class="pub-authors"><b>Chen-Yang Su</b>, Masashi Hasebe, Shihui Peng, Dandan Tan, Shucheng Cao, Kevin Y. H. Liang, Takayoshi Sasako, Vincent Mooser, Wenmin Zhang, Sirui Zhou, Satoshi Yoshiji, Tianyuan Lu*, Guillaume Butler-Laporte*&para;</p>
+			<p class="pub-venue"><i>Nature Communications</i>, accepted 2026</p>
+			<p class="pub-links"><a class="pill" href="https://doi.org/10.1101/2025.09.23.25336398">Preprint</a><a class="pill" href="https://youtu.be/6xE2DROh_30?t=2531">Talk</a></p>
+			<p class="award">&#127942; Presented as an invited oral at TAGC 2025 (UW&ndash;Madison) &mdash; the only Canadian invited</p>
+			</div>
+		</div>
+		<div class="pub">
+			<div class="pub-side">
+			<div class="venue-tag">Lancet Haematol</div>
+			</div>
+			<div class="pub-body">
+			<p class="pub-title"><a href="https://doi.org/10.1016/S2352-3026(25)00068-7">Machine-learning models to predict iron recovery after blood donation: a model development and external validation study</a></p>
+			<p class="pub-authors">Wanjin Li*, <b>Chen-Yang Su</b>*, Amber Meulenbeld, Huzbah Jagirdar, Mart P. Janssen, Ron&eacute;l Swanevelder, Roberta Bruhn, Zhanna Kaidarova, Marjorie D. Bravo, Sophie Cao, Brian Custer, Karin van den Berg, W. Alton Russell&para;</p>
+			<p class="pub-venue"><i>The Lancet Haematology</i>, 2025</p>
+			<p class="pub-links"><a class="pill" href="https://doi.org/10.1016/S2352-3026(25)00068-7">Paper</a></p>
+			</div>
+		</div>
+		<div class="pub">
+			<div class="pub-side">
+			<div class="venue-tag">ICLR</div>
+			<img class="pub-thumb" src="images/pubs/iclr-rirl.png" alt="" width="356" height="461">
+			</div>
+			<div class="pub-body">
+			<p class="pub-title"><a href="https://openreview.net/forum?id=HgLO8yalfwc">Regularized Inverse Reinforcement Learning</a></p>
+			<p class="pub-authors">Wonseok Jeon&para;, <b>Chen-Yang Su</b>, Paul Barde, Thang Doan, Derek Nowrouzezahrai, Joelle Pineau</p>
+			<p class="pub-venue"><i>ICLR</i>, 2021 &middot; also a NeurIPS Deep RL Workshop paper, 2020</p>
+			<p class="pub-links"><a class="pill" href="https://openreview.net/forum?id=HgLO8yalfwc">Paper</a></p>
+			<p class="award">&#127942; Spotlight Presentation (167/2,977 = top 5.6%)</p>
+			</div>
+		</div>
+		<div class="pub">
+			<div class="pub-side">
+			<div class="venue-tag">Sci Rep</div>
+			</div>
+			<div class="pub-body">
+			<p class="pub-title"><a href="https://doi.org/10.1038/s41598-023-31850-y">Circulating proteins to predict COVID-19 severity</a></p>
+			<p class="pub-authors"><b>Chen-Yang Su</b>*, Sirui Zhou*, Edgar Gonzalez-Kozlova*, Guillaume Butler-Laporte, Elsa Brunet-Ratnasingham, ..., The Mount Sinai COVID-19 Biobank Team, ..., J. Brent Richards&para;</p>
+			<p class="pub-venue"><i>Scientific Reports</i>, 2023</p>
+			<p class="pub-links"><a class="pill" href="https://doi.org/10.1038/s41598-023-31850-y">Paper</a></p>
+			</div>
+		</div>
+		<div class="pub">
+			<div class="pub-side">
+			<div class="venue-tag">NEJM</div>
+			</div>
+			<div class="pub-body">
+			<p class="pub-title"><a href="https://doi.org/10.1056/nejmc2509454">Semaglutide in Metabolic Dysfunction&ndash;Associated Steatohepatitis</a></p>
+			<p class="pub-authors"><b>Chen-Yang Su</b>&para;, Masashi Hasebe</p>
+			<p class="pub-venue"><i>The New England Journal of Medicine</i>, 2025</p>
+			<p class="pub-links"><a class="pill" href="https://doi.org/10.1056/nejmc2509454">Paper</a></p>
+			</div>
+		</div>
+		<div class="pub">
+			<div class="pub-side">
+			<div class="venue-tag">NEJM</div>
+			</div>
+			<div class="pub-body">
+			<p class="pub-title"><a href="https://doi.org/10.1056/nejmc2507786">Screening for Prostate Cancer with a Polygenic Risk Score</a></p>
+			<p class="pub-authors"><b>Chen-Yang Su</b>&para;, Masashi Hasebe</p>
+			<p class="pub-venue"><i>The New England Journal of Medicine</i>, 2025</p>
+			<p class="pub-links"><a class="pill" href="https://doi.org/10.1056/nejmc2507786">Paper</a></p>
 			</div>
 		</div>
 
-		<div class="pub">
-			<div class="pub-side">
+		<details class="pub-more">
+			<summary>Preprints &amp; manuscripts</summary>
+			<p class="fineprint">Journal listed where a manuscript is in review; status changes often, so dates are omitted.</p>
+			<div class="pub">
+				<div class="pub-side">
 				<div class="venue-tag">Genome Med</div>
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Multi-ancestry proteome-phenome-wide Mendelian randomization offers a comprehensive protein&ndash;disease atlas and potential therapeutic targets</p>
+				</div>
+				<div class="pub-body">
+				<p class="pub-title"><a href="https://www.medrxiv.org/content/10.1101/2024.10.17.24315553v2">Multi-ancestry proteome-phenome-wide Mendelian randomization offers a comprehensive protein&ndash;disease atlas and potential therapeutic targets</a></p>
 				<p class="pub-authors"><b>Chen-Yang Su</b>, Adriaan van der Graaf, Wenmin Zhang, Dong-Keun Jang, Susannah Selber-Hnatiw, Ta-Yu Yang, Guillaume Butler-Laporte, Kevin Y. H. Liang, Masashi Hasebe, Beno&icirc;t Delabays, Fumihiko Matsuda, Maria C. Costanzo, No&euml;l P. Burtt, Jason Flannick, Sirui Zhou, Vincent Mooser, Tianyuan Lu*, Satoshi Yoshiji*&para;</p>
-				<p class="pub-venue"><i>Genome Medicine</i>, under revision</p>
-				<p class="pub-links"><a href="https://www.medrxiv.org/content/10.1101/2024.10.17.24315553v2">[medRxiv]</a> <a href="https://broad.io/protein_mr_atlas">[Protein&ndash;disease atlas]</a></p>
+				<p class="pub-venue"><i>Genome Medicine</i></p>
+				<p class="pub-links"><a class="pill" href="https://www.medrxiv.org/content/10.1101/2024.10.17.24315553v2">Preprint</a><a class="pill" href="https://broad.io/protein_mr_atlas">Data</a></p>
 				<p class="award">&#127942; ASHG 2024 Platform Talk (top 10% of ~3,500 abstracts) &middot; Roger Williams Award Finalist, IGES 2024 &middot; atlas hosted with the Broad Institute of MIT and Harvard's Common Metabolic Disease Knowledge Portal</p>
+				</div>
 			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
-				<div class="venue-tag">Lancet Haematol</div>
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Machine-learning models to predict iron recovery after blood donation: a model development and external validation study</p>
-				<p class="pub-authors">Wanjin Li*, <b>Chen-Yang Su</b>*, Amber Meulenbeld, Huzbah Jagirdar, Mart P. Janssen, Ron&eacute;l Swanevelder, Roberta Bruhn, Zhanna Kaidarova, Marjorie D. Bravo, Sophie Cao, Brian Custer, Karin van den Berg, W. Alton Russell&para;</p>
-				<p class="pub-venue"><i>The Lancet Haematology</i>, 2025</p>
-				<p class="pub-links"><a href="https://doi.org/10.1016/S2352-3026(25)00068-7">[Paper]</a></p>
-			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
+			<div class="pub">
+				<div class="pub-side">
 				<div class="venue-tag">Commun Biol</div>
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Multi-ancestry proteogenomic analysis identifies risk proteins for intracranial aneurysms</p>
+				</div>
+				<div class="pub-body">
+				<p class="pub-title"><a href="https://www.medrxiv.org/content/10.1101/2025.11.11.25339992v1">Multi-ancestry proteogenomic analysis identifies risk proteins for intracranial aneurysms</a></p>
 				<p class="pub-authors"><b>Chen-Yang Su</b>, Juliano Malizia, Masashi Hasebe, Thomas Zheng, Alejandro Mejia-Garcia, Hsuan Megan Tsao, Zhaohe Lin, Ta-Yu Yang, Fumihiko Matsuda, Patrick A. Dion, Vincent Mooser, Guy Rouleau, Guillaume Butler-Laporte, Tianyuan Lu, Satoshi Yoshiji, Sirui Zhou&para;</p>
-				<p class="pub-venue"><i>Communications Biology</i>, under revision</p>
-				<p class="pub-links"><a href="https://www.medrxiv.org/content/10.1101/2025.11.11.25339992v1">[medRxiv]</a></p>
+				<p class="pub-venue"><i>Communications Biology</i></p>
+				<p class="pub-links"><a class="pill" href="https://www.medrxiv.org/content/10.1101/2025.11.11.25339992v1">Preprint</a></p>
 				<p class="award">&#127942; Best Abstract Award, Canadian Society of Vascular Medicine, Canadian Cardiovascular Congress 2025</p>
+				</div>
 			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
+			<div class="pub">
+				<div class="pub-side">
 				<div class="venue-tag">Diabetes</div>
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Disentangling adiposity-related and non-adiposity-related genetic pathways for type 2 diabetes</p>
+				</div>
+				<div class="pub-body">
+				<p class="pub-title"><a href="https://doi.org/10.64898/2026.06.11.26355425">Disentangling adiposity-related and non-adiposity-related genetic pathways for type 2 diabetes</a></p>
 				<p class="pub-authors"><b>Chen-Yang Su</b>&para;, Tianyuan Lu&para;</p>
-				<p class="pub-venue"><i>Diabetes</i>, under review</p>
-				<p class="pub-links"><a href="https://doi.org/10.64898/2026.06.11.26355425">[medRxiv]</a></p>
+				<p class="pub-venue"><i>Diabetes</i></p>
+				<p class="pub-links"><a class="pill" href="https://doi.org/10.64898/2026.06.11.26355425">Preprint</a></p>
+				</div>
 			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
+			<div class="pub">
+				<div class="pub-side">
 				<div class="venue-tag">eBioMedicine</div>
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Genetic evidence prioritizes circulating proteins for heart failure beyond shared BMI-related genetic liability</p>
+				</div>
+				<div class="pub-body">
+				<p class="pub-title"><a href="https://doi.org/10.64898/2026.06.19.26356109">Genetic evidence prioritizes circulating proteins for heart failure beyond shared BMI-related genetic liability</a></p>
 				<p class="pub-authors"><b>Chen-Yang Su</b>&para;, Tianyuan Lu&para;</p>
-				<p class="pub-venue"><i>eBioMedicine</i>, submitted</p>
-				<p class="pub-links"><a href="https://doi.org/10.64898/2026.06.19.26356109">[medRxiv]</a></p>
+				<p class="pub-venue"><i>eBioMedicine</i></p>
+				<p class="pub-links"><a class="pill" href="https://doi.org/10.64898/2026.06.19.26356109">Preprint</a></p>
+				</div>
 			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
+			<div class="pub">
+				<div class="pub-side">
 				<div class="venue-tag">Nat Genet</div>
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Positive-control Mendelian randomization highlights power constraints in disease-mortality GWAS</p>
+				</div>
+				<div class="pub-body">
+				<p class="pub-title"><a href="https://doi.org/10.64898/2026.05.29.26354472">Positive-control Mendelian randomization highlights power constraints in disease-mortality GWAS</a></p>
 				<p class="pub-authors"><b>Chen-Yang Su</b>, Guillaume Butler-Laporte&para;</p>
-				<p class="pub-venue"><i>Nature Genetics</i> (Correspondence), submitted</p>
-				<p class="pub-links"><a href="https://doi.org/10.64898/2026.05.29.26354472">[medRxiv]</a></p>
+				<p class="pub-venue"><i>Nature Genetics</i> (Correspondence)</p>
+				<p class="pub-links"><a class="pill" href="https://doi.org/10.64898/2026.05.29.26354472">Preprint</a></p>
+				</div>
 			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
+			<div class="pub">
+				<div class="pub-side">
 				<div class="venue-tag">Commun Biol</div>
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Systematic variant-to-gene mapping highlights TGFB2 and VEGFA as adipokine-coding genes with non-obese insulin resistance characteristics and distinct cardiometabolic disease risks</p>
+				</div>
+				<div class="pub-body">
+				<p class="pub-title"><a href="https://doi.org/10.64898/2026.05.01.26352257">Systematic variant-to-gene mapping highlights TGFB2 and VEGFA as adipokine-coding genes with non-obese insulin resistance characteristics and distinct cardiometabolic disease risks</a></p>
 				<p class="pub-authors"><b>Chen-Yang Su</b>, Masashi Hasebe, Adriaan van der Graaf, Yefeng Yang, Hsuan Megan Tsao, Leighton Smith, Guillaume Butler-Laporte, Sirui Zhou, Wenmin Zhang, Tianyuan Lu*, Satoshi Yoshiji*&para;</p>
-				<p class="pub-venue"><i>Communications Biology</i>, under review</p>
-				<p class="pub-links"><a href="https://doi.org/10.64898/2026.05.01.26352257">[medRxiv]</a></p>
+				<p class="pub-venue"><i>Communications Biology</i></p>
+				<p class="pub-links"><a class="pill" href="https://doi.org/10.64898/2026.05.01.26352257">Preprint</a></p>
+				</div>
 			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
-				<div class="venue-tag">ICLR</div>
-				<img class="pub-thumb" src="images/pubs/iclr-rirl.png" alt="">
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Regularized Inverse Reinforcement Learning</p>
-				<p class="pub-authors">Wonseok Jeon&para;, <b>Chen-Yang Su</b>, Paul Barde, Thang Doan, Derek Nowrouzezahrai, Joelle Pineau</p>
-				<p class="pub-venue"><i>ICLR</i>, 2021 &middot; also a NeurIPS Deep RL Workshop paper, 2020</p>
-				<p class="pub-links"><a href="https://openreview.net/forum?id=HgLO8yalfwc">[Paper]</a></p>
-				<p class="award">&#127942; Spotlight Presentation (167/2,977 = top 5.6%)</p>
-			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
-				<div class="venue-tag">Sci Rep</div>
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Circulating proteins to predict COVID-19 severity</p>
-				<p class="pub-authors"><b>Chen-Yang Su</b>*, Sirui Zhou*, Edgar Gonzalez-Kozlova*, Guillaume Butler-Laporte, Elsa Brunet-Ratnasingham, ..., The Mount Sinai COVID-19 Biobank Team, ..., J. Brent Richards&para;</p>
-				<p class="pub-venue"><i>Scientific Reports</i>, 2023</p>
-				<p class="pub-links"><a href="https://doi.org/10.1038/s41598-023-31850-y">[Paper]</a></p>
-			</div>
-		</div>
-
-		<h3>Selected Letters &amp; Correspondence</h3>
-
-		<div class="pub">
-			<div class="pub-side">
-				<div class="venue-tag">NEJM</div>
-				<img class="pub-thumb pub-thumb-logo" src="images/pubs/nejm-logo.png" alt="">
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Semaglutide in Metabolic Dysfunction&ndash;Associated Steatohepatitis</p>
-				<p class="pub-authors"><b>Chen-Yang Su</b>&para;, Masashi Hasebe</p>
-				<p class="pub-venue"><i>The New England Journal of Medicine</i>, 2025</p>
-				<p class="pub-links"><a href="https://doi.org/10.1056/nejmc2509454">[Paper]</a></p>
-			</div>
-		</div>
-
-		<div class="pub">
-			<div class="pub-side">
-				<div class="venue-tag">NEJM</div>
-				<img class="pub-thumb pub-thumb-logo" src="images/pubs/nejm-logo.png" alt="">
-			</div>
-			<div class="pub-body">
-				<p class="pub-title">Screening for Prostate Cancer with a Polygenic Risk Score</p>
-				<p class="pub-authors"><b>Chen-Yang Su</b>&para;, Masashi Hasebe</p>
-				<p class="pub-venue"><i>The New England Journal of Medicine</i>, 2025</p>
-				<p class="pub-links"><a href="https://doi.org/10.1056/nejmc2507786">[Paper]</a></p>
-			</div>
-		</div>
-
-		<p class="fineprint">Plus 18 additional correspondence articles in <i>Diabetes Care</i>, <i>European Heart Journal</i>,
-		<i>Journal of Clinical Endocrinology and Metabolism</i>, <i>Kidney International</i>, <i>Nephrology</i>,
-		<i>International Journal of Cardiology</i>, and other journals &mdash; full list on my <a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>.</p>
+		</details>
 	</section>
 
 	<!-- ======================== Talks ======================== -->
@@ -345,7 +420,7 @@
 		<div class="talk talk-flagship">
 			<span class="talk-date">[08/2026]</span>
 			<div class="talk-body">
-				<p class="talk-venue"><img class="talk-logo" src="images/logos/sinica.png" alt="">Academia Sinica, Taiwan &mdash; <a href="https://gesw.genomics.sinica.edu.tw/">2026 Genomic Epidemiology Workshop</a></p>
+				<p class="talk-venue"><img class="talk-logo" src="images/logos/sinica.png" alt="" width="180" height="180">Academia Sinica, Taiwan &mdash; <a href="https://gesw.genomics.sinica.edu.tw/">2026 Genomic Epidemiology Workshop</a></p>
 				<p class="talk-title">"AI-Driven Integration of Multi-Omics Data: Examples and Demo" (75-minute invited lecture)</p>
 				<p class="talk-note">Invited by Dr. Yi-Hsiang Hsu (Harvard Medical School). Organized by the Genomics Research Center and Biomedical Translation Research Center, Academia Sinica; co-organized by the Taiwan Epidemiology Association and Taiwan Biobank.</p>
 			</div>
@@ -354,7 +429,7 @@
 		<div class="talk talk-flagship">
 			<span class="talk-date">[08/2026]</span>
 			<div class="talk-body">
-				<p class="talk-venue"><img class="talk-logo" src="images/logos/broad.png" alt="">Broad Institute of MIT and Harvard &mdash; <a href="https://www.nealelab.is/">Benjamin Neale Lab</a> &amp; <a href="https://www.atgu.mgh.harvard.edu/">Analytic and Translational Genetics Unit (ATGU)</a></p>
+				<p class="talk-venue"><img class="talk-logo" src="images/logos/broad.png" alt="" width="44" height="46">Broad Institute of MIT and Harvard &mdash; <a href="https://www.nealelab.is/">Benjamin Neale Lab</a> &amp; <a href="https://www.atgu.mgh.harvard.edu/">Analytic and Translational Genetics Unit (ATGU)</a></p>
 				<p class="talk-title">"Integrating Human Genetics and Proteomics to Prioritize Therapeutic Targets Across Complex Diseases" (60-minute talk)</p>
 				<p class="talk-note">ATGU-wide candidate research talk, given during an invited and financially supported 3-day research visit.</p>
 			</div>
@@ -363,7 +438,7 @@
 		<div class="talk talk-flagship">
 			<span class="talk-date">[06/2026]</span>
 			<div class="talk-body">
-				<p class="talk-venue"><img class="talk-logo" src="images/logos/stanford.png" alt="">Stanford University School of Medicine &mdash; <a href="https://med.stanford.edu/snyderlab/about.html">Michael P. Snyder Lab</a></p>
+				<p class="talk-venue"><img class="talk-logo" src="images/logos/stanford.png" alt="" width="250" height="383">Stanford University School of Medicine &mdash; <a href="https://med.stanford.edu/snyderlab/about.html">Michael P. Snyder Lab</a></p>
 				<p class="talk-title">"From Genetic Evidence to Dynamic Precision Health: Multi-ancestry proteogenomics for biomarkers, mechanisms, and actionable targets" (45-minute talk + Q&amp;A)</p>
 			</div>
 		</div>
@@ -371,7 +446,7 @@
 		<div class="talk talk-flagship">
 			<span class="talk-date">[03/2026]</span>
 			<div class="talk-body">
-				<p class="talk-venue"><img class="talk-logo" src="images/logos/broad.png" alt="">Broad Institute of MIT and Harvard &mdash; <a href="https://natarajanlab.mgh.harvard.edu/">Pradeep Natarajan Lab</a></p>
+				<p class="talk-venue"><img class="talk-logo" src="images/logos/broad.png" alt="" width="44" height="46">Broad Institute of MIT and Harvard &mdash; <a href="https://natarajanlab.mgh.harvard.edu/">Pradeep Natarajan Lab</a></p>
 				<p class="talk-title">"Proteogenomics for target discovery in complex diseases with applications to cardiometabolic and vascular traits" (45-minute talk + Q&amp;A)</p>
 			</div>
 		</div>
@@ -379,7 +454,7 @@
 		<div class="talk talk-flagship">
 			<span class="talk-date">[07/2025]</span>
 			<div class="talk-body">
-				<p class="talk-venue"><img class="talk-logo" src="images/logos/sinica.png" alt="">Academia Sinica, Taiwan &mdash; <a href="https://gesw.genomics.sinica.edu.tw/">2025 Genomic Epidemiology Workshop</a></p>
+				<p class="talk-venue"><img class="talk-logo" src="images/logos/sinica.png" alt="" width="180" height="180">Academia Sinica, Taiwan &mdash; <a href="https://gesw.genomics.sinica.edu.tw/">2025 Genomic Epidemiology Workshop</a></p>
 				<p class="talk-title">"AI-Driven Integration of Multi-Omics Data: Opportunities and Challenges" (75-minute invited lecture)</p>
 				<p class="talk-note">Invited by Dr. Yi-Hsiang Hsu (Harvard Medical School).</p>
 			</div>
@@ -396,7 +471,7 @@
 		<div class="talk talk-flagship">
 			<span class="talk-date">[01/2025]</span>
 			<div class="talk-body">
-				<p class="talk-venue"><img class="talk-logo" src="images/logos/ntu.png" alt="">National Taiwan University &mdash; Monthly Talks on Poly-omics &amp; Precision Medicine</p>
+				<p class="talk-venue"><img class="talk-logo" src="images/logos/ntu.png" alt="" width="180" height="180">National Taiwan University &mdash; Monthly Talks on Poly-omics &amp; Precision Medicine</p>
 				<p class="talk-title">"Leveraging large-scale human genetics and multi-omics analysis for drug target discovery" (50-minute talk + Q&amp;A)</p>
 				<p class="talk-note">Invited by Dr. Pei-Lung Chen (Director, Graduate Institute of Medical Genomics and Proteomics, NTU). <a href="https://www.youtube.com/watch?v=6HUOCZs7faI&amp;list=PLybwqWCmSjp4gSd6cI0pvRSIuRY3MUjq6&amp;index=9">[Video]</a></p>
 			</div>
@@ -471,7 +546,7 @@
 			<li>
 				<div class="direction-r">
 					<div class="flag-wrapper">
-						<span class="flag"><img class="flag-logo" src="images/logos/stanford.png" alt="Stanford University">Stanford University</span>
+						<span class="flag"><img class="flag-logo" src="images/logos/stanford.png" alt="" width="250" height="383">Stanford University</span>
 						<span class="time-wrapper"><span class="time">Starting 2026</span></span>
 					</div>
 					<div class="desc"><b>Postdoctoral Scholar (Incoming)</b><br>
@@ -482,7 +557,7 @@
 			<li>
 				<div class="direction-l">
 					<div class="flag-wrapper">
-						<span class="flag"><img class="flag-logo" src="images/logos/uwmadison.png" alt="University of Wisconsin&ndash;Madison">University of Wisconsin&ndash;Madison</span>
+						<span class="flag"><img class="flag-logo" src="images/logos/uwmadison.png" alt="" width="250" height="236">University of Wisconsin&ndash;Madison</span>
 						<span class="time-wrapper"><span class="time">Apr 2026 &ndash; present</span></span>
 					</div>
 					<div class="desc"><b>Postdoctoral Fellow</b><br>
@@ -493,7 +568,7 @@
 			<li>
 				<div class="direction-r">
 					<div class="flag-wrapper">
-						<span class="flag"><img class="flag-logo" src="images/logos/mcgill.png" alt="McGill University">McGill University</span>
+						<span class="flag"><img class="flag-logo" src="images/logos/mcgill.png" alt="" width="250" height="275">McGill University</span>
 						<span class="time-wrapper"><span class="time">Jan 2026 &ndash; Mar 2026</span></span>
 					</div>
 					<div class="desc"><b>Postdoctoral Fellow</b><br>
@@ -504,7 +579,7 @@
 			<li>
 				<div class="direction-l">
 					<div class="flag-wrapper">
-						<span class="flag"><img class="flag-logo" src="images/logos/mcgill.png" alt="McGill University">McGill University</span>
+						<span class="flag"><img class="flag-logo" src="images/logos/mcgill.png" alt="" width="250" height="275">McGill University</span>
 						<span class="time-wrapper"><span class="time">Sep 2022 &ndash; Dec 2025</span></span>
 					</div>
 					<div class="desc"><b>PhD, Quantitative Life Sciences</b><br>
@@ -515,7 +590,7 @@
 			<li>
 				<div class="direction-r">
 					<div class="flag-wrapper">
-						<span class="flag"><img class="flag-logo" src="images/logos/hingehealth.png" alt="Hinge Health">Hinge Health</span>
+						<span class="flag"><img class="flag-logo" src="images/logos/hingehealth.png" alt="" width="96" height="96">Hinge Health</span>
 						<span class="time-wrapper"><span class="time">May 2022 &ndash; Sep 2022</span></span>
 					</div>
 					<div class="desc"><b>Data Science Intern</b><br>
@@ -526,7 +601,7 @@
 			<li>
 				<div class="direction-l">
 					<div class="flag-wrapper">
-						<span class="flag"><img class="flag-logo" src="images/logos/mcgill.png" alt="McGill University">McGill University</span>
+						<span class="flag"><img class="flag-logo" src="images/logos/mcgill.png" alt="" width="250" height="275">McGill University</span>
 						<span class="time-wrapper"><span class="time">Sep 2020 &ndash; May 2022</span></span>
 					</div>
 					<div class="desc"><b>MSc, Computer Science</b><br>
@@ -537,7 +612,7 @@
 			<li>
 				<div class="direction-r">
 					<div class="flag-wrapper">
-						<span class="flag"><img class="flag-logo" src="images/logos/mila.png" alt="Mila &ndash; Quebec AI Institute">Mila &ndash; Quebec AI Institute</span>
+						<span class="flag"><img class="flag-logo" src="images/logos/mila.png" alt="" width="180" height="180">Mila &ndash; Quebec AI Institute</span>
 						<span class="time-wrapper"><span class="time">Feb 2020 &ndash; Aug 2020</span></span>
 					</div>
 					<div class="desc"><b>Machine Learning Researcher</b><br>
@@ -547,7 +622,7 @@
 			<li>
 				<div class="direction-l">
 					<div class="flag-wrapper">
-						<span class="flag"><img class="flag-logo" src="images/logos/mcgill.png" alt="McGill University">McGill University</span>
+						<span class="flag"><img class="flag-logo" src="images/logos/mcgill.png" alt="" width="250" height="275">McGill University</span>
 						<span class="time-wrapper"><span class="time">Sep 2016 &ndash; May 2020</span></span>
 					</div>
 					<div class="desc"><b>BSc, Joint Major in Computer Science &amp; Biology</b><br>
@@ -594,55 +669,34 @@
 			British Columbia, and moved to Montr&eacute;al, Qu&eacute;bec, where I completed my undergraduate,
 			master&rsquo;s, and PhD.
 		</p>
-		<figure class="personal-photo">
-			<img src="images/dragon-tiger-pagodas.jpg" alt="Dragon and Tiger Pagodas at Lotus Pond, Kaohsiung, Taiwan">
-			<figcaption>The Dragon and Tiger Pagodas at Lotus Pond, Kaohsiung. Photo: <a href="https://commons.wikimedia.org/wiki/File:Dragon_and_Tiger_Pagodas_in_Lotus_Pond,_Kaohsiung.jpg">Water Resources Bureau, Kaohsiung City Government</a>.</figcaption>
-		</figure>
-		<p>
-			I speak English, Mandarin, and Taiwanese (all native), along with basic French. In my spare time, I enjoy
-			anything fitness-related, dancing, karaoke, watching cooking videos on YouTube, and trying new foods.
-		</p>
-	</section>
-
-	<!-- ======================== Motivation ======================== -->
-	<section id="motivation">
-		<h2>Motivation</h2>
-
-		<div class="motivation-row">
-			<div class="quote-section">
-			<div class="quote-portrait">
-				<img src="images/coolidge.jpg" alt="Calvin Coolidge">
-				<div class="quote-caption"><b>Calvin Coolidge</b><br>30th U.S. President</div>
-			</div>
-			<blockquote class="quote-main">
-				&ldquo;Nothing in this world can take the place of persistence.
-				Talent will not; nothing is more common than unsuccessful men with talent.
-				Genius will not; unrewarded genius is almost a proverb.
-				Education will not; the world is full of educated derelicts.
-				<span class="quote-highlight">Persistence and determination alone are omnipotent.</span>
-				The slogan &lsquo;Press On&rsquo; has solved, and always will solve, the problems of the human race.&rdquo;
-				<span class="quote-attrib">&mdash; Calvin Coolidge, as recited in <i>The Founder</i> (2016)</span>
-			</blockquote>
-			</div>
-			<figure class="video-card">
-				<iframe src="https://www.youtube-nocookie.com/embed/YF75cLE-6hI" title="Jim Rohn &mdash; The Major Key to Your Better Future Is You" loading="lazy" allowfullscreen></iframe>
-				<figcaption><b>Jim Rohn</b> &mdash; The Major Key to Your Better Future Is You</figcaption>
-				<blockquote class="quote-small">&ldquo;Work harder on yourself than you do on your job.&rdquo;<span class="quote-attrib">&mdash; Jim Rohn</span></blockquote>
-				<blockquote class="quote-small">&ldquo;Don&rsquo;t wish it were easier. Wish you were better.&rdquo;<span class="quote-attrib">&mdash; Jim Rohn</span></blockquote>
-			</figure>
-			<figure class="video-card">
-				<iframe src="https://www.youtube-nocookie.com/embed/jLPdcGe0eS4" title="Earl Nightingale &mdash; The Strangest Secret" loading="lazy" allowfullscreen></iframe>
-				<figcaption><b>Earl Nightingale</b> &mdash; The Strangest Secret</figcaption>
-				<blockquote class="quote-small">&ldquo;We become what we think about.&rdquo;<span class="quote-attrib">&mdash; Earl Nightingale</span></blockquote>
+		<div class="personal-split">
+			<p>
+				I speak English, Mandarin, and Taiwanese (all native), along with basic French. In my spare time, I enjoy
+				anything fitness-related, dancing, karaoke, watching cooking videos on YouTube, and trying new foods.
+				A few things that keep me going are collected on my <a href="notes.html">notes page</a>.
+			</p>
+			<figure class="personal-photo">
+				<picture>
+					<source srcset="images/dragon-tiger-pagodas.webp" type="image/webp">
+					<img src="images/dragon-tiger-pagodas.jpg" alt="Dragon and Tiger Pagodas at Lotus Pond, Kaohsiung, Taiwan" width="960" height="720" loading="lazy">
+				</picture>
+				<figcaption>The Dragon and Tiger Pagodas at Lotus Pond, Kaohsiung.
+				<a href="https://commons.wikimedia.org/wiki/File:Dragon_and_Tiger_Pagodas_in_Lotus_Pond,_Kaohsiung.jpg">Photo source</a>.</figcaption>
 			</figure>
 		</div>
 	</section>
+
 
 	<!-- ======================== Contact ======================== -->
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>The best way to reach me is by email: <b><span class="js-email">csu59 [at] wisc [dot] edu</span></b></p>
 	</section>
+
+	<p class="closing-quote">
+		&ldquo;Nothing in this world can take the place of persistence.&rdquo;
+		<span class="closing-attrib">&mdash; Calvin Coolidge &middot; <a href="notes.html">more notes</a></span>
+	</p>
 
 	<footer class="footer">
 		<p class="footer-main">&copy; 2026 <b>Chen-Yang Su</b> &middot; Last updated: <span id="lastUpdated"></span></p>
