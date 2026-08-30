@@ -72,7 +72,9 @@
 
 .post-meta .dot { color: var(--rule); }
 
-.post-list h2 {
+/* h2 on the blog index, h3 in the Blog section of the home page, where the
+   section itself already owns the h2. Same look either way. */
+.post-list h2, .post-list h3 {
 	font-size: 22px;
 	font-weight: 900;
 	line-height: 1.3;
@@ -82,8 +84,11 @@
 	margin: 7px 0 8px;
 }
 
-.post-list h2 a { color: inherit; }
-.post-list h2 a:hover { color: var(--accent); text-decoration: none; }
+.post-list h2 a, .post-list h3 a { color: inherit; }
+.post-list h2 a:hover, .post-list h3 a:hover { color: var(--accent); text-decoration: none; }
+
+/* "All posts →" under the list on the home page. */
+.post-list-more { margin: 16px 0 0; font-size: 15.5px; font-weight: 700; }
 
 .post-excerpt {
 	margin: 0;

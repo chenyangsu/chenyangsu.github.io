@@ -47,11 +47,15 @@ no extra work — never hardcode a colour in a post, use the variables.
    tags. On the first post, also remove `hidden` from `<ul class="post-list">` and delete the
    `<div class="blog-empty">` block above it.
 
-5. **Add it to `sitemap.xml` and `blog/feed.xml`.** Both files carry a commented-out block
+5. **Add it to the home page.** `index.html` has a `<section id="blog">` before Contact that
+   carries the three most recent posts. Copy the same `<li>` in at the top, change its `<h2>`
+   to `<h3>` (the section already owns the h2), and drop the oldest entry.
+
+6. **Add it to `sitemap.xml` and `blog/feed.xml`.** Both files carry a commented-out block
    showing the exact shape. `pubDate` in the feed is RFC-822
    (`Sun, 30 Aug 2026 12:00:00 +0000`).
 
-6. **Preview, then push.**
+7. **Preview, then push.**
 
    ```bash
    python3 -m http.server 8080     # from the repo root
