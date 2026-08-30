@@ -35,9 +35,21 @@ no extra work — never hardcode a colour in a post, use the variables.
    the template itself out of search results.
 
 3. **Write the post.** Replace everything inside `<div class="prose">`. The template is a
-   specimen of every available element: headings, lists, block quote, callouts (normal and the
-   red `callout-warn` for corrections), figures with captions, code blocks, tables, and
-   footnotes. Delete what you do not use.
+   specimen of every available element: headings, lists, block quote, boxes, figures with
+   captions, code blocks, tables, and footnotes. Delete what you do not use.
+
+   **Boxes.** `<div class="takeaways">` is the summary panel that sits above the body, at most
+   one per post. `<div class="callout">` is an inline box in four colours, and the colour
+   carries meaning, so keep the mapping consistent across posts:
+
+   | Class | Colour | Use it for |
+   |---|---|---|
+   | `callout` | blue | states a limit, or a question to carry forward |
+   | `callout callout-note` | gold | defines a term, a threshold, or the key idea |
+   | `callout callout-warn` | red | a caveat, or a dated correction to a published post |
+   | `callout callout-good` | green | the rule to remember, or the thing to do |
+
+   Two or three inline boxes per post. More and they stop standing out.
 
    Reading time is computed at page load from the real word count — leave
    `<span data-reading-time>` alone rather than typing a number.

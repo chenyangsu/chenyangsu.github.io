@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>Optimism in the face of uncertainty | Chen-Yang Su</title>
+	<meta name="description" content="A principle from bandit algorithms, by way of Jo&euml;lle Pineau's commencement address: take the action whose uncertainty leaves room for it to be much better." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/optimism-in-the-face-of-uncertainty/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Optimism in the face of uncertainty">
+	<meta property="og:description" content="A principle from bandit algorithms, by way of Jo&euml;lle Pineau's commencement address: take the action whose uncertainty leaves room for it to be much better.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/optimism-in-the-face-of-uncertainty/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-08-30">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Optimism in the face of uncertainty">
+	<meta name="twitter:description" content="A principle from bandit algorithms, by way of Jo&euml;lle Pineau's commencement address: take the action whose uncertainty leaves room for it to be much better.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "Optimism in the face of uncertainty",
+		"description": "A principle from bandit algorithms, by way of Joëlle Pineau's commencement address: take the action whose uncertainty leaves room for it to be much better.",
+		"datePublished": "2026-08-30",
+		"url": "https://chenyangsu.github.io/blog/optimism-in-the-face-of-uncertainty/",
+		"keywords": "reinforcement learning, exploration, research careers, open science",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/optimism-in-the-face-of-uncertainty/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">Careers</p>
+
+		<h1 class="post-title">Optimism in the face of uncertainty</h1>
+
+		<p class="post-standfirst">What a principle from reinforcement learning can teach us about
+		research, careers, and taking intelligent risks.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-08-30">30 August 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>The phrase is not a slogan. It comes from bandit algorithms such as
+				<strong>Upper Confidence Bound</strong>, where an action becomes attractive not
+				because its estimated reward is high, but because the uncertainty around that
+				estimate leaves room for it to be much better.</li>
+				<li>Optimism here does not mean believing things will work out. It means treating
+				<strong>uncertainty as something with value</strong>, because an experiment that
+				fails still returns information.</li>
+				<li>Scoring a decision by its single outcome confuses the <strong>quality of the
+				decision</strong> with the result of one trial.</li>
+				<li>The bets worth taking share three properties: <strong>survivable downside,
+				meaningful upside, and something learned either way</strong>. That rules out
+				recklessness as firmly as it rules out timidity.</li>
+				<li>Jo&euml;lle Pineau calls a degree a <strong>licence to take risks</strong>, and
+				makes the same argument about open science one level up: you give up some control
+				over what happens to your work, and far more people can build on it.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>In June 2026, my MSc advisor,
+			<a href="https://www.mcgill.ca/qls/researchers/joelle-pineau" target="_blank" rel="noopener">Jo&euml;lle Pineau</a>,
+			received an
+			<a href="https://www.uottawa.ca/faculty-education/news-all/uottawa-confer-nine-honorary-doctorates-spring-convocation" target="_blank" rel="noopener">honorary doctorate from the University of Ottawa</a>
+			and delivered the commencement address to the graduating class of its Faculty of
+			Engineering. Jo&euml;lle is a professor at McGill, previously led Meta&rsquo;s Fundamental
+			AI Research organization, and is now Chief AI Officer at Cohere.</p>
+
+			<p>Her address had a title that immediately caught my attention:
+			<a href="https://www.linkedin.com/pulse/optimism-face-uncertainty-joelle-pineau-r2c7e" target="_blank" rel="noopener"><b>&ldquo;Optimism in the Face of Uncertainty.&rdquo;</b></a></p>
+
+			<p>It sounds like a piece of general life advice. But the idea came from somewhere much
+			more precise: mathematics.</p>
+
+			<p>Jo&euml;lle described a principle she encountered while studying how intelligent
+			agents should make decisions when they do not know exactly what will happen next.</p>
+
+			<p>When faced with several possible actions, the obvious strategy is to choose the one
+			that currently looks best.</p>
+
+			<p>But that is not always the best strategy.</p>
+
+			<p>Sometimes the most interesting action is the one whose outcome is uncertain, but whose
+			<strong>upside could be much larger</strong>.</p>
+
+			<p>This principle is known as <strong>optimism in the face of uncertainty</strong>.</p>
+
+			<p>And the more I thought about it, the less it seemed like a lesson about reinforcement
+			learning and the more it seemed like a useful way to think about research, careers, and
+			life.</p>
+
+			<h2>A mathematical reason to be optimistic</h2>
+
+			<p>Imagine that an agent has several actions available to it.</p>
+
+			<p>One option has been tried many times. Its reward is reasonably good and reasonably
+			predictable.</p>
+
+			<p>Another has barely been explored. Its average estimated reward might look lower, but
+			because the agent knows so little about it, there is considerable uncertainty around that
+			estimate.</p>
+
+			<p>A purely greedy agent chooses the first option.</p>
+
+			<p>An optimistic agent asks a different question:</p>
+
+			<p><strong>How good could this unexplored option plausibly be?</strong></p>
+
+			<p>This basic idea appears throughout reinforcement learning and the study of multi-armed
+			bandits. Algorithms such as <strong>Upper Confidence Bound (UCB)</strong> deliberately
+			account for uncertainty when deciding what to explore. An action can become attractive not
+			merely because its estimated reward is high, but because there remains a plausible chance
+			that it is substantially better than we currently believe.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">The principle</span>
+				<p>Do not rank actions by their estimated reward. Rank them by the <b>upper end of
+				what they could plausibly be worth</b>, given how little you know. An action you have
+				barely tried carries a wide confidence interval, and the top of that interval is a
+				reason to try it again.</p>
+			</div>
+
+			<p>There is an elegant logic behind this.</p>
+
+			<p>If the optimistic estimate turns out to be right, you discover something valuable.</p>
+
+			<p>If it turns out to be wrong, you still gain information.</p>
+
+			<p>As Jo&euml;lle put it in her commencement address, when reality falls short of your
+			optimism, you have not necessarily lost: <strong>you have gained knowledge.</strong></p>
+
+			<p>That is a subtle but important distinction.</p>
+
+			<p>Optimism here does not mean convincing yourself that everything will work out.</p>
+
+			<p>It means recognizing that <strong>uncertainty can have value</strong>.</p>
+
+			<h2>The same problem appears in our careers</h2>
+
+			<p>The connection to life becomes especially clear around graduation.</p>
+
+			<p>Suddenly, there is an enormous decision tree in front of you.</p>
+
+			<p>Which job should you take? Which city should you move to? Should you stay in academia?
+			Join industry? Start something? Work on the established problem where you know you can
+			succeed, or the strange new question where you have no idea what will happen?</p>
+
+			<p>We often respond to these decisions by trying to eliminate uncertainty.</p>
+
+			<p>We gather more information. Make spreadsheets. Compare salaries. Ask more people for
+			advice. Try to predict exactly where each path will lead.</p>
+
+			<p>Some of this is obviously sensible.</p>
+
+			<p>But eventually there is a limit to how much more thinking can tell you.</p>
+
+			<p>At that point, uncertainty is not something that can be reasoned away. It has to be
+			<strong>experienced</strong>.</p>
+
+			<p>You have to choose an action and observe what happens.</p>
+
+			<p>That is why one of my favourite lines from Jo&euml;lle&rsquo;s address was her
+			description of a degree as a <strong>&ldquo;license to take risks.&rdquo;</strong> She
+			encouraged the graduates to say yes to the project that seems too ambitious, the role they
+			do not quite feel ready for, or the question nobody in their field has thought to ask.</p>
+
+			<p>I think that is particularly good advice early in a career.</p>
+
+			<p>When you are young, the benefits of exploration have a long time to compound.</p>
+
+			<p>A project that goes nowhere might introduce you to an entirely new field.</p>
+
+			<p>A job that turns out not to fit might clarify what kind of work you actually want to
+			do.</p>
+
+			<p>An unsuccessful application might lead you to meet someone you otherwise never would
+			have spoken to.</p>
+
+			<p>A research question that fails might reveal a much better question hiding underneath
+			it.</p>
+
+			<p>The outcome itself is only part of the return.</p>
+
+			<p>The other part is what the experiment teaches you.</p>
+
+			<h2>Optimize for information gain</h2>
+
+			<p>We tend to evaluate past decisions with an overly simple scoring system.</p>
+
+			<p>The paper was accepted: good decision.</p>
+
+			<p>The paper was rejected: bad decision.</p>
+
+			<p>The startup succeeded: good decision.</p>
+
+			<p>The startup failed: bad decision.</p>
+
+			<p>I got the position: good decision.</p>
+
+			<p>I didn&rsquo;t get it: bad decision.</p>
+
+			<p>But that confuses the <strong>quality of a decision</strong> with the
+			<strong>outcome of a single trial</strong>.</p>
+
+			<p>Suppose you spend three months exploring an ambitious research idea and eventually
+			conclude that it does not work.</p>
+
+			<p>You could call those three months wasted.</p>
+
+			<p>But perhaps during those three months you learned a new method, became familiar with a
+			literature you had never encountered, met several collaborators, discovered why an
+			apparently promising idea fails, and stumbled across a different problem that turns out to
+			be much more interesting.</p>
+
+			<p>The experiment failed.</p>
+
+			<p>The information gain did not.</p>
+
+			<p>That suggests a question worth adding whenever we face an uncertain opportunity:</p>
+
+			<p><strong>What will I know after doing this that I don&rsquo;t know now?</strong></p>
+
+			<p>This changes how many opportunities look.</p>
+
+			<p>Something with only a moderate probability of immediate success may still be an
+			excellent bet if:</p>
+
+			<ul>
+				<li>the downside is limited,</li>
+				<li>the potential upside is large, and</li>
+				<li>failure will teach you something useful.</li>
+			</ul>
+
+			<p>That is a very different criterion from simply choosing the path most likely to
+			succeed.</p>
+
+			<h2>Run cheap experiments</h2>
+
+			<p>There is, however, an important caveat.</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">Optimism is not recklessness</span>
+				<p>&ldquo;Optimism in the face of uncertainty&rdquo; should not become an intellectual
+				justification for recklessness. Some decisions have irreversible consequences. Some
+				risks have enormous downside. <b>The fact that an outcome is uncertain does not
+				automatically make it worth exploring.</b></p>
+			</div>
+
+			<p>The most attractive experiments are often the opposite: <strong>small downside, large
+			upside, fast feedback</strong>.</p>
+
+			<ul>
+				<li>Send an email to someone whose work you admire.</li>
+				<li>Apply for the position you think you are slightly underqualified for.</li>
+				<li>Spend a weekend building the prototype.</li>
+				<li>Try the new research direction for two weeks.</li>
+				<li>Submit the paper.</li>
+				<li>Take the difficult course.</li>
+				<li>Write the essay.</li>
+				<li>Go to the conference.</li>
+				<li>Ask the question.</li>
+			</ul>
+
+			<p>These actions can fail.</p>
+
+			<p>But most failures are cheap.</p>
+
+			<p>And occasionally one of them changes the trajectory of your life.</p>
+
+			<p>Perhaps the better rule, then, is not simply <i>take more risks</i>.</p>
+
+			<div class="callout callout-good">
+				<span class="callout-label">The rule</span>
+				<p><strong>Seek uncertainty when the downside is survivable, the upside is meaningful,
+				and the outcome will teach you something.</strong></p>
+				<p>The goal is not to maximize the number of risks you take. It is to run
+				<b>better experiments</b>.</p>
+			</div>
+
+			<h2>There is an asymmetry to opportunity</h2>
+
+			<p>Another reason this framing is useful is that many interesting opportunities have
+			asymmetric payoffs.</p>
+
+			<p>Imagine emailing a researcher you admire.</p>
+
+			<p>Maybe there is a 90% chance nothing happens.</p>
+
+			<p>That sounds like a terrible bet if you evaluate it by probability of success alone.</p>
+
+			<p>But suppose the cost of sending the email is ten minutes, while the 10% outcome could
+			produce a collaboration, mentorship, job opportunity, or entirely new research direction.</p>
+
+			<p>The expected value begins to look very different.</p>
+
+			<p>The same principle applies to applications, introductions, side projects, conferences,
+			writing publicly, and ambitious research questions.</p>
+
+			<p>Humans often overweight the probability of embarrassment or rejection and underweight
+			the magnitude of the upside.</p>
+
+			<p>We see the likely outcome:</p>
+
+			<p><strong>They probably won&rsquo;t respond.</strong></p>
+
+			<p>We pay much less attention to:</p>
+
+			<p><strong>But what if they do?</strong></p>
+
+			<p>Optimism in the face of uncertainty forces us to consider both.</p>
+
+			<h2>Research itself depends on this mindset</h2>
+
+			<p>The idea feels particularly natural in science.</p>
+
+			<p>Good research begins with uncertainty.</p>
+
+			<p>If we already knew the answer, there would be little reason to run the experiment.</p>
+
+			<p>Yet researchers can gradually become surprisingly good at avoiding uncertainty.</p>
+
+			<p>We learn what reviewers like.</p>
+
+			<p>We learn which analyses are predictable.</p>
+
+			<p>We learn which questions can produce another incremental publication.</p>
+
+			<p>And those incentives can push us toward exploitation rather than exploration:
+			repeatedly mining areas where we already know rewards are available.</p>
+
+			<p>But some of the most interesting research exists precisely where the confidence
+			intervals are widest.</p>
+
+			<p>A strange result.</p>
+
+			<p>A new dataset.</p>
+
+			<p>A methodology borrowed from another discipline.</p>
+
+			<p>A question that sounds slightly ridiculous when you first say it aloud.</p>
+
+			<p>Most of these directions will not produce breakthroughs.</p>
+
+			<p>That is the point.</p>
+
+			<p>Exploration is valuable because you cannot know beforehand which one will.</p>
+
+			<h2>Open science as an optimistic bet</h2>
+
+			<p>Jo&euml;lle also connected this philosophy to another theme that has defined much of her
+			career: <strong>open science</strong>.</p>
+
+			<p>For years, she has pushed machine learning toward greater reproducibility and more
+			transparent research practices. Her work helped establish reproducibility initiatives at
+			NeurIPS, including code submission practices, reproducibility challenges, and checklists
+			for reporting machine-learning experiments. In a 2021
+			<a href="https://www.jmlr.org/papers/v22/20-303.html" target="_blank" rel="noopener"><i>Journal of Machine Learning Research</i> paper</a>,
+			she and her co-authors argued that reproducibility helps researchers verify findings,
+			build on one another&rsquo;s work, and move ideas into practice more reliably.</p>
+
+			<p>There is an element of optimism here too.</p>
+
+			<p>When you release code, data, models, or ideas openly, you surrender some control over
+			what happens next.</p>
+
+			<p>Someone may find a mistake.</p>
+
+			<p>Someone may use your work differently than you intended.</p>
+
+			<p>Someone you have never met may take your idea somewhere you never anticipated.</p>
+
+			<p>There is uncertainty.</p>
+
+			<p>But there is also enormous upside.</p>
+
+			<p>Thousands of researchers can inspect, reproduce, modify, and extend something that
+			would otherwise remain confined to a single laboratory.</p>
+
+			<p>In her commencement address, Jo&euml;lle described open source in essentially these
+			terms: sharing carries risks, but inviting more people to participate dramatically expands
+			what can be created.</p>
+
+			<p>The philosophy is consistent.</p>
+
+			<p>You accept some uncertainty because the space of possible positive outcomes becomes
+			much larger.</p>
+
+			<h2>The future cannot be optimized in advance</h2>
+
+			<p>There is a temptation, especially among ambitious people, to treat life as an
+			optimization problem.</p>
+
+			<p>Find the optimal degree.</p>
+
+			<p>The optimal lab.</p>
+
+			<p>The optimal company.</p>
+
+			<p>The optimal city.</p>
+
+			<p>The optimal career.</p>
+
+			<p>Collect enough information and, theoretically, the correct path will reveal itself.</p>
+
+			<p>But life is not a static optimization problem.</p>
+
+			<p>The environment changes.</p>
+
+			<p>You change.</p>
+
+			<p>New technologies appear.</p>
+
+			<p>People enter your life.</p>
+
+			<p>Interests you thought were permanent disappear.</p>
+
+			<p>Opportunities emerge that you could not possibly have anticipated five years
+			earlier.</p>
+
+			<p>There is no dataset containing enough information to calculate your optimal
+			trajectory.</p>
+
+			<p>At some point, you have to explore.</p>
+
+			<p>That may be the part of Jo&euml;lle&rsquo;s speech that resonates most with me.</p>
+
+			<p>Optimism does not require believing that every choice will succeed.</p>
+
+			<p>In fact, you should expect many of your experiments not to.</p>
+
+			<p>Papers will be rejected.</p>
+
+			<p>People won&rsquo;t reply.</p>
+
+			<p>Projects will stall.</p>
+
+			<p>Applications will fail.</p>
+
+			<p>Predictions you made confidently about your future will turn out to be completely
+			wrong.</p>
+
+			<p>The optimistic belief is something different:</p>
+
+			<p><strong>that acting is still worthwhile because action generates information.</strong></p>
+
+			<p>You try something.</p>
+
+			<p>The world responds.</p>
+
+			<p>You update.</p>
+
+			<p>And then you try again.</p>
+
+			<h2>Choose again</h2>
+
+			<p>When faced with uncertainty, our instinct is often to wait until we feel more
+			certain.</p>
+
+			<p>Sometimes that is appropriate.</p>
+
+			<p>But often the information we need is located on the other side of action.</p>
+
+			<div class="callout">
+				<span class="callout-label">Two better questions</span>
+				<p>Instead of asking <i>which choice guarantees success?</i>, ask
+				<b>which choice has the most interesting upside?</b></p>
+				<p>Instead of asking <i>what if this fails?</i>, ask
+				<b>what will I learn if it does?</b></p>
+			</div>
+
+			<p>Instead of trying to map your entire career from where you stand today, run the next
+			useful experiment.</p>
+
+			<p>Choose an action.</p>
+
+			<p>Observe.</p>
+
+			<p>Update.</p>
+
+			<p>Choose again.</p>
+
+			<p>The future is uncertain by definition.</p>
+
+			<p>That is not necessarily a problem to solve.</p>
+
+			<p>Sometimes it is the reason to act.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://www.linkedin.com/pulse/optimism-face-uncertainty-joelle-pineau-r2c7e" target="_blank" rel="noopener">Jo&euml;lle Pineau, &ldquo;Optimism in the Face of Uncertainty&rdquo;</a> &mdash; the commencement address this post is about.</li>
+				<li><a href="https://www.uottawa.ca/about-us/president/honorary-doctorates" target="_blank" rel="noopener">University of Ottawa, honorary doctorate recipients</a></li>
+				<li><a href="https://www.jmlr.org/papers/v22/20-303.html" target="_blank" rel="noopener">Pineau et al., &ldquo;Improving Reproducibility in Machine Learning Research&rdquo;</a>, <i>JMLR</i> 22(164), 2021.</li>
+				<li><a href="https://www.mcgill.ca/qls/researchers/joelle-pineau" target="_blank" rel="noopener">Jo&euml;lle Pineau&rsquo;s research profile at McGill</a></li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">reinforcement learning</span>
+				<span class="tag">exploration</span>
+				<span class="tag">research careers</span>
+				<span class="tag">open science</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+
+</body>
+</html>

@@ -9,6 +9,18 @@
 		<managingEditor>csu59@wisc.edu (Chen-Yang Su)</managingEditor>
 
 		<item>
+			<title>Optimism in the face of uncertainty</title>
+			<link>https://chenyangsu.github.io/blog/optimism-in-the-face-of-uncertainty/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/optimism-in-the-face-of-uncertainty/</guid>
+			<pubDate>Sun, 30 Aug 2026 12:00:00 +0000</pubDate>
+			<category>reinforcement learning</category>
+			<category>exploration</category>
+			<category>research careers</category>
+			<category>open science</category>
+			<description>My MSc advisor Jo&#235;lle Pineau took the title of her commencement address from bandit algorithms. An action is worth taking not because its estimated reward is high, but because the uncertainty around it leaves room for it to be much better.</description>
+		</item>
+
+		<item>
 			<title>The problem with calling models open or closed</title>
 			<link>https://chenyangsu.github.io/blog/the-problem-with-calling-models-open-or-closed/</link>
 			<guid isPermaLink="true">https://chenyangsu.github.io/blog/the-problem-with-calling-models-open-or-closed/</guid>

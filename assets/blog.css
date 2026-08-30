@@ -296,33 +296,108 @@
 
 .prose th { background: var(--chip-bg); font-weight: 700; color: var(--accent-dark); }
 
-/* Callout — for a caveat, a definition, or a "what this does not show" note */
+/* ---------- Boxes ----------
+   Two shapes. .takeaways is the summary panel that sits above the body; a
+   post has at most one. .callout is an inline box for a definition, a caveat
+   or a rule, in four colours. Colours carry meaning, so keep them consistent
+   across posts: blue states, gold defines, red warns, green prescribes.
+
+   The four hues main.css does not already define are declared here, on both
+   dark-mode routes, so they follow the theme like every other token.
+   -------------------------------------------------------------------------- */
+
+:root {
+	--warn-bg: #fdf2f0;
+	--warn-border: #f3d5cf;
+	--good: #1a7a4e;
+	--good-bg: #eef7f1;
+	--good-border: #cfe6d9;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--warn-bg: #2a1613;
+		--warn-border: #4a2a24;
+		--good: #5fbf8a;
+		--good-bg: #10241a;
+		--good-border: #234a35;
+	}
+}
+
+:root[data-theme="dark"] {
+	--warn-bg: #2a1613;
+	--warn-border: #4a2a24;
+	--good: #5fbf8a;
+	--good-bg: #10241a;
+	--good-border: #234a35;
+}
+
+/* Summary panel, directly under the byline. */
+.takeaways {
+	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+	background: var(--tag-bg);
+	border: 1px solid var(--accent);
+	border-radius: 10px;
+	padding: 18px 22px;
+	margin: 0 0 32px;
+}
+
+.takeaways-label {
+	display: block;
+	font-size: 12.5px;
+	font-weight: 900;
+	letter-spacing: 1.4px;
+	text-transform: uppercase;
+	color: var(--accent-dark);
+	margin-bottom: 10px;
+}
+
+.takeaways ul { margin: 0; padding-left: 20px; }
+.takeaways li { margin: 0 0 9px; font-size: 16px; line-height: 1.58; }
+.takeaways li:last-child { margin-bottom: 0; }
+.takeaways strong { font-weight: 700; color: var(--ink); }
+
+/* Inline box. Blue by default; add a modifier for the other three. */
 .callout {
 	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
 	font-size: 15.5px;
 	line-height: 1.6;
-	background: var(--panel-bg);
-	border: 1px solid var(--rule);
+	background: var(--tag-bg);
+	border: 1px solid var(--tag-border);
 	border-left: 4px solid var(--accent);
-	border-radius: 8px;
+	border-radius: 10px;
 	padding: 16px 18px;
-	margin: 26px 0;
+	margin: 28px 0;
 }
 
 .callout p { margin: 0 0 10px; }
 .callout p:last-child { margin-bottom: 0; }
-.callout .callout-label {
+.callout ul { margin: 0; padding-left: 20px; }
+.callout li { margin: 0 0 7px; }
+.callout li:last-child { margin-bottom: 0; }
+
+.callout-label {
+	display: block;
 	font-size: 12.5px;
 	font-weight: 900;
 	letter-spacing: 1.2px;
 	text-transform: uppercase;
 	color: var(--accent);
-	display: block;
-	margin-bottom: 6px;
+	margin-bottom: 7px;
 }
 
-.callout.callout-warn { border-left-color: var(--award); }
-.callout.callout-warn .callout-label { color: var(--award); }
+/* Gold — defines a term or names a principle. */
+.callout-note { background: var(--flag-bg); border-color: var(--flag-border); border-left-color: var(--gold-hl-ink); }
+.callout-note .callout-label { color: var(--gold-hl-ink); }
+
+/* Red — a caveat, a limit, or a correction to a published post. */
+.callout-warn { background: var(--warn-bg); border-color: var(--warn-border); border-left-color: var(--award); }
+.callout-warn .callout-label { color: var(--award); }
+
+/* Green — the rule to take away, or the thing to actually do. */
+.callout-good { background: var(--good-bg); border-color: var(--good-border); border-left-color: var(--good); }
+.callout-good .callout-label { color: var(--good); }
+.callout-good strong { color: var(--ink); }
 
 /* Footnotes / references */
 .prose .footnotes {

@@ -90,6 +90,17 @@
 			<span data-reading-time>&nbsp;</span>
 		</p>
 
+		<!-- MAIN TAKEAWAYS — the summary panel. At most one per post, and only
+		     when the post is long enough to need one. Give away the findings. -->
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>Three to five bullets. Each one states a <strong>finding</strong>, not a topic.</li>
+				<li>A reader who stops here should be able to repeat the argument to someone else.</li>
+				<li>Bold the load-bearing phrase in each bullet, not the whole sentence.</li>
+			</ul>
+		</div>
+
 		<div class="prose">
 
 			<!-- ============ BODY STARTS HERE. Everything below is a specimen of
@@ -121,18 +132,34 @@
 				before, not in the quote.</p>
 			</blockquote>
 
-			<!-- CALLOUT — a caveat, a definition, or "what this does not show" -->
+			<!-- CALLOUTS — four colours, and the colour carries meaning. Keep the
+			     mapping consistent across posts: blue states, gold defines, red
+			     warns, green prescribes. Two or three per post; more and they stop
+			     standing out. -->
+
 			<div class="callout">
 				<span class="callout-label">What this does not show</span>
-				<p>State the limit of the specific claim just made. Naming it here is stronger than
-				a hedge inside the sentence, and it keeps the argument in the main text clean.</p>
+				<p>Blue states something. Use it for the limit of a claim, or for a question worth
+				carrying forward. Naming a limit here is stronger than a hedge inside the sentence,
+				and it keeps the argument in the main text clean.</p>
+			</div>
+
+			<div class="callout callout-note">
+				<span class="callout-label">The principle</span>
+				<p>Gold defines. Use it to pin down a term, a threshold, or the one idea the rest of
+				the section depends on.</p>
 			</div>
 
 			<div class="callout callout-warn">
 				<span class="callout-label">Correction</span>
-				<p>The red variant is for corrections and warnings. If a published post turns out to
-				be wrong, correct it in place with one of these, dated, rather than silently editing
-				the text.</p>
+				<p>Red warns. Use it for a caveat, or for a correction to a published post: add one
+				of these, dated, rather than silently editing the text.</p>
+			</div>
+
+			<div class="callout callout-good">
+				<span class="callout-label">The rule</span>
+				<p>Green prescribes. Use it once, for the thing you actually want the reader to
+				do or remember.</p>
 			</div>
 
 			<h2>Figures</h2>
