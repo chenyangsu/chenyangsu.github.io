@@ -1,0 +1,363 @@
+/* ==========================================================================
+   chenyangsu.github.io — blog stylesheet
+   Loaded after main.css on /blog/ pages only. It reuses every design token
+   from main.css (--accent, --ink, --rule, --panel-bg, ...), so light mode,
+   dark mode and the theme toggle all work here with no extra colour work.
+
+   Two page shapes:
+     .page-blog   the post index   (980px, matches the rest of the site)
+     .page-post   a single post    (720px, a comfortable measure for prose)
+   ========================================================================== */
+
+/* ---------- Page shells ---------- */
+
+.page-post { max-width: 720px; }
+
+/* The post index and a post both open with a plain header, not a hero. */
+.blog-head { margin-top: 10px; }
+
+.blog-head h1 {
+	font-size: 34px;
+	font-weight: 900;
+	color: var(--accent-dark);
+	letter-spacing: -0.3px;
+	margin: 0 0 10px;
+}
+
+.blog-lede {
+	font-size: 18px;
+	line-height: 1.55;
+	color: var(--ink-light);
+	max-width: 62ch;
+	margin: 0 0 6px;
+}
+
+/* Small "Home / Blog" crumb above the title on post pages. */
+.crumbs {
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--ink-light);
+	margin: 0 0 14px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.crumbs a { color: var(--ink-light); }
+.crumbs a:hover { color: var(--accent); text-decoration: none; }
+.crumbs .sep { color: var(--rule); }
+
+/* ---------- Post index ---------- */
+
+.post-list { list-style: none; padding: 0; margin: 30px 0 0; }
+
+.post-list > li {
+	border-top: 1px solid var(--rule);
+	padding: 24px 0;
+}
+
+.post-list > li:last-child { border-bottom: 1px solid var(--rule); }
+
+.post-meta {
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.8px;
+	text-transform: uppercase;
+	color: var(--ink-light);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.post-meta .dot { color: var(--rule); }
+
+.post-list h2 {
+	font-size: 22px;
+	font-weight: 900;
+	line-height: 1.3;
+	color: var(--accent-dark);
+	border: 0;                 /* main.css puts a rule under every h2 */
+	padding: 0;
+	margin: 7px 0 8px;
+}
+
+.post-list h2 a { color: inherit; }
+.post-list h2 a:hover { color: var(--accent); text-decoration: none; }
+
+.post-excerpt {
+	margin: 0;
+	color: var(--ink-light);
+	font-size: 16px;
+	line-height: 1.6;
+	max-width: 70ch;
+}
+
+/* ---------- Tags ---------- */
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 11px; }
+
+.tag {
+	font-size: 12.5px;
+	font-weight: 700;
+	letter-spacing: 0.2px;
+	color: var(--accent);
+	background: var(--tag-bg);
+	border: 1px solid var(--tag-border);
+	border-radius: 999px;
+	padding: 2px 10px;
+	white-space: nowrap;
+}
+
+/* ---------- Empty state (no posts yet) ---------- */
+
+.blog-empty {
+	margin-top: 30px;
+	padding: 26px 24px;
+	background: var(--panel-bg);
+	border: 1px solid var(--rule);
+	border-left: 4px solid var(--accent);
+	border-radius: 8px;
+	color: var(--ink-light);
+}
+
+.blog-empty p { margin: 0 0 8px; }
+.blog-empty p:last-child { margin-bottom: 0; }
+
+/* ---------- Single post: title block ---------- */
+
+.post-kicker {
+	font-size: 12.5px;
+	font-weight: 900;
+	letter-spacing: 1.6px;
+	text-transform: uppercase;
+	color: var(--accent);
+	margin: 0 0 10px;
+}
+
+.post-title {
+	font-size: 36px;
+	font-weight: 900;
+	line-height: 1.18;
+	letter-spacing: -0.5px;
+	color: var(--accent-dark);
+	margin: 0 0 14px;
+}
+
+.post-standfirst {
+	font-family: 'Source Serif 4', Georgia, serif;
+	font-size: 20px;
+	line-height: 1.5;
+	color: var(--ink-light);
+	margin: 0 0 20px;
+}
+
+.post-byline {
+	font-size: 14px;
+	color: var(--ink-light);
+	border-top: 1px solid var(--rule);
+	border-bottom: 1px solid var(--rule);
+	padding: 12px 0;
+	margin-bottom: 30px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 10px;
+}
+
+.post-byline .dot { color: var(--rule); }
+.post-byline b { color: var(--ink); font-weight: 700; }
+
+/* ---------- Single post: body prose ----------
+   Serif at 18px/1.72 for long-form reading. Headings stay in Lato so the
+   article still reads as part of this site.
+   -------------------------------------------------------------------------- */
+
+.prose {
+	font-family: 'Source Serif 4', Georgia, serif;
+	font-size: 18px;
+	line-height: 1.72;
+	color: var(--ink);
+}
+
+.prose p { margin: 0 0 20px; }
+
+.prose h2 {
+	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 24px;
+	font-weight: 900;
+	line-height: 1.3;
+	color: var(--accent-dark);
+	border: 0;
+	padding: 0;
+	margin: 40px 0 14px;
+}
+
+.prose h3 {
+	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 19px;
+	font-weight: 700;
+	color: var(--accent-dark);
+	margin: 30px 0 10px;
+}
+
+.prose ul, .prose ol { margin: 0 0 20px; padding-left: 24px; }
+.prose li { margin: 0 0 8px; }
+.prose li > ul, .prose li > ol { margin: 8px 0 0; }
+
+.prose strong { font-weight: 600; color: var(--ink); }
+
+.prose hr {
+	border: 0;
+	border-top: 1px solid var(--rule);
+	margin: 36px 0;
+}
+
+/* Pull quote / block quote */
+.prose blockquote {
+	margin: 26px 0;
+	padding: 4px 0 4px 20px;
+	border-left: 3px solid var(--accent);
+	color: var(--serif-ink);
+	font-style: italic;
+}
+
+.prose blockquote p:last-child { margin-bottom: 0; }
+
+/* Figures */
+.prose figure { margin: 30px 0; }
+
+.prose figure img,
+.prose figure svg {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+
+.prose figure img { border: 1px solid var(--rule); background: var(--panel-bg); }
+
+.prose figcaption {
+	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	color: var(--caption-ink);
+	margin-top: 10px;
+}
+
+.prose figcaption b { color: var(--ink-light); font-weight: 700; }
+
+/* Code */
+.prose code {
+	font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: 0.87em;
+	background: var(--chip-bg);
+	border: 1px solid var(--rule);
+	border-radius: 4px;
+	padding: 1px 5px;
+}
+
+.prose pre {
+	font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+	font-size: 14px;
+	line-height: 1.6;
+	background: var(--panel-bg);
+	border: 1px solid var(--rule);
+	border-radius: 8px;
+	padding: 14px 16px;
+	margin: 24px 0;
+	overflow-x: auto;          /* long lines scroll, the page never does */
+}
+
+.prose pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+
+/* Tables */
+.prose .table-wrap { overflow-x: auto; margin: 26px 0; }
+
+.prose table {
+	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 15px;
+	border-collapse: collapse;
+	width: 100%;
+	min-width: 460px;
+}
+
+.prose th, .prose td {
+	border: 1px solid var(--rule);
+	padding: 8px 12px;
+	text-align: left;
+	vertical-align: top;
+}
+
+.prose th { background: var(--chip-bg); font-weight: 700; color: var(--accent-dark); }
+
+/* Callout — for a caveat, a definition, or a "what this does not show" note */
+.callout {
+	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 15.5px;
+	line-height: 1.6;
+	background: var(--panel-bg);
+	border: 1px solid var(--rule);
+	border-left: 4px solid var(--accent);
+	border-radius: 8px;
+	padding: 16px 18px;
+	margin: 26px 0;
+}
+
+.callout p { margin: 0 0 10px; }
+.callout p:last-child { margin-bottom: 0; }
+.callout .callout-label {
+	font-size: 12.5px;
+	font-weight: 900;
+	letter-spacing: 1.2px;
+	text-transform: uppercase;
+	color: var(--accent);
+	display: block;
+	margin-bottom: 6px;
+}
+
+.callout.callout-warn { border-left-color: var(--award); }
+.callout.callout-warn .callout-label { color: var(--award); }
+
+/* Footnotes / references */
+.prose .footnotes {
+	font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+	font-size: 14.5px;
+	line-height: 1.6;
+	color: var(--ink-light);
+	border-top: 1px solid var(--rule);
+	margin-top: 40px;
+	padding-top: 18px;
+}
+
+.prose .footnotes ol { padding-left: 20px; }
+.prose sup a { font-weight: 700; text-decoration: none; }
+
+/* ---------- Single post: foot ---------- */
+
+.post-foot {
+	margin-top: 44px;
+	padding-top: 22px;
+	border-top: 1px solid var(--rule);
+}
+
+.post-foot .tags { margin: 0 0 18px; }
+
+.post-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 20px;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 720px) {
+	.blog-head h1 { font-size: 28px; }
+	.blog-lede { font-size: 16.5px; }
+	.post-title { font-size: 28px; }
+	.post-standfirst { font-size: 18px; }
+	.prose { font-size: 17px; }
+	.prose h2 { font-size: 21px; }
+}

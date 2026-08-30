@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Chen-Yang Su — Blog</title>
+		<link>https://chenyangsu.github.io/blog/</link>
+		<atom:link href="https://chenyangsu.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
+		<description>Notes on evaluating AI systems, building agents for science, and human genetics.</description>
+		<language>en-us</language>
+		<managingEditor>csu59@wisc.edu (Chen-Yang Su)</managingEditor>
+
+		<!-- Add one <item> per post, newest first. pubDate is RFC-822:
+		<item>
+			<title>The title of the post</title>
+			<link>https://chenyangsu.github.io/blog/POST-SLUG/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/POST-SLUG/</guid>
+			<pubDate>Sun, 30 Aug 2026 12:00:00 +0000</pubDate>
+			<description>The same two-sentence summary used on the blog index.</description>
+		</item>
+		-->
+
+	</channel>
+</rss>
