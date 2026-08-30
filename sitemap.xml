@@ -12,6 +12,12 @@
 		<changefreq>weekly</changefreq>
 		<priority>0.8</priority>
 	</url>
+	<url>
+		<loc>https://chenyangsu.github.io/blog/the-problem-with-calling-models-open-or-closed/</loc>
+		<lastmod>2026-07-30</lastmod>
+		<changefreq>yearly</changefreq>
+		<priority>0.7</priority>
+	</url>
 	<!-- Add one <url> block per published post:
 	<url>
 		<loc>https://chenyangsu.github.io/blog/POST-SLUG/</loc>

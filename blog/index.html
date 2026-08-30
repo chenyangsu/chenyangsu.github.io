@@ -71,43 +71,45 @@
 	     1. Copy blog/_template/ to blog/<your-slug>/ and write the post there.
 	     2. Copy one <li> block below, move it to the TOP of the list, and update
 	        the date, title, href and summary. Newest post first.
-	     3. Delete the .blog-empty block below once the first post is live.
-	     4. Add the post URL to /sitemap.xml and an <item> to /blog/feed.xml.
+	     3. Add the post URL to /sitemap.xml and an <item> to /blog/feed.xml.
 
 	     Full instructions: blog/README.md
 	     ====================================================================== -->
 
-	<div class="blog-empty">
-		<p><b>The first post is on its way.</b> This is where I will write up the things that do not
-		fit in a paper: what an evaluation actually measured, why a method that looked clean did not
-		replicate, and what I got wrong on the way there.</p>
-		<p>In the meantime, my published work is on the
-		<a href="/#publications">home page</a>, and the code is on
-		<a href="https://github.com/chenyangsu">GitHub</a>.</p>
-	</div>
+	<ul class="post-list">
 
-	<ul class="post-list" hidden>
-
-		<!-- ========== EXAMPLE POST ENTRY — copy this block for each new post ==========
-		     Remove hidden="" from <ul class="post-list"> and delete .blog-empty above
-		     as soon as the first real post is published.                              -->
 		<li>
 			<div class="post-meta">
-				<time datetime="2026-08-30">30 August 2026</time>
+				<time datetime="2026-07-30">30 July 2026</time>
 				<span class="dot">&middot;</span>
-				<span>8 min read</span>
+				<span>2 min read</span>
 			</div>
-			<h2><a href="/blog/example-slug/">The title of the post, written as a claim rather than a topic</a></h2>
-			<p class="post-excerpt">Two or three sentences that give away the finding instead of
-			teasing it. The reader should be able to decide from this paragraph alone whether the
-			post is worth their next eight minutes.</p>
+			<h2><a href="/blog/the-problem-with-calling-models-open-or-closed/">The problem with calling models open or closed</a></h2>
+			<p class="post-excerpt">A safety argument and a commercial interest can point the same
+			way, and from the outside they look identical. Human genetics has spent decades drawing
+			this line; the lesson is to regulate what a system can do, not how it is distributed.</p>
 			<div class="tags">
-				<span class="tag">evals</span>
-				<span class="tag">agents</span>
-				<span class="tag">human genetics</span>
+				<span class="tag">artificial intelligence</span>
+				<span class="tag">open weights</span>
+				<span class="tag">AI safety</span>
+				<span class="tag">AI regulation</span>
+				<span class="tag">open science</span>
 			</div>
 		</li>
-		<!-- ========== END EXAMPLE ========== -->
+
+		<!-- ========== TO ADD A POST, copy this commented block above the newest <li>
+		<li>
+			<div class="post-meta">
+				<time datetime="YYYY-MM-DD">D Month YYYY</time>
+				<span class="dot">&middot;</span>
+				<span>N min read</span>
+			</div>
+			<h2><a href="/blog/POST-SLUG/">The title of the post, written as a claim rather than a topic</a></h2>
+			<p class="post-excerpt">Two or three sentences that give away the finding instead of
+			teasing it.</p>
+			<div class="tags"><span class="tag">tag</span></div>
+		</li>
+		========================================================================= -->
 
 	</ul>
 

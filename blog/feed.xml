@@ -8,6 +8,19 @@
 		<language>en-us</language>
 		<managingEditor>csu59@wisc.edu (Chen-Yang Su)</managingEditor>
 
+		<item>
+			<title>The problem with calling models open or closed</title>
+			<link>https://chenyangsu.github.io/blog/the-problem-with-calling-models-open-or-closed/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/the-problem-with-calling-models-open-or-closed/</guid>
+			<pubDate>Thu, 30 Jul 2026 21:12:40 +0000</pubDate>
+			<category>artificial intelligence</category>
+			<category>open weights</category>
+			<category>AI safety</category>
+			<category>AI regulation</category>
+			<category>open science</category>
+			<description>A safety argument and a commercial interest can point the same way, and from the outside they look identical. Human genetics has spent decades drawing this line; the lesson is to regulate what a system can do, not how it is distributed.</description>
+		</item>
+
 		<!-- Add one <item> per post, newest first. pubDate is RFC-822:
 		<item>
 			<title>The title of the post</title>
