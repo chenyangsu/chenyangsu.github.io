@@ -11,7 +11,7 @@
 	/* ---- Email, assembled at runtime so scrapers do not get a plain mailto ----
 	   Same trick as the home page: any element with .js-email becomes a real
 	   <a href="mailto:..."> keeping its classes, title and aria-label. */
-	var addr = ['csu59', 'wisc', 'edu'];
+	var addr = ['cysu', 'stanford', 'edu'];
 	var email = addr[0] + '@' + addr[1] + '.' + addr[2];
 	document.querySelectorAll('.js-email').forEach(function (el) {
 		var a = document.createElement('a');

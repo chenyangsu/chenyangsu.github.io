@@ -6,7 +6,7 @@
 		<atom:link href="https://chenyangsu.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
 		<description>Notes on evaluating AI systems, building agents for science, and human genetics.</description>
 		<language>en-us</language>
-		<managingEditor>csu59@wisc.edu (Chen-Yang Su)</managingEditor>
+		<managingEditor>cysu@stanford.edu (Chen-Yang Su)</managingEditor>
 
 		<item>
 			<title>Optimism in the face of uncertainty</title>

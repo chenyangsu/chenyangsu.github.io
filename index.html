@@ -692,7 +692,7 @@
 	<!-- ======================== Contact ======================== -->
 	<section id="contact">
 		<h2>Contact</h2>
-		<p>The best way to reach me is by email: <b><span class="js-email">csu59 [at] wisc [dot] edu</span></b> or <b><span class="js-email" data-email="stanford">cysu [at] stanford [dot] edu</span></b></p>
+		<p>The best way to reach me is by email: <b><span class="js-email" data-email="stanford">cysu [at] stanford [dot] edu</span></b></p>
 	</section>
 
 	<footer class="footer">
@@ -712,11 +712,10 @@
 <script>
 	(function () {
 		var addrs = {
-			wisc: ['csu59', 'wisc', 'edu'],
 			stanford: ['cysu', 'stanford', 'edu']
 		};
 		function build(key) {
-			var addr = addrs[key] || addrs.wisc;
+			var addr = addrs[key] || addrs.stanford;
 			return addr[0] + '\u0040' + addr[1] + '.' + addr[2];
 		}
 		document.querySelectorAll('.js-email').forEach(function (el) {
