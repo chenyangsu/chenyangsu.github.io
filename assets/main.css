@@ -134,6 +134,7 @@ h3 {
 }
 
 .degree { font-size: 20px; font-weight: 400; color: var(--ink-light); }
+.name-zh { font-size: 28px; font-weight: 400; }
 
 .position { font-size: 17px; margin: 4px 0; }
 
