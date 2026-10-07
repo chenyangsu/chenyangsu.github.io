@@ -554,6 +554,7 @@ h3 {
 /* Monochrome by default, brand color on hover */
 .icon-row a { color: #8a8f98; }
 .ic-email:hover    { color: #d44638; }
+.ic-stanford:hover { color: #8c1515; }
 .ic-scholar:hover  { color: #4285f4; }
 .ic-github:hover   { color: #24292e; }
 .ic-x:hover        { color: #0f1419; }
@@ -836,6 +837,7 @@ h3 {
 	:root:not([data-theme="light"]) .icon-row a { color: #7d8794; }
 	:root:not([data-theme="light"]) .ic-github:hover { color: #e6edf3; }
 	:root:not([data-theme="light"]) .ic-x:hover { color: #e6edf3; }
+	:root:not([data-theme="light"]) .ic-stanford:hover { color: #e0686b; }
 	:root:not([data-theme="light"]) .quote-portrait img { border-color: #263041; }
 	:root:not([data-theme="light"]) #backToTop { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5); }
 	:root:not([data-theme="light"]) #themeToggle { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
@@ -866,6 +868,7 @@ h3 {
 :root[data-theme="dark"] .icon-row a { color: #7d8794; }
 :root[data-theme="dark"] .ic-github:hover { color: #e6edf3; }
 :root[data-theme="dark"] .ic-x:hover { color: #e6edf3; }
+:root[data-theme="dark"] .ic-stanford:hover { color: #e0686b; }
 :root[data-theme="dark"] .quote-portrait img { border-color: #263041; }
 :root[data-theme="dark"] #backToTop { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5); }
 :root[data-theme="dark"] #themeToggle { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
