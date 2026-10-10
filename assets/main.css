@@ -155,6 +155,30 @@ h3 {
 .bio p { margin: 0 0 14px; text-align: justify; }
 .bio a { font-weight: 700; }
 
+/* Funder logo strip under the funding paragraph */
+.funders {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 10px;
+	text-align: left;
+	font-size: 14px;
+}
+.funders-label { color: var(--ink-light); }
+.bio .funders a.funder {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 3px 10px 3px 4px;
+	border: 1px solid var(--rule);
+	border-radius: 999px;
+	background: var(--chip-bg);
+	color: var(--ink);
+	font-weight: 400;
+}
+.bio .funders a.funder:hover { border-color: var(--accent); text-decoration: none; }
+.funder img { height: 22px; width: 22px; border-radius: 4px; }
+
 /* ---------- News ---------- */
 
 .news-box {
@@ -761,7 +785,7 @@ h3 {
 .hit-label { font-weight: 700; letter-spacing: 0.2px; }
 
 
-.talk-logo {
+.talk-logo, .fund-logo {
 	height: 22px;
 	width: auto;
 	vertical-align: -5px;
