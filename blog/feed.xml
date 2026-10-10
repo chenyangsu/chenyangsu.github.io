@@ -9,57 +9,22 @@
 		<managingEditor>cysu@stanford.edu (Chen-Yang Su)</managingEditor>
 
 		<item>
-			<title>Choosing the game</title>
-			<link>https://chenyangsu.github.io/blog/choosing-the-game-not-just-the-outcome/</link>
-			<guid isPermaLink="true">https://chenyangsu.github.io/blog/choosing-the-game-not-just-the-outcome/</guid>
-			<pubDate>Fri, 09 Oct 2026 12:00:00 +0000</pubDate>
+			<title>How to get luckier</title>
+			<link>https://chenyangsu.github.io/blog/how-to-get-luckier/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/how-to-get-luckier/</guid>
+			<pubDate>Fri, 09 Oct 2026 12:05:00 +0000</pubDate>
+			<category>serendipity</category>
+			<category>weak ties</category>
+			<category>curiosity</category>
 			<category>careers</category>
-			<category>entrepreneurship</category>
-			<category>autonomy</category>
-			<description>A high salary and a high-leverage career are not the same thing. The difference is how closely your earnings are tied to your own time.</description>
-		</item>
-
-		<item>
-			<title>The paradox of ambition</title>
-			<link>https://chenyangsu.github.io/blog/the-paradox-of-ambition/</link>
-			<guid isPermaLink="true">https://chenyangsu.github.io/blog/the-paradox-of-ambition/</guid>
-			<pubDate>Fri, 09 Oct 2026 12:00:00 +0000</pubDate>
-			<category>ambition</category>
-			<category>psychology</category>
-			<category>Goodhart&#8217;s law</category>
-			<category>research careers</category>
-			<description>Lottery winners were barely happier than people living nearby. Ambition runs into the same problem. Each achievement quietly becomes the new baseline.</description>
-		</item>
-
-		<item>
-			<title>What are the important problems in your field?</title>
-			<link>https://chenyangsu.github.io/blog/what-are-the-important-problems-in-your-field/</link>
-			<guid isPermaLink="true">https://chenyangsu.github.io/blog/what-are-the-important-problems-in-your-field/</guid>
-			<pubDate>Fri, 09 Oct 2026 12:00:00 +0000</pubDate>
-			<category>problem selection</category>
-			<category>research careers</category>
-			<category>Hamming</category>
-			<category>healthcare AI</category>
-			<description>Most people choose a role and inherit its problems. Choose the problem first, then find the role that lets you work on it.</description>
-		</item>
-
-		<item>
-			<title>How to know when to change course</title>
-			<link>https://chenyangsu.github.io/blog/how-to-know-when-to-change-course/</link>
-			<guid isPermaLink="true">https://chenyangsu.github.io/blog/how-to-know-when-to-change-course/</guid>
-			<pubDate>Fri, 09 Oct 2026 12:00:00 +0000</pubDate>
-			<category>problem solving</category>
-			<category>decision making</category>
-			<category>startups</category>
-			<category>sunk cost</category>
-			<description>Persistence pays only when it is aimed at the right thing. Commit to the problem, and treat each solution as a hypothesis you are ready to drop.</description>
+			<description>Some people get lucky more often than others. Most of the difference comes down to noticing more and knowing people outside your usual circle.</description>
 		</item>
 
 		<item>
 			<title>Rejection is data</title>
 			<link>https://chenyangsu.github.io/blog/rejection-is-data/</link>
 			<guid isPermaLink="true">https://chenyangsu.github.io/blog/rejection-is-data/</guid>
-			<pubDate>Fri, 09 Oct 2026 12:00:00 +0000</pubDate>
+			<pubDate>Fri, 09 Oct 2026 12:04:00 +0000</pubDate>
 			<category>rejection</category>
 			<category>Bayesian reasoning</category>
 			<category>peer review</category>
@@ -68,15 +33,50 @@
 		</item>
 
 		<item>
-			<title>How to get luckier</title>
-			<link>https://chenyangsu.github.io/blog/how-to-get-luckier/</link>
-			<guid isPermaLink="true">https://chenyangsu.github.io/blog/how-to-get-luckier/</guid>
+			<title>How to know when to change course</title>
+			<link>https://chenyangsu.github.io/blog/how-to-know-when-to-change-course/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/how-to-know-when-to-change-course/</guid>
+			<pubDate>Fri, 09 Oct 2026 12:03:00 +0000</pubDate>
+			<category>problem solving</category>
+			<category>decision making</category>
+			<category>startups</category>
+			<category>sunk cost</category>
+			<description>Persistence pays only when it is aimed at the right thing. Commit to the problem, and treat each solution as a hypothesis you are ready to drop.</description>
+		</item>
+
+		<item>
+			<title>What are the important problems in your field?</title>
+			<link>https://chenyangsu.github.io/blog/what-are-the-important-problems-in-your-field/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/what-are-the-important-problems-in-your-field/</guid>
+			<pubDate>Fri, 09 Oct 2026 12:02:00 +0000</pubDate>
+			<category>problem selection</category>
+			<category>research careers</category>
+			<category>Hamming</category>
+			<category>healthcare AI</category>
+			<description>Most people choose a role and inherit its problems. Choose the problem first, then find the role that lets you work on it.</description>
+		</item>
+
+		<item>
+			<title>The paradox of ambition</title>
+			<link>https://chenyangsu.github.io/blog/the-paradox-of-ambition/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/the-paradox-of-ambition/</guid>
+			<pubDate>Fri, 09 Oct 2026 12:01:00 +0000</pubDate>
+			<category>ambition</category>
+			<category>psychology</category>
+			<category>Goodhart&#8217;s law</category>
+			<category>research careers</category>
+			<description>Lottery winners were barely happier than people living nearby. Ambition runs into the same problem. Each achievement quietly becomes the new baseline.</description>
+		</item>
+
+		<item>
+			<title>Choosing the game</title>
+			<link>https://chenyangsu.github.io/blog/choosing-the-game-not-just-the-outcome/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/choosing-the-game-not-just-the-outcome/</guid>
 			<pubDate>Fri, 09 Oct 2026 12:00:00 +0000</pubDate>
-			<category>serendipity</category>
-			<category>weak ties</category>
-			<category>curiosity</category>
 			<category>careers</category>
-			<description>Some people get lucky more often than others. Most of the difference comes down to noticing more and knowing people outside your usual circle.</description>
+			<category>entrepreneurship</category>
+			<category>autonomy</category>
+			<description>A high salary and a high-leverage career are not the same thing. The difference is how closely your earnings are tied to your own time.</description>
 		</item>
 
 		<item>
