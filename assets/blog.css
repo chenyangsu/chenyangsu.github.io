@@ -372,7 +372,7 @@
 
 .callout p { margin: 0 0 10px; }
 .callout p:last-child { margin-bottom: 0; }
-.callout ul { margin: 0; padding-left: 20px; }
+.callout ul, .callout ol { margin: 0; padding-left: 20px; }
 .callout li { margin: 0 0 7px; }
 .callout li:last-child { margin-bottom: 0; }
 
@@ -398,6 +398,12 @@
 .callout-good { background: var(--good-bg); border-color: var(--good-border); border-left-color: var(--good); }
 .callout-good .callout-label { color: var(--good); }
 .callout-good strong { color: var(--ink); }
+
+/* Series box — a blue callout under the byline that lists every post in a
+   cluster, in reading order, and marks the one being read. */
+.series { margin: 0 0 24px; }
+.series .current { font-weight: 700; color: var(--ink); }
+.series .here { font-weight: 400; color: var(--ink-light); }
 
 /* Footnotes / references */
 .prose .footnotes {
