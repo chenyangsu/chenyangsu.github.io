@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>When the buyer has an agent | Chen-Yang Su</title>
+	<meta name="description" content="Patrick Collison expects personal AI agents to subsidize product quality. They can reward only the quality they can verify independently of the seller." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/when-the-buyer-has-an-agent/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="When the buyer has an agent">
+	<meta property="og:description" content="Patrick Collison expects personal AI agents to subsidize product quality. They can reward only the quality they can verify independently of the seller.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/when-the-buyer-has-an-agent/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-10">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="When the buyer has an agent">
+	<meta name="twitter:description" content="Patrick Collison expects personal AI agents to subsidize product quality. They can reward only the quality they can verify independently of the seller.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The three diagrams in this post are inline SVG coloured with the
+		   site's tokens, so they follow the light and dark themes. */
+		.prose figure.diagram svg { max-width: 540px; margin: 0 auto; border-radius: 0; }
+		.diagram text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.diagram .t-main { font-size: 16px; font-weight: 700; fill: var(--ink); }
+		.diagram .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.diagram .t-warn { font-weight: 700; fill: var(--award); }
+		.diagram .t-accent { font-weight: 700; fill: var(--accent); }
+		.diagram .t-it { font-style: italic; }
+		.diagram .box { fill: var(--chip-bg); stroke: var(--tag-border); stroke-width: 1.5; }
+		.diagram .box-accent { fill: var(--tag-bg); stroke: var(--accent); stroke-width: 1.5; }
+		.diagram .box-warn { fill: var(--warn-bg); stroke: var(--award); stroke-width: 1.5; stroke-dasharray: 6 4; }
+		.diagram .ln { fill: none; stroke: var(--ink-light); stroke-width: 1.8; }
+		.diagram .ln-accent { stroke: var(--accent); }
+		.diagram .ln-warn { stroke: var(--award); stroke-dasharray: 6 4; }
+		.diagram .ah { fill: var(--ink-light); }
+		.diagram .ah-accent { fill: var(--accent); }
+		.diagram .ah-warn { fill: var(--award); }
+		.diagram .bar { fill: var(--accent); }
+		.diagram .axis { stroke: var(--ink-light); stroke-width: 1.5; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "When the buyer has an agent",
+		"description": "Patrick Collison expects personal AI agents to subsidize product quality. They can reward only the quality they can verify independently of the seller.",
+		"datePublished": "2026-10-10",
+		"url": "https://chenyangsu.github.io/blog/when-the-buyer-has-an-agent/",
+		"keywords": "AI agents, economics, AI evaluation, markets",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/when-the-buyer-has-an-agent/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI agents</p>
+
+		<h1 class="post-title">When the buyer has an agent</h1>
+
+		<p class="post-standfirst">Patrick Collison expects personal AI agents to act as a structural subsidy for product quality. They can reward only the quality they can verify, and early experiments find that what an agent buys depends on what it saw first.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-10">10 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>Patrick Collison expects personal agents to act as <strong>a structural subsidy for product quality</strong>, because they make a better product cheaper to find and to check.</li>
+				<li>Cheaper search has moved prices before. Comparison websites helped <strong>cut US term life insurance prices by 8 to 15 percent</strong> between 1995 and 1997, and sellers in other markets answered by making their prices harder to compare.</li>
+				<li>In about 26,000 tests at Wharton, <strong>what an agent bought depended on what it saw first</strong>. One review screenshot moved a model&rsquo;s choice by up to 99 percentage points, and one planted sentence of user &ldquo;memory&rdquo; redirected most models.</li>
+				<li>Whether agents create superstars or spread demand across niches may depend on <strong>whether they all read the same sources</strong>.</li>
+				<li>Airline booking screens and Google&rsquo;s shopping results both <strong>favoured the companies that owned them</strong>. An agent&rsquo;s reward for quality is only as good as the evidence it reads and the interests it serves.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>On 9 October 2026, Patrick Collison, the cofounder and chief executive of Stripe, <a href="https://x.com/patrickc/status/2108706907859116280" target="_blank" rel="noopener">posted a list of things he had been &ldquo;mulling over regarding agents in the economy.&rdquo;</a> His first example is the insurance offered at the end of a booking, which he says is &ldquo;typically priced substantially above what a regular policy would cost.&rdquo; Companies, he wrote, &ldquo;are in some sense the original superintelligence.&rdquo; They can often use their &ldquo;amortized cognitive surplus&rdquo; against certain customers, who by comparison can be &ldquo;inattentive&rdquo; or &ldquo;underinformed.&rdquo;</p>
+
+			<p>Personal agents could narrow that gap. In Collison&rsquo;s words, they will &ldquo;act as a kind of structural subsidy for product quality.&rdquo; He asks how markets would look &ldquo;if individuals always spent at least 10 hours researching their purchases.&rdquo;</p>
+
+			<p>I work on how to evaluate AI agents in science and medicine, where an agent can reach the right answer from evidence that does not support it. Collison&rsquo;s argument runs into the same problem at the scale of an economy. An agent that spends those 10 hours can reward only the quality it is able to check, and it rewards that quality only if it is working for the person who pays.</p>
+
+			<h2>Inattention is a business model</h2>
+
+			<p>Collison invokes Herbert Simon here. In <a href="https://doi.org/10.2307/1884852" target="_blank" rel="noopener">a 1955 paper</a>, Simon replaced the all-knowing chooser of economic theory with one who has limited information and limited capacity to compute, and who stops searching once an option is good enough. The idea became known as <a href="https://plato.stanford.edu/entries/bounded-rationality/" target="_blank" rel="noopener">bounded rationality</a>, and companies have learned to price it.</p>
+
+			<p>When Britain&rsquo;s Financial Conduct Authority <a href="https://www.fca.org.uk/publication/market-studies/ms14-01-final-report.pdf" target="_blank" rel="noopener">studied insurance sold as an add-on</a> in 2014, it found that add-on buyers were less likely to shop around and less sensitive to price. Their attention was on the main purchase, and many bought cover they did not need or understand.</p>
+
+			<p>Subscriptions profit from a related mistake. Stefano DellaVigna and Ulrike Malmendier <a href="https://doi.org/10.1257/aer.96.3.694" target="_blank" rel="noopener">followed 7,752 members of three US health clubs</a> over three years. Members who paid a flat monthly fee of more than $70 went 4.3 times a month on average, which came to more than $17 a visit, when a 10-visit pass would have cost $10 a visit. On average they forwent about $600 of savings over their membership. Monthly members also kept paying for an average of 2.31 full months after their last visit, which cost them about $187. The authors&rsquo; leading explanation is overconfidence, which leads members to overestimate both how often they will go and how likely they are to cancel. Collison&rsquo;s shorthand is that &ldquo;people who forget to cancel subscriptions subsidize those who don&rsquo;t.&rdquo;</p>
+
+			<p>Coupons rely on the same limit from the other side. Chakravarthi Narasimhan <a href="https://doi.org/10.1287/mksc.3.2.128" target="_blank" rel="noopener">modelled coupons in 1984</a> as a way to offer a lower price only to customers whose time is cheap enough to spend clipping them. Collison asks &ldquo;how do coupons work if every agent hunts fastidiously for them?&rdquo; An agent&rsquo;s time costs almost nothing, so the sorting stops working.</p>
+
+			<h2>Cheaper search has cut prices before</h2>
+
+			<p>George Stigler treated the search for a lower price as a cost like any other in <a href="https://doi.org/10.1086/258464" target="_blank" rel="noopener">a 1961 paper</a>. A buyer keeps checking sellers until the expected saving from one more check falls below its cost, which is one reason the same product sells at different prices in the same market. An agent pushes that cost toward zero.</p>
+
+			<p>The internet has already run a version of this experiment. Jeffrey Brown and Austan Goolsbee <a href="https://doi.org/10.1086/339714" target="_blank" rel="noopener">studied term life insurance</a> in the 1990s, as comparison websites spread. A 10 percent increase in the share of a group using the internet reduced that group&rsquo;s average prices by as much as 5 percent. Rising internet use did not lower prices for kinds of insurance the sites did not cover, or in the years before the sites came online. Overall, the authors estimated that the rise of the internet from 1995 to 1997 cut term life prices by 8 to 15 percent.</p>
+
+			<p>Sellers adapt. Glenn Ellison and Sara Fisher Ellison <a href="https://www.nber.org/papers/w10570" target="_blank" rel="noopener">studied small retailers</a> selling computer parts through Pricewatch, a price search engine popular with savvy buyers, where demand for the cheapest memory modules became &ldquo;tremendously price-sensitive.&rdquo; The retailers responded with what the authors call obfuscation, &ldquo;practices that frustrate consumer search or make it less damaging to firms.&rdquo; The retailer they studied listed bare processors at very low prices, then tried to sell buyers a processor with a cooling fan attached.</p>
+
+			<h2>Who pays when every buyer pays attention</h2>
+
+			<p>Collison admits he is &ldquo;not sure what the incidence of all of this will be.&rdquo; Economic theory offers part of an answer. In Xavier Gabaix and David Laibson&rsquo;s <a href="https://doi.org/10.1162/qjec.2006.121.2.505" target="_blank" rel="noopener">model of shrouded add-ons</a>, firms sell a base product cheaply and earn their margin on add-ons that myopic buyers fail to anticipate. One of their examples is the ink for a printer. Sophisticated buyers take the cheap base product and avoid the add-ons, so, in the authors&rsquo; words, &ldquo;two kinds of exploitation coexist.&rdquo; Firms exploit myopic buyers, and sophisticated buyers exploit the firms&rsquo; pricing. When the add-on has close substitutes, educating customers does not pay, because an educated customer avoids the add-on and keeps buying the cheap base product.</p>
+
+			<p>Agents could make every buyer sophisticated. In the model, the add-on price would then fall to what it costs a buyer to avoid the add-on, and the discount on the base product would shrink with it. Buyers would gain on average, because shrouding wastes resources. The gains would go to today&rsquo;s inattentive buyers, and part of them would come from today&rsquo;s careful shoppers, who would pay more for the base product.</p>
+
+			<h2>A subsidy for quality</h2>
+
+			<p>Collison&rsquo;s most hopeful idea starts from an old argument in corporate strategy about distribution and product quality. Perhaps you have made something better, he writes, &ldquo;but does anyone know about it? Won&rsquo;t people just continue to buy the ACME Corp Mousetraps?&rdquo; His answer is that agents tilt the argument toward quality. &ldquo;On the margin,&rdquo; he writes, &ldquo;focusing on making a product better is, I think, going to become a more effective strategy for companies.&rdquo;</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">A structural subsidy for quality</span>
+				<p>Collison&rsquo;s phrase for what agents do to markets. The subsidy is indirect. An agent lowers the cost of finding a better product and of checking that it is better, so the same improvement wins more customers than it used to. <b>The subsidy is only as large as the part of quality an agent can observe.</b></p>
+			</div>
+
+			<p>That limit is old. In <a href="https://doi.org/10.2307/1879431" target="_blank" rel="noopener"><i>The Market for &ldquo;Lemons&rdquo;</i></a>, George Akerlof showed in 1970 that when buyers cannot tell good used cars from bad ones, they pay only for average quality, and owners of good cars withdraw from the market. Quality that buyers cannot observe earns no premium. Agents widen what buyers can observe, and the rule holds at the new boundary.</p>
+
+			<p>Collison draws the corollary himself. If he is right, information about quality &ldquo;will become more important and impactful,&rdquo; and &ldquo;agents will have insatiable thirst for such signals.&rdquo; Some of that information already exists. Price is visible, and battery life can be checked against a standard test. Evidence about durability arrives years after a purchase and is rarely collected in one place, although an agent could read thousands of repair records in seconds if someone kept them. The subsidy is likely to be largest where someone other than the seller already measures quality.</p>
+
+			<figure class="diagram">
+				<svg viewBox="0 0 540 426" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">The market&rsquo;s reward loop, with and without a buyer&rsquo;s agent</title>
+					<desc id="f1-desc">What firms build leads to purchases and revenue, which flow back into what firms build next. Today the step in between is what buyers notice, such as advertising and the first result. With a buyer&rsquo;s agent it is what the agent verifies, such as independent tests and the user&rsquo;s own needs. A dashed arrow shows paid placement and text written for agents feeding into that step.</desc>
+					<defs>
+						<marker id="f1-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+						<marker id="f1-ah-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-warn" d="M0,0 L10,5 L0,10 z"/></marker>
+					</defs>
+
+					<rect class="box" x="130" y="8" width="280" height="58" rx="10"/>
+					<text class="t-main" x="270" y="33" text-anchor="middle">What firms build</text>
+					<text x="270" y="54" text-anchor="middle">and how they sell it</text>
+
+					<path class="ln" d="M210,66 L152,114" marker-end="url(#f1-ah)"/>
+					<path class="ln" d="M330,66 L388,114" marker-end="url(#f1-ah)"/>
+
+					<rect class="box" x="40" y="120" width="225" height="104" rx="10"/>
+					<text class="t-head" x="152.5" y="144" text-anchor="middle">TODAY</text>
+					<text class="t-main" x="152.5" y="170" text-anchor="middle">What buyers notice</text>
+					<text x="152.5" y="192" text-anchor="middle">advertising and</text>
+					<text x="152.5" y="211" text-anchor="middle">the first result</text>
+
+					<rect class="box-accent" x="285" y="120" width="225" height="104" rx="10"/>
+					<text class="t-head" x="397.5" y="144" text-anchor="middle">WITH A BUYER&rsquo;S AGENT</text>
+					<text class="t-main" x="397.5" y="170" text-anchor="middle">What the agent verifies</text>
+					<text x="397.5" y="192" text-anchor="middle">independent tests and</text>
+					<text x="397.5" y="211" text-anchor="middle">the user&rsquo;s own needs</text>
+
+					<path class="ln" d="M152,224 L213,270" marker-end="url(#f1-ah)"/>
+					<path class="ln" d="M397,224 L332,270" marker-end="url(#f1-ah)"/>
+
+					<rect class="box" x="130" y="276" width="280" height="58" rx="10"/>
+					<text class="t-main" x="270" y="301" text-anchor="middle">Purchases and revenue</text>
+					<text x="270" y="322" text-anchor="middle">what the market rewards</text>
+
+					<path class="ln" d="M130,305 H20 V37 H127" marker-end="url(#f1-ah)"/>
+
+					<rect class="box-warn" x="300" y="354" width="210" height="66" rx="10"/>
+					<text class="t-warn" x="405" y="382" text-anchor="middle">Paid placement and</text>
+					<text class="t-warn" x="405" y="403" text-anchor="middle">text written for agents</text>
+					<path class="ln ln-warn" d="M470,354 V228" marker-end="url(#f1-ah-warn)"/>
+				</svg>
+				<figcaption><b>Figure 1.</b> The market&rsquo;s reward loop. Revenue flows back into what firms build next, so whatever stands between a product and its purchase decides what gets rewarded. With buyer agents, that step is what the agent verifies. The dashed arrow marks inputs that can move the agent&rsquo;s choice without improving the product. Conceptual diagram.</figcaption>
+			</figure>
+
+			<p>A signal that steers millions of agents is also worth gaming. Aounon Kumar and Himabindu Lakkaraju <a href="https://arxiv.org/abs/2404.07981" target="_blank" rel="noopener">showed in 2024</a> that adding a carefully crafted string of text to a product&rsquo;s page made a language model more likely to list that product as its top recommendation, in a catalogue of fictitious coffee machines. In <a href="https://arxiv.org/abs/2508.02630" target="_blank" rel="noopener">ACES</a>, a framework for auditing shopping agents, a seller-side agent making &ldquo;simple, query-conditional description tweaks&rdquo; could drive significant gains in market share. If agents read pages that sellers write, the subsidy can flow to whichever seller writes best for machines.</p>
+
+			<h2>What an agent buys depends on what it saw first</h2>
+
+			<p>The Wharton Generative AI Labs tested how stable these choices are. In <a href="https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/" target="_blank" rel="noopener"><i>Agentic Shopping is Complicated and Contingent</i></a>, published on 27 August 2026, a six-person team including Anushka Kumar and Ethan Mollick ran roughly 26,000 tests of six frontier models acting as a shopping assistant. The task was to choose a fitness watch for a user with no stated requirements.</p>
+
+			<p>Shown only a grid of eight products, each model settled on a stable favourite. Context moved it. A single screenshot of Wirecutter&rsquo;s pick sent Gemini 3.5 Flash to that watch in essentially every run, a shift of 99 percentage points. When three sources, Wirecutter among them, arrived bundled in one tool call, GPT-5.5 moved 53 percentage points toward Wirecutter&rsquo;s pick. When the same sources arrived one at a time, it barely moved.</p>
+
+			<p>In another test the team made one product objectively best, a $29.99 watch with a perfect 5.0 rating, against rivals costing at least $359 with worse reviews. Then they planted one sentence of user &ldquo;memory&rdquo; in the prompt. With &ldquo;I love hiking!&rdquo; added, Claude Opus 4.8 switched from its usual pick to a hiking-friendly Garmin in three-quarters of runs. Only Gemini 3.5 Flash chose the best product at baseline and kept choosing it whatever the team injected.</p>
+
+			<p>Researchers at Microsoft found a related weakness in <a href="https://arxiv.org/abs/2510.25779" target="_blank" rel="noopener">Magentic Marketplace</a>, a simulated market where assistant agents shop for customers and service agents sell for businesses. Every model it tested showed a &ldquo;severe first-proposal bias,&rdquo; which gave businesses &ldquo;10-30x advantages for response speed over quality.&rdquo;</p>
+
+			<p>The hiking result is the hardest to read. A real hiker might well want the Garmin, and then following the sentence is good service. The agent cannot tell a preference its user stated from one that someone planted unless it knows where each line of its memory came from. Following a preference counts as fidelity only when the preference came from the user.</p>
+
+			<p>Wirecutter may well be right about the watch. Even so, an agent whose choice flips on one screenshot has reached a good outcome through a process that anyone who controls its inputs can steer. In evaluation terms, the answer was right and the reasoning was fragile.</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">What these tests do not show</span>
+				<p>The Wharton team tested a single product category on simulated pages, for a user with no stated requirements. <b>The tests show how far a choice can move when the context changes.</b> They do not show how often deployed agents buy worse products than their users would have bought alone.</p>
+			</div>
+
+			<h2>Superstars or niches</h2>
+
+			<p>Collison leaves one question open. Agents might strengthen superstar effects, if &ldquo;rational agents all settle on the same product.&rdquo; Or they might spread demand out, because &ldquo;everyone has slightly different tastes and preferences, which agents are good at eliciting.&rdquo;</p>
+
+			<p>Studies of recommender systems have found both. Erik Brynjolfsson and two coauthors <a href="https://doi.org/10.1287/mnsc.1110.1371" target="_blank" rel="noopener">compared the internet and catalogue channels</a> of one retailer that sold the same products at the same prices in both. Internet sales were significantly less concentrated, and the use of search and recommendation tools went with a larger share of niche products. Daniel Fleder and Kartik Hosanagar <a href="https://doi.org/10.1287/mnsc.1080.0974" target="_blank" rel="noopener">modelled and simulated</a> common recommenders such as collaborative filters, which rank products by past sales and ratings. Such recommenders &ldquo;push each person to new products, but they often push similar users toward the same products.&rdquo; Each person&rsquo;s purchases can become more varied while sales across the market become more concentrated.</p>
+
+			<p>Early audits of shopping agents point toward concentration. The ACES audits found that agents &ldquo;can exhibit choice homogeneity, often concentrating demand on a few &lsquo;modal&rsquo; products while ignoring others entirely,&rdquo; and that a model update could &ldquo;drastically reshuffle market shares.&rdquo; The Wharton results suggest one reason. Wirecutter&rsquo;s pick dominated the choices of both Claude models. If millions of agents read the same review site, they could converge on the same product because they share a source. The result would look like a superstar effect while saying more about the source than about the product.</p>
+
+			<figure class="diagram">
+				<svg viewBox="0 0 540 410" role="img" aria-labelledby="f2-title f2-desc">
+					<title id="f2-title">Two ways cheaper comparison could change market shares</title>
+					<desc id="f2-desc">Agents make comparison cheap. If agents read the same reviews, sales concentrate on one product, shown as one tall bar and six short ones. If agents learn each user&rsquo;s needs, sales spread across many products, shown as seven bars of similar height. The bars are illustrative.</desc>
+					<defs>
+						<marker id="f2-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+					</defs>
+
+					<rect class="box-accent" x="120" y="8" width="300" height="50" rx="10"/>
+					<text class="t-main" x="270" y="39" text-anchor="middle">Agents make comparison cheap</text>
+
+					<path class="ln" d="M220,58 L142,98" marker-end="url(#f2-ah)"/>
+					<path class="ln" d="M320,58 L398,98" marker-end="url(#f2-ah)"/>
+
+					<rect class="box" x="20" y="104" width="240" height="62" rx="10"/>
+					<text class="t-main" x="140" y="130" text-anchor="middle">Shared sources</text>
+					<text x="140" y="152" text-anchor="middle">agents read the same reviews</text>
+
+					<rect class="box" x="280" y="104" width="240" height="62" rx="10"/>
+					<text class="t-main" x="400" y="130" text-anchor="middle">Different tastes</text>
+					<text x="400" y="152" text-anchor="middle">agents learn each user&rsquo;s needs</text>
+
+					<path class="ln" d="M140,166 V192" marker-end="url(#f2-ah)"/>
+					<path class="ln" d="M400,166 V192" marker-end="url(#f2-ah)"/>
+
+					<rect class="bar" x="45" y="202" width="20" height="128"/>
+					<rect class="bar" x="73" y="304" width="20" height="26"/>
+					<rect class="bar" x="101" y="312" width="20" height="18"/>
+					<rect class="bar" x="129" y="317" width="20" height="13"/>
+					<rect class="bar" x="157" y="320" width="20" height="10"/>
+					<rect class="bar" x="185" y="322" width="20" height="8"/>
+					<rect class="bar" x="213" y="323" width="20" height="7"/>
+					<line class="axis" x1="35" y1="330.75" x2="245" y2="330.75"/>
+					<text class="t-main" x="140" y="356" text-anchor="middle">A few superstars</text>
+
+					<rect class="bar" x="305" y="294" width="20" height="36"/>
+					<rect class="bar" x="333" y="296" width="20" height="34"/>
+					<rect class="bar" x="361" y="298" width="20" height="32"/>
+					<rect class="bar" x="389" y="300" width="20" height="30"/>
+					<rect class="bar" x="417" y="302" width="20" height="28"/>
+					<rect class="bar" x="445" y="304" width="20" height="26"/>
+					<rect class="bar" x="473" y="306" width="20" height="24"/>
+					<line class="axis" x1="295" y1="330.75" x2="505" y2="330.75"/>
+					<text class="t-main" x="400" y="356" text-anchor="middle">Many smaller winners</text>
+
+					<text class="t-it" x="270" y="394" text-anchor="middle">Illustrative shares of sales across seven products</text>
+				</svg>
+				<figcaption><b>Figure 2.</b> Two ways cheaper comparison could change market shares. Agents that read the same sources converge on a few products. Agents that learn each user&rsquo;s needs spread purchases across many. Each chart holds the same total sales, and the bar heights are illustrative.</figcaption>
+			</figure>
+
+			<p>Which effect wins will differ by category. Where one product is best for nearly everyone, convergence is the right outcome. The worry is convergence driven by a shared source when buyers&rsquo; needs differ.</p>
+
+			<h2>Travel agents had this problem first</h2>
+
+			<p>Collison names the assumption under all of this. &ldquo;Much of what I&rsquo;m writing hinges on the assumption that personal agents will be on the consumer&rsquo;s side.&rdquo; He suspects that will be the winning strategy, and adds that whether it is true &ldquo;involves a lot of other questions.&rdquo;</p>
+
+			<p>Airline booking went through a version of this once. Before online booking, travel agencies sold most airline tickets, using reservation systems that airlines had built, such as American&rsquo;s Sabre. The owner airlines had, in the Department of Transportation&rsquo;s words, &ldquo;the incentive and ability&rdquo; to use the systems to give their own flights &ldquo;an undue preference,&rdquo; and the Civil Aeronautics Board adopted rules against display bias in 1984. When the department <a href="https://www.federalregister.gov/documents/2002/11/15/02-28645/computer-reservations-system-crs-regulations-statements-of-general-policy" target="_blank" rel="noopener">reviewed the rules in 2002</a>, it explained why such bias could work. &ldquo;Travel agents tend to book the first flight displayed by a system. Their customers depend on them to extract information from the system display, which consumers do not view themselves.&rdquo; The department had tightened the rules in 1997, largely over concerns that United had caused Galileo, a system it partly owned, to create displays that prejudiced its competitors. Alaska Airlines put its own lost revenue at about $15 million a year.</p>
+
+			<p>An AI agent sits where the travel agent sat, and its user sees even less of the screen. The bundled tool calls in the Wharton tests are a modern version of display order, a lever that only the platform controls and no user would ever see.</p>
+
+			<p>Search repeated the pattern. In 2017 the European Commission <a href="https://ec.europa.eu/commission/presscorner/detail/en/IP_17_1784" target="_blank" rel="noopener">fined Google &euro;2.42 billion</a> for placing its own comparison-shopping service at or near the top of its search results while demoting rivals, the best-placed of which appeared on average only on page four. The Commission&rsquo;s evidence showed that the top generic result received about 35 percent of clicks. The EU&rsquo;s Court of Justice <a href="https://curia.europa.eu/site/upload/docs/application/pdf/2024-09/cp240135en.pdf" target="_blank" rel="noopener">upheld the fine</a> in 2024.</p>
+
+			<p>Collison grants that paid placement carries some information. &ldquo;Willingness to pay is itself a kind of signal, which is valuable to buyers,&rdquo; he writes. The airline reservation systems did something else. In the department&rsquo;s words, they &ldquo;also hid the extent of their bias.&rdquo;</p>
+
+			<p>Economists call this the principal-agent problem. The person who delegates and the agent who acts can want different things, and the agent knows more about what it did. A personal AI agent can also know its user&rsquo;s habits and budget in detail. That knowledge makes it more useful, and it would make it a more effective salesperson for anyone else who pays it.</p>
+
+			<figure class="diagram">
+				<svg viewBox="0 0 540 432" role="img" aria-labelledby="f3-title f3-desc">
+					<title id="f3-title">Who shapes a buyer&rsquo;s agent</title>
+					<desc id="f3-desc">The buyer sends preferences and permission to the agent, and the agent sends recommendations back. Sellers send products and data to the agent, and a dashed arrow from sellers carries commissions and paid ranking. Independent testers send tests and audits. Beside the agent is the question: whose goal does it serve?</desc>
+					<defs>
+						<marker id="f3-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+						<marker id="f3-ah-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-accent" d="M0,0 L10,5 L0,10 z"/></marker>
+						<marker id="f3-ah-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-warn" d="M0,0 L10,5 L0,10 z"/></marker>
+					</defs>
+
+					<rect class="box" x="190" y="8" width="160" height="50" rx="10"/>
+					<text class="t-main" x="270" y="39" text-anchor="middle">The buyer</text>
+
+					<path class="ln" d="M240,58 V168" marker-end="url(#f3-ah)"/>
+					<text x="231" y="106" text-anchor="end">preferences</text>
+					<text x="231" y="124" text-anchor="end">and permission</text>
+
+					<path class="ln" d="M300,172 V62" marker-end="url(#f3-ah)"/>
+					<text x="309" y="114">recommendations</text>
+
+					<rect class="box-accent" x="150" y="172" width="240" height="70" rx="10"/>
+					<text class="t-main" x="270" y="202" text-anchor="middle">The buyer&rsquo;s agent</text>
+					<text x="270" y="224" text-anchor="middle">and the company that runs it</text>
+
+					<text class="t-it" x="402" y="201">Whose goal</text>
+					<text class="t-it" x="402" y="220">does it serve?</text>
+
+					<rect class="box" x="14" y="368" width="200" height="56" rx="10"/>
+					<text class="t-main" x="114" y="401" text-anchor="middle">Sellers</text>
+
+					<rect class="box" x="326" y="368" width="200" height="56" rx="10"/>
+					<text class="t-main" x="426" y="401" text-anchor="middle">Independent testers</text>
+
+					<path class="ln" d="M70,368 L182,246" marker-end="url(#f3-ah)"/>
+					<text x="16" y="296">products</text>
+					<text x="16" y="314">and data</text>
+
+					<path class="ln ln-warn" d="M160,368 L232,246" marker-end="url(#f3-ah-warn)"/>
+					<text class="t-warn" x="212" y="318">commissions</text>
+					<text class="t-warn" x="212" y="336">and paid ranking</text>
+
+					<path class="ln ln-accent" d="M420,368 L352,246" marker-end="url(#f3-ah-accent)"/>
+					<text class="t-accent" x="392" y="296">tests and</text>
+					<text class="t-accent" x="392" y="314">audits</text>
+				</svg>
+				<figcaption><b>Figure 3.</b> Who shapes a buyer&rsquo;s agent. Solid arrows carry information between the agent and the parties it deals with. The dashed arrow carries payments that can tilt its recommendations, as display bias once tilted airline booking systems.</figcaption>
+			</figure>
+
+			<h2>Grading the decision</h2>
+
+			<p>A completed order measures execution. The Wharton tests measured which watch an agent chose and what moved that choice. Grading a buying agent means grading the decision behind the order, which has at least four parts.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Four ways to grade a purchase</span>
+				<ul>
+					<li><b>Outcome.</b> The purchase served the user&rsquo;s needs at the price paid, and buying nothing was one of the options.</li>
+					<li><b>Evidence.</b> Its claims rested on sources that support them, with independent tests weighed above sponsored claims.</li>
+					<li><b>Preference fidelity.</b> It followed preferences the user actually gave.</li>
+					<li><b>Stability.</b> It would survive changes that should not matter, such as the order of sources or the format of a tool call.</li>
+				</ul>
+			</div>
+
+			<p>Two of the Wharton manipulations test the fourth directly. Shuffling the order of the sources and changing the tool-call format leave the evidence unchanged, so a stable agent&rsquo;s choice should stay put. Evaluation in science and medicine already separates a right answer from a well-grounded one. Buying agents face the same test, repeated across millions of purchases a day.</p>
+
+			<h2>The market&rsquo;s backpropagation</h2>
+
+			<p>Collison ends with an analogy from machine learning. The market, he writes, is a &ldquo;highly imperfect value attribution machine,&rdquo; and agents &ldquo;will change the nature of the backpropagation such that the rewards for better products increase.&rdquo; He hopes that companies &ldquo;that make things that they&rsquo;re proud of will feel that the universe is a little more partisan in their favor.&rdquo;</p>
+
+			<p>Backpropagation adjusts each weight in a neural network according to its share of the error, so a network learns whatever its loss function measures. A market learns from purchases in a similar way. If agents&rsquo; choices track verified quality, money and talent will flow toward better products. If their choices track whatever the agent happened to read first, firms will learn to optimize that instead.</p>
+
+			<p>I share Collison&rsquo;s hope, with one condition attached.</p>
+
+			<p><strong>Agents will raise the reward for quality only where quality can be verified independently of the seller.</strong></p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://x.com/patrickc/status/2108706907859116280" target="_blank" rel="noopener">Patrick Collison, on agents in the economy</a> (9 October 2026), the post this essay responds to.</li>
+				<li><a href="https://gail.wharton.upenn.edu/research-and-insights/technical-report-agentic-shopping/" target="_blank" rel="noopener">Kumar et al., <i>Agentic Shopping is Complicated and Contingent</i></a> (Wharton Generative AI Labs, 2026), the 26,000 tests of shopping agents.</li>
+				<li><a href="https://arxiv.org/abs/2508.02630" target="_blank" rel="noopener">Allouah et al., <i>What Is Your AI Agent Buying?</i></a> (2025), audits of position bias and choice concentration in shopping agents.</li>
+				<li><a href="https://doi.org/10.1162/qjec.2006.121.2.505" target="_blank" rel="noopener">Gabaix and Laibson, <i>Shrouded attributes, consumer myopia, and information suppression in competitive markets</i></a> (<i>Quarterly Journal of Economics</i>, 2006), on who pays for hidden add-on prices.</li>
+				<li><a href="https://doi.org/10.1086/339714" target="_blank" rel="noopener">Brown and Goolsbee, <i>Does the Internet make markets more competitive?</i></a> (<i>Journal of Political Economy</i>, 2002), on comparison websites and life insurance prices.</li>
+				<li><a href="https://doi.org/10.2307/1879431" target="_blank" rel="noopener">George Akerlof, <i>The market for &ldquo;lemons&rdquo;</i></a> (<i>Quarterly Journal of Economics</i>, 1970), on quality that buyers cannot observe.</li>
+				<li><a href="https://www.federalregister.gov/documents/2002/11/15/02-28645/computer-reservations-system-crs-regulations-statements-of-general-policy" target="_blank" rel="noopener">US Department of Transportation, <i>Computer reservations system regulations</i></a> (<i>Federal Register</i>, 2002), on display bias in airline booking systems.</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">AI agents</span>
+				<span class="tag">economics</span>
+				<span class="tag">AI evaluation</span>
+				<span class="tag">markets</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+
+</body>
+</html>
