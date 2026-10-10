@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>Rejection is data | Chen-Yang Su</title>
+	<meta name="description" content="Of the NeurIPS papers one committee accepted, a second committee rejected 50.6%. One rejection is a noisy observation." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/rejection-is-data/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Rejection is data">
+	<meta property="og:description" content="Of the NeurIPS papers one committee accepted, a second committee rejected 50.6%. One rejection is a noisy observation.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/rejection-is-data/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-09">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Rejection is data">
+	<meta name="twitter:description" content="Of the NeurIPS papers one committee accepted, a second committee rejected 50.6%. One rejection is a noisy observation.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "Rejection is data",
+		"description": "Of the NeurIPS papers one committee accepted, a second committee rejected 50.6%. One rejection is a noisy observation.",
+		"datePublished": "2026-10-09",
+		"url": "https://chenyangsu.github.io/blog/rejection-is-data/",
+		"keywords": "rejection, Bayesian reasoning, peer review, customer discovery",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/rejection-is-data/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">Feedback</p>
+
+		<h1 class="post-title">Rejection is data</h1>
+
+		<p class="post-standfirst">One rejection is a noisy observation. Read many of them together, and trust what people do over what they say.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-09">9 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="callout series">
+			<span class="callout-label">A cluster of essays</span>
+			<p>I have been thinking about these questions for a long time. They turned into six essays, meant to be read together.</p>
+			<ol>
+				<li><a href="/blog/choosing-the-game-not-just-the-outcome/">Choosing the game</a></li>
+				<li><a href="/blog/the-paradox-of-ambition/">The paradox of ambition</a></li>
+				<li><a href="/blog/what-are-the-important-problems-in-your-field/">What are the important problems in your field?</a></li>
+				<li><a href="/blog/how-to-know-when-to-change-course/">How to know when to change course</a></li>
+				<li class="current">Rejection is data <span class="here">(you are here)</span></li>
+				<li><a href="/blog/how-to-get-luckier/">How to get luckier</a></li>
+			</ol>
+		</div>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>At NeurIPS, <strong>half the papers one committee accepted were rejected by a second committee</strong>. A single rejection is a weak signal.</li>
+				<li>The same &ldquo;no&rdquo; can have very different causes, and each cause calls for a different next step.</li>
+				<li>A rejection should move your beliefs only as much as it is <strong>more likely under a bad idea than a good one</strong>.</li>
+				<li>Feedback from the wrong people misleads. Test with the people you actually want to serve.</li>
+				<li>Compliments are cheap. <strong>What people have already done</strong> about a problem is better evidence than what they say they would do.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>In 2021, the organizers of NeurIPS, one of the largest machine-learning conferences, <a href="https://blog.neurips.cc/2021/12/08/the-neurips-2021-consistency-experiment" target="_blank" rel="noopener">ran an experiment</a>. They picked 882 submissions at random and had each one reviewed by two independent committees. Of the papers one committee accepted, the other rejected 50.6%. A similar experiment in 2014 had found 49.5%.</p>
+
+			<p>The experiment does not show that peer review is meaningless. Judging the quality of research is hard. It does show how much a single decision can depend on which reviewers a paper happens to draw.</p>
+
+			<p>The same holds outside publishing. A declined application or a polite no from a collaborator can feel like a verdict on you. Usually it is a narrower observation. One person or institution said no to one request at one moment, which does not tell you whether the idea was any good.</p>
+
+			<h2>The same no, different causes</h2>
+
+			<p>Suppose a potential customer turns down your product. The problem might not matter to them. Your solution might be weak. Or you might be talking to someone with no authority to buy anything.</p>
+
+			<p>Each cause points somewhere else. If the problem is unimportant, the whole idea needs rethinking. If the product is weak, improve it. If you reached the wrong person, the product may be fine and your approach to customers is what needs work.</p>
+
+			<p>Treating every rejection as the same verdict throws this information away.</p>
+
+			<h2>Ask how surprising the rejection is</h2>
+
+			<p>Bayesian reasoning gives you a way to weigh it. How much a piece of evidence should change your mind depends on how much more likely it is under one explanation than under another.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">How much a rejection tells you</span>
+				<p>Ask how often you would see this rejection if your idea were good, and how often if it were bad. <b>When good ideas get rejected nearly as often as bad ones, a rejection tells you very little.</b> At NeurIPS, an accepted paper had roughly even odds of being rejected on a second review.</p>
+			</div>
+
+			<p>One no is weak evidence. Many independent responses from the right people can be strong evidence, especially when you read the reasons behind them.</p>
+
+			<p>Imagine showing a healthcare product to 20 hospitals.</p>
+
+			<ul>
+				<li>If most say the problem is already handled, the opportunity is weaker than you thought.</li>
+				<li>If most agree the problem is real but cannot justify the cost, you have a pricing or value problem.</li>
+				<li>If most are interested but stuck in a long approval process, the obstacle is how hospitals buy.</li>
+			</ul>
+
+			<p>The count of rejections is the same in all three cases. The pattern of reasons is what tells you what to do next.</p>
+
+			<h2>Whose rejection counts</h2>
+
+			<p>The sample matters as much as the count. In a <a href="https://doi.org/10.1287/mnsc.2021.01740" target="_blank" rel="noopener">2024 study in <i>Management Science</i></a>, Ruiqing Cao and colleagues looked at startups launching on a website where about nine in ten users were men. Products aimed at women grew 45% less in the year after launch than products aimed at men. On days when unusually many women happened to be testing new products, the gap shrank toward zero.</p>
+
+			<p>The gap closed whenever the right people were testing. In research we would call this a sampling problem. In product development it is easy to mistake for a market verdict. Before you trust a pattern of rejections, check that it comes from the people you are actually trying to serve.</p>
+
+			<h2>Compliments are not evidence</h2>
+
+			<p>Resilience matters, because one setback should not end a worthwhile effort. But resilience can turn into a search for people who agree with you. With a large enough network, almost any idea will find someone who likes it.</p>
+
+			<p>Someone who enjoys a conversation and praises your product may have no intention of using it. If ten people politely call a product interesting and none can point to a recent time they needed it, that tells you something too.</p>
+
+			<div class="callout callout-good">
+				<span class="callout-label">Ask about the past</span>
+				<p>In Y Combinator&rsquo;s <a href="https://www.youtube.com/watch?v=MT4Ig2uqjTc" target="_blank" rel="noopener"><i>How to Talk to Users</i></a>, Eric Migicovsky advises asking about real experience. Ask about <b>the last time they ran into the problem</b> and what, if anything, they have already done about it. Someone who has spent time or money working around a problem is telling you more than someone who says it sounds interesting.</p>
+			</div>
+
+			<p>Encouragement still matters. Mentors and friends make hard projects possible. Just keep emotional support and evidence that the idea works in separate columns.</p>
+
+			<h2>When rejection is a signal</h2>
+
+			<p>Spending days replaying a rejection rarely improves the next attempt. But none of this means you should explain every rejection away.</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">When to listen</span>
+				<p>If people with no connection to each other <b>raise the same objection</b>, treat it as a finding. Ask what experiment would show whether they are right, and run it.</p>
+			</div>
+
+			<p>Sometimes the right response is to improve the approach or find a different audience. Sometimes it is to accept that the idea does not work. Changing direction after real feedback shows you took it seriously.</p>
+
+			<p>Start a rejection log today. For each no, write down the reason given and the assumption it bears on. After ten entries, read them together. The pattern will tell you more than any single verdict.</p>
+
+			<p>A rejection need not define you. Sometimes it should change your next experiment.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://blog.neurips.cc/2021/12/08/the-neurips-2021-consistency-experiment" target="_blank" rel="noopener">Beygelzimer et al., <i>The NeurIPS 2021 consistency experiment</i></a> (2021), the experiment in the opening.</li>
+				<li><a href="https://doi.org/10.1287/mnsc.2021.01740" target="_blank" rel="noopener">Cao, Koning and Nanda, <i>Sampling bias in entrepreneurial experiments</i></a> (2024), on testing with the wrong users.</li>
+				<li><a href="https://www.youtube.com/watch?v=MT4Ig2uqjTc" target="_blank" rel="noopener">Eric Migicovsky, <i>How to Talk to Users</i></a> (Y Combinator), on interviews that produce evidence.</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">rejection</span>
+				<span class="tag">Bayesian reasoning</span>
+				<span class="tag">peer review</span>
+				<span class="tag">customer discovery</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+
+</body>
+</html>
