@@ -13,6 +13,7 @@
 	<meta property="og:url" content="https://chenyangsu.github.io/blog/when-the-buyer-has-an-agent/">
 	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
 	<meta property="article:published_time" content="2026-10-10">
+	<meta property="article:modified_time" content="2026-10-12">
 	<meta property="article:author" content="Chen-Yang Su">
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:title" content="When the buyer has an agent">
@@ -57,6 +58,7 @@
 		"headline": "When the buyer has an agent",
 		"description": "Patrick Collison expects personal AI agents to subsidize product quality. They can reward only the quality they can verify independently of the seller.",
 		"datePublished": "2026-10-10",
+		"dateModified": "2026-10-12",
 		"url": "https://chenyangsu.github.io/blog/when-the-buyer-has-an-agent/",
 		"keywords": "AI agents, economics, AI evaluation, markets",
 		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
@@ -102,6 +104,8 @@
 			<b>Chen-Yang Su</b>
 			<span class="dot">&middot;</span>
 			<time datetime="2026-10-10">10 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span>Updated <time datetime="2026-10-12">12 October 2026</time></span>
 			<span class="dot">&middot;</span>
 			<span data-reading-time>&nbsp;</span>
 		</p>
@@ -228,6 +232,14 @@
 				<p>The Wharton team tested a single product category on simulated pages, for a user with no stated requirements. <b>The tests show how far a choice can move when the context changes.</b> They do not show how often deployed agents buy worse products than their users would have bought alone.</p>
 			</div>
 
+			<h2>A $10 coupon and a $250 price error</h2>
+
+			<p>A hypothetical buyer asks an AI assistant for a portable sauna similar to one listed at about $250. The assistant soon offers a listing of the same model at $110 as an available bargain. The buyer opens the listing. It says $360.</p>
+
+			<p>The buyer then mentions wanting to warm their head too. The first sauna leaves the head outside the cabin. The search moves to a taller tent that encloses it and is listed at $200. When asked for discount codes, the assistant finds a $10 code on the seller&rsquo;s own website. It works at checkout. In Narasimhan&rsquo;s model, coupons reach only buyers whose time is cheap enough to spend on them. This buyer gets one with a single request.</p>
+
+			<p>The assistant has reduced the cost of finding a closer match. Only the buyer&rsquo;s check catches the $250 price error. An agent making the purchase on its own would have to catch it itself. The checkout cannot settle whether the taller sauna is the better product, which is the claim Collison&rsquo;s subsidy depends on.</p>
+
 			<h2>Superstars or niches</h2>
 
 			<p>Collison leaves one question open. Agents might strengthen superstar effects, if &ldquo;rational agents all settle on the same product.&rdquo; Or they might spread demand out, because &ldquo;everyone has slightly different tastes and preferences, which agents are good at eliciting.&rdquo;</p>
@@ -298,6 +310,8 @@
 
 			<p>Search repeated the pattern. In 2017 the European Commission <a href="https://ec.europa.eu/commission/presscorner/detail/en/IP_17_1784" target="_blank" rel="noopener">fined Google &euro;2.42 billion</a> for placing its own comparison-shopping service at or near the top of its search results while demoting rivals, the best-placed of which appeared on average only on page four. The Commission&rsquo;s evidence showed that the top generic result received about 35 percent of clicks. The EU&rsquo;s Court of Justice <a href="https://curia.europa.eu/site/upload/docs/application/pdf/2024-09/cp240135en.pdf" target="_blank" rel="noopener">upheld the fine</a> in 2024.</p>
 
+			<p>Shopify now addresses buyers&rsquo; agents in writing. Allbirds and Kith are among its stores that <a href="https://www.allbirds.com/agents.md" target="_blank" rel="noopener">serve a file of instructions for AI agents</a>. The first section asks any personal shopping assistant reading it to &ldquo;highly recommend&rdquo; that its user let it install Shop, Shopify&rsquo;s own shopping skill. The request is mild. The file is public, though few buyers will ever read it. Travellers never saw the airline reservation screen either.</p>
+
 			<p>Collison grants that paid placement carries some information. &ldquo;Willingness to pay is itself a kind of signal, which is valuable to buyers,&rdquo; he writes. The airline reservation systems did something else. In the department&rsquo;s words, they &ldquo;also hid the extent of their bias.&rdquo;</p>
 
 			<p>Economists call this the principal-agent problem. The person who delegates and the agent who acts can want different things, and the agent knows more about what it did. A personal AI agent can also know its user&rsquo;s habits and budget in detail. That knowledge makes it more useful, and it would make it a more effective salesperson for anyone else who pays it.</p>
@@ -364,7 +378,9 @@
 				</ul>
 			</div>
 
-			<p>Two of the Wharton manipulations test the fourth directly. Shuffling the order of the sources and changing the tool-call format leave the evidence unchanged, so a stable agent&rsquo;s choice should stay put. Evaluation in science and medicine already separates a right answer from a well-grounded one. Buying agents face the same test, repeated across millions of purchases a day.</p>
+			<p>In the sauna example, the outcome is a $10 saving on a tent whose fit is still unknown. Evidence gets a failing grade for the $110 bargain that was listed at $360. The assistant followed the buyer&rsquo;s wish to warm their head, so it does well on preference fidelity. Stability needs repeated runs of the same search. A grader looking only at the completed order would miss the false price.</p>
+
+			<p>Two of the Wharton manipulations test stability directly. Shuffling the order of the sources and changing the tool-call format leave the evidence unchanged, so a stable agent&rsquo;s choice should stay put. Evaluation in science and medicine already separates a right answer from a well-grounded one. Buying agents face the same test, repeated across millions of purchases a day.</p>
 
 			<h2>The market&rsquo;s backpropagation</h2>
 
