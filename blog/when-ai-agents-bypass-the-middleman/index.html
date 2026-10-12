@@ -29,15 +29,13 @@
 	<script src="/assets/theme.js"></script>
 
 	<style>
-		/* The two charts in this post are inline SVG coloured with the
-		   site's tokens, so they follow the light and dark themes. */
+		/* The chart uses the site's tokens, so it follows both themes. */
 		.prose figure.diagram svg { max-width: 540px; margin: 0 auto; border-radius: 0; }
 		.diagram text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
 		.diagram .t-main { font-size: 16px; font-weight: 700; fill: var(--ink); }
 		.diagram .t-bar { font-weight: 700; fill: var(--paper-bg); }
 		.diagram .t-warn { font-weight: 700; fill: var(--award); }
 		.diagram .t-accent { font-weight: 700; fill: var(--accent); }
-		.diagram .t-it { font-style: italic; }
 		.diagram .bar { fill: var(--accent); }
 		.diagram .bar-warn { fill: var(--award); }
 		.diagram .bar-muted { fill: var(--ink-light); }
@@ -179,125 +177,56 @@
 
 			<p>The host could instead charge $1,000 direct. Then the guest saves nothing, while the host gets $970 after the card fee. Direct bookings also have costs this example leaves out, such as finding guests and handling payment disputes. An agent can compare prices, but it cannot force the host to offer a discount.</p>
 
-			<h2>What an agent needs to book direct</h2>
+			<h2>Can the agent make a safe direct booking?</h2>
 
-			<p>Jenney&rsquo;s agent would &ldquo;query property management system APIs directly.&rdquo; Professional operators already use property management systems to list one home on several sites at once. <a href="https://www.hostaway.com/features/channel-manager/" target="_blank" rel="noopener">Hostaway</a>, one of them, advertises &ldquo;direct, two-way APIs&rdquo; that keep an operator&rsquo;s calendar and prices in sync across Airbnb and the operator&rsquo;s own website, among other channels.</p>
+			<p>Some professional hosts list the same home on Airbnb and their own websites. Software such as <a href="https://www.hostaway.com/features/channel-manager/" target="_blank" rel="noopener">Hostaway</a> can keep prices and calendars in sync across those sites. That creates a possible route around Airbnb.</p>
 
-			<p>Those connections belong to the operator. Hostaway&rsquo;s <a href="https://api.hostaway.com/documentation" target="_blank" rel="noopener">API</a> issues credentials to the operator&rsquo;s own account. An outside agent needs the operator&rsquo;s permission to read the calendar. It also has to establish that the cheaper listing is the same home. Photos can be copied, and a fraudulent site can pose as a real operator. Airbnb&rsquo;s <a href="https://www.airbnb.com/help/article/2908" target="_blank" rel="noopener">terms of service</a> forbid bots and &ldquo;other automated means&rdquo; of collecting data from the platform, so an agent cannot match homes by scraping Airbnb without breaking them.</p>
+			<p>The agent still faces three checks. It needs a current calendar; using Hostaway&rsquo;s <a href="https://api.hostaway.com/documentation" target="_blank" rel="noopener">API</a> for that requires the operator&rsquo;s permission. It needs to prove that the cheaper listing is the same home and belongs to the real host; copied photos are weak evidence. And it needs a way to pay and get help if something goes wrong. Airbnb&rsquo;s <a href="https://www.airbnb.com/help/article/2908" target="_blank" rel="noopener">terms</a> also forbid bots from collecting its data, so scraping Airbnb is not a dependable way to compare listings.</p>
 
-			<p>Operators would have to give agents authorized access to their calendars for Jenney&rsquo;s forecast to work at scale. Someone would also have to verify that two listings describe the same home.</p>
+			<p>Many homes may have no direct route at all. Chesky said in February that &ldquo;the vast majority of our homes and our unique inventory is only on Airbnb.&rdquo; That claim has not been independently measured. If it holds, an agent could suggest another home, but could not book the same one for less elsewhere.</p>
 
-			<h2>What the bear case leaves out</h2>
+			<p>Guests also give up Airbnb&rsquo;s <a href="https://www.airbnb.com/help/article/209" target="_blank" rel="noopener">AirCover protection</a> when they pay outside the platform. A direct site may offer its own guarantee, but the agent must check it. Saving $75 is a bad trade if a fake listing could cost the guest the whole stay.</p>
 
-			<p>Jenney&rsquo;s own exception may cover much of Airbnb. On the February call, Chesky said that &ldquo;the vast majority of our homes and our unique inventory is only on Airbnb.&rdquo; No one has measured that independently. If the claim holds, an agent can recommend a different home but cannot book the same home elsewhere.</p>
+			<h2>Four things must happen before a booking leaves</h2>
 
-			<p>Airbnb&rsquo;s <a href="https://www.airbnb.com/help/article/209" target="_blank" rel="noopener">help pages</a> say a guest who pays for a booking outside the platform will &ldquo;lose the AirCover protection,&rdquo; which backs guests through serious problems they cannot resolve with the host. Airbnb policy also forbids hosts from asking guests to take a booking off the platform. A direct site can offer its own guarantees, but an agent would have to check them. A $75 saving is poor value if it brings a real risk of fraud and no one to call.</p>
+			<p>Jenney&rsquo;s forecast depends on four conditions. A direct booking happens only when every one of them holds:</p>
 
-			<p>Airbnb is also building AI into its own app. Its <a href="https://news.airbnb.com/en-uk/airbnb-2026-autumn-update" target="_blank" rel="noopener">30 September product update</a> added search &ldquo;using your own words or voice&rdquo; and side-by-side comparisons of saved homes with AI summaries. On the February call, Chesky said traffic from chatbots &ldquo;converts at a higher rate than traffic that comes from Google.&rdquo; He <a href="https://techcrunch.com/2026/10/01/brian-chesky-interview-ai-agents-need-their-own-operating-system/" target="_blank" rel="noopener">told TechCrunch</a> on 1 October that Airbnb wants &ldquo;to make our app more agentic.&rdquo; He had tried Airbnb inside two consumer agents, Muse and Instinct, and said &ldquo;it doesn&rsquo;t work very well.&rdquo;</p>
+			<ol>
+				<li><strong>The same home is available elsewhere.</strong> Some homes are listed only on Airbnb.</li>
+				<li><strong>The guest uses an agent that checks other booking sites.</strong> Many guests may stay in Airbnb&rsquo;s app.</li>
+				<li><strong>The direct offer is better overall.</strong> A lower price may not make up for weaker protection.</li>
+				<li><strong>The agent can finish a safe booking.</strong> It needs a real host, a live calendar and a working checkout.</li>
+			</ol>
 
-			<p>Airbnb faces at least three possible outcomes. In the first, agents book directly with operators, and Airbnb loses bookings and pricing power. In the second, outside agents send guests to Airbnb to complete the booking. Airbnb earns its fee, though it may have to share part of it with whoever runs the agent. In the third, guests plan and book through Airbnb&rsquo;s own agent, and Airbnb keeps its relationship with the guest.</p>
+			<p>To see why the conditions matter, imagine that half of homes pass the first check. Suppose 40 percent of those guests use a comparing agent, half of those find a better direct offer, and 80 percent of those bookings succeed. That leaves <strong>8 percent of all bookings</strong>: 50% &times; 40% &times; 50% &times; 80%. These are made-up rates, not a forecast. The real rates are what we need to measure.</p>
 
-			<div class="callout callout-warn">
-				<span class="callout-label">What Airbnb&rsquo;s growth does not show</span>
-				<p>Airbnb&rsquo;s <a href="https://news.airbnb.com/airbnb-q2-2026-financial-results" target="_blank" rel="noopener">second-quarter 2026 results</a> show revenue up 17 percent from a year earlier and Nights and Seats Booked up 10 percent. <b>Neither number tests a forecast about the next five years.</b> Jenney&rsquo;s mechanism could be right even if his timeline is wrong.</p>
-			</div>
+			<p>Airbnb keeps the booking when any check fails. Even a small share of direct bookings could matter if it includes valuable, professionally managed homes that appear on several sites.</p>
 
-			<h2>Four gates before a booking leaves</h2>
+			<h2>How we could tell if Jenney is right</h2>
 
-			<p>A booking leaves Airbnb only if four things hold at once. The home has to be bookable somewhere else. The guest has to use an agent that compares channels. The direct offer has to win once price and protection are both counted. The agent then has to complete the direct booking.</p>
+			<p>We do not need to wait five years to test the mechanism. Take a sample of Airbnb homes across destinations, prices and host types. For each one, ask an agent to find a legitimate direct offer for the same nights. Then check the final price, the host&rsquo;s identity, the calendar, the checkout and the protection the guest would lose or gain.</p>
 
-			<p>With the illustrative pass rates in Figure 2, 8 percent of bookings would leave the platform. Those rates are invented and could be measured.</p>
+			<p>The test should include fake host sites and stale calendars. It should give the agent credit for refusing an unsafe booking. A low price means little if the agent cannot show that the offer is real.</p>
 
-			<figure class="diagram">
-				<svg viewBox="0 0 540 290" role="img" aria-labelledby="f2-title f2-desc">
-					<title id="f2-title">Four gates before a booking leaves the platform</title>
-					<desc id="f2-desc">Five bars shrink from 100 percent of bookings to 50 percent when the home must be bookable elsewhere (pass rate 50 percent), to 20 percent when the guest must use an agent that compares channels (40 percent), to 10 percent when the direct offer must win (50 percent), and to 8 percent when the direct checkout must succeed (80 percent).</desc>
+			<p>Airbnb&rsquo;s <a href="https://news.airbnb.com/airbnb-q2-2026-financial-results" target="_blank" rel="noopener">revenue rose 17 percent</a> in the second quarter of 2026. That tells us how the company was doing then; it does not settle what agents will do to bookings over the next five years. Better signals would be completed direct bookings through agents, the share of homes with a verified direct option, and any change in Airbnb&rsquo;s effective fee.</p>
 
-					<text class="t-main" x="20" y="22">All bookings</text>
-					<rect class="bar" x="20" y="30" width="500" height="24"/>
-					<text class="t-bar" x="32" y="47">100%</text>
+			<h2>Three ways this could play out</h2>
 
-					<text x="20" y="78">Home is bookable elsewhere</text>
-					<text class="t-it" x="520" y="78" text-anchor="end">passes 50%</text>
-					<rect class="bar" x="20" y="86" width="250" height="24"/>
-					<text class="t-main" x="280" y="103">50%</text>
+			<ol>
+				<li><strong>Guests book direct.</strong> Agents find safe, cheaper offers with hosts. Airbnb loses those bookings.</li>
+				<li><strong>Guests still book on Airbnb.</strong> Outside agents send them there for the home or the protection. Airbnb keeps a role, though it may have to share revenue with the agent.</li>
+				<li><strong>Guests use Airbnb&rsquo;s own agent.</strong> Airbnb handles both the search and the booking. It has already added <a href="https://news.airbnb.com/en-uk/airbnb-2026-autumn-update" target="_blank" rel="noopener">natural-language search and AI summaries</a> to its app.</li>
+			</ol>
 
-					<text x="20" y="134">Guest uses an agent that compares channels</text>
-					<text class="t-it" x="520" y="134" text-anchor="end">passes 40%</text>
-					<rect class="bar" x="20" y="142" width="100" height="24"/>
-					<text class="t-main" x="130" y="159">20%</text>
-
-					<text x="20" y="190">Direct offer wins on price and protection</text>
-					<text class="t-it" x="520" y="190" text-anchor="end">passes 50%</text>
-					<rect class="bar" x="20" y="198" width="50" height="24"/>
-					<text class="t-main" x="80" y="215">10%</text>
-
-					<text x="20" y="246">Direct checkout succeeds</text>
-					<text class="t-it" x="520" y="246" text-anchor="end">passes 80%</text>
-					<rect class="bar-warn" x="20" y="254" width="40" height="24"/>
-					<text class="t-warn" x="70" y="271">8% leave the platform</text>
-				</svg>
-				<figcaption><b>Figure 2.</b> Four gates before a booking leaves the platform. Each bar is the share of all bookings that has passed every gate so far, and the figure on the right is each gate&rsquo;s pass rate. The pass rates are illustrative assumptions.</figcaption>
-			</figure>
-
-			<p>Airbnb keeps its commission when the home is listed nowhere else or the guest prefers its protection. Modest adoption could still cost Airbnb if agents take its most valuable bookings, such as professionally managed homes listed on several sites.</p>
-
-			<h2>How the forecast could be tested</h2>
-
-			<p>A sample of Airbnb listings could test the forecast well before five years pass. It would cover different destinations and price levels, with listings from individual hosts and professional managers. The sample would show how often an agent can find a direct channel for the same home. Proving that it is the same home and completing a safe booking would be harder.</p>
-
-			<div class="callout callout-note">
-				<span class="callout-label">Five measures for a booking agent</span>
-				<ul>
-					<li><b>Overlap.</b> The share of sampled listings with a legitimate direct channel for the same home.</li>
-					<li><b>Price.</b> How much cheaper the direct booking is after every mandatory charge.</li>
-					<li><b>Identity.</b> Whether the agent can show that two listings describe the same home.</li>
-					<li><b>Execution.</b> Whether the agent completes the booking without a double booking.</li>
-					<li><b>Protection.</b> What the guest gains or loses in refunds and support.</li>
-				</ul>
-			</div>
-
-			<p>The test set would need hard cases, such as a fake operator site or a calendar that is out of date. It would also need to score the option of not booking. An agent that stops when the evidence runs out can do better than one that completes every booking it is asked for.</p>
-
-			<p>I work on agent evaluation, where an answer can look right even when its evidence does not support it. In the hypothetical <a href="/blog/when-the-buyer-has-an-agent/#sauna-example">sauna purchase</a> from my last essay, the assistant&rsquo;s $110 bargain turned out to be a $360 listing. A booking agent would have to check the price, then gather more evidence to judge the booking.</p>
-
-			<h2>Beyond vacation rentals</h2>
-
-			<p>Many internet businesses charge for connecting suppliers with buyers.</p>
-
-			<div class="table-wrap">
-				<table>
-					<thead>
-						<tr><th>Market</th><th>What an agent can compare</th><th>What is hard to replace</th></tr>
-					</thead>
-					<tbody>
-						<tr><td>Hotels</td><td>Direct and agency prices for the same room</td><td>Loyalty benefits and negotiated rates</td></tr>
-						<tr><td>Online retail</td><td>Identical products across sellers</td><td>Returns and proof of authenticity</td></tr>
-						<tr><td>Freelancing</td><td>Workers and their rates</td><td>Escrow and dispute resolution</td></tr>
-						<tr><td>Insurance</td><td>Policy terms and prices</td><td>Claims handling and underwriting</td></tr>
-					</tbody>
-				</table>
-			</div>
-
-			<p>Marketplaces that mostly display inventory available elsewhere are the most exposed. A marketplace can still charge for exclusive supply or for standing behind a transaction. Some may sell to agents directly, offering verified listings and guaranteed bookings to software that never shows the guest their app.</p>
+			<p>The same choice appears in other markets. An agent can compare a hotel room across booking sites or an identical product across stores. The marketplace can still earn its fee if it offers something the agent cannot easily supply, such as a room available nowhere else, reliable returns or help when a purchase fails.</p>
 
 			<h2>The next middleman</h2>
 
-			<p>Jenney expects agents to remove a middleman. They could also become one. An agent used by millions of people would receive the guest&rsquo;s request before a provider had been chosen. Marketplaces have long charged for access to that demand. The agent might also know each guest&rsquo;s budget and willingness to compromise. Hosts and marketplaces could offer discounts or pay for placement to get its attention.</p>
+			<p>Jenney expects agents to remove a middleman. But an agent used by millions of guests would become the first place they ask for a stay. Hosts and booking sites might offer discounts or pay to appear in its answer.</p>
 
-			<p>My last essay traced how <a href="/blog/when-the-buyer-has-an-agent/#travel-agents">airline reservation systems and Google&rsquo;s shopping results</a> favoured the companies that owned them. An agent can hide that kind of bias better than a results page, because its user sees one answer and none of the options it dropped. Competition would depend on whom the agent represents and whether its choices can be audited.</p>
+			<p>My <a href="/blog/when-the-buyer-has-an-agent/#travel-agents">last essay</a> showed how travel booking screens and Google shopping results have favoured their owners. An agent could hide a similar bias inside a single recommendation. The guest would need to know whose interests it serves and why it chose that booking.</p>
 
-			<h2>Signs of the shift</h2>
-
-			<p>The shift would show up in completed bookings. One sign is the share of stays booked by an agent that compared channels. Another is how often agents complete direct bookings with verified operators. A third is whether professional managers take a growing share of bookings through their own sites, and whether Airbnb&rsquo;s effective commission starts to fall.</p>
-
-			<h2>After the interface</h2>
-
-			<p>For two decades, the consumer internet has centred on places people visit to search and buy. A guest using an agent starts with a description of the stay. The software then picks a route through Airbnb or around it.</p>
-
-			<p>Companies that check homes and stand behind bookings could become more valuable if those jobs stay costly while agents make search cheap. Airbnb already charges for the work Chesky said a chatbot cannot do.</p>
-
-			<p><strong>Agents will make marketplaces show which parts of their commission pay for work an agent cannot do.</strong></p>
+			<p>AI agents may make it cheaper to find a home. Whether they make the booking cheaper and safer depends on the homes they can reach, the evidence they can check and who takes responsibility when something goes wrong. Those are the parts of a marketplace&rsquo;s fee that will face the clearest test.</p>
 
 			<h2>Further reading</h2>
 
