@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>When AI agents bypass the middleman | Chen-Yang Su</title>
+	<meta name="description" content="Mark Jenney expects AI agents to book around Airbnb. Agents will make marketplaces show which parts of their commission pay for work an agent cannot do." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/when-ai-agents-bypass-the-middleman/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="When AI agents bypass the middleman">
+	<meta property="og:description" content="Mark Jenney expects AI agents to book around Airbnb. Agents will make marketplaces show which parts of their commission pay for work an agent cannot do.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/when-ai-agents-bypass-the-middleman/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-11">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="When AI agents bypass the middleman">
+	<meta name="twitter:description" content="Mark Jenney expects AI agents to book around Airbnb. Agents will make marketplaces show which parts of their commission pay for work an agent cannot do.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The two charts in this post are inline SVG coloured with the
+		   site's tokens, so they follow the light and dark themes. */
+		.prose figure.diagram svg { max-width: 540px; margin: 0 auto; border-radius: 0; }
+		.diagram text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.diagram .t-main { font-size: 16px; font-weight: 700; fill: var(--ink); }
+		.diagram .t-bar { font-weight: 700; fill: var(--paper-bg); }
+		.diagram .t-warn { font-weight: 700; fill: var(--award); }
+		.diagram .t-accent { font-weight: 700; fill: var(--accent); }
+		.diagram .t-it { font-style: italic; }
+		.diagram .bar { fill: var(--accent); }
+		.diagram .bar-warn { fill: var(--award); }
+		.diagram .bar-muted { fill: var(--ink-light); }
+		.diagram .bar-save { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 5 4; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "When AI agents bypass the middleman",
+		"description": "Mark Jenney expects AI agents to book around Airbnb. Agents will make marketplaces show which parts of their commission pay for work an agent cannot do.",
+		"datePublished": "2026-10-11",
+		"url": "https://chenyangsu.github.io/blog/when-ai-agents-bypass-the-middleman/",
+		"keywords": "AI agents, marketplaces, platform economics, AI evaluation",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/when-ai-agents-bypass-the-middleman/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">Marketplaces</p>
+
+		<h1 class="post-title">When AI agents bypass the middleman</h1>
+
+		<p class="post-standfirst">Mark Jenney, whose Airbnb rentals bring in almost $1 million a month, expects AI agents to book around Airbnb. Agents could make finding a home cheap, and a marketplace&rsquo;s commission would then rest on what stays costly, which is checking the home and standing behind the booking.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-11">11 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>Airbnb deducts its whole fee from the host&rsquo;s payout under its single-fee structure. Most hosts pay <strong>15.5 percent</strong>. A direct booking would avoid that fee.</li>
+				<li>In an illustrative $1,000 booking, a direct price of $925 leaves the guest $75 better off and the host $52.25 better off. <strong>Nothing obliges the host to share the saving.</strong></li>
+				<li>A booking leaves the platform only after passing <strong>four gates</strong>, from finding the same home elsewhere to a working checkout. With illustrative pass rates, 8 percent of bookings get through all four.</li>
+				<li>Airbnb&rsquo;s revenue grew 17 percent in the second quarter of 2026. Its chief executive says <strong>most of its homes are listed nowhere else</strong>, and guests who pay outside the platform lose its AirCover protection.</li>
+				<li><strong>Whoever runs the agent that chooses where people book could become the next middleman.</strong></li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>On 11 October 2026, Mark Jenney <a href="https://x.com/markjenney/status/2109124350339366975" target="_blank" rel="noopener">posted a &ldquo;bear case&rdquo; for Airbnb on X</a> that drew more than a million views. He bought his first Airbnb property in 2012, and he says his high-end rentals now bring in &ldquo;almost $1M a month in rental income.&rdquo; He had been bullish on the company for years. His first week using AI agents changed his view. He now sees &ldquo;an existential threat that most of the market is completely missing.&rdquo;</p>
+
+			<p>Jenney calls Airbnb&rsquo;s 15.5 percent host commission &ldquo;the middleman tax.&rdquo; Once a guest knows which home they want, he expects an agent asked for &ldquo;the cheapest way to book the property&rdquo; to &ldquo;query property management system APIs directly, find the exact same home, and execute a direct booking that saves everyone 15%.&rdquo; He predicts that Airbnb&rsquo;s growth rate &ldquo;will slow down significantly in the next 24 to 36 months&rdquo; and turn negative within five years. He applies the same forecast to most online marketplaces, sparing those with &ldquo;unique inventory that can only be booked directly on their platform and nowhere else.&rdquo;</p>
+
+			<p>Jenney&rsquo;s forecast is hard to check. Its mechanism is easier to take apart. My <a href="/blog/when-the-buyer-has-an-agent/">last essay</a> asked what buyer agents do to the reward for better products. This one asks which parts of a marketplace&rsquo;s commission would survive.</p>
+
+			<h2>What the commission pays for</h2>
+
+			<p>Airbnb operates in what Jean-Charles Rochet and Jean Tirole <a href="https://doi.org/10.1162/154247603322493212" target="_blank" rel="noopener">modelled in 2003</a> as a two-sided market. It earns money by bringing hosts and travellers together. Its value to hosts grows with the number of travellers using it. Travellers in turn have more reason to use it as more hosts join.</p>
+
+			<p>Airbnb collects most of its charge from one side. Under its <a href="https://www.airbnb.com/help/article/1857" target="_blank" rel="noopener">single-fee structure</a>, &ldquo;the entire fee is deducted from the host&rsquo;s payout,&rdquo; and most hosts pay 15.5 percent. The structure is already mandatory for most hosts, including those who use property management software. The older split fee, which charged guests 14.1 to 16.5 percent and most hosts 3 percent, is being phased out. The cost reaches guests through the prices hosts set.</p>
+
+			<p>The commission pays for help finding a home and for someone to stand behind the booking.</p>
+
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr><th>Part of the bundle</th><th>Whether an agent can supply it</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>Finding and comparing homes</td><td>Yes, wherever listings and prices are open to it</td></tr>
+						<tr><td>Matching a home to the guest</td><td>Often, given good data on both</td></tr>
+						<tr><td>Reviews and host histories</td><td>Partly, because independent checks are hard</td></tr>
+						<tr><td>Payments and refunds</td><td>Only through payment systems it is authorized to use</td></tr>
+						<tr><td>Support when a stay goes wrong</td><td>Partly, because someone has to take responsibility</td></tr>
+						<tr><td>Protection against fraud</td><td>Not on its own</td></tr>
+					</tbody>
+				</table>
+			</div>
+
+			<p>Airbnb&rsquo;s chief executive, Brian Chesky, made this distinction on the company&rsquo;s <a href="https://www.fool.com/earnings/call-transcripts/2026/02/12/airbnb-abnb-q4-2025-earnings-call-transcript/" target="_blank" rel="noopener">February 2026 earnings call</a>. A chatbot, he said, &ldquo;can&rsquo;t provide global payment processing, customer support or insurance.&rdquo; An agent can take over the search more easily than it can guarantee that the guest gets the home they paid for.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Disintermediation</span>
+				<p>Buyers and sellers can meet through a platform, then complete their deal outside it. Economists call this disintermediation. Grace Gu and Feng Zhu <a href="https://doi.org/10.1287/mnsc.2020.3583" target="_blank" rel="noopener">ran a randomized trial</a> on an online freelance marketplace to measure it. Greater trust between clients and freelancers led to more hiring of high-quality freelancers. <b>At high enough levels of trust, it also led more pairs to go around the platform, which offset the platform&rsquo;s revenue gains.</b></p>
+			</div>
+
+			<h2>The arithmetic of booking direct</h2>
+
+			<p>Jenney&rsquo;s &ldquo;saves everyone 15%&rdquo; does not say who keeps the saving. In an illustrative booking, a home is listed on Airbnb at $1,000 before taxes and cleaning. At a 15.5 percent host fee, Airbnb keeps $155 and the host receives $845. If the operator&rsquo;s own website sells the same nights for $925, and card processing there costs 3 percent, the host keeps $897.25. The guest saves $75, or 7.5 percent. The host gains $52.25, about 6 percent. Between them they keep $127.25 of the $155 that would have gone to Airbnb.</p>
+
+			<figure class="diagram">
+				<svg viewBox="0 0 540 226" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">Where an illustrative $1,000 booking goes</title>
+					<desc id="f1-desc">Two bars drawn to the same scale. Booked through Airbnb, the guest pays $1,000, the host receives $845 and Airbnb keeps $155. Booked direct, the guest pays $925, the host receives $897.25, card processing takes $27.75 and the guest keeps $75.</desc>
+
+					<text class="t-main" x="20" y="24">Booked through Airbnb</text>
+					<text x="520" y="24" text-anchor="end">Guest pays $1,000</text>
+					<rect class="bar" x="20" y="34" width="422.5" height="40"/>
+					<rect class="bar-warn" x="442.5" y="34" width="77.5" height="40"/>
+					<text class="t-bar" x="34" y="59">Host receives $845</text>
+					<text class="t-bar" x="481.25" y="59" text-anchor="middle">$155</text>
+					<text class="t-warn" x="520" y="96" text-anchor="end">Airbnb keeps $155</text>
+
+					<text class="t-main" x="20" y="140">Booked direct</text>
+					<text x="520" y="140" text-anchor="end">Guest pays $925</text>
+					<rect class="bar" x="20" y="150" width="448.625" height="40"/>
+					<rect class="bar-muted" x="468.625" y="150" width="13.875" height="40"/>
+					<rect class="bar-save" x="483.25" y="150.75" width="36" height="38.5"/>
+					<text class="t-bar" x="34" y="175">Host receives $897.25</text>
+					<text class="t-accent" x="501.25" y="175" text-anchor="middle">$75</text>
+					<text x="520" y="212" text-anchor="end">Card processing $27.75 &middot; <tspan class="t-accent">guest keeps $75</tspan></text>
+				</svg>
+				<figcaption><b>Figure 1.</b> Where an illustrative $1,000 booking goes. Through Airbnb, the host receives $845 after the 15.5 percent fee. Booked direct at $925 with 3 percent card processing, the host receives $897.25 and the guest keeps $75. Bars are drawn to scale, and the numbers are an illustrative calculation.</figcaption>
+			</figure>
+
+			<p>The operator could also charge the full $1,000 directly and keep the whole saving. The example leaves out the cost of finding guests and absorbing chargebacks. An agent comparing booking sites can put pressure on the higher price, though the host still sets it. A guest may pay the difference for Airbnb&rsquo;s protection.</p>
+
+			<h2>What an agent needs to book direct</h2>
+
+			<p>Jenney&rsquo;s agent would &ldquo;query property management system APIs directly.&rdquo; Professional operators already use property management systems to list one home on several sites at once. <a href="https://www.hostaway.com/features/channel-manager/" target="_blank" rel="noopener">Hostaway</a>, one of them, advertises &ldquo;direct, two-way APIs&rdquo; that keep an operator&rsquo;s calendar and prices in sync across Airbnb and the operator&rsquo;s own website, among other channels.</p>
+
+			<p>Those connections belong to the operator. Hostaway&rsquo;s <a href="https://api.hostaway.com/documentation" target="_blank" rel="noopener">API</a> issues credentials to the operator&rsquo;s own account. An outside agent needs the operator&rsquo;s permission to read the calendar. It also has to establish that the cheaper listing is the same home. Photos can be copied, and a fraudulent site can pose as a real operator. Airbnb&rsquo;s <a href="https://www.airbnb.com/help/article/2908" target="_blank" rel="noopener">terms of service</a> forbid bots and &ldquo;other automated means&rdquo; of collecting data from the platform, so an agent cannot match homes by scraping Airbnb without breaking them.</p>
+
+			<p>Operators would have to give agents authorized access to their calendars for Jenney&rsquo;s forecast to work at scale. Someone would also have to verify that two listings describe the same home.</p>
+
+			<h2>What the bear case leaves out</h2>
+
+			<p>Jenney&rsquo;s own exception may cover much of Airbnb. On the February call, Chesky said that &ldquo;the vast majority of our homes and our unique inventory is only on Airbnb.&rdquo; No one has measured that independently. If the claim holds, an agent can recommend a different home but cannot book the same home elsewhere.</p>
+
+			<p>Airbnb&rsquo;s <a href="https://www.airbnb.com/help/article/209" target="_blank" rel="noopener">help pages</a> say a guest who pays for a booking outside the platform will &ldquo;lose the AirCover protection,&rdquo; which backs guests through serious problems they cannot resolve with the host. Airbnb policy also forbids hosts from asking guests to take a booking off the platform. A direct site can offer its own guarantees, but an agent would have to check them. A $75 saving is poor value if it brings a real risk of fraud and no one to call.</p>
+
+			<p>Airbnb is also building AI into its own app. Its <a href="https://news.airbnb.com/en-uk/airbnb-2026-autumn-update" target="_blank" rel="noopener">30 September product update</a> added search &ldquo;using your own words or voice&rdquo; and side-by-side comparisons of saved homes with AI summaries. On the February call, Chesky said traffic from chatbots &ldquo;converts at a higher rate than traffic that comes from Google.&rdquo; He <a href="https://techcrunch.com/2026/10/01/brian-chesky-interview-ai-agents-need-their-own-operating-system/" target="_blank" rel="noopener">told TechCrunch</a> on 1 October that Airbnb wants &ldquo;to make our app more agentic.&rdquo; He had tried Airbnb inside two consumer agents, Muse and Instinct, and said &ldquo;it doesn&rsquo;t work very well.&rdquo;</p>
+
+			<p>Airbnb faces at least three possible outcomes. In the first, agents book directly with operators, and Airbnb loses bookings and pricing power. In the second, outside agents send guests to Airbnb to complete the booking. Airbnb earns its fee, though it may have to share part of it with whoever runs the agent. In the third, guests plan and book through Airbnb&rsquo;s own agent, and Airbnb keeps its relationship with the guest.</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">What Airbnb&rsquo;s growth does not show</span>
+				<p>Airbnb&rsquo;s <a href="https://news.airbnb.com/airbnb-q2-2026-financial-results" target="_blank" rel="noopener">second-quarter 2026 results</a> show revenue up 17 percent from a year earlier and Nights and Seats Booked up 10 percent. <b>Neither number tests a forecast about the next five years.</b> Jenney&rsquo;s mechanism could be right even if his timeline is wrong.</p>
+			</div>
+
+			<h2>Four gates before a booking leaves</h2>
+
+			<p>A booking leaves Airbnb only if four things hold at once. The home has to be bookable somewhere else. The guest has to use an agent that compares channels. The direct offer has to win once price and protection are both counted. The agent then has to complete the direct booking.</p>
+
+			<p>With the illustrative pass rates in Figure 2, 8 percent of bookings would leave the platform. Those rates are invented and could be measured.</p>
+
+			<figure class="diagram">
+				<svg viewBox="0 0 540 290" role="img" aria-labelledby="f2-title f2-desc">
+					<title id="f2-title">Four gates before a booking leaves the platform</title>
+					<desc id="f2-desc">Five bars shrink from 100 percent of bookings to 50 percent when the home must be bookable elsewhere (pass rate 50 percent), to 20 percent when the guest must use an agent that compares channels (40 percent), to 10 percent when the direct offer must win (50 percent), and to 8 percent when the direct checkout must succeed (80 percent).</desc>
+
+					<text class="t-main" x="20" y="22">All bookings</text>
+					<rect class="bar" x="20" y="30" width="500" height="24"/>
+					<text class="t-bar" x="32" y="47">100%</text>
+
+					<text x="20" y="78">Home is bookable elsewhere</text>
+					<text class="t-it" x="520" y="78" text-anchor="end">passes 50%</text>
+					<rect class="bar" x="20" y="86" width="250" height="24"/>
+					<text class="t-main" x="280" y="103">50%</text>
+
+					<text x="20" y="134">Guest uses an agent that compares channels</text>
+					<text class="t-it" x="520" y="134" text-anchor="end">passes 40%</text>
+					<rect class="bar" x="20" y="142" width="100" height="24"/>
+					<text class="t-main" x="130" y="159">20%</text>
+
+					<text x="20" y="190">Direct offer wins on price and protection</text>
+					<text class="t-it" x="520" y="190" text-anchor="end">passes 50%</text>
+					<rect class="bar" x="20" y="198" width="50" height="24"/>
+					<text class="t-main" x="80" y="215">10%</text>
+
+					<text x="20" y="246">Direct checkout succeeds</text>
+					<text class="t-it" x="520" y="246" text-anchor="end">passes 80%</text>
+					<rect class="bar-warn" x="20" y="254" width="40" height="24"/>
+					<text class="t-warn" x="70" y="271">8% leave the platform</text>
+				</svg>
+				<figcaption><b>Figure 2.</b> Four gates before a booking leaves the platform. Each bar is the share of all bookings that has passed every gate so far, and the figure on the right is each gate&rsquo;s pass rate. The pass rates are illustrative assumptions.</figcaption>
+			</figure>
+
+			<p>Airbnb keeps its commission when the home is listed nowhere else or the guest prefers its protection. Modest adoption could still cost Airbnb if agents take its most valuable bookings, such as professionally managed homes listed on several sites.</p>
+
+			<h2>How the forecast could be tested</h2>
+
+			<p>A sample of Airbnb listings could test the forecast well before five years pass. It would cover different destinations and price levels, with listings from individual hosts and professional managers. The sample would show how often an agent can find a direct channel for the same home. Proving that it is the same home and completing a safe booking would be harder.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Five measures for a booking agent</span>
+				<ul>
+					<li><b>Overlap.</b> The share of sampled listings with a legitimate direct channel for the same home.</li>
+					<li><b>Price.</b> How much cheaper the direct booking is after every mandatory charge.</li>
+					<li><b>Identity.</b> Whether the agent can show that two listings describe the same home.</li>
+					<li><b>Execution.</b> Whether the agent completes the booking without a double booking.</li>
+					<li><b>Protection.</b> What the guest gains or loses in refunds and support.</li>
+				</ul>
+			</div>
+
+			<p>The test set would need hard cases, such as a fake operator site or a calendar that is out of date. It would also need to score the option of not booking. An agent that stops when the evidence runs out can do better than one that completes every booking it is asked for.</p>
+
+			<p>I work on agent evaluation, where an answer can look right even when its evidence does not support it. In the hypothetical <a href="/blog/when-the-buyer-has-an-agent/#sauna-example">sauna purchase</a> from my last essay, the assistant&rsquo;s $110 bargain turned out to be a $360 listing. A booking agent would have to check the price, then gather more evidence to judge the booking.</p>
+
+			<h2>Beyond vacation rentals</h2>
+
+			<p>Many internet businesses charge for connecting suppliers with buyers.</p>
+
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr><th>Market</th><th>What an agent can compare</th><th>What is hard to replace</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>Hotels</td><td>Direct and agency prices for the same room</td><td>Loyalty benefits and negotiated rates</td></tr>
+						<tr><td>Online retail</td><td>Identical products across sellers</td><td>Returns and proof of authenticity</td></tr>
+						<tr><td>Freelancing</td><td>Workers and their rates</td><td>Escrow and dispute resolution</td></tr>
+						<tr><td>Insurance</td><td>Policy terms and prices</td><td>Claims handling and underwriting</td></tr>
+					</tbody>
+				</table>
+			</div>
+
+			<p>Marketplaces that mostly display inventory available elsewhere are the most exposed. A marketplace can still charge for exclusive supply or for standing behind a transaction. Some may sell to agents directly, offering verified listings and guaranteed bookings to software that never shows the guest their app.</p>
+
+			<h2>The next middleman</h2>
+
+			<p>Jenney expects agents to remove a middleman. They could also become one. An agent used by millions of people would receive the guest&rsquo;s request before a provider had been chosen. Marketplaces have long charged for access to that demand. The agent might also know each guest&rsquo;s budget and willingness to compromise. Hosts and marketplaces could offer discounts or pay for placement to get its attention.</p>
+
+			<p>My last essay traced how <a href="/blog/when-the-buyer-has-an-agent/#travel-agents">airline reservation systems and Google&rsquo;s shopping results</a> favoured the companies that owned them. An agent can hide that kind of bias better than a results page, because its user sees one answer and none of the options it dropped. Competition would depend on whom the agent represents and whether its choices can be audited.</p>
+
+			<h2>Signs of the shift</h2>
+
+			<p>The shift would show up in completed bookings. One sign is the share of stays booked by an agent that compared channels. Another is how often agents complete direct bookings with verified operators. A third is whether professional managers take a growing share of bookings through their own sites, and whether Airbnb&rsquo;s effective commission starts to fall.</p>
+
+			<h2>After the interface</h2>
+
+			<p>For two decades, the consumer internet has centred on places people visit to search and buy. A guest using an agent starts with a description of the stay. The software then picks a route through Airbnb or around it.</p>
+
+			<p>Companies that check homes and stand behind bookings could become more valuable if those jobs stay costly while agents make search cheap. Airbnb already charges for the work Chesky said a chatbot cannot do.</p>
+
+			<p><strong>Agents will make marketplaces show which parts of their commission pay for work an agent cannot do.</strong></p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://x.com/markjenney/status/2109124350339366975" target="_blank" rel="noopener">Mark Jenney, the bear case for Airbnb</a> (11 October 2026), the post this essay responds to.</li>
+				<li><a href="https://www.airbnb.com/help/article/1857" target="_blank" rel="noopener">Airbnb&rsquo;s help article on service fees</a>, on the single-fee and split-fee structures.</li>
+				<li><a href="https://doi.org/10.1287/mnsc.2020.3583" target="_blank" rel="noopener">Gu and Zhu, <i>Trust and disintermediation: Evidence from an online freelance marketplace</i></a> (<i>Management Science</i>, 2021), the randomized trial on going around a platform.</li>
+				<li><a href="https://doi.org/10.1162/154247603322493212" target="_blank" rel="noopener">Rochet and Tirole, <i>Platform competition in two-sided markets</i></a> (<i>Journal of the European Economic Association</i>, 2003), on how platforms price two groups of users.</li>
+				<li><a href="https://www.fool.com/earnings/call-transcripts/2026/02/12/airbnb-abnb-q4-2025-earnings-call-transcript/" target="_blank" rel="noopener">Airbnb&rsquo;s fourth-quarter 2025 earnings call</a> (12 February 2026), where Brian Chesky discusses exclusive inventory and chatbots.</li>
+				<li><a href="https://news.airbnb.com/airbnb-q2-2026-financial-results" target="_blank" rel="noopener">Airbnb, <i>Q2 2026 financial results</i></a> (6 August 2026).</li>
+				<li><a href="/blog/when-the-buyer-has-an-agent/">Chen-Yang Su, <i>When the buyer has an agent</i></a> (10 October 2026), on how buyer agents change the reward for product quality.</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">AI agents</span>
+				<span class="tag">marketplaces</span>
+				<span class="tag">platform economics</span>
+				<span class="tag">AI evaluation</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+
+</body>
+</html>
