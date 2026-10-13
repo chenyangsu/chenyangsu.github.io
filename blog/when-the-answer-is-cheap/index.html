@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>When the answer is cheap | Chen-Yang Su</title>
+	<meta name="description" content="Xiaoyin Qu predicts AI will make verifiable tasks worthless. When answers get cheap, the premium moves to choosing the questions and checking the answers." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/when-the-answer-is-cheap/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="When the answer is cheap">
+	<meta property="og:description" content="Xiaoyin Qu predicts AI will make verifiable tasks worthless. When answers get cheap, the premium moves to choosing the questions and checking the answers.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/when-the-answer-is-cheap/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-12">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="When the answer is cheap">
+	<meta name="twitter:description" content="Xiaoyin Qu predicts AI will make verifiable tasks worthless. When answers get cheap, the premium moves to choosing the questions and checking the answers.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The two diagrams in this post are inline SVG coloured with the
+		   site's tokens, so they follow the light and dark themes. */
+		.prose figure.diagram svg { max-width: 540px; margin: 0 auto; border-radius: 0; }
+		.diagram text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.diagram .t-main { font-size: 16px; font-weight: 700; fill: var(--ink); }
+		.diagram .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.diagram .t-warn { font-weight: 700; fill: var(--award); }
+		.diagram .t-accent { font-weight: 700; fill: var(--accent); }
+		.diagram .t-it { font-style: italic; }
+		.diagram .box { fill: var(--chip-bg); stroke: var(--tag-border); stroke-width: 1.5; }
+		.diagram .box-hot { fill: var(--warn-bg); stroke: var(--award); stroke-width: 1.5; }
+		.diagram .cell-ex { fill: var(--warn-bg); stroke: var(--award); stroke-width: 1.5; }
+		.diagram .cell-def { fill: var(--tag-bg); stroke: var(--accent); stroke-width: 1.5; }
+		.diagram .ln { fill: none; stroke: var(--ink-light); stroke-width: 1.8; }
+		.diagram .ah { fill: var(--ink-light); }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "When the answer is cheap",
+		"description": "Xiaoyin Qu predicts AI will make verifiable tasks worthless. When answers get cheap, the premium moves to choosing the questions and checking the answers.",
+		"datePublished": "2026-10-12",
+		"url": "https://chenyangsu.github.io/blog/when-the-answer-is-cheap/",
+		"keywords": "verifiable rewards, economics, AI evaluation, future of work",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/when-the-answer-is-cheap/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">Verifiable work</p>
+
+		<h1 class="post-title">When the answer is cheap</h1>
+
+		<p class="post-standfirst">Xiaoyin Qu predicts that AI will drive the value of every task with a checkable answer to zero, leaving profit only in matters of taste. Competition can push the price of an answer toward the cost of electricity while the answer stays useful. The premium, the extra that buyers will pay, moves to choosing the questions and checking the answers.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-12">12 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>Tasks with checkable answers are the easiest for AI to learn because a program can grade millions of attempts. The AI model DeepSeek-R1 used this approach to reach <strong>strong results in mathematics and coding</strong>.</li>
+				<li><strong>Competition pushes the price of an answer toward its cost.</strong> Buyers keep most of the gain when the answer remains useful.</li>
+				<li>Taste offers little protection on its own. After an AI image generator launched, <strong>illustrators on the art site Pixiv posted less</strong>. Comic artists were less affected.</li>
+				<li><strong>Checkers can be gamed.</strong> When the grading programs checked only final labels, models learned to list the expected labels and skip the rule they were meant to find.</li>
+				<li><strong>Pricing power, the room to charge more, survives where someone controls a scarce input or decides which questions deserve an answer.</strong></li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>On 11 October 2026, Xiaoyin Qu, a founder and angel investor, <a href="https://x.com/quxiaoyin/status/2109208643157754297" target="_blank" rel="noopener">predicted on X</a> that &ldquo;the value of all verifiable tasks in the long run is 0.&rdquo; Any task &ldquo;where the success is defined in a finite and non-ambiguous way&rdquo; is, in Qu&rsquo;s words, &ldquo;over.&rdquo; Qu wrote that profits &ldquo;are all in taste/judgement related tasks where some like it and some hate it. Vibes only. No rationality.&rdquo;</p>
+
+			<p>Qu points to OpenAI&rsquo;s new mathematical results and expects that &ldquo;soon others will follow and players like DeepSeek will drive its cost to electricity.&rdquo; Qu makes one exception. In Qu&rsquo;s words, &ldquo;coming up with verifiable task to do is worth a lot because the ability to come up is not a verifiable task by itself.&rdquo;</p>
+
+			<p>The prediction brings together three questions. One concerns the tasks AI will learn to do. Another concerns what happens to their price. The third concerns where the money goes once prices fall. Qu&rsquo;s answer to the first holds up well. The other two need more care.</p>
+
+			<h2>Why checkable tasks fall first</h2>
+
+			<p>A child learning multiplication can have each answer marked right or wrong. A novel has no answer key. Readers disagree. Averaging a million opinions measures their preferences without finding a correct answer.</p>
+
+			<p>Reinforcement learning trains a model through rewards. Here, a model makes an attempt and a program checks it. That result becomes the reward that shapes the next attempt. An automatic check lets the model practise millions of times without a human grader.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Reinforcement learning with verifiable rewards</span>
+				<p>This method is often shortened to RLVR. A program checks code or the steps in a proof. It scores each answer, so no person has to grade the attempts. The <a href="https://doi.org/10.1038/s41586-025-09422-z" target="_blank" rel="noopener">DeepSeek-R1</a> paper appeared in <i>Nature</i> in September 2025. Reasoning abilities &ldquo;can be incentivized through pure reinforcement learning,&rdquo; its authors wrote. The resulting model outperformed conventionally trained models &ldquo;on verifiable tasks such as mathematics, coding competitions and STEM fields.&rdquo; <b>What a program can check, a model can practise at scale.</b></p>
+			</div>
+
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr><th>Task</th><th>How success is checked</th><th>What stays hard</th></tr>
+					</thead>
+					<tbody>
+						<tr><td>Arithmetic</td><td>Comparison with the known answer</td><td>Very little</td></tr>
+						<tr><td>A computer program</td><td>Tests of the program</td><td>Behaviour the tests do not cover</td></tr>
+						<tr><td>A mathematical proof</td><td>Software such as Lean checks each step of the proof</td><td>Finding the proof in the first place</td></tr>
+					</tbody>
+				</table>
+			</div>
+
+			<p>A proof checker can confirm in seconds a proof that took an enormous search to find. That check supplies the reward used to train a model to search for proofs.</p>
+
+			<p>On 6 October 2026, OpenAI <a href="https://openai.com/index/sharing-ai-progress-in-mathematics/" target="_blank" rel="noopener">released the output</a> of an internal model tested on unsolved research problems. The <a href="https://github.com/openai/math" target="_blank" rel="noopener">collection</a> opened with 722 manuscripts in 372 groups of related results. They came from about 4,000 problems. A result used about three hours of ChatGPT Pro thinking on average.</p>
+
+			<p>Many results came with proofs formalized in Lean, meaning written so a computer could check them line by line. The README, the collection&rsquo;s introductory document, warned that &ldquo;some of the unformalized results could have issues.&rdquo; Two days later, the collection listed 719 manuscripts. About 42 percent of the main results were formalized.</p>
+
+			<h2>Price and value come apart</h2>
+
+			<p>A company pays a consultant $100 for an analysis. The analysis supports a decision worth $500 to the company. If AI produces an equally useful analysis for $3, the price falls 97 percent. The company&rsquo;s net gain rises from $400 to $497.</p>
+
+			<p>William Nordhaus <a href="https://www.nber.org/books-and-chapters/economics-new-goods/do-real-output-and-real-wage-measures-capture-reality-history-lighting-suggests-not" target="_blank" rel="noopener">estimated</a> that the efficiency of lighting rose by a factor of nine hundred between 1800 and 1992. Conventional price indexes missed almost all of that gain. Cheap light became abundant, and most of the value went to the people using it.</p>
+
+			<p>Qu&rsquo;s &ldquo;cost to electricity&rdquo; is close to what economists expect. When many sellers offer the same service and buyers can check it, competition pushes the price toward cost.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Economic profit</span>
+				<p>Economic profit is revenue left after all costs. Those costs include what the owners&rsquo; money and time could earn elsewhere. Competition among sellers of the same checkable service pushes that profit toward zero. Buyers then pay close to the cost of computing power and any remaining human work. <b>A task can lose its profit and keep its value.</b></p>
+			</div>
+
+			<p>Once buyers can check a result, they can compare suppliers. As more suppliers automate the work, each has less room to charge a premium.</p>
+
+			<h2>Checkable work can still command a price</h2>
+
+			<p>Two firms that can produce the same report compete on price. Exclusive access to data changes that. A firm with that access can charge a premium even when its analysis is fully automated and checkable. No rival can use the same data.</p>
+
+			<p>A hospital using AI for most of its paperwork still needs beds and licensed staff. Both are scarce. In my <a href="/blog/when-ai-agents-bypass-the-middleman/">last essay</a>, Airbnb&rsquo;s best defence against automated booking software was the homes listed nowhere else.</p>
+
+			<figure class="diagram">
+				<svg viewBox="0 0 540 334" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">Where pricing power can survive</title>
+					<desc id="f1-desc">A two-by-two grid. Columns are tasks with no scarce input and tasks with a scarce input. Rows are checkable tasks and taste-driven tasks. Checkable work with no scarce input, such as routine code and standard analysis, is where prices fall fastest. Checkable work with a scarce input, such as exclusive data and licensed services, keeps a premium from the input. Taste-driven work with no scarce input, such as generic illustration and stock copywriting, gets crowded by AI output. Taste-driven work with a scarce input, such as a known creator or a loyal audience, keeps a premium from trust.</desc>
+
+					<text class="t-head" x="160.5" y="22" text-anchor="middle">NO SCARCE INPUT</text>
+					<text class="t-head" x="411.5" y="22" text-anchor="middle">A SCARCE INPUT</text>
+					<text class="t-head" transform="translate(24,104) rotate(-90)" text-anchor="middle">CHECKABLE</text>
+					<text class="t-head" transform="translate(24,256) rotate(-90)" text-anchor="middle">TASTE-DRIVEN</text>
+
+					<rect class="cell-ex" x="40" y="34" width="241" height="140" rx="10"/>
+					<text class="t-warn" x="160.5" y="88" text-anchor="middle">Price falls fastest</text>
+					<text x="160.5" y="114" text-anchor="middle">Routine code</text>
+					<text x="160.5" y="136" text-anchor="middle">Standard analysis</text>
+
+					<rect class="cell-def" x="291" y="34" width="241" height="140" rx="10"/>
+					<text class="t-accent" x="411.5" y="88" text-anchor="middle">Premium from the input</text>
+					<text x="411.5" y="114" text-anchor="middle">Exclusive data</text>
+					<text x="411.5" y="136" text-anchor="middle">Licensed services</text>
+
+					<rect class="cell-ex" x="40" y="186" width="241" height="140" rx="10"/>
+					<text class="t-warn" x="160.5" y="240" text-anchor="middle">Crowded by AI output</text>
+					<text x="160.5" y="266" text-anchor="middle">Generic illustration</text>
+					<text x="160.5" y="288" text-anchor="middle">Stock copywriting</text>
+
+					<rect class="cell-def" x="291" y="186" width="241" height="140" rx="10"/>
+					<text class="t-accent" x="411.5" y="240" text-anchor="middle">Premium from trust</text>
+					<text x="411.5" y="266" text-anchor="middle">A known creator</text>
+					<text x="411.5" y="288" text-anchor="middle">A loyal audience</text>
+				</svg>
+				<figcaption><b>Figure 1.</b> Where pricing power can survive. Prices fall fastest when many suppliers can do a task and buyers can check the result. A scarce input or a trusted name can keep a premium in either row. The examples are illustrative, and a task can move between cells as technology and markets change.</figcaption>
+			</figure>
+
+			<p>Scarcity can also disappear. A dataset can become public, and a trusted brand can lose its reputation.</p>
+
+			<h2>Taste alone is thin protection</h2>
+
+			<p>Qu&rsquo;s &ldquo;No rationality&rdquo; goes too far. Two people can choose different restaurants for good reasons. They want different things. Economists use a utility function, a mathematical description of what someone wants. Once the function is known, choosing becomes an optimization problem. That means finding the choice that best fits those wants. People rarely know their preferences well enough to write such a function.</p>
+
+			<p>Machines can still learn taste. Recommendation systems already learn preferences from choices. Language models trained on many people&rsquo;s combined preferences serve &ldquo;a hypothetical &lsquo;average user&rsquo; who represents no real person particularly well,&rdquo; Cristina Garbacea <a href="https://proceedings.mlr.press/v306/garbacea26a.html" target="_blank" rel="noopener">argued at ICML 2026</a>, a major machine learning conference. Garbacea called for models that learn individual preferences. A model can learn what pleases one customer without a universal standard of good.</p>
+
+			<p>Sueyoul Kim and two coauthors <a href="https://www.nber.org/papers/w34733" target="_blank" rel="noopener">studied Pixiv</a>, a large illustration site. The launch of an AI image generator &ldquo;led to a significant decline in post uploads by illustrators,&rdquo; they found. They also found that &ldquo;comic artists were less affected.&rdquo; Illustration posts lost viewers. Illustrators who worked on the characters most flooded with AI images cut their uploads further.</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">What the Pixiv study shows</span>
+				<p>Illustrators sell work judged by taste, yet those who did not use AI still lost attention and posted less. <b>Taste can be valuable without being scarce.</b> A recognized name or a loyal audience can give a creator something buyers cannot get elsewhere.</p>
+			</div>
+
+			<h2>Choosing the question</h2>
+
+			<p>Qu&rsquo;s exception concerns the choice of problem. That choice is hard to verify. AI also reaches each stage of research at a different speed.</p>
+
+			<figure class="diagram">
+				<svg viewBox="0 0 540 318" role="img" aria-labelledby="f2-title f2-desc">
+					<title id="f2-title">The stages of a research problem</title>
+					<desc id="f2-desc">Five stages in order. Choose the problem: which question deserves the work? Define success: what result would settle it? Generate answers: prices fall here first. Validate: does the result hold up? Act on it: what changes because of it?</desc>
+					<defs>
+						<marker id="f2-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+					</defs>
+
+					<rect class="box" x="20" y="8" width="500" height="48" rx="10"/>
+					<text class="t-main" x="36" y="38">Choose the problem</text>
+					<text class="t-it" x="504" y="38" text-anchor="end">Which question deserves the work?</text>
+					<path class="ln" d="M270,57 V68" marker-end="url(#f2-ah)"/>
+
+					<rect class="box" x="20" y="70" width="500" height="48" rx="10"/>
+					<text class="t-main" x="36" y="100">Define success</text>
+					<text class="t-it" x="504" y="100" text-anchor="end">What result would settle it?</text>
+					<path class="ln" d="M270,119 V130" marker-end="url(#f2-ah)"/>
+
+					<rect class="box-hot" x="20" y="132" width="500" height="48" rx="10"/>
+					<text class="t-main" x="36" y="162">Generate answers</text>
+					<text class="t-warn" x="504" y="162" text-anchor="end">Prices fall here first</text>
+					<path class="ln" d="M270,181 V192" marker-end="url(#f2-ah)"/>
+
+					<rect class="box" x="20" y="194" width="500" height="48" rx="10"/>
+					<text class="t-main" x="36" y="224">Validate</text>
+					<text class="t-it" x="504" y="224" text-anchor="end">Does the result hold up?</text>
+					<path class="ln" d="M270,243 V254" marker-end="url(#f2-ah)"/>
+
+					<rect class="box" x="20" y="256" width="500" height="48" rx="10"/>
+					<text class="t-main" x="36" y="286">Act on it</text>
+					<text class="t-it" x="504" y="286" text-anchor="end">What changes because of it?</text>
+				</svg>
+				<figcaption><b>Figure 2.</b> The stages of a research problem. AI tools reach all five stages. Competition cuts prices first where answers are generated and checked automatically. The stages depend on each other. Cheaper answers also make it cheaper to test which problems are worth choosing.</figcaption>
+			</figure>
+
+			<p>Better solvers make it cheaper to test which questions can be solved. AI may also get good at proposing questions. Faster answers give little evidence of how well a model judges which problems matter.</p>
+
+			<h2>When the checker is wrong</h2>
+
+			<p>Lukas Helff and colleagues <a href="https://arxiv.org/abs/2604.15149" target="_blank" rel="noopener">found in 2026</a> that reasoning models trained with RLVR to find general rules from examples &ldquo;systematically abandon rule induction.&rdquo; Their verifiers checked only whether each output label was right. The models learned to list labels for the examples they saw and skipped the general rule. They used this shortcut more as tasks got harder. They also used it more when given more computing power to produce an answer. A stricter verifier removed the shortcut by checking the answer on an equivalent version of the task.</p>
+
+			<p>Medicine has a similar problem in daily use. The Epic Sepsis Model predicts sepsis, a dangerous response to infection. It scores hospital patients every 15 minutes and is used at hundreds of US hospitals.</p>
+
+			<p>When Andrew Wong and colleagues <a href="https://doi.org/10.1001/jamainternmed.2021.2626" target="_blank" rel="noopener">tested it at Michigan Medicine</a>, the study covered 38,455 hospitalizations. The model missed 1,709 of the 2,552 patients who developed sepsis. That was 67 percent of the sepsis cases. It raised alerts for 18 percent of all hospitalized patients.</p>
+
+			<p>It flagged only 183 sepsis patients who had not already received timely antibiotics. Whether a patient developed sepsis can be checked. Clinicians needed the model to catch cases they would otherwise miss without overwhelming them with alerts.</p>
+
+			<p>I work on evaluating AI agents in science and medicine. An agent is software that uses AI to carry out tasks. It can reach a conclusion that looks correct even when the evidence does not support it. A checkable answer may still answer the wrong question. Choosing the target matters more as models get better at hitting it.</p>
+
+			<h2>Tasks change before jobs do</h2>
+
+			<p>Most jobs are made up of tasks. AI learns to do these tasks at different speeds. A software engineer writes code. The job also includes deciding what to build and working out why it broke.</p>
+
+			<p>Daron Acemoglu and Pascual Restrepo <a href="https://www.nber.org/papers/w25684" target="_blank" rel="noopener">describe automation</a> as two forces. Machines take over existing tasks and displace workers. New tasks bring demand for labour back.</p>
+
+			<p>Erik Brynjolfsson and two coauthors <a href="https://www.nber.org/papers/w31161" target="_blank" rel="noopener">studied an AI assistant</a> used by 5,179 customer support workers. Issues resolved per hour rose 14 percent on average. For novice and low-skilled workers, the rise was 34 percent. The study covers one kind of job, where part of the work became cheaper. It says little about employment elsewhere.</p>
+
+			<h2>Where the premium moves</h2>
+
+			<p>When coding was expensive, firms could charge for the code itself. As it gets cheaper, a firm selling only code faces the price fall Qu describes. A customer still needs a system that fits the rest of the business and keeps working. Firms can charge for building and maintaining that system.</p>
+
+			<p>A drug discovery company can sell predictions about what a drug could act on. Testing those predictions in experiments gives it evidence that is scarcer than the predictions. Taking responsibility for a result earns a premium only if rivals cannot easily copy what supports it.</p>
+
+			<h2>How the prediction could be tested</h2>
+
+			<p>Three measurements would test the prediction. The first is what buyers pay for a standard analysis or a code change. The work&rsquo;s reliability would have to be checked independently. The second is spending on independent evaluation where mistakes are expensive. The third is whether buyers still pay for a particular creator&rsquo;s name once equivalent work is cheap.</p>
+
+			<h2>Who decides what is worth doing</h2>
+
+			<p>Cheap answers would let small labs run analyses that only large institutions can afford today. Researchers could test far more ideas. Their time and attention would still be limited. Someone would have to decide which problems deserve them. Those decisions rest on evidence and on what people value, and people can argue for them with reasons.</p>
+
+			<p>Cheap code makes it more valuable to understand code well enough to catch a wrong answer.</p>
+
+			<p><strong>When answers get cheap, the premium moves to choosing the questions and checking the answers.</strong></p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://x.com/quxiaoyin/status/2109208643157754297" target="_blank" rel="noopener">Xiaoyin Qu, on the value of verifiable tasks</a> (11 October 2026), the post this essay responds to.</li>
+				<li><a href="https://doi.org/10.1038/s41586-025-09422-z" target="_blank" rel="noopener">Guo et al., <i>DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning</i></a> (<i>Nature</i>, 2025), on training with verifiable rewards.</li>
+				<li><a href="https://github.com/openai/math" target="_blank" rel="noopener">OpenAI, <i>openai/math</i></a> (6 October 2026), the manuscripts and Lean proofs from an internal model.</li>
+				<li><a href="https://arxiv.org/abs/2604.15149" target="_blank" rel="noopener">Helff et al., <i>LLMs gaming verifiers: RLVR can lead to reward hacking</i></a> (2026 preprint), on models that satisfy a checker without solving the task.</li>
+				<li><a href="https://www.nber.org/papers/w34733" target="_blank" rel="noopener">Kim et al., <i>Does generative AI crowd out human creators? Evidence from Pixiv</i></a> (NBER working paper, 2026), on AI competition in illustration.</li>
+				<li><a href="https://doi.org/10.1001/jamainternmed.2021.2626" target="_blank" rel="noopener">Wong et al., <i>External validation of a widely implemented proprietary sepsis prediction model in hospitalized patients</i></a> (<i>JAMA Internal Medicine</i>, 2021).</li>
+				<li><a href="https://www.nber.org/papers/w31161" target="_blank" rel="noopener">Brynjolfsson et al., <i>Generative AI at work</i></a> (<i>Quarterly Journal of Economics</i>, 2025), on an AI assistant in customer support.</li>
+				<li><a href="https://www.nber.org/papers/w25684" target="_blank" rel="noopener">Acemoglu and Restrepo, <i>Automation and new tasks</i></a> (<i>Journal of Economic Perspectives</i>, 2019), on displacement and new work.</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">verifiable rewards</span>
+				<span class="tag">economics</span>
+				<span class="tag">AI evaluation</span>
+				<span class="tag">future of work</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+
+</body>
+</html>
