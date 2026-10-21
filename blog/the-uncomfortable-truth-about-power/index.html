@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>The uncomfortable truth about power: why merit alone is not enough | Chen-Yang Su</title>
+	<meta name="description" content="Semmelweis cut deaths in his clinic ninefold and was out of a job two years later. Jeffrey Pfeffer argues that getting good work adopted is a learnable skill." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/the-uncomfortable-truth-about-power/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="The uncomfortable truth about power: why merit alone is not enough">
+	<meta property="og:description" content="Semmelweis cut deaths in his clinic ninefold and was out of a job two years later. Jeffrey Pfeffer argues that getting good work adopted is a learnable skill.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/the-uncomfortable-truth-about-power/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-21">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="The uncomfortable truth about power: why merit alone is not enough">
+	<meta name="twitter:description" content="Semmelweis cut deaths in his clinic ninefold and was out of a job two years later. Jeffrey Pfeffer argues that getting good work adopted is a learnable skill.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The cartoons, charts and diagrams in this post are inline SVG and
+		   HTML coloured with the site's tokens, so they follow the light and
+		   dark themes. Card grids and comic panels reflow at phone width. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Figure 2: the seven rules as cards */
+		.rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.rule { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 10px 14px; text-align: center; }
+		.prose .rule svg { width: 76px; height: 76px; margin: 0 auto 4px; border-radius: 0; }
+		.prose .rule-num { font-size: 11.5px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin: 0 0 2px; }
+		.prose .rule-name { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; line-height: 1.35; text-transform: uppercase; color: var(--accent-dark); margin: 0 0 6px; }
+		.prose .rule-says { font-family: 'Source Serif 4', Georgia, serif; font-style: italic; font-size: 15px; line-height: 1.38; color: var(--ink); margin: 0; }
+		.rule-quote { display: flex; flex-direction: column; justify-content: center; text-align: left; background: var(--tag-bg); border-color: var(--tag-border); }
+		.prose .rule-quote .rule-says { font-size: 17px; }
+		.prose .rule-src { font-size: 13px; line-height: 1.4; color: var(--ink-light); margin: 8px 0 0; }
+
+		/* Figure 4: comic panels */
+		.strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.panel { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px 12px; }
+		.prose .panel svg { border-radius: 0; }
+		.prose .panel-beat { font-size: 12px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+		.prose .panel-text { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 8px 0 0; }
+
+		@media (max-width: 720px) {
+			.rules { grid-template-columns: repeat(2, 1fr); }
+			.strip { grid-template-columns: 1fr; }
+			.prose .strip .panel svg { max-width: 320px; margin: 0 auto; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-tick { font-size: 14px; }
+		.toon .t-it { font-style: italic; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-coin { font-size: 13px; font-weight: 900; fill: var(--ink); }
+		.toon .t-dots { font-size: 18px; font-weight: 900; fill: var(--ink); }
+		.toon .t-name { font-size: 16px; fill: var(--ink); }
+		.toon .t-big { font-size: 18px; font-weight: 900; fill: var(--ink); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; }
+		.toon .ln-red { fill: none; stroke: var(--award); stroke-width: 2.2; stroke-linecap: round; }
+		.toon .ln-acc { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+		.toon .ln-gold { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2; stroke-linecap: round; }
+		.toon .ln-arrow { fill: none; stroke: var(--ink-light); stroke-width: 1.8; }
+		.toon .ln-rule { fill: none; stroke: var(--tag-border); stroke-width: 1.6; stroke-dasharray: 4 4; }
+		.toon .ln-grid { fill: none; stroke: var(--rule); stroke-width: 1; }
+		.toon .ln-axis { fill: none; stroke: var(--ink-light); stroke-width: 1.2; }
+		.toon .ln-first { fill: none; stroke: var(--award); stroke-width: 2.6; stroke-linejoin: round; }
+		.toon .ln-second { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linejoin: round; stroke-dasharray: 7 5; }
+		.toon .ln-event { fill: none; stroke: var(--good); stroke-width: 1.8; stroke-dasharray: 5 4; }
+		.toon .ln-event-red { fill: none; stroke: var(--award); stroke-width: 1.8; stroke-dasharray: 5 4; }
+		.toon .ln-net { fill: none; stroke: var(--ink-light); stroke-width: 1.4; }
+		.toon .ln-bridge { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2.2; stroke-dasharray: 5 4; stroke-linecap: round; }
+		.toon .ln-wave { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; opacity: 0.45; }
+		.toon .ln-link { fill: none; stroke: var(--good); stroke-width: 5; stroke-linecap: round; opacity: 0.4; }
+		.toon .ln-track-red { fill: none; stroke: var(--award); stroke-width: 4; stroke-linecap: round; }
+		.toon .ln-track-blue { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
+		.toon .ln-after { fill: none; stroke: var(--ink-light); stroke-width: 2.4; stroke-dasharray: 1 6; stroke-linecap: round; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .head-sm { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon .eye { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .card { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .bubble { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .lens { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 4; }
+		.toon .water { fill: var(--tag-bg); stroke: var(--tag-border); stroke-width: 1.5; }
+		.toon .island { fill: var(--flag-bg); stroke: var(--gold-hl-ink); stroke-width: 1.6; }
+		.toon .node-a { fill: var(--paper-bg); stroke: var(--accent); stroke-width: 2.2; }
+		.toon .node-b { fill: var(--paper-bg); stroke: var(--good); stroke-width: 2.2; }
+		.toon .band { fill: var(--good); opacity: 0.3; }
+		.toon .hl { fill: var(--gold-hl-ink); opacity: 0.35; }
+		.toon .fade { opacity: 0.35; }
+		.toon .pp-yes { fill: var(--good); }
+		.toon .pp-no { fill: var(--ink-light); opacity: 0.35; }
+		.toon .mk-first { fill: var(--award); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .mk-second { fill: var(--accent); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .dot-ctrl { fill: var(--paper-bg); stroke: var(--ink-light); stroke-width: 2.2; }
+		.toon .dot-boost { fill: var(--good); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .red { fill: var(--award); }
+		.toon .grn { fill: var(--good); }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .eraser { fill: var(--warn-bg); stroke: var(--award); stroke-width: 2; }
+		.toon .ah { fill: var(--ink-light); }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "The uncomfortable truth about power: why merit alone is not enough",
+		"description": "Semmelweis cut deaths in his clinic ninefold and was out of a job two years later. Jeffrey Pfeffer argues that getting good work adopted is a learnable skill.",
+		"datePublished": "2026-10-21",
+		"url": "https://chenyangsu.github.io/blog/the-uncomfortable-truth-about-power/",
+		"keywords": "power, careers, influence, networks",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/the-uncomfortable-truth-about-power/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">Careers</p>
+
+		<h1 class="post-title">The uncomfortable truth about power: why merit alone is not enough</h1>
+
+		<p class="post-standfirst">In 1847 Ignaz Semmelweis began making medical students wash their hands, and the death rate in his Vienna maternity clinic fell ninefold. Two years later he was out of a job. Jeffrey Pfeffer of Stanford argues that doing good work and getting it adopted are separate skills, and that the second one can be learned.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-21">21 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>Semmelweis&rsquo;s handwashing cut deaths in his clinic from <strong>11.4% of births in 1846 to 1.3% in 1848</strong>. Two scholars who recalculated the numbers trace the opposition he met to something other than doubts about the washing.</li>
+				<li>Pfeffer writes that power is important for career success, &ldquo;maybe more important than job performance,&rdquo; and he calls the skills behind it <strong>&ldquo;all learnable and teachable.&rdquo;</strong></li>
+				<li>Students who had to get five strangers to fill out a questionnaire <strong>expected to ask 20.5 people and needed 10.5</strong>.</li>
+				<li>In a map test done in pairs, <strong>overconfidence predicted how competent a partner rated someone about as well as actual skill did</strong>.</li>
+				<li>A random donation to new Kickstarter projects <strong>raised the share that drew other backers from 39% to 70%</strong>.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>In May 1847, Ignaz Semmelweis, an assistant in the First Maternity Clinic of the Vienna General Hospital, <a href="https://www.jameslindlibrary.org/articles/ignaz-phillip-semmelweis-studies-of-death-in-childbirth/" target="_blank" rel="noopener">began requiring medical students to wash their hands</a> in chloride of lime before they examined women giving birth. The students came to the ward from the dissecting room. Semmelweis suspected that they carried what he later called &ldquo;decomposing animal organic matter&rdquo; from the corpses on their hands.</p>
+
+			<p>The First Clinic trained doctors and medical students. The hospital&rsquo;s Second Clinic trained midwives, who did no post-mortems, and far fewer of its mothers died. In 1846, 459 of the 4,010 women who gave birth in the First Clinic died, about one in nine. In 1848, the first full year of washing, 45 of 3,556 died, about one in eighty. That was almost exactly the rate in the midwives&rsquo; clinic.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 340" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">Deaths in the two Vienna maternity clinics, 1841 to 1849</title>
+					<desc id="f1-desc">A line chart of maternal deaths as a percentage of births each year from 1841 to 1849. The First Clinic, which trained doctors and medical students, runs between about 7 and 16 percent from 1841 to 1846. The Second Clinic, which trained midwives, runs between about 2 and 8 percent. A dashed green line marks mid-May 1847, when handwashing began. The First Clinic falls to 5.0 percent in 1847 and 1.3 percent in 1848, level with the Second Clinic. A dashed red line marks March 1849, when Semmelweis was out of a job.</desc>
+
+					<path class="ln-grid" d="M70,305 H540 M70,230 H540 M70,155 H540 M70,80 H540"/>
+					<text class="t-tick" x="62" y="309" text-anchor="end">0%</text>
+					<text class="t-tick" x="62" y="234" text-anchor="end">5%</text>
+					<text class="t-tick" x="62" y="159" text-anchor="end">10%</text>
+					<text class="t-tick" x="62" y="84" text-anchor="end">15%</text>
+					<text class="t-tick" transform="translate(16,192) rotate(-90)" text-anchor="middle">Mothers who died (% of births)</text>
+					<text class="t-tick" x="78" y="326" text-anchor="middle">1841</text>
+					<text class="t-tick" x="134" y="326" text-anchor="middle">1842</text>
+					<text class="t-tick" x="190" y="326" text-anchor="middle">1843</text>
+					<text class="t-tick" x="246" y="326" text-anchor="middle">1844</text>
+					<text class="t-tick" x="302" y="326" text-anchor="middle">1845</text>
+					<text class="t-tick" x="358" y="326" text-anchor="middle">1846</text>
+					<text class="t-tick" x="414" y="326" text-anchor="middle">1847</text>
+					<text class="t-tick" x="470" y="326" text-anchor="middle">1848</text>
+					<text class="t-tick" x="526" y="326" text-anchor="middle">1849</text>
+
+					<path class="ln-first" d="M14,14 H42"/>
+					<circle class="mk-first" cx="28" cy="14" r="4.5"/>
+					<text class="t-small" x="50" y="18.5">First Clinic (doctors and medical students)</text>
+					<path class="ln-second" d="M14,36 H42"/>
+					<rect class="mk-second" x="24" y="32" width="8" height="8"/>
+					<text class="t-small" x="50" y="40.5">Second Clinic (midwives)</text>
+
+					<path class="ln-event" d="M407,80 V305"/>
+					<text class="t-good" x="400" y="57" text-anchor="end">Handwashing begins</text>
+					<text class="t-small" x="400" y="74" text-anchor="end">mid-May 1847</text>
+					<path class="soft" d="M224,52 Q237,70 250,52 Z"/>
+					<path class="acc" d="M232,34 q4,7 0,10 q-4,-3 0,-10 Z"/>
+					<path class="acc" d="M242,40 q3,6 0,8 q-3,-2 0,-8 Z"/>
+
+					<path class="ln-event-red" d="M510,80 V305"/>
+					<text class="t-red" x="548" y="57" text-anchor="end">Semmelweis out</text>
+					<text class="t-small" x="548" y="74" text-anchor="end">March 1849</text>
+
+					<path class="ln-first" d="M78,187.9 L134,68.6 L190,170.7 L246,181.5 L302,201.5 L358,133.3 L414,229.4 L470,286 L526,265"/>
+					<path class="ln-second" d="M78,252.2 L134,191 L190,215.2 L246,270.5 L302,274.5 L358,263 L414,290.5 L470,285.6 L526,266.3"/>
+					<rect class="mk-second" x="74" y="248.2" width="8" height="8"/>
+					<rect class="mk-second" x="130" y="187" width="8" height="8"/>
+					<rect class="mk-second" x="186" y="211.2" width="8" height="8"/>
+					<rect class="mk-second" x="242" y="266.5" width="8" height="8"/>
+					<rect class="mk-second" x="298" y="270.5" width="8" height="8"/>
+					<rect class="mk-second" x="354" y="259" width="8" height="8"/>
+					<rect class="mk-second" x="410" y="286.5" width="8" height="8"/>
+					<rect class="mk-second" x="466" y="281.6" width="8" height="8"/>
+					<rect class="mk-second" x="522" y="262.3" width="8" height="8"/>
+					<circle class="mk-first" cx="78" cy="187.9" r="4.5"/>
+					<circle class="mk-first" cx="134" cy="68.6" r="4.5"/>
+					<circle class="mk-first" cx="190" cy="170.7" r="4.5"/>
+					<circle class="mk-first" cx="246" cy="181.5" r="4.5"/>
+					<circle class="mk-first" cx="302" cy="201.5" r="4.5"/>
+					<circle class="mk-first" cx="358" cy="133.3" r="4.5"/>
+					<circle class="mk-first" cx="414" cy="229.4" r="4.5"/>
+					<circle class="mk-first" cx="470" cy="286" r="4.5"/>
+					<circle class="mk-first" cx="526" cy="265" r="4.5"/>
+
+					<text class="t-main" x="350" y="106" text-anchor="end">459 of 4,010 died</text>
+					<text class="t-small" x="350" y="122" text-anchor="end">in 1846</text>
+					<text class="t-main" x="420" y="190" text-anchor="start">45 of 3,556</text>
+					<text class="t-small" x="420" y="206" text-anchor="start">died in 1848</text>
+					<path class="ln-thin" d="M464,212 L469,276"/>
+				</svg>
+				<figcaption><b>Figure 1.</b> Maternal deaths as a share of births in the two maternity clinics of the Vienna General Hospital, 1841&ndash;1849, computed from the yearly counts <a href="https://www.jameslindlibrary.org/semmelweis-i-1861/" target="_blank" rel="noopener">Semmelweis published in 1861</a> (tables 1 and 12 of K. Codell Carter&rsquo;s 1983 translation). Handwashing began in the First Clinic in mid-May 1847, so the 1847 value mixes months before and after. Each clinic recorded about 2,400 to 4,000 births a year.</figcaption>
+			</figure>
+
+			<p>Two years later Semmelweis was out of a job. In 1849 he was removed from his post as assistant. When Pablo Jadraque and K. Codell Carter, who translated Semmelweis&rsquo;s book into English, <a href="https://doi.org/10.1017/S0950268817000875" target="_blank" rel="noopener">recalculated the clinic&rsquo;s deaths</a> in 2017, they found that the rate stayed low after he left, which suggests that his successors kept up the washing. The opposition he met, they concluded, &ldquo;had other sources than doubts about the effectiveness of the chlorine washings.&rdquo;</p>
+
+			<p>Semmelweis waited thirteen years to publish his own account. The historian Irvine Loudon describes a treatise of more than 500 pages that mixes &ldquo;passages of great clarity&rdquo; with &ldquo;bellicose passages in which he attacks his critics.&rdquo; In 1865 Semmelweis was admitted to an asylum, where he died two weeks later. His work, Loudon writes, &ldquo;had very little effect on obstetric practice.&rdquo;</p>
+
+			<p>Semmelweis had the numbers. He could not get his profession to act on them. Jeffrey Pfeffer has spent his career studying that gap between being right and getting something done.</p>
+
+			<h2>The cod liver oil of the business school</h2>
+
+			<p>Pfeffer is the <a href="https://www.gsb.stanford.edu/faculty-research/faculty/jeffrey-pfeffer" target="_blank" rel="noopener">Thomas D. Dee II Professor of Organizational Behavior</a> at Stanford Graduate School of Business, where he has taught since 1979, and he holds a courtesy appointment in health policy at Stanford&rsquo;s medical school. After joining Stanford he wanted to teach something &ldquo;important, under-researched, and under-taught,&rdquo; and he chose power. His elective, now called The Paths to Power, <a href="https://www.gsb.stanford.edu/experience/news-history/back-class-paths-power" target="_blank" rel="noopener">carries a boldface warning</a> on its syllabus, &ldquo;This Class Is Not for Everyone.&rdquo; In the winter of 2021, two students were turned away for every one admitted. A student once described it as &ldquo;the cod liver oil of the GSB: You know it&rsquo;s good for you, but you feel a little nervous about it.&rdquo;</p>
+
+			<p>Pfeffer made his case to general readers in two books, <a href="https://jeffreypfeffer.com/books/power-why-some-people-have-it-and-others-dont/" target="_blank" rel="noopener"><i>Power: Why Some People Have It and Others Don&rsquo;t</i></a> (2010) and <a href="https://jeffreypfeffer.com/books/7-rules-of-power/" target="_blank" rel="noopener"><i>7 Rules of Power</i></a> (2022). Power, he writes, is important for career success, &ldquo;maybe more important than job performance.&rdquo; <a href="https://www.gsb.stanford.edu/faculty-research/books/power-why-some-people-have-it-others-dont" target="_blank" rel="noopener">Stanford&rsquo;s summary</a> of the first book describes the mistake he wants to correct. &ldquo;By believing that life is fair, we tend to subscribe to the &lsquo;just-world phenomenon,&rsquo; which leaves us unprepared for the challenges and competition of the real world.&rdquo;</p>
+
+			<figure>
+				<div class="rules">
+					<div class="rule">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<circle class="head" cx="50" cy="54" r="32"/>
+							<path class="ln" d="M31,41 l11,-4 M69,41 l-11,-4"/>
+							<circle class="ink" cx="39" cy="49" r="3.2"/>
+							<circle class="ink" cx="61" cy="49" r="3.2"/>
+							<path class="ln" d="M34,68 H64"/>
+							<path class="ln-thin" d="M38,64 v8 M44,64 v8 M50,64 v8 M56,64 v8"/>
+							<rect class="gold" x="63" y="64" width="9" height="13" rx="2"/>
+							<path class="acc" d="M82,24 q6,9 0,13 q-6,-4 0,-13 Z"/>
+						</svg>
+						<p class="rule-num">Rule 1</p>
+						<p class="rule-name">Get out of your own way</p>
+						<p class="rule-says">&ldquo;In order to acquire power, you have to be brave.&rdquo;</p>
+					</div>
+					<div class="rule">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<g transform="rotate(-14 28 56)">
+								<rect class="gold" x="6" y="47" width="42" height="18" rx="2"/>
+								<path class="ln-thin" d="M12,47 v6 M18,47 v9 M24,47 v6 M30,47 v9 M36,47 v6 M42,47 v9"/>
+							</g>
+							<g transform="rotate(16 72 56)">
+								<rect class="gold" x="52" y="47" width="42" height="18" rx="2"/>
+								<path class="ln-thin" d="M58,47 v6 M64,47 v9 M70,47 v6 M76,47 v9 M82,47 v6 M88,47 v9"/>
+							</g>
+							<path class="ln-red" d="M50,34 l0,-10 M42,36 l-6,-7 M58,36 l6,-7"/>
+						</svg>
+						<p class="rule-num">Rule 2</p>
+						<p class="rule-name">Break the rules</p>
+						<p class="rule-says">&ldquo;Most people will follow the rules, because that&rsquo;s what they&rsquo;re taught to do.&rdquo;</p>
+					</div>
+					<div class="rule">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<path class="shirt" d="M20,98 L26,64 Q50,52 74,64 L80,98 Z"/>
+							<path class="card" d="M40,58 L50,82 L60,58 Z" style="stroke-width: 2"/>
+							<path class="acc" d="M47,60 L53,60 L55,66 L50,86 L45,66 Z"/>
+							<path class="ln" d="M40,58 L45,76 M60,58 L55,76"/>
+							<circle class="head" cx="50" cy="31" r="18"/>
+							<circle class="ink" cx="43.5" cy="29" r="2.4"/>
+							<circle class="ink" cx="56.5" cy="29" r="2.4"/>
+							<path class="ln" d="M43,37 q7,5 14,0"/>
+						</svg>
+						<p class="rule-num">Rule 3</p>
+						<p class="rule-name">Show up in powerful fashion</p>
+						<p class="rule-says">&ldquo;Appearance is always reality.&rdquo;</p>
+					</div>
+					<div class="rule">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<path class="ln-thin" d="M38,30 L45,8 M62,30 L55,8"/>
+							<rect class="card" x="16" y="28" width="68" height="54" rx="7" style="stroke-width: 2.2"/>
+							<path class="acc" d="M16,35 a7,7 0 0 1 7,-7 h54 a7,7 0 0 1 7,7 v7 h-68 Z"/>
+							<path class="gold" transform="translate(50,63)" d="M0,-13 L3.8,-4.3 L13,-4 L6,2.2 L8,11.5 L0,6.6 L-8,11.5 L-6,2.2 L-13,-4 L-3.8,-4.3 Z"/>
+						</svg>
+						<p class="rule-num">Rule 4</p>
+						<p class="rule-name">Create a powerful brand</p>
+						<p class="rule-says">&ldquo;If everybody thinks you&rsquo;re a genius, you are.&rdquo;</p>
+					</div>
+					<div class="rule">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<path class="ln-net" d="M22,30 L52,54 M50,14 L52,54 M80,30 L52,54 M18,72 L52,54 M84,74 L52,54 M50,90 L52,54 M22,30 L50,14 M50,14 L80,30 M80,30 L84,74 M18,72 L50,90 M22,30 L18,72 M84,74 L50,90"/>
+							<circle class="node-a" cx="22" cy="30" r="7"/>
+							<circle class="node-a" cx="50" cy="14" r="7"/>
+							<circle class="node-b" cx="80" cy="30" r="7"/>
+							<circle class="node-a" cx="18" cy="72" r="7"/>
+							<circle class="node-b" cx="84" cy="74" r="7"/>
+							<circle class="node-b" cx="50" cy="90" r="7"/>
+							<circle class="gold" cx="52" cy="54" r="10"/>
+						</svg>
+						<p class="rule-num">Rule 5</p>
+						<p class="rule-name">Network relentlessly</p>
+						<p class="rule-says">&ldquo;You need non-redundant people and information.&rdquo;</p>
+					</div>
+					<div class="rule">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<path class="ln-thin" d="M28,90 H72"/>
+							<path class="soft" d="M50,70 L39,90 L61,90 Z"/>
+							<path class="ln" style="stroke-width: 4" d="M12,82 L90,50"/>
+							<circle class="gold" cx="82" cy="40" r="11"/>
+							<path class="ln-red" style="stroke-width: 3" d="M20,40 V66"/>
+							<path class="red" d="M13,63 L20,75 L27,63 Z"/>
+						</svg>
+						<p class="rule-num">Rule 6</p>
+						<p class="rule-name">Use your power</p>
+						<p class="rule-says">&ldquo;If you want to get them out of equilibrium, you need some force.&rdquo;</p>
+					</div>
+					<div class="rule">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<path class="ln" d="M30,26 Q16,26 20,40 Q24,50 33,48 M62,26 Q76,26 72,40 Q68,50 59,48"/>
+							<path class="gold" d="M28,18 H64 V36 Q64,56 46,58 Q28,56 28,36 Z"/>
+							<rect class="gold" x="42" y="58" width="8" height="10"/>
+							<rect class="gold" x="32" y="68" width="28" height="9" rx="2"/>
+							<path class="ln-thin" style="opacity: 0.45" d="M18,90 q6,-4 12,0 t12,0 t12,0"/>
+							<g transform="rotate(-28 78 84)">
+								<rect class="eraser" x="64" y="77" width="28" height="14" rx="3"/>
+								<rect class="acc" x="64" y="77" width="10" height="14" rx="2"/>
+							</g>
+							<circle class="ink" cx="60" cy="94" r="1.4"/>
+							<circle class="ink" cx="65" cy="96" r="1.1"/>
+						</svg>
+						<p class="rule-num">Rule 7</p>
+						<p class="rule-name">Forgiven, forgotten, or both</p>
+						<p class="rule-says">&ldquo;People will tend to forgive and forget what you did to acquire it.&rdquo;</p>
+					</div>
+					<div class="rule rule-quote">
+						<p class="rule-says">&ldquo;This stuff is all learnable and teachable.&rdquo;</p>
+						<p class="rule-src">Jeffrey Pfeffer, 2022</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 2.</b> The seven rules from Pfeffer&rsquo;s <i>7 Rules of Power</i> (2022), each paired with a line from his <a href="https://www.gsb.stanford.edu/insights/introducing-steps-toward-power-nice-generation" target="_blank" rel="noopener">2022 interview with Stanford&rsquo;s business school</a>. The seventh rule&rsquo;s name is shortened. The drawings are illustrative.</figcaption>
+			</figure>
+
+			<p>The rules are blunt, and Pfeffer&rsquo;s central claim about them is hopeful. &ldquo;This stuff is all learnable and teachable,&rdquo; he said in the 2022 interview. &ldquo;You&rsquo;re not born one thing or the other.&rdquo;</p>
+
+			<p>Power in Pfeffer&rsquo;s sense is the capacity to get things done. Formal authority is one source of it. Control of something other people need is another. A hypothetical postdoc who maintains the lab&rsquo;s only working copy of a hard-won dataset becomes central to every collaboration that needs it, whatever their title.</p>
+
+			<h2>Being right is half the job</h2>
+
+			<p>Pfeffer&rsquo;s first target is the belief that good work speaks for itself. People who decide on promotions or grants rarely have time to judge every contribution in depth, so they lean on quicker signals, such as a recommendation from someone they trust.</p>
+
+			<p>Two hypothetical engineers solve equally hard problems in the same year. One of them also explains her work in the meetings where leaders decide what to fund next. When a team-lead role opens, the people choosing have heard of only one of them.</p>
+
+			<p>The just-world belief makes that outcome look fair after the fact. If merit is always rewarded, the engineer who was passed over must have had less of it. Pfeffer treats making work visible as part of the work, and there is nothing virtuous about staying invisible.</p>
+
+			<p>Semmelweis is the extreme case. His method apparently survived in his own clinic after he left. Elsewhere it had few supporters, and antisepsis did not become routine in obstetrics until the 1880s.</p>
+
+			<h2>Asking works twice as often as people expect</h2>
+
+			<p>Pfeffer&rsquo;s first two rules, get out of your own way and break the rules, are about inhibitions people learn early. &ldquo;Most people will follow the rules, because that&rsquo;s what they&rsquo;re taught to do,&rdquo; he said. &ldquo;In order to acquire power, you have to be brave, which is why most people don&rsquo;t acquire power.&rdquo;</p>
+
+			<p>One of those inhibitions is the expectation that strangers will say no. Francis Flynn, now a colleague of Pfeffer&rsquo;s at Stanford, tested how accurate that expectation is. In a <a href="https://doi.org/10.1037/0022-3514.95.1.128" target="_blank" rel="noopener">2008 study with Vanessa Bohns</a>, 42 Columbia University students each had to get five strangers to fill out a questionnaire, using a single scripted line, &ldquo;Will you fill out a questionnaire?&rdquo; The students asked to predict beforehand expected to approach 20.5 people on average. They needed 10.5.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 272" role="img" aria-labelledby="f3-title f3-desc">
+					<title id="f3-title">Strangers approached to get five yeses</title>
+					<desc id="f3-desc">A cartoon student with a clipboard asks, will you fill out a questionnaire? Below are two rows of little people. The predicted row has twenty and a half people, of whom five are green for yes. The actual row has ten and a half people, of whom five are green. An arrow between the ends of the rows reads ten fewer asks.</desc>
+					<defs>
+						<marker id="f3-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+						<clipPath id="f3-half1"><rect x="500" y="110" width="16" height="60"/></clipPath>
+						<clipPath id="f3-half2"><rect x="300" y="180" width="16" height="60"/></clipPath>
+						<symbol id="f3-pp" viewBox="-8 0 16 28" width="16" height="28" overflow="visible">
+							<circle cx="0" cy="5.5" r="5.5"/>
+							<rect x="-6.5" y="12.5" width="13" height="15.5" rx="5.5"/>
+						</symbol>
+					</defs>
+
+					<circle class="head" cx="44" cy="40" r="18"/>
+					<circle class="ink" cx="38" cy="38" r="2.3"/>
+					<circle class="ink" cx="50" cy="38" r="2.3"/>
+					<path class="ln" d="M38,47 q6,5 12,0"/>
+					<rect class="shirt" x="27" y="60" width="34" height="42" rx="13"/>
+					<rect class="card" x="58" y="66" width="22" height="28" rx="2" style="stroke-width: 2"/>
+					<rect class="gold" x="64" y="62.5" width="10" height="6" rx="1.5"/>
+					<path class="ln-thin" d="M62,77 H76 M62,83 H76 M62,89 H72"/>
+					<rect class="bubble" x="94" y="12" width="262" height="38" rx="16"/>
+					<path class="bubble" d="M106,48 L84,60 L124,48"/>
+					<path style="fill: var(--paper-bg)" d="M104,46 H128 V51 H104 Z"/>
+					<text class="t-it" x="225" y="36" text-anchor="middle">Will you fill out a questionnaire?</text>
+
+					<text class="t-head" x="548" y="28" text-anchor="end">STRANGERS ASKED</text>
+					<text class="t-head" x="548" y="44" text-anchor="end">TO GET FIVE YESES</text>
+					<use href="#f3-pp" class="pp-yes" x="392" y="70" width="10" height="17"/>
+					<text class="t-small" x="406" y="84">said yes</text>
+					<use href="#f3-pp" class="pp-no" x="474" y="70" width="10" height="17"/>
+					<text class="t-small" x="488" y="84">said no</text>
+
+					<text class="t-main" x="12" y="134">Predicted</text>
+					<text class="t-small" x="12" y="151">20.5 asks</text>
+					<g class="pp-no">
+						<use href="#f3-pp" x="108" y="120"/><use href="#f3-pp" x="128" y="120"/><use href="#f3-pp" x="148" y="120"/>
+						<use href="#f3-pp" x="188" y="120"/><use href="#f3-pp" x="208" y="120"/><use href="#f3-pp" x="228" y="120"/>
+						<use href="#f3-pp" x="268" y="120"/><use href="#f3-pp" x="288" y="120"/><use href="#f3-pp" x="308" y="120"/>
+						<use href="#f3-pp" x="348" y="120"/><use href="#f3-pp" x="368" y="120"/><use href="#f3-pp" x="388" y="120"/>
+						<use href="#f3-pp" x="428" y="120"/><use href="#f3-pp" x="448" y="120"/><use href="#f3-pp" x="468" y="120"/>
+						<g clip-path="url(#f3-half1)"><use href="#f3-pp" x="508" y="120"/></g>
+					</g>
+					<g class="pp-yes">
+						<use href="#f3-pp" x="168" y="120"/><use href="#f3-pp" x="248" y="120"/><use href="#f3-pp" x="328" y="120"/>
+						<use href="#f3-pp" x="408" y="120"/><use href="#f3-pp" x="488" y="120"/>
+					</g>
+
+					<text class="t-main" x="12" y="204">Actual</text>
+					<text class="t-small" x="12" y="221">10.5 asks</text>
+					<g class="pp-no">
+						<use href="#f3-pp" x="108" y="190"/><use href="#f3-pp" x="148" y="190"/><use href="#f3-pp" x="188" y="190"/>
+						<use href="#f3-pp" x="228" y="190"/><use href="#f3-pp" x="268" y="190"/>
+						<g clip-path="url(#f3-half2)"><use href="#f3-pp" x="308" y="190"/></g>
+					</g>
+					<g class="pp-yes">
+						<use href="#f3-pp" x="128" y="190"/><use href="#f3-pp" x="168" y="190"/><use href="#f3-pp" x="208" y="190"/>
+						<use href="#f3-pp" x="248" y="190"/><use href="#f3-pp" x="288" y="190"/>
+					</g>
+
+					<path class="ln-rule" d="M318,226 V250 M518,156 V250"/>
+					<path class="ln-arrow" d="M322,246 H514" marker-start="url(#f3-ah)" marker-end="url(#f3-ah)"/>
+					<text class="t-main" x="418" y="266" text-anchor="middle">10 fewer asks</text>
+				</svg>
+				<figcaption><b>Figure 3.</b> The first study in Flynn and Lake (2008). Each of 42 students had to get five strangers to fill out a questionnaire. The 23 asked to predict expected to approach 20.5 people on average and needed 10.5. Each figure is one person approached, and green figures said yes. Where the yeses fall within each row is illustrative.</figcaption>
+			</figure>
+
+			<p>Bohns later <a href="https://doi.org/10.1177/0963721415628011" target="_blank" rel="noopener">reviewed a run of such studies</a> in which participants made requests of more than 14,000 strangers. On average they underestimated how often people would agree by 48%. The error, she found, comes from forgetting how awkward it is to say no.</p>
+
+			<p>Pfeffer&rsquo;s classroom guests tell the same story from experience. Christina Troitino, a former student in his course, told one class how she talked her way into dinner with Martha Stewart. &ldquo;I&rsquo;m not the loudest person in the room,&rdquo; she said, &ldquo;but I&rsquo;m shameless.&rdquo;</p>
+
+			<div class="callout">
+				<span class="callout-label">Who starts on the 50-yard line</span>
+				<p>In the same class, a student objected, &ldquo;That&rsquo;s all well and good if you&rsquo;re a tall, good-looking white guy.&rdquo; Pfeffer agrees that people start from different places. &ldquo;People from underrepresented groups don&rsquo;t start off on the 50-yard line,&rdquo; he said in 2022, which is why he thinks they need these skills more. The penalties are measurable. In <a href="https://doi.org/10.1037/0022-3514.74.3.629" target="_blank" rel="noopener">Laurie Rudman&rsquo;s 1998 experiments</a>, women who promoted themselves were rated as more competent but less likable. They were also rated as less hireable, except by men whose own payoff depended on the women&rsquo;s performance. Pfeffer&rsquo;s rules work inside that bias and leave it in place.</p>
+			</div>
+
+			<h2>Conflict comes with the job</h2>
+
+			<p>In <i>Power</i>, Pfeffer lists seven personal qualities that help people gain influence, and he sorts them into will and skill. Two of them pull against each other. Empathy lets a person see a dispute the way the other side sees it. The capacity to tolerate conflict lets them keep pushing after the other side says no.</p>
+
+			<p>Many capable people avoid disagreement because they want to be seen as easy to work with. Pfeffer is unsympathetic. When a student asked where assertive ends and &ldquo;just plain annoying&rdquo; begins, he replied, &ldquo;You could be called much worse things than annoying.&rdquo; In the same class he called likability &ldquo;not really relevant.&rdquo;</p>
+
+			<p>Semmelweis had the second quality in abundance and little of the first. Loudon calls him &ldquo;a complex, difficult, and dogmatic man, intolerant to the point of paranoia of the slightest criticism.&rdquo; His critics were the obstetricians he needed to convince, and his treatise spends page after page attacking them. Pfeffer&rsquo;s list asks for both qualities at once.</p>
+
+			<h2>Reputation arrives before you do</h2>
+
+			<p>Reputation matters most when people must decide before they can judge. Investors back founders before a product works, and hiring committees choose people whose next decade they cannot see. Both rely on what they have heard.</p>
+
+			<p>In 1968 the sociologist Robert Merton <a href="https://doi.org/10.1126/science.159.3810.56" target="_blank" rel="noopener">described what this does to credit in science</a>. Working from Harriet Zuckerman&rsquo;s interviews with Nobel laureates, he found that the same contribution earns more recognition when an eminent scientist makes it. He called this the Matthew effect, after the verse &ldquo;For unto every one that hath shall be given.&rdquo; One laureate in physics put it plainly. &ldquo;The world is peculiar in this matter of how it gives credit. It tends to give the credit to [already] famous people.&rdquo;</p>
+
+			<figure>
+				<div class="strip">
+					<div class="panel">
+						<p class="panel-beat">1 &middot; The paper</p>
+						<svg class="toon" viewBox="0 0 240 180" role="img" aria-label="A paper with two title bars and three author names, R. Student, T. Postdoc and Prof. Famous.">
+							<rect class="card" x="40" y="8" width="160" height="166" rx="6"/>
+							<rect class="acc" x="54" y="22" width="132" height="9" rx="3"/>
+							<rect class="acc" x="54" y="38" width="96" height="9" rx="3"/>
+							<path class="ln-rule" d="M54,62 H186 M54,74 H186 M54,86 H162"/>
+							<text class="t-name" x="54" y="116">R. Student</text>
+							<text class="t-name" x="54" y="138">T. Postdoc</text>
+							<text class="t-name" x="54" y="160">Prof. Famous</text>
+						</svg>
+						<p class="panel-text">Three people share the work.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">2 &middot; The reader</p>
+						<svg class="toon" viewBox="0 0 240 180" role="img" aria-label="The same paper, with the first two names faded. A reader holds a magnifying glass over the name Prof. Famous, which is highlighted in gold.">
+							<rect class="card" x="8" y="8" width="132" height="166" rx="6"/>
+							<rect class="acc fade" x="20" y="22" width="104" height="9" rx="3"/>
+							<rect class="acc fade" x="20" y="38" width="76" height="9" rx="3"/>
+							<text class="t-name fade" x="20" y="72">R. Student</text>
+							<text class="t-name fade" x="20" y="94">T. Postdoc</text>
+							<path class="ln" style="stroke-width: 7" d="M102,111 L128,90"/>
+							<circle class="lens" cx="74" cy="134" r="37"/>
+							<rect class="hl" x="41" y="122" width="66" height="26" rx="5"/>
+							<text class="t-small" x="74" y="118" text-anchor="middle">Prof.</text>
+							<text class="t-big" x="74" y="142" text-anchor="middle">Famous</text>
+							<path class="ln" d="M128,90 L166,108"/>
+							<rect class="shirt" x="164" y="96" width="40" height="56" rx="15"/>
+							<circle class="head" cx="184" cy="70" r="20"/>
+							<circle class="eye" cx="176" cy="68" r="6"/>
+							<circle class="ink" cx="173" cy="70.5" r="2.6"/>
+							<circle class="eye" cx="192" cy="68" r="6"/>
+							<circle class="ink" cx="189" cy="70.5" r="2.6"/>
+							<path class="ln" d="M178,81 q6,4 12,0"/>
+						</svg>
+						<p class="panel-text">&ldquo;You usually notice the name that you&rsquo;re familiar with.&rdquo;</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">3 &middot; The credit</p>
+						<svg class="toon" viewBox="0 0 240 180" role="img" aria-label="Two people chat and one says, Famous's paper! In the background, the student who did the work looks on with a sweat drop and an empty speech bubble.">
+							<rect class="bubble" x="6" y="8" width="132" height="34" rx="14"/>
+							<path class="bubble" d="M44,40 L52,60 L62,40"/>
+							<path style="fill: var(--paper-bg)" d="M43,37 H63 V43 H43 Z"/>
+							<text class="t-main" x="72" y="30" text-anchor="middle">Famous&rsquo;s paper!</text>
+							<circle class="head" cx="50" cy="84" r="16"/>
+							<circle class="ink" cx="45" cy="82" r="2.2"/>
+							<circle class="ink" cx="55" cy="82" r="2.2"/>
+							<path class="ln" d="M44,90 q6,5 12,0"/>
+							<rect class="shirt" x="36" y="102" width="28" height="48" rx="11"/>
+							<circle class="head" cx="108" cy="84" r="16"/>
+							<circle class="ink" cx="103" cy="82" r="2.2"/>
+							<circle class="ink" cx="113" cy="82" r="2.2"/>
+							<path class="ln" d="M102,90 q6,5 12,0"/>
+							<rect class="shirt" x="94" y="102" width="28" height="48" rx="11"/>
+							<rect class="bubble" x="168" y="58" width="52" height="28" rx="12"/>
+							<path class="bubble" d="M188,84 L194,96 L200,84"/>
+							<path style="fill: var(--paper-bg)" d="M187,81 H201 V86 H187 Z"/>
+							<text class="t-dots" x="194" y="78" text-anchor="middle">&hellip;</text>
+							<circle class="head-sm" cx="196" cy="116" r="12"/>
+							<circle class="ink" cx="192" cy="115" r="1.8"/>
+							<circle class="ink" cx="200" cy="115" r="1.8"/>
+							<path class="ln-thin" d="M192,122 h8"/>
+							<rect class="shirt" x="185" y="130" width="22" height="34" rx="9" style="stroke-width: 2"/>
+							<path class="acc" d="M214,98 q4,7 0,10 q-4,-3 0,-10 Z"/>
+						</svg>
+						<p class="panel-text">The credit goes to the name people already know.</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 4.</b> The Matthew effect, as Nobel laureates described it to Harriet Zuckerman and Robert Merton reported it in 1968. The quote in panel 2 is from a laureate in physiology and medicine. Names and people are illustrative.</figcaption>
+			</figure>
+
+			<p>Pfeffer&rsquo;s fourth rule, create a powerful brand, runs on the same mechanism. He calls most organizational processes &ldquo;self-reinforcing.&rdquo; &ldquo;If you&rsquo;ve claimed competence, in fact, that just causes more people to want to work with you, and you are able to attract more talent,&rdquo; he said. &ldquo;So you become more competent.&rdquo;</p>
+
+			<p>His third rule, show up in powerful fashion, extends the argument to how people present themselves. &ldquo;We live in a world where it&rsquo;s almost impossible to find out the truth,&rdquo; he said. &ldquo;Therefore, appearance is always reality.&rdquo; He once met the head of business intelligence at a large accounting firm and told a friend afterwards that the man seemed to have none. The friend replied, &ldquo;He looks good in a suit.&rdquo;</p>
+
+			<p>The research backs him uncomfortably well. In a <a href="https://doi.org/10.1037/a0029395" target="_blank" rel="noopener">2012 study</a> led by Cameron Anderson at Berkeley, 76 students each placed 15 US cities on a blank map and rated how they had done against everyone else. Then they did the task again in pairs. Overconfidence predicted how competent a partner rated someone (r = .36) about as well as actual skill did (r = .39). In a <a href="https://doi.org/10.1016/j.obhdp.2013.08.005" target="_blank" rel="noopener">follow-up</a>, group members did not punish people even after learning that they had been overconfident.</p>
+
+			<p>That is a fact about observers, and organizations pay for it when they promote people who are confidently wrong. A scientist can state the limits of a result plainly and still speak with authority about what it shows. Doubt about the evidence is part of the job. Doubt about whether one belongs in the conversation is a different thing.</p>
+
+			<h2>Good ideas cross between groups</h2>
+
+			<p>Pfeffer&rsquo;s fifth rule is to network relentlessly, and his reasoning is blunt. &ldquo;People to whom you&rsquo;re strongly tied tend to know the same people, and have the same information,&rdquo; he said. &ldquo;So what the hell good are they? You need non-redundant people and information.&rdquo;</p>
+
+			<p>He was pointing to research from 1973, when Mark Granovetter <a href="https://doi.org/10.1086/225469" target="_blank" rel="noopener">argued</a> that acquaintances matter because they reach circles your close friends do not. In 2022 a <a href="https://doi.org/10.1126/science.abl4476" target="_blank" rel="noopener">randomized experiment on more than 20 million LinkedIn users</a> found that moderately weak ties, counted by mutual connections, produced the most job moves, as I described in <a href="/blog/how-to-get-luckier/">How to get luckier</a>. Weak ties helped more in digital industries, and strong ties helped more in less digital ones.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Structural holes</span>
+				<p>The sociologist Ronald Burt&rsquo;s term for the gaps between groups whose members rarely talk to one another. Opinion and behavior are more alike within a group than between groups, so a person with contacts on both sides of a gap hears ideas that neither side has. Burt calls that person a broker.</p>
+			</div>
+
+			<p>Burt measured what brokers do for ideas. He <a href="https://doi.org/10.1086/421787" target="_blank" rel="noopener">studied 673 managers</a> who ran the supply chain of one of America&rsquo;s largest electronics companies in 2001 and asked them for their best idea to improve it. Two senior executives rated the ideas. Managers whose discussion partners spanned separate groups proposed ideas the executives judged more valuable, and they were paid more than peers in comparable jobs. Burt called it &ldquo;creativity as an import-export business.&rdquo;</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 300" role="img" aria-labelledby="f5-title f5-desc">
+					<title id="f5-title">A broker across a structural hole</title>
+					<desc id="f5-desc">Two islands sit in a sea. The lab island on the left and the startup island on the right each hold five people, all connected to each other. Between them, a broker in a small boat carries a lightbulb. Dashed gold lines tie the broker to one person on each island, and curved arrows run both ways across the water, which is labelled structural hole.</desc>
+					<defs>
+						<marker id="f5-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+					</defs>
+					<rect class="water" x="1" y="1" width="558" height="298" rx="10"/>
+					<path class="ln-wave" d="M28,40 q8,-6 16,0 t16,0 M488,32 q8,-6 16,0 t16,0 M240,236 q8,-6 16,0 t16,0 M262,262 q8,-6 16,0 t16,0 M20,262 q8,-6 16,0 t16,0 M500,268 q8,-6 16,0 t16,0"/>
+
+					<ellipse class="island" cx="128" cy="160" rx="108" ry="96"/>
+					<ellipse class="island" cx="432" cy="160" rx="108" ry="96"/>
+					<text class="t-head" x="128" y="92" text-anchor="middle">THE LAB</text>
+					<text class="t-head" x="432" y="92" text-anchor="middle">THE STARTUPS</text>
+
+					<path class="ln-net" d="M84,126 L160,118 M84,126 L66,184 M84,126 L124,222 M84,126 L186,182 M160,118 L66,184 M160,118 L124,222 M160,118 L186,182 M66,184 L124,222 M66,184 L186,182 M124,222 L186,182"/>
+					<path class="ln-net" d="M400,118 L476,126 M400,118 L374,182 M400,118 L436,222 M400,118 L494,184 M476,126 L374,182 M476,126 L436,222 M476,126 L494,184 M374,182 L436,222 M374,182 L494,184 M436,222 L494,184"/>
+					<circle class="node-a" cx="84" cy="126" r="11"/>
+					<circle class="node-a" cx="160" cy="118" r="11"/>
+					<circle class="node-a" cx="66" cy="184" r="11"/>
+					<circle class="node-a" cx="124" cy="222" r="11"/>
+					<circle class="node-a" cx="186" cy="182" r="11"/>
+					<circle class="node-b" cx="400" cy="118" r="11"/>
+					<circle class="node-b" cx="476" cy="126" r="11"/>
+					<circle class="node-b" cx="374" cy="182" r="11"/>
+					<circle class="node-b" cx="436" cy="222" r="11"/>
+					<circle class="node-b" cx="494" cy="184" r="11"/>
+					<g class="ink"><circle cx="80.4" cy="124.2" r="1.6"/><circle cx="87.6" cy="124.2" r="1.6"/><circle cx="156.4" cy="116.2" r="1.6"/><circle cx="163.6" cy="116.2" r="1.6"/><circle cx="62.4" cy="182.2" r="1.6"/><circle cx="69.6" cy="182.2" r="1.6"/><circle cx="120.4" cy="220.2" r="1.6"/><circle cx="127.6" cy="220.2" r="1.6"/><circle cx="182.4" cy="180.2" r="1.6"/><circle cx="189.6" cy="180.2" r="1.6"/><circle cx="396.4" cy="116.2" r="1.6"/><circle cx="403.6" cy="116.2" r="1.6"/><circle cx="472.4" cy="124.2" r="1.6"/><circle cx="479.6" cy="124.2" r="1.6"/><circle cx="370.4" cy="180.2" r="1.6"/><circle cx="377.6" cy="180.2" r="1.6"/><circle cx="432.4" cy="220.2" r="1.6"/><circle cx="439.6" cy="220.2" r="1.6"/><circle cx="490.4" cy="182.2" r="1.6"/><circle cx="497.6" cy="182.2" r="1.6"/></g>
+					<path class="ln-thin" d="M80,129 q4,3 8,0 M156,121 q4,3 8,0 M62,187 q4,3 8,0 M120,225 q4,3 8,0 M182,185 q4,3 8,0 M396,121 q4,3 8,0 M472,129 q4,3 8,0 M370,185 q4,3 8,0 M432,225 q4,3 8,0 M490,187 q4,3 8,0"/>
+
+					<text class="t-head" x="280" y="30" text-anchor="middle">STRUCTURAL HOLE</text>
+					<path class="ln-arrow" d="M280,38 V52" marker-end="url(#f5-ah)"/>
+					<path class="ln-arrow" d="M206,112 Q280,62 354,112" marker-end="url(#f5-ah)"/>
+					<path class="ln-arrow" d="M354,214 Q280,252 206,214" marker-end="url(#f5-ah)"/>
+
+					<path class="ln-bridge" d="M197,182 Q226,176 246,160"/>
+					<path class="ln-bridge" d="M314,160 Q336,176 363,182"/>
+					<path class="ln-wave" style="opacity: 0.7" d="M234,190 q8,-6 16,0 t16,0 t16,0 t16,0 t16,0 t16,0"/>
+					<path class="soft" d="M238,158 H322 L308,180 H252 Z"/>
+					<circle class="gold" cx="266" cy="138" r="13"/>
+					<circle class="ink" cx="262" cy="136" r="1.8"/>
+					<circle class="ink" cx="270" cy="136" r="1.8"/>
+					<path class="ln-thin" d="M261,143 q5,4 10,0"/>
+					<circle class="gold" cx="298" cy="134" r="10"/>
+					<rect class="ink" x="294" y="144" width="8" height="7" rx="1.5"/>
+					<path class="ln-gold" d="M298,114 v-6 M284,120 l-4,-4 M312,120 l4,-4"/>
+
+					<text class="t-small t-it" x="280" y="287" text-anchor="middle">&ldquo;An idea mundane in one group can be a valuable insight in another.&rdquo;</text>
+				</svg>
+				<figcaption><b>Figure 5.</b> A broker across a structural hole, with a line from Burt&rsquo;s 2004 paper. Each island&rsquo;s members talk mostly to one another, and the broker is tied to one person on each side. The drawing is illustrative.</figcaption>
+			</figure>
+
+			<p>The value in Burt&rsquo;s data came from what crossed the gap, an idea routine on one side and new on the other. Elsewhere in the paper he put it more starkly. &ldquo;An idea is as valuable as an audience is willing to credit it with being.&rdquo;</p>
+
+			<h2>Success compounds, up to a point</h2>
+
+			<p>Pfeffer&rsquo;s sixth rule is to use your power, and he grounds it in something close to physics. &ldquo;If the world could change without the exercise of influence, it already would have changed,&rdquo; he said. &ldquo;Things are in equilibrium, and if you want to get them out of equilibrium, you need some force.&rdquo; Using power also tends to produce more of it. &ldquo;Most people who have power use it to get more power and to keep their power.&rdquo;</p>
+
+			<p>Some of that compounding needs no merit at all. In <a href="https://doi.org/10.1073/pnas.1316836111" target="_blank" rel="noopener">field experiments published in 2014</a>, Arnout van de Rijt and colleagues handed early successes to randomly chosen recipients on four websites, then recorded what strangers did next. On Kickstarter they donated to 100 of 200 new projects, picked at random. Among the projects they skipped, 39% went on to attract other backers. Among the projects they funded, 70% did. The same pattern held on the other three sites.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 300" role="img" aria-labelledby="f6-title f6-desc">
+					<title id="f6-title">A random head start on four websites</title>
+					<desc id="f6-desc">A dot chart with four rows. For each website, an open circle shows the share of people without a head start who went on to a later success from other users, and a filled green circle shows the share among those given a random head start. Kickstarter, after a donation, 39 percent rising to 70 percent. Epinions, after a very helpful rating, 77 to 90 percent. Wikipedia, after an award, 31 to 40 percent. Change.org, after a dozen signatures, 52 to 66 percent.</desc>
+
+					<circle class="dot-ctrl" cx="216" cy="20" r="6.5"/>
+					<text class="t-small" x="228" y="24.5">No head start</text>
+					<circle class="dot-boost" cx="346" cy="20" r="7"/>
+					<text class="t-small" x="358" y="24.5">Random head start</text>
+
+					<path class="ln-grid" d="M210,46 V252 M292.5,46 V252 M375,46 V252 M457.5,46 V252 M540,46 V252"/>
+					<path class="ln-axis" d="M210,252 H540"/>
+					<text class="t-tick" x="210" y="270" text-anchor="middle">0%</text>
+					<text class="t-tick" x="292.5" y="270" text-anchor="middle">25%</text>
+					<text class="t-tick" x="375" y="270" text-anchor="middle">50%</text>
+					<text class="t-tick" x="457.5" y="270" text-anchor="middle">75%</text>
+					<text class="t-tick" x="540" y="270" text-anchor="middle">100%</text>
+					<text class="t-small" x="375" y="292" text-anchor="middle">Share with a later success from other users</text>
+
+					<circle class="gold" cx="22" cy="68" r="10"/>
+					<text class="t-coin" x="22" y="72.5" text-anchor="middle">$</text>
+					<text class="t-main" x="40" y="70">Kickstarter</text>
+					<text class="t-small" x="40" y="87">a donation</text>
+					<path class="ln-link" d="M338.7,74 H441"/>
+					<circle class="dot-ctrl" cx="338.7" cy="74" r="7"/>
+					<circle class="dot-boost" cx="441" cy="74" r="7.5"/>
+					<text class="t-small" x="326" y="78.5" text-anchor="end">39%</text>
+					<text class="t-main" x="453" y="79.5">70%</text>
+
+					<path class="gold" transform="translate(22,124) scale(0.85)" d="M0,-13 L3.8,-4.3 L13,-4 L6,2.2 L8,11.5 L0,6.6 L-8,11.5 L-6,2.2 L-13,-4 L-3.8,-4.3 Z"/>
+					<text class="t-main" x="40" y="124">Epinions</text>
+					<text class="t-small" x="40" y="141">a &ldquo;very helpful&rdquo; rating</text>
+					<path class="ln-link" d="M464.1,128 H507"/>
+					<circle class="dot-ctrl" cx="464.1" cy="128" r="7"/>
+					<circle class="dot-boost" cx="507" cy="128" r="7.5"/>
+					<text class="t-small" x="451.5" y="132.5" text-anchor="end">77%</text>
+					<text class="t-main" x="519" y="133.5">90%</text>
+
+					<circle class="soft" cx="22" cy="176" r="10"/>
+					<path class="gold" transform="translate(22,176) scale(0.55)" d="M0,-13 L3.8,-4.3 L13,-4 L6,2.2 L8,11.5 L0,6.6 L-8,11.5 L-6,2.2 L-13,-4 L-3.8,-4.3 Z"/>
+					<text class="t-main" x="40" y="178">Wikipedia</text>
+					<text class="t-small" x="40" y="195">an award for editors</text>
+					<path class="ln-link" d="M312.3,182 H342"/>
+					<circle class="dot-ctrl" cx="312.3" cy="182" r="7"/>
+					<circle class="dot-boost" cx="342" cy="182" r="7.5"/>
+					<text class="t-small" x="300" y="186.5" text-anchor="end">31%</text>
+					<text class="t-main" x="354" y="187.5">40%</text>
+
+					<path class="ln" d="M14,238 L28,224 L32,228 L18,242 Z"/>
+					<path class="ln-thin" d="M14,238 L11,245 L18,242"/>
+					<text class="t-main" x="40" y="232">Change.org</text>
+					<text class="t-small" x="40" y="249">a dozen signatures</text>
+					<path class="ln-link" d="M381.6,236 H427.8"/>
+					<circle class="dot-ctrl" cx="381.6" cy="236" r="7"/>
+					<circle class="dot-boost" cx="427.8" cy="236" r="7.5"/>
+					<text class="t-small" x="369" y="240.5" text-anchor="end">52%</text>
+					<text class="t-main" x="440" y="241.5">66%</text>
+				</svg>
+				<figcaption><b>Figure 6.</b> Results from van de Rijt and colleagues (2014). On Kickstarter and Change.org the researchers boosted 100 of 200 new projects or petitions, chosen at random. On Epinions and Wikipedia they boosted a random share of 305 product reviews and of 521 highly active editors. Dots show the share in each group that went on to a further success from other users.</figcaption>
+			</figure>
+
+			<p>The experiments also found a limit. Bigger head starts produced little extra advantage, and the authors concluded that cumulative advantage plays &ldquo;a more modest role&rdquo; in inequality &ldquo;than previously thought.&rdquo;</p>
+
+			<p>Pfeffer&rsquo;s seventh rule describes what success does to memory. Once someone has acquired power, &ldquo;what you did to get it will be forgiven, forgotten, or both.&rdquo; People are drawn to money and power, he explained, and &ldquo;they will engage in rationalizations so they can be close to what they desire to be close to.&rdquo;</p>
+
+			<p>The rule describes how observers judge winners. It is a poor recipe for winning. Stories about founders who ignored their critics come from founders who succeeded, and the many who ignored their critics and failed do not get profiles. Even Stanford&rsquo;s summary of <i>Power</i> warns that advice from people in charge &ldquo;often puts a rosy spin on their ascent.&rdquo;</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">Where rule seven runs out</span>
+				<p>Pfeffer&rsquo;s example of power entrenching itself is the super-majority voting share, which lets founders keep control whatever other investors want. Elizabeth Holmes held such shares in Theranos. In 2018 the SEC <a href="https://www.sec.gov/newsroom/press-releases/2018-41" target="_blank" rel="noopener">charged her</a> with raising more than $700 million through &ldquo;an elaborate, years-long fraud,&rdquo; and she gave up her voting control to settle. In 2022 a federal jury <a href="https://www.justice.gov/usao-ndca/pr/theranos-founder-elizabeth-holmes-found-guilty-investor-fraud" target="_blank" rel="noopener">convicted her</a> of defrauding investors. The SEC had stated the limit in 2018. There is &ldquo;no exemption from the anti-fraud provisions of the federal securities laws,&rdquo; it said, for a company that is &ldquo;the subject of exuberant media attention.&rdquo;</p>
+			</div>
+
+			<h2>A tool for any purpose</h2>
+
+			<p>Pfeffer insists that power is neutral. &ldquo;Power is a tool that can be used for any different purpose to which you want to apply it,&rdquo; he said. &ldquo;One should not confuse the value of the tool with how it&rsquo;s being used.&rdquo;</p>
+
+			<p>That neutrality is the strongest objection to his books. Advice to cultivate useful relationships and project confidence serves a manipulator as well as a reformer. A manager can gain influence by intimidating subordinates and then stop hearing bad news from them. A researcher can win attention by overstating a result and spend the trust that makes results worth reading.</p>
+
+			<p>Declining to learn how power works leaves it in other hands. Decisions about funding and hiring are made by people with influence, and those who understand how such decisions get made are better placed to argue for good projects. Power expands what a person can do. Whether anyone else benefits depends on what it is used for.</p>
+
+			<h2>How the mothers were saved</h2>
+
+			<p>Semmelweis&rsquo;s idea did reach the maternity wards, by a road he never saw. In Glasgow, the surgeon Joseph Lister read Louis Pasteur&rsquo;s papers on putrefaction <a href="https://doi.org/10.1503/cjs.007112" target="_blank" rel="noopener">on the advice of Thomas Anderson</a>, a professor of chemistry, and reasoned that the process Pasteur had found in fermentation was also at work in infected wounds. From 1867 he published a series of papers in <i>The Lancet</i> and the <i>British Medical Journal</i> on dressing wounds with carbolic acid.</p>
+
+			<p>His statistics were thinner than his legend. Lister&rsquo;s best-known numbers, 16 deaths in 35 amputations before antisepsis and 6 in 40 after, came from his own wards, and the historian Ulrich Tröhler <a href="https://www.jameslindlibrary.org/articles/statistics-and-the-british-controversy-about-the-effects-of-joseph-listers-system-of-antisepsis-for-surgery-1867-1890/" target="_blank" rel="noopener">counts more than a decade</a> of fighting among British surgeons over whether the method worked. Lister kept publishing. In 1877 he moved to King&rsquo;s College Hospital in London, and two years later the city&rsquo;s leading surgeons were still waiting for proof. When the surgeon Lawson Tait was still demanding statistics in 1890, Lister, who &ldquo;did not relish controversy,&rdquo; politely ignored him.</p>
+
+			<p>By the 1880s antisepsis had spread from surgery into maternity hospitals, and within a few years, Loudon writes, mortality there &ldquo;fell dramatically.&rdquo; Loudon traces antisepsis in obstetrics to Lister&rsquo;s surgical methods, which reached the lying-in wards long after Semmelweis&rsquo;s death. Lister had not even heard of Semmelweis until long after his own method was firmly established.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 300" role="img" aria-labelledby="f7-title f7-desc">
+					<title id="f7-title">Two careers and one idea</title>
+					<desc id="f7-desc">Two timelines on one axis from 1845 to 1895. Semmelweis's red line runs from handwashing in 1847, through his removal in 1849 and his treatise in 1861, to his death in 1865, then a dotted line continues to 1887, when his reputation was revived. Lister's blue line starts with his first papers in 1867, when he had not heard of Semmelweis, passes his move to London in 1877, and runs through a green band for the 1880s, when maternity wards adopted antisepsis.</desc>
+					<defs>
+						<marker id="f7-ah" viewBox="0 0 10 10" refX="5" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto"><path class="acc" d="M0,0 L10,5 L0,10 z"/></marker>
+					</defs>
+
+					<path class="ln-grid" d="M60,40 V262 M155,40 V262 M250,40 V262 M345,40 V262 M440,40 V262 M535,40 V262"/>
+					<path class="ln-axis" d="M60,262 H535"/>
+					<text class="t-tick" x="60" y="282" text-anchor="middle">1845</text>
+					<text class="t-tick" x="155" y="282" text-anchor="middle">1855</text>
+					<text class="t-tick" x="250" y="282" text-anchor="middle">1865</text>
+					<text class="t-tick" x="345" y="282" text-anchor="middle">1875</text>
+					<text class="t-tick" x="440" y="282" text-anchor="middle">1885</text>
+					<text class="t-tick" x="535" y="282" text-anchor="middle">1895</text>
+
+					<path class="soft" d="M34,36 Q46,52 58,36 Z"/>
+					<path class="acc" d="M41,20 q4,7 0,10 q-4,-3 0,-10 Z"/>
+					<path class="acc" d="M50,25 q3,6 0,8 q-3,-2 0,-8 Z"/>
+					<text class="t-main" x="74" y="48">Semmelweis</text>
+					<path class="ln-after" d="M250,96 H459"/>
+					<path class="ln-track-red" d="M79,96 H250"/>
+					<circle class="red" cx="79" cy="96" r="5.5"/>
+					<circle class="red" cx="98" cy="96" r="5.5"/>
+					<circle class="red" cx="212" cy="96" r="5.5"/>
+					<circle class="card" cx="250" cy="96" r="6" style="stroke: var(--award); stroke-width: 2.4"/>
+					<path class="gold" transform="translate(459,96) scale(0.75)" d="M0,-13 L3.8,-4.3 L13,-4 L6,2.2 L8,11.5 L0,6.6 L-8,11.5 L-6,2.2 L-13,-4 L-3.8,-4.3 Z"/>
+					<text class="t-small" x="74" y="121">1847 washing</text>
+					<text class="t-small" x="93" y="138">1849 removed</text>
+					<text class="t-small" x="212" y="80" text-anchor="middle">1861 treatise</text>
+					<text class="t-small" x="250" y="121" text-anchor="middle">1865 dies</text>
+					<text class="t-small" x="459" y="76" text-anchor="middle">1887 reputation revived</text>
+
+					<rect class="soft" x="232" y="154" width="13" height="18" rx="3"/>
+					<path class="ln" d="M238.5,154 V148 H248"/>
+					<circle class="acc" cx="253" cy="146" r="1.6"/>
+					<circle class="acc" cx="257" cy="150" r="1.6"/>
+					<circle class="acc" cx="255" cy="142" r="1.4"/>
+					<text class="t-main" x="264" y="168">Lister</text>
+					<rect class="band" x="392.5" y="186" width="95" height="20" rx="10"/>
+					<path class="ln-track-blue" d="M269,196 H522" marker-end="url(#f7-ah)"/>
+					<circle class="acc" cx="269" cy="196" r="5.5"/>
+					<circle class="acc" cx="364" cy="196" r="5.5"/>
+					<text class="t-small" x="264" y="222">1867 first papers</text>
+					<text class="t-small" x="359" y="240">1877 moves to London</text>
+					<text class="t-good" x="440" y="176" text-anchor="middle">Maternity wards adopt it</text>
+					<text class="t-small t-it" x="70" y="184">In 1867, Lister had</text>
+					<text class="t-small t-it" x="70" y="201">not heard of Semmelweis</text>
+				</svg>
+				<figcaption><b>Figure 7.</b> Two careers and one idea on a single time axis. Red marks Semmelweis&rsquo;s career, and the dotted line runs to the revival of his reputation after 1887. Blue marks Lister&rsquo;s. The green band marks the 1880s, when, by Loudon&rsquo;s account, antisepsis reached maternity hospitals. Dates from Loudon (2013), Tröhler (2014), Jadraque and Carter (2017), and Pitt and Aubin (2012).</figcaption>
+			</figure>
+
+			<p>Semmelweis&rsquo;s reputation came back after 1887, and by the 1920s, Loudon writes, his story &ldquo;had all the elements of a Hollywood epic.&rdquo; It is usually told as a lesson about stubborn doctors. Pfeffer&rsquo;s books suggest a second lesson. Semmelweis had thousands of births in his tables. Lister had 75 amputations and a stack of case reports, and he spent more than twenty years getting surgeons to use his method.</p>
+
+			<p><strong>Doing good work and getting it adopted are separate skills, and the second one can be learned.</strong> Semmelweis had the first. Mothers who gave birth in hospitals in the 1880s owed much to a surgeon who also had the second, and who spent his influence on something worth spreading.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://jeffreypfeffer.com/books/power-why-some-people-have-it-and-others-dont/" target="_blank" rel="noopener">Jeffrey Pfeffer, <i>Power: Why Some People Have It and Others Don&rsquo;t</i></a> (HarperBusiness, 2010), the research case, including the seven personal qualities.</li>
+				<li><a href="https://jeffreypfeffer.com/books/7-rules-of-power/" target="_blank" rel="noopener">Jeffrey Pfeffer, <i>7 Rules of Power</i></a> (Matt Holt Books, 2022), the rules in Figure 2.</li>
+				<li><a href="https://www.gsb.stanford.edu/insights/introducing-steps-toward-power-nice-generation" target="_blank" rel="noopener">Patrick J. Kiger, <i>Introducing the Steps Toward Power to the Nice Generation</i></a> (Stanford GSB, 2022), the interview behind most of the Pfeffer quotes here.</li>
+				<li><a href="https://www.gsb.stanford.edu/experience/news-history/back-class-paths-power" target="_blank" rel="noopener">Dave Gilson, <i>Back to Class: The Paths to Power</i></a> (Stanford GSB, 2021), a visit to Pfeffer&rsquo;s course.</li>
+				<li><a href="https://doi.org/10.1016/j.orgdyn.2021.100830" target="_blank" rel="noopener">Jeffrey Pfeffer, <i>Teaching power in ways that influence students&rsquo; career success</i></a> (<i>Organizational Dynamics</i>, 2022), on how he teaches the material.</li>
+				<li><a href="https://www.jameslindlibrary.org/articles/ignaz-phillip-semmelweis-studies-of-death-in-childbirth/" target="_blank" rel="noopener">Irvine Loudon, <i>Ignaz Phillip Semmelweis&rsquo; studies of death in childbirth</i></a> (James Lind Library, 2013), a short history that separates Semmelweis from his legend.</li>
+				<li><a href="https://doi.org/10.1017/S0950268817000875" target="_blank" rel="noopener">Jadraque and Carter, <i>What happened at Vienna&rsquo;s Allgemeines Krankenhaus after Semmelweis&rsquo;s contract as Assistant in the First Maternity Division was terminated?</i></a> (<i>Epidemiology and Infection</i>, 2017).</li>
+				<li><a href="https://www.jameslindlibrary.org/articles/statistics-and-the-british-controversy-about-the-effects-of-joseph-listers-system-of-antisepsis-for-surgery-1867-1890/" target="_blank" rel="noopener">Ulrich Tröhler, <i>Statistics and the British controversy about the effects of Joseph Lister&rsquo;s system of antisepsis for surgery, 1867&ndash;1890</i></a> (James Lind Library, 2014), on how thin Lister&rsquo;s numbers were.</li>
+				<li><a href="https://doi.org/10.1037/0022-3514.95.1.128" target="_blank" rel="noopener">Flynn and Lake (now Bohns), <i>If you need help, just ask</i></a> (<i>Journal of Personality and Social Psychology</i>, 2008).</li>
+				<li><a href="https://doi.org/10.1086/421787" target="_blank" rel="noopener">Ronald Burt, <i>Structural holes and good ideas</i></a> (<i>American Journal of Sociology</i>, 2004).</li>
+				<li><a href="https://doi.org/10.1126/science.159.3810.56" target="_blank" rel="noopener">Robert Merton, <i>The Matthew effect in science</i></a> (<i>Science</i>, 1968).</li>
+				<li><a href="https://doi.org/10.1037/a0029395" target="_blank" rel="noopener">Anderson et al., <i>A status-enhancement account of overconfidence</i></a> (<i>Journal of Personality and Social Psychology</i>, 2012).</li>
+				<li><a href="https://doi.org/10.1073/pnas.1316836111" target="_blank" rel="noopener">van de Rijt et al., <i>Field experiments of success-breeds-success dynamics</i></a> (<i>PNAS</i>, 2014).</li>
+				<li><a href="https://doi.org/10.1126/science.abl4476" target="_blank" rel="noopener">Rajkumar et al., <i>A causal test of the strength of weak ties</i></a> (<i>Science</i>, 2022), and <a href="https://doi.org/10.1086/225469" target="_blank" rel="noopener">Granovetter, <i>The strength of weak ties</i></a> (<i>American Journal of Sociology</i>, 1973).</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">power</span>
+				<span class="tag">careers</span>
+				<span class="tag">influence</span>
+				<span class="tag">networks</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+
+</body>
+</html>
