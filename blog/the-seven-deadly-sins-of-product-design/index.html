@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>The seven deadly sins explain the sign-up | Chen-Yang Su</title>
+	<meta name="description" content="Reid Hoffman says social networks do best when they feed a deadly sin. The sins explain sign-ups. They say less about what happens to users next." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/the-seven-deadly-sins-of-product-design/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="The seven deadly sins explain the sign-up">
+	<meta property="og:description" content="Reid Hoffman says social networks do best when they feed a deadly sin. The sins explain sign-ups. They say less about what happens to users next.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/the-seven-deadly-sins-of-product-design/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-20">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="The seven deadly sins explain the sign-up">
+	<meta name="twitter:description" content="Reid Hoffman says social networks do best when they feed a deadly sin. The sins explain sign-ups. They say less about what happens to users next.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The cartoons and diagrams in this post are inline SVG and HTML
+		   coloured with the site's tokens, so they follow the light and dark
+		   themes. Panels reflow to one column at phone width. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Figure 1: the seven sins as cards */
+		.sins { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.sin { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 10px 14px; text-align: center; }
+		.prose .sin svg { width: 76px; height: 76px; margin: 0 auto 4px; border-radius: 0; }
+		.prose .sin-name { font-size: 12.5px; font-weight: 900; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent-dark); margin: 0 0 4px; }
+		.prose .sin-says { font-family: 'Source Serif 4', Georgia, serif; font-style: italic; font-size: 15.5px; line-height: 1.35; color: var(--ink); margin: 0 0 6px; }
+		.prose .sin-app { font-size: 13px; line-height: 1.4; color: var(--ink-light); margin: 0; }
+		.by-rh { display: inline-block; font-size: 10.5px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; color: var(--accent); background: var(--tag-bg); border: 1px solid var(--tag-border); border-radius: 999px; padding: 0 6px; margin-left: 2px; vertical-align: 1px; }
+		.sin-quote { display: flex; flex-direction: column; justify-content: center; text-align: left; background: var(--tag-bg); border-color: var(--tag-border); }
+		.prose .sin-quote .sin-says { font-size: 15px; }
+
+		/* Figures 2 and 4: comic panels */
+		.strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.strip-2 { grid-template-columns: repeat(2, 1fr); }
+		.panel { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px 12px; }
+		.prose .panel svg { border-radius: 0; }
+		.prose .panel-beat { font-size: 12px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+		.prose .panel-text { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 8px 0 0; }
+
+		@media (max-width: 720px) {
+			.sins { grid-template-columns: repeat(2, 1fr); }
+			.strip, .strip-2 { grid-template-columns: 1fr; }
+			.prose .strip .panel svg { max-width: 320px; margin: 0 auto; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-big { font-size: 30px; font-weight: 900; fill: var(--accent-dark); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-it { font-style: italic; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-head-warn { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--award); }
+		.toon .t-warn { font-weight: 700; fill: var(--award); }
+		.toon .t-sym { font-size: 22px; font-weight: 900; fill: var(--good); }
+		.toon .t-z { font-weight: 900; fill: var(--accent); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; }
+		.toon .ln-red { fill: none; stroke: var(--award); stroke-width: 2.2; stroke-linecap: round; }
+		.toon .ln-acc { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+		.toon .ln-good { fill: none; stroke: var(--good); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-check { fill: none; stroke: var(--good); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-arrow { fill: none; stroke: var(--ink-light); stroke-width: 1.8; }
+		.toon .ln-dash { fill: none; stroke: var(--award); stroke-width: 1.8; stroke-dasharray: 5 4; }
+		.toon .ln-rule { fill: none; stroke: var(--tag-border); stroke-width: 1.6; stroke-dasharray: 4 4; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .head-envy { fill: var(--good-bg); stroke: var(--good); stroke-width: 2.4; }
+		.toon .head-wrath { fill: var(--warn-bg); stroke: var(--award); stroke-width: 2.4; }
+		.toon .eye { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .card { fill: var(--paper-bg); stroke: var(--tag-border); stroke-width: 1.5; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--tag-border); stroke-width: 1.5; }
+		.toon .board { fill: var(--tag-bg); stroke: var(--accent); stroke-width: 2; }
+		.toon .bubble { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .box { fill: var(--chip-bg); stroke: var(--tag-border); stroke-width: 1.5; }
+		.toon .box-good { fill: var(--good-bg); stroke: var(--good); stroke-width: 1.5; }
+		.toon .box-hot { fill: var(--warn-bg); stroke: var(--award); stroke-width: 1.5; }
+		.toon .track { fill: var(--chip-bg); stroke: var(--rule); stroke-width: 1; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .red { fill: var(--award); }
+		.toon .grn { fill: var(--good); }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .ah { fill: var(--ink-light); }
+		.toon .ah-good { fill: var(--good); }
+		.toon .ah-red { fill: var(--award); }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "The seven deadly sins explain the sign-up",
+		"description": "Reid Hoffman says social networks do best when they feed a deadly sin. The sins explain sign-ups. They say less about what happens to users next.",
+		"datePublished": "2026-10-20",
+		"url": "https://chenyangsu.github.io/blog/the-seven-deadly-sins-of-product-design/",
+		"keywords": "product design, human motivation, AI agents, engagement",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/the-seven-deadly-sins-of-product-design/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">Product design</p>
+
+		<h1 class="post-title">The seven deadly sins explain the sign-up</h1>
+
+		<p class="post-standfirst">Reid Hoffman says social networks do best when they tap into one of the seven deadly sins. The sins explain why someone signs up. They explain much less about what happens to that person afterward, and that gap widens once AI agents start acting for their users.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-20">20 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>Hoffman&rsquo;s heuristic pairs each big network with a sin. In his words, &ldquo;<strong>Facebook is [pride]. Zynga is sloth. LinkedIn is greed.</strong>&rdquo;</li>
+				<li>Greed was supposed to fill LinkedIn&rsquo;s profiles. <strong>At one point the average profile ran 90 characters.</strong> Pride drove some members to 20,000 connections instead.</li>
+				<li>LinkedIn <strong>capped the visible count at 500+</strong>, a design choice meant to tap pride &ldquo;but also to temper it.&rdquo;</li>
+				<li>On Twitter, <strong>likes and retweets for outraged posts led to more outrage</strong>, in a study of 12.7 million tweets from 7,331 users.</li>
+				<li>An AI agent can be worth more the less people open it. <strong>Engagement then stops tracking value.</strong></li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>In 2011, Reid Hoffman gave the <i>Wall Street Journal</i> a rule of thumb for the consumer internet. &ldquo;Social networks do best when they tap into one of the Seven Deadly Sins,&rdquo; said Hoffman, who co-founded LinkedIn and was an early investor in Facebook. &ldquo;Facebook is [pride]. Zynga is sloth. LinkedIn is greed.&rdquo; The bracket comes from his own <a href="https://greylock.com/reid-hoffman/vices-and-virtues-investing-and-human-nature/" target="_blank" rel="noopener">retelling in a 2021 essay</a>, ten years later.</p>
+
+			<p>Hoffman began angel investing in the dot-com era, and the sins became &ldquo;one criterion for my investing decisions.&rdquo; At Y Combinator&rsquo;s Startup School in 2016, <a href="https://www.ycombinator.com/blog/reid-hoffman-at-startup-school/" target="_blank" rel="noopener">he told Sam Altman why</a>. Most people he talked to, he said, &ldquo;can&rsquo;t articulate a robust theory of human nature.&rdquo; The sins pushed founders toward one question. &ldquo;If you&rsquo;re trying to create a mass market consumer application, what parts of what it is to be human are you actually triggering?&rdquo;</p>
+
+			<p>The question catches a habit common among engineers and researchers, who tend to judge a product by what its technology can do. Users judge it by whether it gets them something they already want. The sins answer half the question. The other half is what a product does to people once it has them, and Hoffman&rsquo;s own account of building LinkedIn is mostly about that half.</p>
+
+			<h2>A rogues&rsquo; gallery</h2>
+
+			<p>Each sin names a desire much older than the internet. On Hoffman&rsquo;s account, a product succeeds when it finds a new way to satisfy an old one.</p>
+
+			<figure>
+				<div class="sins">
+					<div class="sin">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<circle class="head" cx="50" cy="58" r="31"/>
+							<path class="gold" d="M30,33 L33,13 L42,23 L50,8 L58,23 L67,13 L70,33 Z"/>
+							<path class="ln" d="M35,57 q5.5,-6 11,0 M54,57 q5.5,-6 11,0"/>
+							<path class="ln" d="M41,73 q10,7 19,-4"/>
+						</svg>
+						<p class="sin-name">Pride</p>
+						<p class="sin-says">&ldquo;Look at me.&rdquo;</p>
+						<p class="sin-app">Facebook <span class="by-rh">Hoffman</span></p>
+					</div>
+					<div class="sin">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<circle class="head" cx="50" cy="54" r="32"/>
+							<text class="t-sym" x="39" y="57" text-anchor="middle">$</text>
+							<text class="t-sym" x="61" y="57" text-anchor="middle">$</text>
+							<path class="ln" d="M35,66 Q50,84 65,66 Z"/>
+						</svg>
+						<p class="sin-name">Greed</p>
+						<p class="sin-says">&ldquo;What&rsquo;s in it for me?&rdquo;</p>
+						<p class="sin-app">LinkedIn <span class="by-rh">Hoffman</span></p>
+					</div>
+					<div class="sin">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<circle class="head" cx="48" cy="56" r="32"/>
+							<path class="red" transform="translate(37,44)" d="M0,4 C0,-2 -8,-3 -8,3 C-8,8 0,12 0,14 C0,12 8,8 8,3 C8,-3 0,-2 0,4 Z"/>
+							<path class="red" transform="translate(59,44)" d="M0,4 C0,-2 -8,-3 -8,3 C-8,8 0,12 0,14 C0,12 8,8 8,3 C8,-3 0,-2 0,4 Z"/>
+							<path class="red" transform="translate(84,12) scale(0.75)" d="M0,4 C0,-2 -8,-3 -8,3 C-8,8 0,12 0,14 C0,12 8,8 8,3 C8,-3 0,-2 0,4 Z"/>
+							<path class="ln" d="M39,71 q9,8 18,0"/>
+						</svg>
+						<p class="sin-name">Lust</p>
+						<p class="sin-says">&ldquo;Swipe right.&rdquo;</p>
+						<p class="sin-app">Tinder and Hinge</p>
+					</div>
+					<div class="sin">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<circle class="head-envy" cx="50" cy="54" r="32"/>
+							<circle class="eye" cx="39" cy="51" r="7"/>
+							<circle class="ink" cx="43.5" cy="52" r="3.2"/>
+							<circle class="eye" cx="61" cy="51" r="7"/>
+							<circle class="ink" cx="65.5" cy="52" r="3.2"/>
+							<path class="head-envy" style="stroke: var(--ink); stroke-width: 2" d="M31.5,52 a7.5,7.5 0 0 1 15,0 Z M53.5,52 a7.5,7.5 0 0 1 15,0 Z"/>
+							<path class="ln" d="M31,40 L46,43 M69,40 L54,43"/>
+							<path class="ln" d="M39,71 q5,-4 10,0 t10,0"/>
+						</svg>
+						<p class="sin-name">Envy</p>
+						<p class="sin-says">&ldquo;Why them?&rdquo;</p>
+						<p class="sin-app">Instagram</p>
+					</div>
+					<div class="sin">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<circle class="head" cx="44" cy="50" r="31"/>
+							<circle class="eye" cx="34" cy="44" r="6.5"/>
+							<circle class="ink" cx="36" cy="46" r="3"/>
+							<circle class="eye" cx="54" cy="44" r="6.5"/>
+							<circle class="ink" cx="56" cy="46" r="3"/>
+							<ellipse class="ink" cx="42" cy="64" rx="6.5" ry="5.5"/>
+							<rect class="soft" x="58" y="60" width="36" height="28" rx="5" style="stroke: var(--ink); stroke-width: 2.2"/>
+							<path class="acc" d="M71,67 L82,74 L71,81 Z"/>
+						</svg>
+						<p class="sin-name">Gluttony</p>
+						<p class="sin-says">&ldquo;Just one more.&rdquo;</p>
+						<p class="sin-app">Autoplay and endless feeds</p>
+					</div>
+					<div class="sin">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<path class="ln-red" d="M20,36 q-5,-5 0,-10 q5,-5 0,-10 M80,36 q5,-5 0,-10 q-5,-5 0,-10"/>
+							<circle class="head-wrath" cx="50" cy="57" r="31"/>
+							<path class="ln" d="M33,43 L46,50 M67,43 L54,50"/>
+							<circle class="ink" cx="41" cy="56" r="3"/>
+							<circle class="ink" cx="59" cy="56" r="3"/>
+							<rect class="eye" x="37" y="67" width="26" height="11" rx="2"/>
+							<path class="ln-thin" d="M43.5,67 V78 M50,67 V78 M56.5,67 V78 M37,72.5 H63"/>
+						</svg>
+						<p class="sin-name">Wrath</p>
+						<p class="sin-says">&ldquo;Someone is wrong on the internet!&rdquo;</p>
+						<p class="sin-app">Twitter <span class="by-rh">Hoffman</span></p>
+					</div>
+					<div class="sin">
+						<svg class="toon" viewBox="0 0 100 100" aria-hidden="true">
+							<circle class="head" cx="44" cy="58" r="31"/>
+							<path class="ln" d="M31,57 q5,4 10,0 M48,57 q5,4 10,0"/>
+							<ellipse class="ln" cx="45" cy="73" rx="3.5" ry="4.5"/>
+							<text class="t-z" x="76" y="32" style="font-size: 15px">z</text>
+							<text class="t-z" x="84" y="18" style="font-size: 20px">Z</text>
+						</svg>
+						<p class="sin-name">Sloth</p>
+						<p class="sin-says">&ldquo;Do it for me.&rdquo;</p>
+						<p class="sin-app">Zynga <span class="by-rh">Hoffman</span></p>
+					</div>
+					<div class="sin sin-quote">
+						<p class="sin-says">&ldquo;What parts of what it is to be human are you actually triggering?&rdquo;</p>
+						<p class="sin-app">Reid Hoffman, Startup School, 2016</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 1.</b> The seven deadly sins as desires a product can feed. Cards marked <span class="by-rh">Hoffman</span> carry his own pairings from 2011 and 2021. The other examples are illustrative.</figcaption>
+			</figure>
+
+			<p>Several of the sins are milder than their names. Hoffman&rsquo;s greed is the pursuit of opportunity, and financial security pays for plenty of good things. Envy can spoil an evening spent on other people&rsquo;s holiday photos. It can also show someone from a similar background that a goal is within reach.</p>
+
+			<p>Sloth, in product terms, is a preference for less effort, which is often the rational choice. Uber and food delivery are built on it. It is also the sin that AI agents will feed most directly.</p>
+
+			<p>Wrath is on the list because Hoffman watched one platform change sins. He first thought people used Twitter out of pride, to let everyone know they were having dinner at the hot new restaurant. &ldquo;But, over time, venom and outrage overtook humblebrags,&rdquo; he wrote. &ldquo;So, wrath started to dominate as the primary sin there.&rdquo;</p>
+
+			<h2>Greed wrote 90 characters</h2>
+
+			<p>Hoffman&rsquo;s 2021 essay, <a href="https://greylock.com/reid-hoffman/vices-and-virtues-investing-and-human-nature/" target="_blank" rel="noopener"><i>Investing in Vices and Virtues</i></a>, first ran on the Knight Foundation&rsquo;s site. It records what happened when the heuristic met LinkedIn&rsquo;s first users. Before launch, Hoffman expected greed to produce detailed profiles. A complete profile makes a member easier to find, and being found is how a professional network pays off.</p>
+
+			<p>Early members wrote almost nothing. &ldquo;At one point in our first few years, the average profile length was just 90 characters,&rdquo; Hoffman wrote. That was &ldquo;shorter than a tweet!&rdquo;</p>
+
+			<p>The sin was real. Members did want better careers. The wanting stopped short of typing.</p>
+
+			<p>Pride, a sin nobody had designed for, filled the gap. LinkedIn showed each member&rsquo;s connection count, and early users were soon &ldquo;amassing 1,000, 5,000 and even 20,000 connections.&rdquo; A connection was meant to stand for someone a member could vouch for. &ldquo;No one can have 20,000 professional connections whom they know well enough to credibly vouch for,&rdquo; Hoffman wrote. After &ldquo;extensive discussion and design thought,&rdquo; LinkedIn capped the displayed number at 500+. The cap, in his words, &ldquo;allowed us to utilize a game dynamic that tapped into pride, but also to temper it.&rdquo;</p>
+
+			<figure>
+				<div class="strip">
+					<div class="panel">
+						<p class="panel-beat">1 &middot; The plan</p>
+						<svg class="toon" viewBox="0 0 240 180" role="img" aria-label="A cartoon member points proudly at an almost empty profile card. The card reads Pat Doe, Manager, with blank lines below. The member says Done. A red label under the card reads 90 characters.">
+							<rect class="card" x="10" y="26" width="136" height="118" rx="8"/>
+							<circle class="soft" cx="34" cy="52" r="14"/>
+							<text class="t-main" x="34" y="57.5" text-anchor="middle">?</text>
+							<text class="t-main" x="56" y="49">Pat Doe</text>
+							<text class="t-small" x="56" y="66">Manager.</text>
+							<path class="ln-rule" d="M22,90 H134 M22,108 H134 M22,126 H134"/>
+							<text class="t-warn" x="78" y="170" text-anchor="middle">90 characters</text>
+							<circle class="head" cx="196" cy="84" r="17"/>
+							<rect class="shirt" x="181" y="103" width="30" height="44" rx="13"/>
+							<path class="ln" d="M183,114 L162,102 M209,114 L218,130"/>
+							<path class="ln" d="M187.5,82 q3,-3.5 6,0 M198.5,82 q3,-3.5 6,0"/>
+							<path class="ln" d="M189,90 q7,6 14,0"/>
+							<rect class="bubble" x="160" y="8" width="72" height="34" rx="14"/>
+							<path class="bubble" d="M187,40 L192,59 L203,40"/>
+							<text class="t-main" x="196" y="30" text-anchor="middle">Done!</text>
+						</svg>
+						<p class="panel-text">Greed was supposed to fill the profiles. The average ran 90 characters.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">2 &middot; What happened</p>
+						<svg class="toon" viewBox="0 0 240 180" role="img" aria-label="The same member, chest puffed out, points at a scoreboard reading 20,000 connections, surrounded by gold sparkles, and says Add me.">
+							<rect class="board" x="100" y="32" width="130" height="84" rx="10"/>
+							<text class="t-big" x="165" y="76" text-anchor="middle">20,000</text>
+							<text class="t-small" x="165" y="100" text-anchor="middle">connections</text>
+							<path class="gold" transform="translate(104,30)" d="M0,-8 L2.2,-2.2 L8,0 L2.2,2.2 L0,8 L-2.2,2.2 L-8,0 L-2.2,-2.2 Z"/>
+							<path class="gold" transform="translate(226,28) scale(0.8)" d="M0,-8 L2.2,-2.2 L8,0 L2.2,2.2 L0,8 L-2.2,2.2 L-8,0 L-2.2,-2.2 Z"/>
+							<path class="gold" transform="translate(228,118) scale(0.9)" d="M0,-8 L2.2,-2.2 L8,0 L2.2,2.2 L0,8 L-2.2,2.2 L-8,0 L-2.2,-2.2 Z"/>
+							<circle class="head" cx="54" cy="88" r="17"/>
+							<ellipse class="shirt" cx="54" cy="134" rx="22" ry="26"/>
+							<path class="ln" d="M34,126 L20,106 M74,126 L96,108"/>
+							<path class="ln" d="M44,87 q3.5,-4 7,0 M57,87 q3.5,-4 7,0"/>
+							<path class="ln" d="M46,95 q8,8 16,0"/>
+							<rect class="bubble" x="8" y="12" width="84" height="34" rx="14"/>
+							<path class="bubble" d="M42,44 L48,66 L58,44"/>
+							<text class="t-main" x="50" y="34" text-anchor="middle">Add me!</text>
+						</svg>
+						<p class="panel-text">Pride filled the connection counter instead. Some members passed 20,000.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">3 &middot; The fix</p>
+						<svg class="toon" viewBox="0 0 240 180" role="img" aria-label="The scoreboard now reads 500+ connections and carries a gold padlock. The member shrugs and says Fair enough.">
+							<rect class="board" x="100" y="32" width="130" height="84" rx="10"/>
+							<text class="t-big" x="165" y="78" text-anchor="middle">500+</text>
+							<text class="t-small" x="165" y="100" text-anchor="middle">connections</text>
+							<path class="ln" d="M207,110 v-7 a7,7 0 0 1 14,0 v7"/>
+							<rect class="gold" x="202" y="108" width="24" height="18" rx="3"/>
+							<circle class="head" cx="54" cy="88" r="17"/>
+							<rect class="shirt" x="39" y="107" width="30" height="44" rx="13"/>
+							<path class="ln" d="M41,118 L26,110 L22,98 M67,118 L82,110 L86,98"/>
+							<circle class="ink" cx="48" cy="87" r="2.3"/>
+							<circle class="ink" cx="60" cy="87" r="2.3"/>
+							<path class="ln" d="M43,80 l7,-2 M58,78 l7,2"/>
+							<path class="ln" d="M48,96 q6,3 12,0"/>
+							<rect class="bubble" x="4" y="12" width="104" height="34" rx="14"/>
+							<path class="bubble" d="M46,44 L51,66 L61,44"/>
+							<text class="t-main" x="56" y="34" text-anchor="middle">Fair enough.</text>
+						</svg>
+						<p class="panel-text">LinkedIn capped the display at 500+.</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 2.</b> LinkedIn&rsquo;s first years, as Hoffman described them in 2021. The numbers are his. The member and the profile are drawn for illustration.</figcaption>
+			</figure>
+
+			<p>LinkedIn turned down engagement in other places too. It was built on real identities, and until much later it did not let members upload photos of themselves. Photos &ldquo;would have tapped into pride, lust and envy, and dramatically accelerated engagement,&rdquo; Hoffman wrote. LinkedIn did not want to become &ldquo;the workplace version of &lsquo;Am I Hot or Not?&rsquo;&rdquo; It also chose subscriptions over advertising as its main revenue, because Hoffman wanted &ldquo;a time-saving platform, not a time-wasting one.&rdquo;</p>
+
+			<p>Sometimes a sin worked for the platform. When LinkedIn opened its publishing platform in October 2012, only 150 hand-picked figures, among them Richard Branson and Arianna Huffington, could post. LinkedIn occasionally showed them an internal leaderboard of who posted most and whose posts drew the most views. &ldquo;Naturally, pride and envy kicked in,&rdquo; Hoffman wrote, and the influencers wrote more. By the time every member could post, 17 months later, the early writers had set the norms.</p>
+
+			<p>The 2011 aphorism leaves this part out. A designer chooses which sin to feed and how hard. That choice decides whether the desire that brought someone in turns into the behavior the product was built for. The heuristic runs short in four places.</p>
+
+			<h2>A sin fits any story</h2>
+
+			<p>Someone posts a promotion on LinkedIn. Pride could explain the post. Greed could too, if the poster hopes a recruiter will notice. So could envy of a former classmate&rsquo;s promotion last month. Or the poster might simply want to thank a team in public.</p>
+
+			<p>A framework that explains every behavior after the fact predicts little in advance. Hoffman&rsquo;s own record shows the problem. His heuristic picked greed for LinkedIn, and greed predicted neither the 90-character profiles nor the 20,000-connection collections. Both made sense once they had happened.</p>
+
+			<p>The sins make a memorable list. Nobody tested them as a theory of motivation. For a founder, a sin is a hypothesis about demand. It becomes evidence when people keep using the product and pay for it, for the reason the founder proposed.</p>
+
+			<h2>The motives the sins leave out</h2>
+
+			<p>A scientist can spend years on a question with no commercial payoff in sight. A musician practises scales because getting better feels good. Calling either of them proud explains away the reason each would give.</p>
+
+			<p>Edward Deci and Richard Ryan offered another list in a <a href="https://doi.org/10.1207/S15327965PLI1104_01" target="_blank" rel="noopener">2000 paper</a> on self-determination theory.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Self-determination theory</span>
+				<p>Deci and Ryan proposed three basic psychological needs.</p>
+				<ul>
+					<li><b>Autonomy</b> is the sense that your actions follow from your own choices and values.</li>
+					<li><b>Competence</b> is the sense of being capable, especially while learning something hard.</li>
+					<li><b>Relatedness</b> is the sense of real connection to other people.</li>
+				</ul>
+				<p>A sin describes a desire in the moment. A need describes what leaves a person better off over months. Dorian Peters and Rafael Calvo <a href="https://doi.org/10.1093/oxfordhb/9780197600047.013.49" target="_blank" rel="noopener">review</a> how designers have applied the theory in fields from games to health.</p>
+			</div>
+
+			<p>A language app can feed pride with streaks and badges. The need it serves is competence, and the test is whether the learner can order dinner in Spanish a year later. An accessibility tool sells convenience. Its larger effect is on autonomy, the ability to get through a day without asking for help.</p>
+
+			<h2>Wanting a product is cheap</h2>
+
+			<p>A hypothetical startup builds an AI app that helps people earn more. Greed is on its side and the market looks huge. Neither fact says whether anyone will open the app twice. The advice might be unreliable. The gains might be too slow to notice. A customer with a working spreadsheet may see no reason to switch, and finding each new user may cost more than that user pays.</p>
+
+			<p>LinkedIn&rsquo;s profiles showed the same gap. Hoffman read the motive correctly, since people joined to advance their careers. He misjudged how much work they would do on the way.</p>
+
+			<p>Interest in a product is easy to collect. A customer who says &ldquo;I&rsquo;d use that&rdquo; over coffee has spent nothing. Repeat use and payment are stronger evidence. The strongest is a measured improvement in whatever the customer came for.</p>
+
+			<h2>Engagement can grow while users gain nothing</h2>
+
+			<p>The fourth gap matters most. A product can hold attention for hours and leave its users no better off.</p>
+
+			<p>William Brady and colleagues measured one version of this on Twitter, in a <a href="https://doi.org/10.1126/sciadv.abe5641" target="_blank" rel="noopener">2021 study in <i>Science Advances</i></a>. Two preregistered observational studies covered 7,331 users and 12.7 million tweets, and two behavioral experiments added 240 participants. &ldquo;Positive social feedback for outrage expressions increases the likelihood of future outrage expressions,&rdquo; the authors found. Users also matched their outrage to the norms of the networks around them.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 460 340" role="img" aria-labelledby="f3-title f3-desc">
+					<title id="f3-title">The outrage loop</title>
+					<desc id="f3-desc">A cycle of three steps around an angry cartoon face. Step one, post in outrage, for example this is unacceptable. Step two, collect the reward, as likes and retweets pile up. Step three, post more outrage the next time, because the reward taught the habit. An arrow leads from step three back to step one.</desc>
+					<defs>
+						<marker id="f3-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+					</defs>
+
+					<rect class="box" x="12" y="14" width="196" height="66" rx="10"/>
+					<text class="t-main" x="110" y="41" text-anchor="middle">1. Post in outrage</text>
+					<text class="t-small t-it" x="110" y="63" text-anchor="middle">&ldquo;This is unacceptable!&rdquo;</text>
+
+					<rect class="box" x="252" y="14" width="196" height="66" rx="10"/>
+					<text class="t-main" x="350" y="41" text-anchor="middle">2. Collect the reward</text>
+					<text class="t-small" x="350" y="63" text-anchor="middle">Likes and retweets pile up</text>
+
+					<rect class="box-hot" x="132" y="262" width="196" height="66" rx="10"/>
+					<text class="t-main" x="230" y="289" text-anchor="middle">3. Post more outrage</text>
+					<text class="t-small" x="230" y="311" text-anchor="middle">The reward taught the habit</text>
+
+					<path class="ln-arrow" d="M210,47 H248" marker-end="url(#f3-ah)"/>
+					<path class="ln-arrow" d="M350,82 C350,170 334,226 300,258" marker-end="url(#f3-ah)"/>
+					<path class="ln-arrow" d="M130,296 C62,296 58,170 102,84" marker-end="url(#f3-ah)"/>
+
+					<path class="ln-red" d="M190,150 q-5,-5 0,-10 q5,-5 0,-10 M270,150 q5,-5 0,-10 q-5,-5 0,-10"/>
+					<circle class="head-wrath" cx="230" cy="172" r="34"/>
+					<path class="ln" d="M211,155 L225,163 M249,155 L235,163"/>
+					<circle class="ink" cx="220" cy="170" r="3.2"/>
+					<circle class="ink" cx="240" cy="170" r="3.2"/>
+					<rect class="eye" x="216" y="182" width="28" height="12" rx="2"/>
+					<path class="ln-thin" d="M223,182 V194 M230,182 V194 M237,182 V194 M216,188 H244"/>
+					<path class="red" transform="translate(296,112) scale(0.9)" d="M0,4 C0,-2 -8,-3 -8,3 C-8,8 0,12 0,14 C0,12 8,8 8,3 C8,-3 0,-2 0,4 Z"/>
+					<path class="red" transform="translate(318,94) scale(0.65)" d="M0,4 C0,-2 -8,-3 -8,3 C-8,8 0,12 0,14 C0,12 8,8 8,3 C8,-3 0,-2 0,4 Z"/>
+					<path class="red" transform="translate(286,140) scale(0.55)" d="M0,4 C0,-2 -8,-3 -8,3 C-8,8 0,12 0,14 C0,12 8,8 8,3 C8,-3 0,-2 0,4 Z"/>
+				</svg>
+				<figcaption><b>Figure 3.</b> The loop Brady and colleagues found on Twitter. Positive feedback on an outraged post made the next outraged post more likely, across 12.7 million tweets from 7,331 users and in two experiments with 240 participants. Users also matched their outrage to their network&rsquo;s norms, which the loop does not show.</figcaption>
+			</figure>
+
+			<p>Nobody at Twitter had to design for anger. A like button rewards whatever draws reactions, and outrage draws reactions.</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">What the outrage study measured</span>
+				<p>The study covers one platform. Likes and retweets worked like rewards in reinforcement learning, where feedback on one action shapes the next. In ideologically extreme networks, where outrage was already common, users responded less to feedback and more to the norms around them. The study measured how much outrage people expressed. It did not measure whether expressing it harmed them.</p>
+			</div>
+
+			<p>The trouble starts when a company&rsquo;s metrics drift from what users came for. A social app may count longer sessions as success. Its users may have joined to keep up with friends, and an extra hour of scrolling does not show that they did.</p>
+
+			<p>Compare two hypothetical networking apps. One keeps a user browsing updates for an hour. The other finds the one contact worth meeting in ten minutes and lets the user go. The first wins every engagement chart. The second did the job.</p>
+
+			<p>When revenue rises with time spent, a company has a reason to keep users longer even when they would be better off leaving. Hoffman gives this as a reason for LinkedIn&rsquo;s subscriptions. Without advertising, he wrote, LinkedIn &ldquo;never felt compelled to maximize time spent on site.&rdquo; Builders who fail to check &ldquo;lowest-common-denominator impulses,&rdquo; he argued, end up &ldquo;passively optimizing for&rdquo; the sins.</p>
+
+			<h2>The best AI product may be one you rarely open</h2>
+
+			<p>Most of the consumer internet was built around screens that people tap through themselves. An AI agent can do the tapping. It might book a trip or clear a month of paperwork while its user does something else.</p>
+
+			<p>Such a product gets more valuable as people spend less time in it. A hypothetical assistant that saves someone five hours of administrative work a week might be opened twice, to approve a decision. Every engagement metric would score it as a failure.</p>
+
+			<figure>
+				<div class="strip strip-2">
+					<div class="panel">
+						<p class="panel-beat">A feed</p>
+						<svg class="toon" viewBox="0 0 260 200" role="img" aria-label="A cartoon user slumps on a couch staring at a glowing phone. A clock reads three hours later. The time in app bar is full and the hours back bar is almost empty.">
+							<rect class="soft" x="16" y="78" width="150" height="40" rx="12"/>
+							<rect class="soft" x="10" y="110" width="162" height="30" rx="10"/>
+							<path class="ln-thin" d="M24,140 v8 M158,140 v8"/>
+							<ellipse class="shirt" cx="80" cy="110" rx="22" ry="18"/>
+							<circle class="head" cx="76" cy="78" r="17"/>
+							<circle class="ink" cx="76" cy="80" r="2.2"/>
+							<circle class="ink" cx="87" cy="80" r="2.2"/>
+							<path class="ln" d="M71,76 H80 M83,76 H92"/>
+							<path class="ln" d="M74,89 H84"/>
+							<path class="ln" d="M94,108 L104,98"/>
+							<rect class="ink" x="100" y="82" width="13" height="21" rx="2.5"/>
+							<path class="ln-acc" d="M118,84 l6,-4 M119,93 h7 M118,102 l6,4"/>
+							<circle class="card" cx="214" cy="46" r="24" style="stroke: var(--ink); stroke-width: 2"/>
+							<path class="ln" d="M214,46 V31 M214,46 L225,52"/>
+							<text class="t-small" x="214" y="88" text-anchor="middle">3 hours later</text>
+							<text class="t-small" x="12" y="172">Time in app</text>
+							<rect class="track" x="100" y="162" width="148" height="12" rx="6"/>
+							<rect class="acc" x="100" y="162" width="144" height="12" rx="6"/>
+							<text class="t-small" x="12" y="194">Hours back</text>
+							<rect class="track" x="100" y="184" width="148" height="12" rx="6"/>
+							<rect class="grn" x="100" y="184" width="10" height="12" rx="6"/>
+						</svg>
+						<p class="panel-text">Hours of attention, and little to show for them.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">An agent</p>
+						<svg class="toon" viewBox="0 0 260 200" role="img" aria-label="A cartoon robot works through a stack of paperwork at a desk while the user waves from outside in the sun. The time in app bar is almost empty and the hours back bar is full.">
+							<rect class="soft" x="14" y="118" width="134" height="10" rx="3"/>
+							<path class="ln-thin" d="M24,128 v20 M138,128 v20"/>
+							<path class="ln" d="M62,52 v-9"/>
+							<circle class="acc" cx="62" cy="39" r="4"/>
+							<rect class="shirt" x="42" y="52" width="40" height="30" rx="7"/>
+							<circle class="acc" cx="54" cy="67" r="4"/>
+							<circle class="acc" cx="70" cy="67" r="4"/>
+							<path class="ln-thin" d="M56,76 h12"/>
+							<rect class="shirt" x="38" y="84" width="48" height="34" rx="8"/>
+							<path class="ln" d="M86,96 L102,92"/>
+							<rect class="card" x="100" y="88" width="40" height="30" rx="3" style="stroke: var(--ink-light)"/>
+							<rect class="card" x="96" y="93" width="40" height="25" rx="3" style="stroke: var(--ink)"/>
+							<path class="ln-check" d="M106,105 l6,6 l12,-12"/>
+							<path class="ln-thin" d="M160,150 H252"/>
+							<circle class="gold" cx="232" cy="32" r="11"/>
+							<circle class="head" cx="204" cy="94" r="16"/>
+							<rect class="shirt" x="190" y="112" width="28" height="38" rx="12"/>
+							<path class="ln" d="M216,120 L232,104 M192,122 L184,138"/>
+							<path class="ln" d="M196.5,92 q3,-3.5 6,0 M205.5,92 q3,-3.5 6,0"/>
+							<path class="ln" d="M197,100 q7,6 14,0"/>
+							<text class="t-small" x="12" y="172">Time in app</text>
+							<rect class="track" x="100" y="162" width="148" height="12" rx="6"/>
+							<rect class="acc" x="100" y="162" width="10" height="12" rx="6"/>
+							<text class="t-small" x="12" y="194">Hours back</text>
+							<rect class="track" x="100" y="184" width="148" height="12" rx="6"/>
+							<rect class="grn" x="100" y="184" width="144" height="12" rx="6"/>
+						</svg>
+						<p class="panel-text">Opened twice a week, with five hours handed back.</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 4.</b> Two hypothetical products. Blue bars show time spent in the app, which engagement metrics count. Green bars show the hours a user gets back, which those metrics miss. The bars are illustrative.</figcaption>
+			</figure>
+
+			<p>Hoffman&rsquo;s sins still explain the sign-up. Sloth wants the paperwork gone, and greed wants the hours back to earn with. The value lies in what the hours buy. A parent may spend them with a child. A scientist may spend them on an experiment.</p>
+
+			<p>The same capability raises a harder problem. A system that books trips well will soon be asked which job offer to take. People who hand over every such decision may get better results and lose practice at choosing which results they want.</p>
+
+			<p>In <a href="https://www.superagency.ai/" target="_blank" rel="noopener"><i>Superagency</i></a>, published in 2025, Hoffman and Greg Beato argue that AI can widen human agency by putting expertise within reach of more people. Design decides whether a given system does. An assistant that lays out the options and their trade-offs leaves the choice with its user. One that hides its reasoning and steers every decision can wear down autonomy even when each recommendation is accurate.</p>
+
+			<div class="callout">
+				<span class="callout-label">The question for agent builders</span>
+				<p>An agent succeeds outside the app, in hours returned and in decisions its user still understands. A usage dashboard records neither. What an agent company should count in their place is still an open question.</p>
+			</div>
+
+			<h2>Where desire and need line up</h2>
+
+			<p>Hoffman&rsquo;s heuristic still earns its place. A technically brilliant product that pulls on no human desire usually finds no users. The sins name what pulls people in. Self-determination theory names what leaves them better off. Often the two line up.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 440 450" role="img" aria-labelledby="f5-title f5-desc">
+					<title id="f5-title">When a sin lines up with a need</title>
+					<desc id="f5-desc">Top half, green arrows lead from three of Hoffman's sins to the three basic needs. Pride leads to competence through praise for real skill. Greed leads to autonomy through money that buys freedom. Sloth leads to relatedness through hours freed for people. Bottom half, under the heading when they come apart, dashed red arrows lead from pride with no achievement, envy with no way to improve, and wrath with nowhere to go, to a single box reading engagement, no need met.</desc>
+					<defs>
+						<marker id="f5-ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-good" d="M0,0 L10,5 L0,10 z"/></marker>
+						<marker id="f5-ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="ah-red" d="M0,0 L10,5 L0,10 z"/></marker>
+					</defs>
+
+					<text class="t-head" x="72" y="22" text-anchor="middle">HOFFMAN&rsquo;S SINS</text>
+					<text class="t-head" x="368" y="22" text-anchor="middle">BASIC NEEDS</text>
+
+					<rect class="box" x="12" y="36" width="120" height="42" rx="10"/>
+					<text class="t-main" x="72" y="62" text-anchor="middle">Pride</text>
+					<path class="ln-good" d="M134,57 H304" marker-end="url(#f5-ahg)"/>
+					<text class="t-small t-it" x="220" y="49" text-anchor="middle">praise for real skill</text>
+					<rect class="box-good" x="308" y="36" width="120" height="42" rx="10"/>
+					<text class="t-main" x="368" y="62" text-anchor="middle">Competence</text>
+
+					<rect class="box" x="12" y="96" width="120" height="42" rx="10"/>
+					<text class="t-main" x="72" y="122" text-anchor="middle">Greed</text>
+					<path class="ln-good" d="M134,117 H304" marker-end="url(#f5-ahg)"/>
+					<text class="t-small t-it" x="220" y="109" text-anchor="middle">money that buys freedom</text>
+					<rect class="box-good" x="308" y="96" width="120" height="42" rx="10"/>
+					<text class="t-main" x="368" y="122" text-anchor="middle">Autonomy</text>
+
+					<rect class="box" x="12" y="156" width="120" height="42" rx="10"/>
+					<text class="t-main" x="72" y="182" text-anchor="middle">Sloth</text>
+					<path class="ln-good" d="M134,177 H304" marker-end="url(#f5-ahg)"/>
+					<text class="t-small t-it" x="220" y="169" text-anchor="middle">hours freed for people</text>
+					<rect class="box-good" x="308" y="156" width="120" height="42" rx="10"/>
+					<text class="t-main" x="368" y="182" text-anchor="middle">Relatedness</text>
+
+					<path class="ln-rule" d="M12,224 H428"/>
+					<text class="t-head-warn" x="220" y="252" text-anchor="middle">WHEN THEY COME APART</text>
+
+					<rect class="box-hot" x="12" y="268" width="120" height="50" rx="10"/>
+					<text class="t-main" x="72" y="289" text-anchor="middle">Pride</text>
+					<text class="t-small t-it" x="72" y="307" text-anchor="middle">no achievement</text>
+
+					<rect class="box-hot" x="12" y="328" width="120" height="50" rx="10"/>
+					<text class="t-main" x="72" y="349" text-anchor="middle">Envy</text>
+					<text class="t-small t-it" x="72" y="367" text-anchor="middle">no way to improve</text>
+
+					<rect class="box-hot" x="12" y="388" width="120" height="50" rx="10"/>
+					<text class="t-main" x="72" y="409" text-anchor="middle">Wrath</text>
+					<text class="t-small t-it" x="72" y="427" text-anchor="middle">nowhere to go</text>
+
+					<path class="ln-dash" d="M134,293 C220,293 220,353 304,353" marker-end="url(#f5-ahr)"/>
+					<path class="ln-dash" d="M134,353 H304" marker-end="url(#f5-ahr)"/>
+					<path class="ln-dash" d="M134,413 C220,413 220,353 304,353" marker-end="url(#f5-ahr)"/>
+
+					<rect class="box-hot" x="308" y="328" width="120" height="50" rx="10"/>
+					<text class="t-main" x="368" y="349" text-anchor="middle">Engagement</text>
+					<text class="t-small t-it" x="368" y="367" text-anchor="middle">no need met</text>
+				</svg>
+				<figcaption><b>Figure 5.</b> How a desire can line up with a need, or fail to. Green arrows show the sin that brings a user in feeding one of the three needs in self-determination theory. Red arrows show a sin fed with nothing behind it. The pairings are illustrative and were not measured.</figcaption>
+			</figure>
+
+			<p>Recognition for real achievement can build competence. Money can buy independence. A service that removes busywork can hand back time for the people in someone&rsquo;s life. In each case the desire that brought the user in and the need the product serves push the same way.</p>
+
+			<p>Problems start when they come apart. A product can feed pride with no achievement behind it, or envy with no way for users to improve their own position. It can stir outrage that leads nowhere. Such products can make money. Their revenue says little about what they do to the people using them.</p>
+
+			<p>I work on evaluating AI systems in science and medicine, where the gap is easy to see. A physician adopting a clinical AI tool wants help that can be trusted and more time with patients. Minutes spent inside the tool count against it. Its value shows up in the care, outside the product.</p>
+
+			<p>Hoffman&rsquo;s 2011 line is memorable because it is right about why people sign up. His 2021 essay is more useful, because it records what happened next at a company he ran and what he changed. The sins answer what makes people want a product. As AI moves into decisions that matter more than what to watch next, the question that counts is what happens to people because they use it.</p>
+
+			<p>Understanding human desires may help us build successful products. <strong>Understanding how to serve human needs is what gives those products a reason to exist.</strong></p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://greylock.com/reid-hoffman/vices-and-virtues-investing-and-human-nature/" target="_blank" rel="noopener">Reid Hoffman, <i>Investing in Vices and Virtues</i></a> (Greylock, 2021, first published by the Knight Foundation), his look back at the heuristic and at LinkedIn&rsquo;s design choices.</li>
+				<li><a href="https://www.ycombinator.com/blog/reid-hoffman-at-startup-school/" target="_blank" rel="noopener">Y Combinator, <i>Reid Hoffman at Startup School</i></a> (2016), his conversation with Sam Altman on theories of human nature.</li>
+				<li><a href="https://doi.org/10.1207/S15327965PLI1104_01" target="_blank" rel="noopener">Deci and Ryan, <i>The &ldquo;what&rdquo; and &ldquo;why&rdquo; of goal pursuits</i></a> (<i>Psychological Inquiry</i>, 2000), the paper that sets out the three needs.</li>
+				<li><a href="https://doi.org/10.1126/sciadv.abe5641" target="_blank" rel="noopener">Brady et al., <i>How social learning amplifies moral outrage expression in online social networks</i></a> (<i>Science Advances</i>, 2021).</li>
+				<li><a href="https://doi.org/10.1093/oxfordhb/9780197600047.013.49" target="_blank" rel="noopener">Peters and Calvo, <i>Self-determination theory and technology design</i></a> (<i>The Oxford Handbook of Self-Determination Theory</i>, 2023), on applying the theory to product design.</li>
+				<li><a href="https://www.superagency.ai/" target="_blank" rel="noopener">Hoffman and Beato, <i>Superagency: What Could Possibly Go Right with Our AI Future</i></a> (Authors Equity, 2025).</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">product design</span>
+				<span class="tag">human motivation</span>
+				<span class="tag">AI agents</span>
+				<span class="tag">engagement</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+
+</body>
+</html>
