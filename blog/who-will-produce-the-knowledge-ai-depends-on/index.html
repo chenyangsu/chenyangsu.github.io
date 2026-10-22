@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>Who will produce the knowledge AI depends on? | Chen-Yang Su</title>
+	<meta name="description" content="Students who practised maths with plain GPT-4 scored 17% lower on the exam. AI can deliver the output of routine work without the learning that came with it." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/who-will-produce-the-knowledge-ai-depends-on/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Who will produce the knowledge AI depends on?">
+	<meta property="og:description" content="Students who practised maths with plain GPT-4 scored 17% lower on the exam. AI can deliver the output of routine work without the learning that came with it.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/who-will-produce-the-knowledge-ai-depends-on/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-22">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Who will produce the knowledge AI depends on?">
+	<meta name="twitter:description" content="Students who practised maths with plain GPT-4 scored 17% lower on the exam. AI can deliver the output of routine work without the learning that came with it.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The cartoons, charts and controls in this post are inline SVG and
+		   HTML coloured with the site's tokens, so they follow the light and
+		   dark themes. Figures 1 and 4 are interactive; with JavaScript off
+		   they show their starting state and the captions carry the numbers.
+		   Comic panels reflow to one column at phone width. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Figure 1: practice / exam toggle */
+		.seg { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.seg button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--panel-bg); color: var(--ink); cursor: pointer; }
+		.seg button:hover { border-color: var(--accent); }
+		.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg button:focus-visible, .sim input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+		/* Figure 4: the toy model */
+		.sim { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px 16px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.sim-ctl { margin: 0 0 12px; }
+		.prose .sim-ctl label { display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; font-weight: 700; line-height: 1.4; color: var(--ink); margin: 0 0 4px; }
+		.sim-ctl output { font-weight: 900; color: var(--accent); white-space: nowrap; }
+		.sim-ctl input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
+		.prose .sim svg { border-radius: 0; margin-top: 0; }
+		.prose .sim-axis { font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-dark); margin: 14px 0 0; }
+		.sim-read { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0 0; }
+		.sim-cell { background: var(--chip-bg); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 6px; text-align: center; }
+		.prose .sim-k { font-size: 12px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-dark); margin: 0; }
+		.prose .sim-v { font-size: 24px; font-weight: 900; color: var(--ink); margin: 2px 0 0; }
+		.prose .sim-say { font-size: 14.5px; line-height: 1.5; color: var(--ink); margin: 12px 0 0; }
+
+		/* Figures 2 and 6: comic panels */
+		.strip, .pair { display: grid; gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.strip { grid-template-columns: repeat(3, 1fr); }
+		.pair { grid-template-columns: repeat(2, 1fr); }
+		.panel { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px 12px; }
+		.prose .panel svg { border-radius: 0; }
+		.prose .panel-beat { font-size: 12px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+		.prose .panel-text { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 8px 0 0; }
+
+		@media (max-width: 720px) {
+			.strip, .pair { grid-template-columns: 1fr; }
+			.prose .strip .panel svg, .prose .pair .panel svg { max-width: 320px; margin: 0 auto; }
+		}
+		@media (max-width: 520px) {
+			.sim .toon text { font-size: 22px; }
+			.sim .toon .t-small { font-size: 19px; }
+		}
+		@media (max-width: 420px) {
+			.prose .sim-v { font-size: 20px; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-tick { font-size: 14px; }
+		.toon .t-it { font-style: italic; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-big { font-size: 18px; font-weight: 900; fill: var(--ink); }
+		.toon .t-huge { font-size: 46px; font-weight: 900; fill: var(--award); }
+		.toon .t-q { font-size: 40px; font-weight: 900; fill: var(--ink-light); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; }
+		.toon .ln-acc { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-gold { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2; stroke-linecap: round; }
+		.toon .ln-rule { fill: none; stroke: var(--tag-border); stroke-width: 1.6; stroke-dasharray: 4 4; }
+		.toon .ln-rule-red { fill: none; stroke: var(--award); stroke-width: 2.4; stroke-dasharray: 5 6; stroke-linecap: round; opacity: 0.7; }
+		.toon .ln-grid { fill: none; stroke: var(--rule); stroke-width: 1; }
+		.toon .ln-axis { fill: none; stroke: var(--ink-light); stroke-width: 1.2; }
+		.toon .ln-base { fill: none; stroke: var(--ink-light); stroke-width: 2; stroke-dasharray: 6 5; }
+		.toon .ln-model { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
+		.toon .ln-needle { fill: none; stroke: var(--award); stroke-width: 3.2; stroke-linecap: round; }
+		.toon .ln-check { fill: none; stroke: var(--paper-bg); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-dash-arc { fill: none; stroke: var(--ink-light); stroke-width: 2.4; stroke-dasharray: 3 7; stroke-linecap: round; }
+		.toon .curve-0 { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .curve-n { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linejoin: round; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .head-sm { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .card { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .bubble { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .dash { fill: var(--panel-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .bar-ctrl { fill: var(--chip-bg); stroke: var(--ink-light); stroke-width: 1.8; }
+		.toon .bar-base { fill: var(--tag-bg); stroke: var(--accent); stroke-width: 2; }
+		.toon .bar-tutor { fill: var(--good-bg); stroke: var(--good); stroke-width: 2; }
+		.toon .bar-long { fill: var(--tag-bg); stroke: var(--tag-border); stroke-width: 1.5; }
+		.toon .lens-ring { fill: none; stroke: var(--ink); stroke-width: 3.5; }
+		.toon .hl { fill: var(--gold-hl-ink); opacity: 0.35; }
+		.toon .dot-ctrl { fill: var(--paper-bg); stroke: var(--ink-light); stroke-width: 2.2; }
+		.toon .mk-ai { fill: var(--accent); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .mk-model { fill: var(--accent); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .ok { fill: var(--good); }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .is-hidden { display: none; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "Who will produce the knowledge AI depends on?",
+		"description": "Students who practised maths with plain GPT-4 scored 17% lower on the exam. AI can deliver the output of routine work without the learning that came with it.",
+		"datePublished": "2026-10-22",
+		"url": "https://chenyangsu.github.io/blog/who-will-produce-the-knowledge-ai-depends-on/",
+		"keywords": "future of work, education, scientific discovery, economics",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/who-will-produce-the-knowledge-ai-depends-on/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI and learning</p>
+
+		<h1 class="post-title">Who will produce the knowledge AI depends on?</h1>
+
+		<p class="post-standfirst">About a thousand high-school students in Turkey practised maths with GPT-4. Their practice scores rose 48%, and then they scored 17% lower on the exam than classmates who had used only a textbook. Routine work used to make two things at once, the output someone paid for and the expert nobody paid for, and AI can now deliver the first without the second.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-22">22 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>Students who practised maths with a plain GPT-4 chat <strong>scored 48% higher in practice and 17% lower on the exam</strong> than students with only a textbook. A version built to give hints left exam scores unchanged.</li>
+				<li>Routine junior work used to pay for training without anyone budgeting for it. <strong>When AI does that work, the training needs a payer of its own.</strong></li>
+				<li>Employment of 22-to-25-year-olds in the most AI-exposed jobs is <strong>19% below the path of their less-exposed peers</strong>, mostly through fewer hires. The authors call this an early, descriptive signal.</li>
+				<li>In a 2026 economic model, accurate AI advice improves decisions today while weakening the effort that feeds shared knowledge. <strong>Past a point, shared knowledge can collapse.</strong></li>
+				<li>Google&rsquo;s Co-Scientist proposed in two days the answer an Imperial College lab had spent about a decade on. <strong>Only the lab&rsquo;s years of experiments could show the answer was right.</strong></li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>In the autumn of 2023, Hamsa Bastani and colleagues at the University of Pennsylvania <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12232635/" target="_blank" rel="noopener">ran an experiment</a> at a large high school in Turkey. About a thousand students in grades 9 to 11 took four 90-minute maths sessions. In each one, a teacher reviewed a topic and the students worked through practice problems. Then they sat an exam on their own, with no books and no laptops.</p>
+
+			<p>The classes practised in one of three ways. Some used only their textbook and notes. Some used GPT-4 in a plain chat window much like ChatGPT. The rest used a version the researchers called GPT Tutor. Its hidden instructions held the correct solution and the mistakes teachers see most often, and they told it to give hints without giving the answer away.</p>
+
+			<p>In the plain chat, the message students typed most often was &ldquo;What is the answer?&rdquo; The researchers later asked the plain chat each practice problem ten times. It gave the correct answer only 51% of the time.</p>
+
+			<p>During practice, AI helped a great deal. Scores rose 48% with the plain chat and 127% with the tutor. Then came the exam. Students who had practised with the plain chat scored 17% lower than students who had used only a textbook. The tutor group scored about the same as the textbook group.</p>
+
+			<figure class="diagram">
+				<div class="seg" role="group" aria-label="Choose which scores to show">
+					<button type="button" data-mode="practice" aria-pressed="true">Practice, AI allowed</button>
+					<button type="button" data-mode="exam" aria-pressed="false">Exam, no AI</button>
+				</div>
+				<svg class="toon" id="f1" viewBox="0 0 560 340" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">Scores in practice and on the exam, by how students practised</title>
+					<desc id="f1-desc">A bar chart with three groups. Scores are relative to the textbook group, which is set to 100. In practice, with AI allowed, the plain GPT-4 chat group scored 148 and the GPT-4 tutor group scored 227. On the exam, with no AI, the plain chat group scored 83, or 17% lower than the textbook group, and the tutor group scored about the same as the textbook group. A cartoon face sits on top of each bar, and the plain chat group's face turns worried on the exam.</desc>
+
+					<text id="f1-mode" class="t-head" x="302" y="24" text-anchor="middle">PRACTICE, WITH AI ALLOWED</text>
+
+					<path class="ln-grid" d="M64,104 H540"/>
+					<path class="ln-rule" d="M64,192 H540"/>
+					<path class="ln-axis" d="M64,280 H540"/>
+					<text class="t-tick" x="56" y="284" text-anchor="end">0</text>
+					<text class="t-tick" x="56" y="196" text-anchor="end">100</text>
+					<text class="t-tick" x="56" y="108" text-anchor="end">200</text>
+					<text class="t-tick" transform="translate(18,192) rotate(-90)" text-anchor="middle">Average score (textbook group = 100)</text>
+
+					<rect id="f1-bar-0" class="bar-ctrl" x="106" y="192" width="88" height="88" rx="4"/>
+					<rect id="f1-bar-1" class="bar-base" x="258" y="149.76" width="88" height="130.24" rx="4"/>
+					<rect id="f1-bar-2" class="bar-tutor" x="410" y="80.24" width="88" height="199.76" rx="4"/>
+
+					<g id="f1-face-0" transform="translate(150,173)">
+						<circle class="head-sm" cx="0" cy="0" r="15"/>
+						<circle class="ink" cx="-5" cy="-3" r="1.9"/>
+						<circle class="ink" cx="5" cy="-3" r="1.9"/>
+						<path class="ln-thin" d="M-6,4 Q0,10 6,4"/>
+					</g>
+					<g id="f1-face-1" transform="translate(302,130.76)">
+						<circle class="head-sm" cx="0" cy="0" r="15"/>
+						<circle class="ink" cx="-5" cy="-3" r="1.9"/>
+						<circle class="ink" cx="5" cy="-3" r="1.9"/>
+						<path class="ln-thin" d="M-6,4 Q0,10 6,4"/>
+						<path class="acc is-hidden" d="M17,-12 q4,7 0,10 q-4,-3 0,-10 Z"/>
+					</g>
+					<g id="f1-face-2" transform="translate(454,61.24)">
+						<circle class="head-sm" cx="0" cy="0" r="15"/>
+						<circle class="ink" cx="-5" cy="-3" r="1.9"/>
+						<circle class="ink" cx="5" cy="-3" r="1.9"/>
+						<path class="ln-thin" d="M-6,4 Q0,10 6,4"/>
+					</g>
+
+					<text id="f1-val-0" class="t-main" x="150" y="150" text-anchor="middle">100</text>
+					<text id="f1-val-1" class="t-blue" x="302" y="107.76" text-anchor="middle">+48%</text>
+					<text id="f1-val-2" class="t-good" x="454" y="38.24" text-anchor="middle">+127%</text>
+
+					<text class="t-main" x="150" y="302" text-anchor="middle">Textbook only</text>
+					<text class="t-small" x="150" y="320" text-anchor="middle">and notes</text>
+					<text class="t-main" x="302" y="302" text-anchor="middle">Plain GPT-4 chat</text>
+					<text class="t-small" x="302" y="320" text-anchor="middle">gives answers</text>
+					<text class="t-main" x="454" y="302" text-anchor="middle">GPT-4 tutor</text>
+					<text class="t-small" x="454" y="320" text-anchor="middle">gives hints</text>
+				</svg>
+				<figcaption><b>Figure 1.</b> Press the buttons to switch between practice and the exam. Bars show average scores relative to the students who practised with only a textbook and notes, set to 100 and marked by the dashed line. The 48%, 127% and 17% figures are from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12232635/" target="_blank" rel="noopener">Bastani et al. (2025)</a>. The tutor group&rsquo;s exam score was about 1% below the textbook group&rsquo;s, a gap the authors could not tell apart from zero. The faces are decoration.</figcaption>
+			</figure>
+
+			<p>The students who lost ground did not notice. When the researchers asked, the plain-chat group <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12232635/" target="_blank" rel="noopener">did not think they had done worse</a> or learned less. They had found a faster way to produce answers, and it had taken the place of the practice that builds the ability to produce answers alone.</p>
+
+			<p>Whole professions now face the same trade, and so does science. AI makes it cheap to use what people already know. That knowledge was built by people who did slow, routine work and learned from it. If AI takes over the routine work, someone still has to do the learning. The question is who.</p>
+
+			<h2>Every answer was once somebody&rsquo;s lesson</h2>
+
+			<p>Medical guidelines come from clinical trials and from doctors who watched thousands of patients get better or worse. Engineering rules come from tests and from structures that failed. When an AI system answers a question about either, it draws on this stock of past work.</p>
+
+			<p>Some of that knowledge is easy to write down. The criteria for diagnosing a disease fit on a page. Other knowledge lives in people. An experienced doctor can sense that a patient who meets every criterion is somehow different. The chemist and philosopher Michael Polanyi described this second kind in his 1966 book <a href="https://press.uchicago.edu/ucp/books/book/chicago/T/bo6035368.html" target="_blank" rel="noopener"><i>The Tacit Dimension</i></a>. &ldquo;We can know more than we can tell,&rdquo; Polanyi wrote. It is now called tacit knowledge.</p>
+
+			<p>Machine learning blurs the line, because a model can learn patterns from examples that nobody could put into words. One part of expertise matters as much as before. An expert knows where an answer came from and when it stops applying.</p>
+
+			<p>A hypothetical analyst asks an AI model to value a company and gets back a clean spreadsheet. An experienced investor reads it and sees that it assumes customers will keep paying after a cheaper rival arrives. Both people had the same answer in front of them. Only one of them could tell whether to trust it.</p>
+
+			<h2>Routine work came with a hidden scholarship</h2>
+
+			<p>A first-year lawyer reviewing contracts is doing a job for a client. The lawyer is also being trained, though nobody calls it that. After a few hundred contracts, the lawyer starts to see which harmless-looking clause will start a dispute five years later. A medical resident sees hundreds of ordinary cases of chest pain before meeting the one that is different. A junior programmer fixes small bugs and slowly learns how large systems break.</p>
+
+			<p>The client pays for the contract review. The training rides along for free. I call this the hidden scholarship of routine work. It never appears in a budget, because the junior&rsquo;s output covers the junior&rsquo;s salary and the learning costs nothing extra.</p>
+
+			<figure>
+				<div class="strip">
+					<div class="panel">
+						<p class="panel-beat">Year 1</p>
+						<svg class="toon" viewBox="0 0 240 170" role="img" aria-label="A young lawyer sits at a desk reading a contract. Next to them is a tall stack of contracts, and the top one is numbered 287.">
+							<path class="ln-thin" d="M10,156 H230"/>
+							<rect class="soft" x="60" y="112" width="166" height="12" rx="3"/>
+							<path class="ln" d="M72,124 V156 M214,124 V156"/>
+							<rect class="card" x="72" y="100" width="44" height="12" rx="1"/>
+							<rect class="card" x="75" y="88" width="44" height="12" rx="1"/>
+							<rect class="card" x="71" y="76" width="44" height="12" rx="1"/>
+							<rect class="card" x="74" y="64" width="44" height="12" rx="1"/>
+							<rect class="card" x="72" y="52" width="44" height="12" rx="1"/>
+							<text class="t-small t-main" x="94" y="44" text-anchor="middle">No. 287</text>
+							<path class="shirt" d="M150,112 Q152,86 174,84 Q196,86 198,112 Z"/>
+							<circle class="head" cx="174" cy="62" r="17"/>
+							<circle class="ink" cx="168" cy="66" r="2"/>
+							<circle class="ink" cx="180" cy="66" r="2"/>
+							<path class="ln-thin" d="M169,74 Q174,76 179,74"/>
+							<rect class="card" x="156" y="90" width="34" height="22" rx="1"/>
+							<path class="ln-thin" d="M161,97 H185 M161,103 H181"/>
+						</svg>
+						<p class="panel-text">A new lawyer reviews contracts, hundreds of them. The client pays for the reviews.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">Year 6</p>
+						<svg class="toon" viewBox="0 0 240 170" role="img" aria-label="The same lawyer, six years later, points at one highlighted line on a contract and says, this one is trouble.">
+							<path class="ln-thin" d="M10,156 H230"/>
+							<path class="bubble" d="M96,6 H232 A6,6 0 0 1 238,12 V32 A6,6 0 0 1 232,38 H112 L96,50 L102,38 H96 A6,6 0 0 1 90,32 V12 A6,6 0 0 1 96,6 Z"/>
+							<text class="t-small t-main" x="164" y="27" text-anchor="middle">This one is trouble.</text>
+							<path class="shirt" d="M52,156 Q54,96 80,92 Q106,96 108,156 Z"/>
+							<circle class="head" cx="80" cy="70" r="17"/>
+							<circle class="ink" cx="75" cy="68" r="2"/>
+							<circle class="ink" cx="87" cy="68" r="2"/>
+							<path class="ln-thin" d="M74,77 Q80,82 86,77"/>
+							<path class="ln" d="M104,108 L138,96"/>
+							<rect class="card" x="138" y="56" width="70" height="90" rx="2"/>
+							<path class="ln-thin" d="M146,68 H200 M146,78 H196 M146,88 H200 M146,120 H192 M146,130 H198"/>
+							<rect class="hl" x="142" y="98" width="62" height="12" rx="2"/>
+							<path class="ln-thin" d="M146,104 H200"/>
+						</svg>
+						<p class="panel-text">Six years in, the lawyer spots trouble that no checklist lists. Nobody paid for that training. It came with the work.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">Now</p>
+						<svg class="toon" viewBox="0 0 240 170" role="img" aria-label="A robot sits at the desk and sends finished contracts flying onto a pile. Beside the desk is an empty chair with a question mark above it.">
+							<path class="ln-thin" d="M10,156 H230"/>
+							<rect class="soft" x="84" y="112" width="146" height="12" rx="3"/>
+							<path class="ln" d="M96,124 V156 M218,124 V156"/>
+							<rect class="soft" x="160" y="82" width="50" height="30" rx="6"/>
+							<rect class="soft" x="163" y="44" width="44" height="34" rx="8"/>
+							<path class="ln" d="M185,44 V34"/>
+							<circle class="acc" cx="185" cy="31" r="3.5"/>
+							<rect class="ink" x="173" y="54" width="7" height="7" rx="1"/>
+							<rect class="ink" x="191" y="54" width="7" height="7" rx="1"/>
+							<path class="ln-thin" d="M176,69 H195"/>
+							<rect class="card" x="98" y="100" width="40" height="12" rx="1"/>
+							<rect class="card" x="100" y="88" width="40" height="12" rx="1"/>
+							<rect class="card" transform="rotate(-14 146 68)" x="128" y="62" width="34" height="11" rx="1"/>
+							<path class="ln-thin" d="M150,52 l-8,-4 M152,44 l-6,-6"/>
+							<path class="ln" d="M24,156 V128 H56 V156 M24,128 V96"/>
+							<circle class="bubble" cx="40" cy="62" r="16"/>
+							<circle class="bubble" cx="31" cy="85" r="3.5"/>
+							<text class="t-big" x="40" y="69" text-anchor="middle">?</text>
+						</svg>
+						<p class="panel-text">AI does the reviews faster, and the output still gets made. The six years of practice now have no one paying for them.</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 2.</b> The hidden scholarship of routine work, as a comic. The lawyer, the contract number and the years are made up for illustration.</figcaption>
+			</figure>
+
+			<p>Economists have long asked why firms pay for training at all, since a worker can take general skills to a rival. In 1998, Daron Acemoglu and Jörn-Steffen Pischke <a href="https://www.nber.org/papers/w5605" target="_blank" rel="noopener">offered an answer</a>. The current employer knows more about how good a worker is than other firms do. Rival firms cannot easily judge the worker, so they offer less, and the worker is more likely to stay. Because the employer keeps part of the gain, it can afford to train. In many professions, most of that cost was hidden inside routine work.</p>
+
+			<p>AI pulls the bundle apart. If a model can review contracts faster and more cheaply, the firm no longer needs a junior to produce that output. Society still needs the junior to gain the experience. <strong>Routine work used to make two things at once, the output someone paid for and the expert nobody paid for, and AI can now deliver the first without the second.</strong></p>
+
+			<p>The first signs may already be visible. Erik Brynjolfsson, Bharat Chandar and Ruyu Chen at Stanford <a href="https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/" target="_blank" rel="noopener">follow payroll records</a> from ADP, a large payroll company, covering millions of US workers. In their August 2026 update, employment of 22-to-25-year-olds in the occupations most exposed to AI stood 19% below where it would be had it kept pace with less-exposed peers. Most of the gap came from fewer young people being hired. Experienced workers in the same occupations showed no comparable gap.</p>
+
+			<p>The declines were concentrated in jobs where people mainly use AI to do tasks for them. Where people mainly use AI to help with their own work, employment was flat or rising.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 300" role="img" aria-labelledby="f3-title f3-desc">
+					<title id="f3-title">A career ladder with its first rungs going missing</title>
+					<desc id="f3-desc">A cartoon ladder. Two experienced workers stand on its upper rungs, with the note that experienced workers show no comparable gap. The two lowest rungs are dashed red outlines, labelled first rungs going missing. A young graduate in a cap stands on the ground, looking up with a question mark. To the right, a large red 19% reads: below the path of less-exposed peers, for ages 22 to 25 in the most AI-exposed jobs, mostly through fewer hires.</desc>
+
+					<path class="ln-thin" d="M30,286 H530"/>
+					<path class="ln" d="M150,24 V286 M232,24 V286"/>
+					<path class="ln" d="M150,54 H232 M150,94 H232 M150,134 H232 M150,174 H232"/>
+					<path class="ln-rule-red" d="M150,214 H232 M150,254 H232"/>
+
+					<path class="shirt" d="M176,94 Q178,74 191,72 Q204,74 206,94 Z"/>
+					<circle class="head-sm" cx="191" cy="60" r="11"/>
+					<circle class="ink" cx="187" cy="59" r="1.6"/>
+					<circle class="ink" cx="195" cy="59" r="1.6"/>
+					<path class="ln-thin" d="M187,64 Q191,67 195,64"/>
+
+					<path class="shirt" d="M176,174 Q178,154 191,152 Q204,154 206,174 Z"/>
+					<circle class="head-sm" cx="191" cy="140" r="11"/>
+					<circle class="ink" cx="187" cy="139" r="1.6"/>
+					<circle class="ink" cx="195" cy="139" r="1.6"/>
+					<path class="ln-thin" d="M187,144 Q191,147 195,144"/>
+
+					<text class="t-good" x="250" y="64">Experienced workers</text>
+					<text class="t-small" x="250" y="82">no comparable gap</text>
+
+					<text class="t-red" x="140" y="228" text-anchor="end">First rungs</text>
+					<text class="t-red" x="140" y="246" text-anchor="end">going missing</text>
+
+					<path class="shirt" d="M272,286 Q274,258 290,255 Q306,258 308,286 Z"/>
+					<circle class="head" cx="290" cy="240" r="14"/>
+					<path class="gold" d="M272,229 L290,221 L308,229 L290,237 Z"/>
+					<path class="ln-thin" d="M306,229 V240"/>
+					<circle class="ink" cx="285" cy="241" r="1.8"/>
+					<circle class="ink" cx="294" cy="241" r="1.8"/>
+					<path class="ln-thin" d="M286,249 Q290,246 294,249"/>
+					<circle class="bubble" cx="324" cy="196" r="15"/>
+					<circle class="bubble" cx="309" cy="217" r="3.5"/>
+					<text class="t-big" x="324" y="202" text-anchor="middle">?</text>
+
+					<text class="t-huge" x="360" y="160">19%</text>
+					<text class="t-main" x="360" y="184">below the path of</text>
+					<text class="t-main" x="360" y="204">less-exposed peers</text>
+					<text class="t-small" x="360" y="230">Ages 22 to 25, in the most</text>
+					<text class="t-small" x="360" y="248">AI-exposed jobs. Mostly</text>
+					<text class="t-small" x="360" y="266">through fewer hires.</text>
+				</svg>
+				<figcaption><b>Figure 3.</b> The ladder is a drawing. The numbers come from Brynjolfsson, Chandar and Chen&rsquo;s August 2026 update, which uses ADP payroll records through June 2026. The 19% compares 22-to-25-year-olds in the most AI-exposed occupations with the path they would have followed had they kept pace with less-exposed peers.</figcaption>
+			</figure>
+
+			<div class="callout callout-warn">
+							<span class="callout-label">What the payroll data cannot show</span>
+							<p>The authors call their results &ldquo;early, descriptive indicators&rdquo; and stop short of saying AI caused the gap. The pattern weakens when they account for workers&rsquo; education, and some of the gaps began before generative AI arrived. It is also stronger in the ADP records than in national surveys. They found no sign of widespread job losses across the economy. The numbers fit the worry about a missing first rung, and they do not yet prove it.</p>
+						</div>
+
+			<h2>Two kinds of help</h2>
+
+			<p>The Turkish experiment had a second result, and it is the hopeful one. The tutor group got the biggest boost in practice and lost nothing on the exam. Both groups used the same model. The difference was in what the model was told to do.</p>
+
+			<p>Other studies point the same way. In autumn 2023, Greg Kestin and colleagues <a href="https://doi.org/10.1038/s41598-025-97652-6" target="_blank" rel="noopener">tested an AI tutor</a> in Harvard&rsquo;s largest physics class. The tutor followed the same teaching principles as the class&rsquo;s live lessons, and it gave each student feedback at their own pace. Among the 194 students in the study, median learning gains with the AI tutor were more than double those from an active-learning class. The median student finished in 49 minutes, against a 60-minute lesson.</p>
+
+			<p>In customer support, Brynjolfsson, Danielle Li and Lindsey Raymond <a href="https://www.nber.org/papers/w31161" target="_blank" rel="noopener">studied 5,179 agents</a> who were given an AI assistant. The number of issues they resolved per hour rose 14% on average and 34% for the newest and least-skilled agents. The authors found evidence that the assistant passed the habits of the best agents on to newer ones.</p>
+
+			<p>Two kinds of help can raise the same score. One does the thinking for you. The other makes your own thinking better. A count of finished tasks cannot tell them apart. Only a test without the AI can.</p>
+
+			<h2>One person&rsquo;s homework feeds everyone</h2>
+
+			<p>The students in Turkey hurt only themselves. In February 2026, the economists Daron Acemoglu, Dingwen Kong and Asuman Ozdaglar <a href="https://www.nber.org/papers/w34910" target="_blank" rel="noopener">published a model</a> in which the damage spreads.</p>
+
+			<p>In their model, good decisions need two kinds of knowledge. General knowledge is shared by a whole community. Context-specific knowledge is about one person&rsquo;s own situation. When people make the effort to learn about their own situation, they also produce a small public signal that adds to the shared stock. A hypothetical farmer who tests a new seed learns about one field and also shows the neighbours what happened.</p>
+
+			<div class="callout callout-note">
+							<span class="callout-label">Spillover</span>
+							<p>A spillover is a benefit that reaches people who did not pay for it. Economists also call it a positive externality. A vaccine protects the people around the person who gets it. Research paid for by one firm helps its rivals. Markets tend to produce too little of anything that spills over, because the person who decides bears the whole cost and keeps only part of the gain. The farmer&rsquo;s test spills over to the neighbours. A junior&rsquo;s training spills over to every future employer.</p>
+						</div>
+
+			<p>Now give everyone an AI agent with accurate, tailored advice. People put in less effort, because the advice is good enough. Decisions improve today, and the public signals dry up. If people cut back enough and the advice is accurate enough, the model reaches what the authors call &ldquo;a knowledge-collapse steady state in which general knowledge vanishes.&rdquo; In their model, welfare first rises and then falls as AI advice gets more accurate, so the best level of accuracy lies somewhere in the middle.</p>
+
+			<p>This is theory. It shows that the trade can exist, and it says nothing about how close any real economy is to the edge. Figure 4 is a toy version of the idea, written for this post, so you can see its shape.</p>
+
+			<figure>
+				<div class="sim" id="f4">
+					<div class="sim-ctl">
+						<label for="f4-r"><span>People who ask AI and skip finding out for themselves</span><output id="f4-r-out" for="f4-r">90%</output></label>
+						<input type="range" id="f4-r" min="0" max="100" step="5" value="90">
+					</div>
+					<div class="sim-ctl">
+						<label for="f4-e"><span>New observations from AI-run experiments, as a share of what today&rsquo;s investigators add</span><output id="f4-e-out" for="f4-e">0%</output></label>
+						<input type="range" id="f4-e" min="0" max="100" step="5" value="0">
+					</div>
+					<p class="sim-axis">Share of questions the shared knowledge can answer</p>
+					<svg class="toon" viewBox="0 0 560 322" role="img" aria-labelledby="f4-title f4-desc">
+						<title id="f4-title">A toy model of shared knowledge over 40 years</title>
+						<desc id="f4-desc">A line chart over 40 years. The vertical axis is the share of questions the shared knowledge can answer, from 0 to 100%. A dashed line stays flat at 80%, the starting point where 20% of people ask AI first. A solid blue line shows the setting chosen with the sliders. At the default setting, where 90% ask AI first and AI runs no experiments, the line falls slowly from 80% to about 35% over 40 years.</desc>
+
+						<path class="ln-grid" d="M70,40 H540 M70,95 H540 M70,150 H540 M70,205 H540"/>
+						<path class="ln-axis" d="M70,260 H540"/>
+						<text class="t-tick" x="57" y="264" text-anchor="end">0%</text>
+						<text class="t-tick" x="57" y="209" text-anchor="end">25%</text>
+						<text class="t-tick" x="57" y="154" text-anchor="end">50%</text>
+						<text class="t-tick" x="57" y="99" text-anchor="end">75%</text>
+						<text class="t-tick" x="57" y="44" text-anchor="end">100%</text>
+						<text class="t-tick" x="70" y="280" text-anchor="middle">0</text>
+						<text class="t-tick" x="187.5" y="280" text-anchor="middle">10</text>
+						<text class="t-tick" x="305" y="280" text-anchor="middle">20</text>
+						<text class="t-tick" x="422.5" y="280" text-anchor="middle">30</text>
+						<text class="t-tick" x="540" y="280" text-anchor="middle">40</text>
+						<text class="t-tick" x="305" y="314" text-anchor="middle">Years from today</text>
+
+						<path class="ln-base" d="M70,84 H540"/>
+						<text class="t-small" x="536" y="74" text-anchor="end">Starting point: 20% ask AI first</text>
+
+						<path id="f4-line" class="ln-model" d="M70.00,84.0 L81.75,91.7 L93.50,98.8 L105.25,105.4 L117.00,111.5 L128.75,117.1 L140.50,122.4 L152.25,127.2 L164.00,131.6 L175.75,135.8 L187.50,139.6 L199.25,143.1 L211.00,146.4 L222.75,149.4 L234.50,152.2 L246.25,154.8 L258.00,157.2 L269.75,159.4 L281.50,161.4 L293.25,163.3 L305.00,165.1 L316.75,166.7 L328.50,168.2 L340.25,169.6 L352.00,170.9 L363.75,172.0 L375.50,173.1 L387.25,174.2 L399.00,175.1 L410.75,176.0 L422.50,176.8 L434.25,177.5 L446.00,178.2 L457.75,178.8 L469.50,179.4 L481.25,180.0 L493.00,180.5 L504.75,180.9 L516.50,181.4 L528.25,181.8 L540.00,182.1"/>
+						<circle id="f4-m1" class="mk-model" cx="81.75" cy="91.7" r="5"/>
+						<circle id="f4-m10" class="mk-model" cx="187.50" cy="139.6" r="5"/>
+						<circle id="f4-m40" class="mk-model" cx="540.00" cy="182.1" r="5"/>
+					</svg>
+					<div class="sim-read">
+						<div class="sim-cell"><p class="sim-k">After 1 year</p><p class="sim-v" id="f4-y1">77%</p></div>
+						<div class="sim-cell"><p class="sim-k">After 10 years</p><p class="sim-v" id="f4-y10">55%</p></div>
+						<div class="sim-cell"><p class="sim-k">After 40 years</p><p class="sim-v" id="f4-y40">35%</p></div>
+					</div>
+					<p class="sim-say" id="f4-say" aria-live="polite">With 90% of people asking AI first and no new observations from AI, the shared knowledge answers 77% of questions after one year and 35% after 40 years.</p>
+				</div>
+				<figcaption><b>Figure 4.</b> Move the sliders. This is a toy model written for this post. It is not the model in Acemoglu, Kong and Ozdaglar&rsquo;s paper, and its numbers are invented to show the shape of the argument. Each year, 5% of what is known goes out of date as the world changes. People who investigate fill part of the remaining gap, so the more people investigate, the faster it fills. AI-run experiments fill it the same way. The dashed line is the starting point, where 20% of people ask AI first and the stock holds steady at 80%.</figcaption>
+			</figure>
+
+			<p>In the toy, the stock falls slowly at first. After one year the loss is too small for anyone to notice. By the time it shows, the people who would have refilled the stock have stopped practising. The second slider shows a way out. When AI systems collect new observations of their own, through experiments, the stock can hold up even if most people stop investigating. What matters is whether someone is still making contact with the world.</p>
+
+			<h2>Two days in the model, a decade in the lab</h2>
+
+			<p>In 2025, José Penadés and colleagues at Imperial College London gave Google&rsquo;s new AI system, Co-Scientist, a short prompt about a puzzle they had worked on for years. The puzzle concerned cf-PICIs, small pieces of bacterial DNA that help bacteria share genes, including genes for antibiotic resistance. The team wanted to know how these pieces move between bacterial species. They had found the answer and had not yet published it.</p>
+
+			<p>Within two days, Co-Scientist <a href="https://doi.org/10.1038/s41586-026-10644-y" target="_blank" rel="noopener">proposed the team&rsquo;s answer</a> as its top hypothesis. The DNA pieces borrow the tails of viruses that infect other species, which lets them reach new hosts. Penadés described the next step to <a href="https://www.bbc.com/news/articles/clyz6e9edy3o" target="_blank" rel="noopener">BBC Radio 4</a>. &ldquo;I wrote an email to Google to say, &lsquo;you have access to my computer, is that right?&rsquo;&rdquo; The company said it did not.</p>
+
+			<p>The two days and the decade measure different things. The decade included several years of experiments to prove the mechanism, and those experiments are the reason anyone could say the AI was right. The team also told the BBC that having the hypothesis at the start would have saved years of work. Both facts hold at once. AI made the idea cheap, and checking it stayed expensive.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 250" role="img" aria-labelledby="f5-title f5-desc">
+					<title id="f5-title">A decade in the lab and two days in the model</title>
+					<desc id="f5-desc">Two timelines on the same scale. The top one, for the Imperial College lab, is a long bar of about ten years filled with lab flasks, with a green check at its end. Under it, the text reads: finding the mechanism, then several years of experiments to prove it. The bottom one, for Co-Scientist, is a thin sliver of two days under a magnifying glass, labelled same hypothesis, ranked first. A cartoon robot with a light bulb sits to the right.</desc>
+
+					<text class="t-head" x="40" y="34">IMPERIAL COLLEGE LAB</text>
+					<rect class="bar-long" x="40" y="46" width="480" height="48" rx="8"/>
+					<g transform="translate(90,72)"><path class="card" d="M-5,-15 H5 V-6 L14,10 A3,3 0 0 1 11,14 H-11 A3,3 0 0 1 -14,10 L-5,-6 Z"/><path class="acc" d="M-9,3 H9 L12,9 A2,2 0 0 1 10,12 H-10 A2,2 0 0 1 -12,9 Z"/></g>
+					<g transform="translate(165,72)"><path class="card" d="M-5,-15 H5 V-6 L14,10 A3,3 0 0 1 11,14 H-11 A3,3 0 0 1 -14,10 L-5,-6 Z"/><path class="acc" d="M-9,3 H9 L12,9 A2,2 0 0 1 10,12 H-10 A2,2 0 0 1 -12,9 Z"/></g>
+					<g transform="translate(240,72)"><path class="card" d="M-5,-15 H5 V-6 L14,10 A3,3 0 0 1 11,14 H-11 A3,3 0 0 1 -14,10 L-5,-6 Z"/><path class="acc" d="M-9,3 H9 L12,9 A2,2 0 0 1 10,12 H-10 A2,2 0 0 1 -12,9 Z"/></g>
+					<g transform="translate(315,72)"><path class="card" d="M-5,-15 H5 V-6 L14,10 A3,3 0 0 1 11,14 H-11 A3,3 0 0 1 -14,10 L-5,-6 Z"/><path class="acc" d="M-9,3 H9 L12,9 A2,2 0 0 1 10,12 H-10 A2,2 0 0 1 -12,9 Z"/></g>
+					<g transform="translate(390,72)"><path class="card" d="M-5,-15 H5 V-6 L14,10 A3,3 0 0 1 11,14 H-11 A3,3 0 0 1 -14,10 L-5,-6 Z"/><path class="acc" d="M-9,3 H9 L12,9 A2,2 0 0 1 10,12 H-10 A2,2 0 0 1 -12,9 Z"/></g>
+					<g transform="translate(465,72)"><path class="card" d="M-5,-15 H5 V-6 L14,10 A3,3 0 0 1 11,14 H-11 A3,3 0 0 1 -14,10 L-5,-6 Z"/><path class="acc" d="M-9,3 H9 L12,9 A2,2 0 0 1 10,12 H-10 A2,2 0 0 1 -12,9 Z"/></g>
+					<circle class="ok" cx="520" cy="46" r="13"/>
+					<path class="ln-check" d="M513,46 L518,51 L527,41"/>
+					<text class="t-main" x="40" y="118">About ten years</text>
+					<text class="t-small" x="40" y="136">Finding the mechanism, then several years of experiments to prove it</text>
+
+					<text class="t-head" x="40" y="176">CO-SCIENTIST</text>
+					<rect class="acc" x="40" y="190" width="2.5" height="36"/>
+					<circle class="lens-ring" cx="41" cy="208" r="22"/>
+					<path class="ln" d="M57,224 L71,238"/>
+					<text class="t-main" x="86" y="204">Two days</text>
+					<text class="t-small" x="86" y="222">Same hypothesis, ranked first</text>
+
+					<g transform="translate(-130,0)">
+						<rect class="soft" x="420" y="190" width="44" height="34" rx="8"/>
+						<rect class="ink" x="430" y="201" width="6" height="6" rx="1"/>
+						<rect class="ink" x="448" y="201" width="6" height="6" rx="1"/>
+						<path class="ln-thin" d="M432,215 Q442,220 452,215"/>
+						<path class="ln" d="M442,190 V180"/>
+						<circle class="gold" cx="442" cy="170" r="9"/>
+						<path class="ln-gold" d="M442,154 V150 M428,160 L425,157 M456,160 L459,157 M426,172 H422 M458,172 H462"/>
+					</g>
+				</svg>
+				<figcaption><b>Figure 5.</b> The top bar is about ten years, the time the Imperial College team spent on the problem, which included several years proving the answer in the lab (<a href="https://www.bbc.com/news/articles/clyz6e9edy3o" target="_blank" rel="noopener">BBC, February 2025</a>). The thin mark below is two days, the time Co-Scientist took to propose the same hypothesis (<a href="https://doi.org/10.1038/s41586-026-10644-y" target="_blank" rel="noopener">Gottweis et al., 2026</a>). On the same scale two days would be a quarter of a pixel wide, so the mark is drawn wider. The icons are decoration.</figcaption>
+			</figure>
+
+			<p>A second system goes further. <a href="https://doi.org/10.1038/s41586-026-10652-y" target="_blank" rel="noopener">Robin</a>, built at the research organization FutureHouse, proposed that ripasudil might treat dry age-related macular degeneration, a leading cause of blindness. Ripasudil is already approved in Japan for glaucoma. In lab tests, it made the retinal cells that clear away debris almost twice as active. Robin analysed those results and proposed the next experiment. Human scientists still chose which candidates to test and carried out the experiments, following a protocol they wrote from Robin&rsquo;s suggested assay. Both papers appeared in <i>Nature</i> in May 2026.</p>
+
+			<p>In an earlier post, <a href="/blog/when-the-answer-is-cheap/">When the answer is cheap</a>, I argued that as answers get cheap, the premium moves to choosing the questions and checking the answers. Discovery adds a twist. The useful information often comes from what a model did not expect. A cell line that refuses to respond is one example. A customer who will not pay for a product that looked perfect on paper is another.</p>
+
+			<div class="callout">
+							<span class="callout-label">Who gets to run the test</span>
+							<p>If testing becomes the scarce step, the advantage goes to whoever owns somewhere to test ideas. In biology that means a wet lab. In business it means real customers. Anyone can now generate a plausible idea, and far fewer people can check one. How widely the means of testing are shared may shape who benefits from AI as much as who has the best model.</p>
+						</div>
+
+			<h2>When everyone asks the same oracle</h2>
+
+			<p>In a study published in 2024, Anil Doshi and Oliver Hauser <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11244532/" target="_blank" rel="noopener">asked 293 people</a> to write an eight-sentence story for teenagers and young adults. Some writers could ask a language model for story ideas. Another 600 people then rated the stories without knowing which writers had used AI. Writers who could ask for up to five AI ideas wrote stories rated 8% more novel and 9% more useful, and the least creative writers gained the most.</p>
+
+			<p>The AI-assisted stories were also more similar to one another. Each writer did better, and the collection as a whole became narrower. The authors compare it to a social dilemma.</p>
+
+			<p>A similar narrowing shows up inside AI models. Ilia Shumailov and colleagues <a href="https://doi.org/10.1038/s41586-024-07566-y" target="_blank" rel="noopener">trained models</a> on text written by earlier models, generation after generation. The rare cases went first. In their words, the &ldquo;tails of the original content distribution disappear.&rdquo; They called the effect model collapse. It came from reusing model output without care, and in their tests, keeping some original human data in each round reduced the damage. The authors drew the lesson themselves. Data &ldquo;about genuine human interactions&rdquo; will grow more valuable as model-written text spreads.</p>
+
+			<figure>
+				<div class="pair">
+					<div class="panel">
+						<p class="panel-beat">Copies of copies</p>
+						<svg class="toon" viewBox="0 0 260 220" role="img" aria-label="Four bell curves on one axis. The widest, generation 0, has shaded tails labelled rare cases. Each later generation is narrower and taller, and generation 9 is a tall thin spike.">
+							<path class="hl" d="M16,180 L16,178.8 L19,178.6 L22,178.3 L25,178.0 L28,177.6 L31,177.1 L34,176.6 L37,176.0 L40,175.4 L43,174.6 L46,173.8 L49,172.8 L52,171.8 L55,170.7 L58,169.4 L61,168.1 L64,166.6 L67,165.1 L67,180 Z"/>
+							<path class="hl" d="M193,180 L193,165.1 L196,166.6 L199,168.1 L202,169.4 L205,170.7 L208,171.8 L211,172.8 L214,173.8 L217,174.6 L220,175.4 L223,176.0 L226,176.6 L229,177.1 L232,177.6 L235,178.0 L238,178.3 L241,178.6 L244,178.8 L244,180 Z"/>
+							<path class="ln-axis" d="M12,180 H248"/>
+							<path class="curve-0" d="M16,178.8 L20,178.5 L24,178.1 L28,177.6 L32,177.0 L36,176.2 L40,175.4 L44,174.3 L48,173.2 L52,171.8 L56,170.3 L60,168.5 L64,166.6 L68,164.5 L72,162.3 L76,159.9 L80,157.4 L84,154.7 L88,152.1 L92,149.5 L96,146.9 L100,144.4 L104,142.0 L108,139.9 L112,138.0 L116,136.5 L120,135.3 L124,134.5 L128,134.1 L132,134.1 L136,134.5 L140,135.3 L144,136.5 L148,138.0 L152,139.9 L156,142.0 L160,144.4 L164,146.9 L168,149.5 L172,152.1 L176,154.7 L180,157.4 L184,159.9 L188,162.3 L192,164.5 L196,166.6 L200,168.5 L204,170.3 L208,171.8 L212,173.2 L216,174.3 L220,175.4 L224,176.2 L228,177.0 L232,177.6 L236,178.1 L240,178.5 L244,178.8"/>
+							<path class="curve-n" style="opacity: 0.4" d="M48,178.4 L52,177.8 L56,176.8 L60,175.7 L64,174.1 L68,172.2 L72,169.8 L76,166.9 L80,163.5 L84,159.6 L88,155.2 L92,150.4 L96,145.3 L100,140.0 L104,134.7 L108,129.6 L112,124.9 L116,120.8 L120,117.6 L124,115.3 L128,114.1 L132,114.1 L136,115.3 L140,117.6 L144,120.8 L148,124.9 L152,129.6 L156,134.7 L160,140.0 L164,145.3 L168,150.4 L172,155.2 L176,159.6 L180,163.5 L184,166.9 L188,169.8 L192,172.2 L196,174.1 L200,175.7 L204,176.8 L208,177.8 L212,178.4"/>
+							<path class="curve-n" style="opacity: 0.7" d="M68,179.5 L72,179.1 L76,178.3 L80,176.9 L84,174.8 L88,171.5 L92,166.7 L96,160.2 L100,151.8 L104,141.6 L108,129.9 L112,117.4 L116,105.3 L120,94.7 L124,86.8 L128,82.5 L132,82.5 L136,86.8 L140,94.7 L144,105.3 L148,117.4 L152,129.9 L156,141.6 L160,151.8 L164,160.2 L168,166.7 L172,171.5 L176,174.8 L180,176.9 L184,178.3 L188,179.1 L192,179.5"/>
+							<path class="curve-n" d="M92,179.9 L96,179.6 L100,178.4 L104,175.2 L108,167.6 L112,152.3 L116,127.5 L120,95.1 L124,63.1 L128,42.8 L132,42.8 L136,63.1 L140,95.1 L144,127.5 L148,152.3 L152,167.6 L156,175.2 L160,178.4 L164,179.6 L168,179.9"/>
+							<text class="t-small t-blue" x="140" y="40">Generation 9</text>
+							<text class="t-small t-main" x="14" y="104">Generation 0</text>
+							<path class="ln-thin" d="M44,110 L84,151"/>
+							<text class="t-small t-red" x="14" y="206">rare cases</text>
+							<path class="ln-thin" d="M40,195 L40,180"/>
+							<text class="t-small t-red" x="246" y="206" text-anchor="end">rare cases</text>
+							<path class="ln-thin" d="M220,195 L220,180"/>
+						</svg>
+						<p class="panel-text">Each generation of a model learns from the last one&rsquo;s output. The rare cases in the tails go first.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">Stories with AI ideas</p>
+						<svg class="toon" viewBox="0 0 260 220" role="img" aria-label="Two clouds of dots, where each dot is a story. On the left, stories written alone are spread out. On the right, stories written with AI ideas are bunched closely around a small gold star that stands for the AI's ideas.">
+							<circle class="dot-ctrl" cx="30" cy="70" r="6"/>
+							<circle class="dot-ctrl" cx="60" cy="55" r="6"/>
+							<circle class="dot-ctrl" cx="95" cy="62" r="6"/>
+							<circle class="dot-ctrl" cx="112" cy="92" r="6"/>
+							<circle class="dot-ctrl" cx="100" cy="125" r="6"/>
+							<circle class="dot-ctrl" cx="75" cy="145" r="6"/>
+							<circle class="dot-ctrl" cx="42" cy="138" r="6"/>
+							<circle class="dot-ctrl" cx="24" cy="108" r="6"/>
+							<circle class="dot-ctrl" cx="55" cy="88" r="6"/>
+							<circle class="dot-ctrl" cx="82" cy="110" r="6"/>
+							<circle class="dot-ctrl" cx="65" cy="122" r="6"/>
+							<circle class="dot-ctrl" cx="90" cy="85" r="6"/>
+							<path class="gold" transform="translate(190,100) scale(0.55)" d="M0,-13 L3.8,-4.3 L13,-4 L6,2.2 L8,11.5 L0,6.6 L-8,11.5 L-6,2.2 L-13,-4 L-3.8,-4.3 Z"/>
+							<circle class="mk-ai" cx="176" cy="90" r="6"/>
+							<circle class="mk-ai" cx="187" cy="83" r="6"/>
+							<circle class="mk-ai" cx="200" cy="86" r="6"/>
+							<circle class="mk-ai" cx="207" cy="97" r="6"/>
+							<circle class="mk-ai" cx="202" cy="110" r="6"/>
+							<circle class="mk-ai" cx="191" cy="117" r="6"/>
+							<circle class="mk-ai" cx="178" cy="113" r="6"/>
+							<circle class="mk-ai" cx="172" cy="102" r="6"/>
+							<circle class="mk-ai" cx="183" cy="124" r="6"/>
+							<circle class="mk-ai" cx="196" cy="74" r="6"/>
+							<circle class="mk-ai" cx="212" cy="122" r="6"/>
+							<circle class="mk-ai" cx="168" cy="78" r="6"/>
+							<text class="t-main" x="68" y="182" text-anchor="middle">Alone</text>
+							<text class="t-small" x="68" y="200" text-anchor="middle">more spread out</text>
+							<text class="t-main" x="190" y="182" text-anchor="middle">With AI ideas</text>
+							<text class="t-small" x="190" y="200" text-anchor="middle">closer together</text>
+						</svg>
+						<p class="panel-text">Each dot is a story. Stories written with AI ideas were rated more creative, and they sat closer to one another.</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 6.</b> Left, a drawing of model collapse as <a href="https://doi.org/10.1038/s41586-024-07566-y" target="_blank" rel="noopener">Shumailov and colleagues</a> describe it. Right, a drawing of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11244532/" target="_blank" rel="noopener">Doshi and Hauser&rsquo;s</a> result, with the gold star standing for the AI&rsquo;s ideas. The curve shapes and dot positions are illustrative.</figcaption>
+			</figure>
+
+			<p>Neither study shows that science is getting narrower. They show a mechanism worth watching. When many people take ideas from the same few models, and new models learn from what those people write, the whole system can get better at common cases and forget rare ones. Rare cases are often where a wrong idea gets caught.</p>
+
+			<h2>A dashboard with one working gauge</h2>
+
+			<p>Most organizations judge AI by output. They count tasks finished and hours saved. Those numbers can rise just as fast in two very different firms. A hypothetical Firm A uses the time saved to give its juniors harder cases and more feedback. A hypothetical Firm B stops hiring juniors. For a few years their reports look the same. Ten years later, only Firm A has people who can catch the model when it is wrong.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 256" role="img" aria-labelledby="f7-title f7-desc">
+					<title id="f7-title">A dashboard with one working gauge</title>
+					<desc id="f7-desc">A cartoon car dashboard with three gauges. The first, output per hour, has a red needle pointing high and is marked measured. The second, can people do it without AI, and the third, ideas that survived a real test, have dotted dials with question marks and no needles. Both are marked rarely measured, and their cables dangle unplugged below the dashboard.</desc>
+
+					<rect class="dash" x="16" y="20" width="528" height="190" rx="26"/>
+
+					<path class="ln" d="M52,124 A58,58 0 0 1 168,124"/>
+					<path class="ln-thin" d="M52,124 H62 M69,83 L76.1,90.1 M110,66 V76 M151,83 L143.9,90.1 M168,124 H158"/>
+					<path class="ln-needle" d="M110,124 L147.7,97.6"/>
+					<circle class="ink" cx="110" cy="124" r="5.5"/>
+					<text class="t-main" x="110" y="152" text-anchor="middle">Output</text>
+					<text class="t-main" x="110" y="170" text-anchor="middle">per hour</text>
+					<text class="t-good" x="110" y="192" text-anchor="middle">measured</text>
+
+					<path class="ln-dash-arc" d="M222,124 A58,58 0 0 1 338,124"/>
+					<text class="t-q" x="280" y="122" text-anchor="middle">?</text>
+					<text class="t-main" x="280" y="152" text-anchor="middle">Can people do it</text>
+					<text class="t-main" x="280" y="170" text-anchor="middle">without AI?</text>
+					<text class="t-red" x="280" y="192" text-anchor="middle">rarely measured</text>
+
+					<path class="ln-dash-arc" d="M392,124 A58,58 0 0 1 508,124"/>
+					<text class="t-q" x="450" y="122" text-anchor="middle">?</text>
+					<text class="t-main" x="450" y="152" text-anchor="middle">Ideas that survived</text>
+					<text class="t-main" x="450" y="170" text-anchor="middle">a real test</text>
+					<text class="t-red" x="450" y="192" text-anchor="middle">rarely measured</text>
+
+					<path class="ln-thin" d="M280,210 C280,226 266,226 262,236"/>
+					<rect class="card" x="254" y="234" width="16" height="10" rx="2"/>
+					<path class="ln-thin" d="M258,244 V250 M266,244 V250"/>
+					<path class="ln-thin" d="M450,210 C450,224 464,226 468,236"/>
+					<rect class="card" x="460" y="234" width="16" height="10" rx="2"/>
+					<path class="ln-thin" d="M464,244 V250 M472,244 V250"/>
+				</svg>
+				<figcaption><b>Figure 7.</b> A cartoon of how most organizations measure AI. The first gauge reads itself. The other two need a test without AI or a real experiment, and few organizations run either.</figcaption>
+			</figure>
+
+			<p>The Turkish experiment shows what a second gauge looks like. The researchers measured scores with AI and then scores without it, and the two moved in opposite directions. Few workplaces run the second test. Research has the same blind spot. A count of papers or hypotheses measures how much was produced. The number of ideas that survived a real experiment measures how much was learned.</p>
+
+			<h2>Paying for the scholarship on purpose</h2>
+
+			<p>Some professions already pay for training in the open. In the United States, Medicare <a href="https://www.cms.gov/medicare/payment/prospective-payment-systems/acute-inpatient-pps/direct-graduate-medical-education-dgme" target="_blank" rel="noopener">pays teaching hospitals</a> part of the cost of training medical residents. It is public money for an apprenticeship whose benefits reach far beyond the hospital that provides it.</p>
+
+			<p>AI could also widen who gets to become an expert. An AI tutor like Harvard&rsquo;s costs little to copy. A student far from a good university could get patient feedback that once required a private tutor. A small lab could explore questions that once needed a large institute. The plain chat and the tutor in Turkey ran on the same model. One produced answers. The other left students able to find answers on their own.</p>
+
+			<p>The models we use today learned from what generations of people wrote down after doing the work the slow way. Every answer they give draws on that inheritance. For most of history, routine work refilled it without anyone deciding to. Juniors learned by doing, and investigators fed the shared stock as a side effect of solving their own problems.</p>
+
+			<p>AI makes the routine work optional. The knowledge AI depends on will come from whoever still pays for two things. One is people learning to do hard work themselves. The other is new observations of the world, whether people make them or machines in a lab do. Until now, nobody had to decide to pay for either. From now on, someone will.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12232635/" target="_blank" rel="noopener">Bastani et al., <i>Generative AI without guardrails can harm learning: Evidence from high school mathematics</i></a> (<i>PNAS</i>, 2025), the experiment in Figure 1.</li>
+				<li><a href="https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/" target="_blank" rel="noopener">Brynjolfsson, Chandar and Chen, <i>Canaries in the coal mine? Six facts about the recent employment effects of artificial intelligence</i></a> (Stanford Digital Economy Lab, revised August 2026).</li>
+				<li><a href="https://www.nber.org/papers/w34910" target="_blank" rel="noopener">Acemoglu, Kong and Ozdaglar, <i>AI, human cognition and knowledge collapse</i></a> (NBER Working Paper 34910, 2026), the model of shared knowledge.</li>
+				<li><a href="https://www.nber.org/papers/w5605" target="_blank" rel="noopener">Acemoglu and Pischke, <i>Why do firms train? Theory and evidence</i></a> (<i>Quarterly Journal of Economics</i>, 1998), on who pays for general training.</li>
+				<li><a href="https://doi.org/10.1038/s41598-025-97652-6" target="_blank" rel="noopener">Kestin et al., <i>AI tutoring outperforms in-class active learning</i></a> (<i>Scientific Reports</i>, 2025), the Harvard physics trial.</li>
+				<li><a href="https://www.nber.org/papers/w31161" target="_blank" rel="noopener">Brynjolfsson, Li and Raymond, <i>Generative AI at work</i></a> (<i>Quarterly Journal of Economics</i>, 2025), on an AI assistant in customer support.</li>
+				<li><a href="https://doi.org/10.1038/s41586-026-10644-y" target="_blank" rel="noopener">Gottweis et al., <i>Accelerating scientific discovery with Co-Scientist</i></a> (<i>Nature</i>, 2026), and <a href="https://www.bbc.com/news/articles/clyz6e9edy3o" target="_blank" rel="noopener">Tom Gerken, <i>AI cracks superbug problem in two days that took scientists years</i></a> (BBC, 2025).</li>
+				<li><a href="https://doi.org/10.1038/s41586-026-10652-y" target="_blank" rel="noopener">Ghareeb et al., <i>A multi-agent system for automating scientific discovery</i></a> (<i>Nature</i>, 2026), the Robin system.</li>
+				<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11244532/" target="_blank" rel="noopener">Doshi and Hauser, <i>Generative AI enhances individual creativity but reduces the collective diversity of novel content</i></a> (<i>Science Advances</i>, 2024).</li>
+				<li><a href="https://doi.org/10.1038/s41586-024-07566-y" target="_blank" rel="noopener">Shumailov et al., <i>AI models collapse when trained on recursively generated data</i></a> (<i>Nature</i>, 2024).</li>
+				<li><a href="https://press.uchicago.edu/ucp/books/book/chicago/T/bo6035368.html" target="_blank" rel="noopener">Michael Polanyi, <i>The Tacit Dimension</i></a> (1966), on knowledge that is hard to put into words.</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">future of work</span>
+				<span class="tag">education</span>
+				<span class="tag">scientific discovery</span>
+				<span class="tag">economics</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+<script>
+/* Figures 1 and 4. Both start in a state the static markup already shows,
+   so the page reads the same with JavaScript off. */
+(function () {
+	'use strict';
+	var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	/* ---- Figure 1: practice and exam scores ----
+	   Heights are scores relative to the textbook group (100), drawn at
+	   0.88 px per point above a baseline at y = 280. */
+	var f1 = document.getElementById('f1');
+	if (f1) {
+		var BASE = 280, K = 0.88;
+		var modes = {
+			practice: {
+				title: 'PRACTICE, WITH AI ALLOWED',
+				vals: [100, 148, 227],
+				text: ['100', '+48%', '+127%'],
+				cls: ['t-main', 't-blue', 't-good'],
+				mouth: ['M-6,4 Q0,10 6,4', 'M-6,4 Q0,10 6,4', 'M-6,4 Q0,10 6,4'],
+				sweat: false
+			},
+			exam: {
+				title: 'EXAM, NO AI ALLOWED',
+				vals: [100, 83, 99],
+				text: ['100', '−17%', 'no real change'],
+				cls: ['t-main', 't-red', 't-good'],
+				mouth: ['M-6,4 Q0,10 6,4', 'M-6,9 Q0,3 6,9', 'M-6,4 Q0,10 6,4'],
+				sweat: true
+			}
+		};
+		var xs = [150, 302, 454];
+		var bars = [0, 1, 2].map(function (i) { return document.getElementById('f1-bar-' + i); });
+		var faces = [0, 1, 2].map(function (i) { return document.getElementById('f1-face-' + i); });
+		var vals = [0, 1, 2].map(function (i) { return document.getElementById('f1-val-' + i); });
+		var title = document.getElementById('f1-mode');
+		var sweat = faces[1].querySelector('.acc');
+		var now = modes.practice.vals.slice();
+		var raf = null;
+
+		function place(v) {
+			for (var i = 0; i < 3; i++) {
+				var top = BASE - v[i] * K;
+				bars[i].setAttribute('y', top.toFixed(2));
+				bars[i].setAttribute('height', (BASE - top).toFixed(2));
+				faces[i].setAttribute('transform', 'translate(' + xs[i] + ',' + (top - 19).toFixed(2) + ')');
+				vals[i].setAttribute('y', (top - 42).toFixed(2));
+			}
+		}
+
+		function show(name) {
+			var m = modes[name];
+			title.textContent = m.title;
+			for (var i = 0; i < 3; i++) {
+				vals[i].textContent = m.text[i];
+				vals[i].setAttribute('class', m.cls[i]);
+				faces[i].querySelector('path.ln-thin').setAttribute('d', m.mouth[i]);
+			}
+			sweat.setAttribute('class', m.sweat ? 'acc' : 'acc is-hidden');
+			var from = now.slice(), to = m.vals, t0 = null, dur = 650;
+			if (raf) cancelAnimationFrame(raf);
+			if (reduce) { now = to.slice(); place(now); return; }
+			function step(ts) {
+				if (t0 === null) t0 = ts;
+				var p = Math.min(1, (ts - t0) / dur);
+				var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+				for (var i = 0; i < 3; i++) now[i] = from[i] + (to[i] - from[i]) * e;
+				place(now);
+				if (p < 1) raf = requestAnimationFrame(step);
+			}
+			raf = requestAnimationFrame(step);
+		}
+
+		var buttons = document.querySelectorAll('.seg button');
+		Array.prototype.forEach.call(buttons, function (b) {
+			b.addEventListener('click', function () {
+				Array.prototype.forEach.call(buttons, function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+				show(b.getAttribute('data-mode'));
+			});
+		});
+	}
+
+	/* ---- Figure 4: the toy model ----
+	   K is the share of questions shared knowledge can answer. Each year
+	   5% of it goes out of date (D), and investigators fill a share A of
+	   the remaining gap, scaled by how many people still investigate (1 - r)
+	   plus what AI-run experiments add (e). Starting at K = 0.8, the stock
+	   holds steady when r = 0.2 and e = 0. */
+	var r = document.getElementById('f4-r'), e = document.getElementById('f4-e');
+	if (r && e) {
+		var A = 0.25, D = 0.05, K0 = 0.8, YEARS = 40;
+		var X0 = 70, XW = 470, Y0 = 260, YH = 220;
+		var line = document.getElementById('f4-line');
+		var m1 = document.getElementById('f4-m1'), m10 = document.getElementById('f4-m10'), m40 = document.getElementById('f4-m40');
+		var out = {
+			r: document.getElementById('f4-r-out'), e: document.getElementById('f4-e-out'),
+			y1: document.getElementById('f4-y1'), y10: document.getElementById('f4-y10'), y40: document.getElementById('f4-y40'),
+			say: document.getElementById('f4-say')
+		};
+		function x(t) { return X0 + XW * t / YEARS; }
+		function y(k) { return Y0 - YH * k; }
+		function pct(k) { return Math.round(100 * k) + '%'; }
+
+		function run() {
+			var rv = r.value / 100, ev = e.value / 100, k = K0, ks = [k];
+			for (var t = 1; t <= YEARS; t++) {
+				k = k + A * ((1 - rv) + ev) * (1 - k) - D * k;
+				ks.push(Math.max(0, Math.min(1, k)));
+			}
+			line.setAttribute('d', ks.map(function (kk, t) { return (t ? 'L' : 'M') + x(t).toFixed(2) + ',' + y(kk).toFixed(1); }).join(' '));
+			[[m1, 1], [m10, 10], [m40, 40]].forEach(function (p) {
+				p[0].setAttribute('cx', x(p[1]).toFixed(2));
+				p[0].setAttribute('cy', y(ks[p[1]]).toFixed(1));
+			});
+			out.r.textContent = r.value + '%';
+			out.e.textContent = e.value + '%';
+			out.y1.textContent = pct(ks[1]);
+			out.y10.textContent = pct(ks[10]);
+			out.y40.textContent = pct(ks[40]);
+			var who = 'With ' + r.value + '% of people asking AI first';
+			var ai = ev > 0 ? ' and AI experiments adding ' + e.value + '% as many new observations as today’s investigators' : ' and no new observations from AI';
+			out.say.textContent = who + ai + ', the shared knowledge answers ' + pct(ks[1]) + ' of questions after one year and ' + pct(ks[40]) + ' after 40 years.';
+		}
+		r.addEventListener('input', run);
+		e.addEventListener('input', run);
+		run();
+	}
+})();
+</script>
+
+</body>
+</html>
