@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>The end of intellectual boundaries? AI, epistemic trespassing, and the future of scientific discovery | Chen-Yang Su</title>
+	<meta name="description" content="An AI agent solved 49 of 50 unpublished physics problems. As AI makes it cheap to work in a new field, the ability to judge that work becomes the scarce part." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/the-end-of-intellectual-boundaries/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="The end of intellectual boundaries? AI, epistemic trespassing, and the future of scientific discovery">
+	<meta property="og:description" content="An AI agent solved 49 of 50 unpublished physics problems. As AI makes it cheap to work in a new field, the ability to judge that work becomes the scarce part.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/the-end-of-intellectual-boundaries/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-23">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="The end of intellectual boundaries? AI, epistemic trespassing, and the future of scientific discovery">
+	<meta name="twitter:description" content="An AI agent solved 49 of 50 unpublished physics problems. As AI makes it cheap to work in a new field, the ability to judge that work becomes the scarce part.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The cartoons, charts and controls in this post are inline SVG and
+		   HTML coloured with the site's tokens, so they follow the light and
+		   dark themes. Figures 2, 3, 5 and 7 are interactive; with JavaScript
+		   off they show their starting state and the captions carry the
+		   numbers. Comic panels and quiz cards reflow to one column on phones. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Buttons shared by Figures 2, 3 and 5 */
+		.seg { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 10px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.seg button, .q-btns button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 7px 15px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.seg-sm button { font-size: 13.5px; padding: 5px 13px; }
+		.seg button:hover, .q-btns button:hover { border-color: var(--accent); }
+		.seg button[aria-pressed="true"], .q-btns button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg button:focus-visible, .q-btns button:focus-visible, .sim input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+		/* Interactive panels: Figures 2, 3 and 7 */
+		.sim { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px 16px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.prose .sim svg { border-radius: 0; margin: 0 auto; }
+		.prose .sim-score { text-align: center; font-size: 20px; font-weight: 900; color: var(--ink); margin: 2px 0 8px; }
+		.prose .sim-score b { color: var(--accent); }
+		.sim-ctl { margin: 0 0 12px; }
+		.prose .sim-ctl label { display: flex; justify-content: space-between; gap: 12px; font-size: 14.5px; font-weight: 700; line-height: 1.4; color: var(--ink); margin: 0 0 4px; }
+		.sim-ctl output { font-weight: 900; color: var(--accent); white-space: nowrap; }
+		.sim-ctl input[type="range"] { width: 100%; accent-color: var(--accent); margin: 0; }
+		.sim-read { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0 0; }
+		.sim-cell { background: var(--chip-bg); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 6px; text-align: center; }
+		.prose .sim-k { font-size: 12px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-dark); margin: 0; }
+		.prose .sim-v { font-size: 24px; font-weight: 900; color: var(--ink); margin: 2px 0 0; }
+		.prose .sim-say { font-size: 14.5px; line-height: 1.5; color: var(--ink); margin: 12px 0 0; }
+		#f2 svg { max-width: 480px; }
+		#f3 svg { max-width: 500px; }
+
+		/* Comic panels: Figures 1 and 6 */
+		.quad, .pair { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.panel { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px 12px; }
+		.prose .panel svg { border-radius: 0; }
+		.prose .panel-beat { font-size: 12px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+		.prose .panel-text { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 8px 0 0; }
+
+		/* Figure 5: quiz cards */
+		.quiz { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.q-card { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px 14px; }
+		.prose .q-card svg { max-width: 230px; margin: 0 auto; border-radius: 0; }
+		.prose .q-text { font-size: 15px; line-height: 1.45; color: var(--ink); margin: 8px 0 10px; }
+		.q-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+		.prose .q-verdict { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 10px 0 0; padding-top: 10px; border-top: 1px dashed var(--tag-border); }
+		.q-you { font-weight: 700; color: var(--ink-light); }
+		.quiz-js .q-verdict { display: none; }
+		.quiz-js .q-card.done .q-verdict { display: block; }
+
+		@media (max-width: 600px) {
+			.quad, .pair, .quiz { grid-template-columns: 1fr; }
+			.prose .quad .panel svg, .prose .pair .panel svg { max-width: 340px; margin: 0 auto; }
+		}
+		@media (max-width: 520px) {
+			#f7 .toon text { font-size: 21px; }
+			#f7 .toon .t-small { font-size: 18px; }
+		}
+		@media (max-width: 420px) {
+			.prose .sim-v { font-size: 20px; }
+			.prose .sim-k { font-size: 11px; letter-spacing: 0.5px; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-tick { font-size: 14px; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-big { font-size: 18px; font-weight: 900; fill: var(--ink); }
+		.toon .t-score { font-size: 34px; font-weight: 900; fill: var(--good); }
+		.toon .t-onfill { font-weight: 900; fill: var(--paper-bg); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-red { fill: none; stroke: var(--award); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-good { fill: none; stroke: var(--good); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-gold { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2; stroke-linecap: round; }
+		.toon .ln-rule { fill: none; stroke: var(--tag-border); stroke-width: 1.6; stroke-dasharray: 4 4; }
+		.toon .ln-axis { fill: none; stroke: var(--ink-light); stroke-width: 1.2; }
+		.toon .ln-null { fill: none; stroke: var(--ink-light); stroke-width: 1.6; stroke-dasharray: 5 4; }
+		.toon .ln-dash-arc { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: 3 7; stroke-linecap: round; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .head-sm { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .card { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .bubble { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .board { fill: var(--chip-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .hl { fill: var(--gold-hl-ink); opacity: 0.35; }
+		.toon .lens-ring { fill: none; stroke: var(--ink); stroke-width: 3; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .ok { fill: var(--good); }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .halo { fill: none; stroke: var(--gold-hl-ink); stroke-width: 4; }
+		.toon .hdl { fill: var(--good-bg); stroke: var(--good); stroke-width: 2.4; }
+		.toon .road { fill: none; stroke: var(--tag-border); stroke-width: 16; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .road-mid { fill: none; stroke: var(--paper-bg); stroke-width: 2; stroke-dasharray: 6 7; }
+		.toon .hole { fill: var(--ink-light); opacity: 0.6; }
+		.toon .funnel { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.2; stroke-linejoin: round; }
+		.toon .idea { fill: var(--paper-bg); stroke: var(--ink-light); stroke-width: 1.4; }
+		.toon .idea.on { fill: var(--accent); stroke: var(--accent); }
+		.toon .disc { fill: var(--good); }
+		.toon .ci { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; }
+		.toon .ci-red { fill: none; stroke: var(--award); stroke-width: 2.4; stroke-linecap: round; }
+		.toon .mk-obs { fill: var(--accent); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .mk-red { fill: var(--award); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .mk-gene { fill: var(--good); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .mk-hollow { fill: var(--paper-bg); stroke: var(--ink-light); stroke-width: 2.2; }
+		.toon .helix { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; }
+		.toon .rung { fill: none; stroke: var(--ink-light); stroke-width: 1.6; }
+		.toon .stamp { fill: none; stroke: var(--award); stroke-width: 2.4; }
+		.toon .tile rect { fill: var(--accent); stroke: var(--accent); stroke-width: 1.5; }
+		.toon .tile .tk-ok { fill: none; stroke: var(--paper-bg); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .tile .tk-x { display: none; fill: none; stroke: var(--award); stroke-width: 2.4; stroke-linecap: round; }
+		.toon .tile.miss rect { fill: var(--warn-bg); stroke: var(--award); }
+		.toon .tile.miss .tk-ok { display: none; }
+		.toon .tile.miss .tk-x { display: inline; }
+		.toon .is-hidden { display: none; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "The end of intellectual boundaries? AI, epistemic trespassing, and the future of scientific discovery",
+		"description": "An AI agent solved 49 of 50 unpublished physics problems. As AI makes it cheap to work in a new field, the ability to judge that work becomes the scarce part.",
+		"datePublished": "2026-10-23",
+		"url": "https://chenyangsu.github.io/blog/the-end-of-intellectual-boundaries/",
+		"keywords": "scientific discovery, AI evaluation, expertise, philosophy of science",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/the-end-of-intellectual-boundaries/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI and science</p>
+
+		<h1 class="post-title">The end of intellectual boundaries? AI, epistemic trespassing, and the future of scientific discovery</h1>
+
+		<p class="post-standfirst">In October 2026, an AI agent solved 49 of 50 unpublished problems from 11 specialties of theoretical physics, after its objections sent the experts back to find errors in their own answers. Philosophers call it epistemic trespassing when an expert passes judgment outside their field. As AI makes it cheap to work in a field you never trained in, the ability to judge that work becomes the scarce part of science.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-23">23 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li>An AI agent solved <strong>49 of 50 unpublished problems</strong> across 11 specialties of theoretical physics, after the experts found <strong>errors in their own answers</strong>.</li>
+				<li>The authors found agents weak at choosing interesting problems, and called the missing skill <strong>taste</strong>.</li>
+				<li>Linus Pauling, a Nobel-winning chemist, promoted vitamin C against cancer. <strong>Two Mayo Clinic trials found no benefit.</strong></li>
+				<li>High HDL cholesterol goes with fewer heart attacks, yet <strong>gene variants that raise HDL did not lower the risk</strong>.</li>
+				<li>When a lab can run only so many experiments, more ideas add discoveries only if someone <strong>picks better ones</strong>.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>On 17 October 2026, Jack Clark, a co-founder of Anthropic, gave the <a href="https://www.youtube.com/watch?v=Rqt9kWoTJbc" target="_blank" rel="noopener">Per Jacobsson Foundation Lecture</a> at the IMF and World Bank meetings in Bangkok. Near the end of <a href="https://jack-clark.net/2026/10/19/import-ai-477-in-which-i-tell-the-imf-the-singularity-has-begun/" target="_blank" rel="noopener">the speech</a>, he read out a story from the Indian physicist Suvrat Raju about a test that Raju and his colleagues had built for AI agents.</p>
+
+			<p>The test held 50 unpublished problems in theoretical physics. &ldquo;Our initial evaluation suggested that GPT-6-Astra&rsquo;s score was in the late eighties,&rdquo; Raju wrote. When the team looked at the problems the agent had missed, the models, &ldquo;especially Astra, insisted that they were right and that it was the expert-supplied answers that were erroneous.&rdquo; The experts went back to their own work and &ldquo;found some subtle errors buried deep inside their calculations.&rdquo; Once they fixed them, Astra&rsquo;s score reached 98%, or 49 of 50.</p>
+
+			<figure>
+				<div class="quad">
+					<div class="panel">
+						<p class="panel-beat">First grading</p>
+						<svg class="toon" viewBox="0 0 260 170" role="img" aria-label="A grader at a desk marks a robot's answer sheet with a red pen. Most answers have green ticks and one has a red cross. A sign reads: score, late 80s.">
+							<path class="ln-thin" d="M8,158 H252"/>
+							<path class="shirt" d="M36,110 Q38,84 58,82 Q78,84 80,110 Z"/>
+							<circle class="head" cx="58" cy="62" r="16"/>
+							<circle class="ink" cx="52" cy="62" r="2"/>
+							<circle class="ink" cx="64" cy="62" r="2"/>
+							<path class="ln-thin" d="M53,70 H63"/>
+							<rect class="soft" x="20" y="110" width="160" height="10" rx="3"/>
+							<path class="ln" d="M30,120 V158 M170,120 V158"/>
+							<rect class="card" x="96" y="64" width="62" height="46" rx="2"/>
+							<path class="ln-good" d="M102,74 l3,3 l6,-6 M102,86 l3,3 l6,-6 M102,98 l3,3 l6,-6"/>
+							<path class="ln-red" d="M136,82 l8,8 M144,82 l-8,8"/>
+							<path class="ln-thin" d="M115,75 H150 M115,99 H150"/>
+							<path class="ln-red" d="M78,98 L96,86"/>
+							<rect class="card" x="186" y="16" width="68" height="54" rx="6"/>
+							<text class="t-head" x="220" y="34" text-anchor="middle">SCORE</text>
+							<text class="t-main" x="220" y="58" text-anchor="middle">late 80s</text>
+							<rect class="soft" x="200" y="104" width="40" height="34" rx="7"/>
+							<rect class="ink" x="208" y="114" width="6" height="6" rx="1"/>
+							<rect class="ink" x="226" y="114" width="6" height="6" rx="1"/>
+							<path class="ln-thin" d="M212,129 H228"/>
+							<path class="ln" d="M220,104 V96"/>
+							<circle class="acc" cx="220" cy="93" r="3.5"/>
+							<rect class="soft" x="204" y="138" width="32" height="20" rx="5"/>
+						</svg>
+						<p class="panel-text">The graders mark each answer against the experts&rsquo; key. Astra&rsquo;s first score is in the late 80s.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">The pushback</p>
+						<svg class="toon" viewBox="0 0 260 170" role="img" aria-label="The robot points at its answer and says: my answer is right, your key is wrong. A physicist holding the answer key looks puzzled.">
+							<path class="ln-thin" d="M8,158 H252"/>
+							<path class="bubble" d="M10,6 H170 A6,6 0 0 1 176,12 V44 A6,6 0 0 1 170,50 H78 L62,64 L64,50 H10 A6,6 0 0 1 4,44 V12 A6,6 0 0 1 10,6 Z"/>
+							<text class="t-small t-main" x="90" y="24" text-anchor="middle">My answer is right.</text>
+							<text class="t-small t-main" x="90" y="41" text-anchor="middle">Your key is wrong.</text>
+							<rect class="soft" x="34" y="72" width="48" height="38" rx="8"/>
+							<rect class="ink" x="44" y="84" width="7" height="7" rx="1"/>
+							<rect class="ink" x="65" y="84" width="7" height="7" rx="1"/>
+							<path class="ln-thin" d="M48,100 L68,98"/>
+							<rect class="soft" x="38" y="114" width="40" height="44" rx="6"/>
+							<path class="ln" d="M78,124 L112,112"/>
+							<rect class="card" x="112" y="96" width="38" height="48" rx="2"/>
+							<path class="ln-thin" d="M118,108 H144 M118,118 H140 M118,128 H144"/>
+							<path class="shirt" d="M180,158 Q182,112 206,108 Q230,112 232,158 Z"/>
+							<circle class="head" cx="206" cy="88" r="17"/>
+							<circle class="ink" cx="200" cy="86" r="2"/>
+							<circle class="ink" cx="212" cy="86" r="2"/>
+							<circle class="ln-thin" cx="206" cy="96" r="3"/>
+							<rect class="card" x="176" y="118" width="30" height="36" rx="2"/>
+							<text class="t-small t-head" x="191" y="140" text-anchor="middle">KEY</text>
+							<text class="t-big" x="234" y="66">?</text>
+						</svg>
+						<p class="panel-text">On problems marked wrong, the models, especially Astra, insist that the key is wrong.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">The recheck</p>
+						<svg class="toon" viewBox="0 0 260 170" role="img" aria-label="The physicist studies a blackboard full of equations through a magnifying glass. One term deep in the middle is highlighted in gold. The physicist sweats and says: oh.">
+							<path class="ln-thin" d="M8,158 H252"/>
+							<rect class="board" x="12" y="10" width="170" height="100" rx="4"/>
+							<path class="ln-thin" d="M24,26 q6,-6 12,0 t12,0 M54,24 H70 M76,26 q5,-5 10,0 t10,0 t10,0 M24,46 H44 M50,48 q6,-6 12,0 t12,0 M80,46 H110 M118,48 q5,-5 10,0 t10,0 M24,68 q6,-6 12,0 M42,66 H58 M24,90 H60 M66,92 q5,-5 10,0 t10,0 M92,90 H128 M136,92 q5,-5 10,0 t10,0"/>
+							<rect class="hl" x="100" y="58" width="38" height="18" rx="3"/>
+							<path class="ln-thin" d="M104,68 q5,-5 10,0 t10,0 t8,0"/>
+							<circle class="lens-ring" cx="119" cy="67" r="20"/>
+							<path class="ln" d="M133,81 L152,104"/>
+							<path class="shirt" d="M190,158 Q192,116 214,112 Q236,116 238,158 Z"/>
+							<circle class="head" cx="214" cy="92" r="17"/>
+							<circle class="ink" cx="208" cy="90" r="2"/>
+							<circle class="ink" cx="220" cy="90" r="2"/>
+							<circle class="ln-thin" cx="214" cy="100" r="2.5"/>
+							<path class="acc" d="M233,76 q4,7 0,10 q-4,-3 0,-10 Z"/>
+							<path class="ln" d="M192,126 L156,104"/>
+							<path class="bubble" d="M196,20 H244 A6,6 0 0 1 250,26 V46 A6,6 0 0 1 244,52 H226 L218,66 L214,52 H196 A6,6 0 0 1 190,46 V26 A6,6 0 0 1 196,20 Z"/>
+							<text class="t-small t-main" x="220" y="41" text-anchor="middle">Oh.</text>
+						</svg>
+						<p class="panel-text">The experts recheck their own work and find subtle errors buried deep in their calculations.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">Final score</p>
+						<svg class="toon" viewBox="0 0 260 170" role="img" aria-label="A scoreboard reads 98 percent, 49 of 50. The robot and the physicist stand under it, both smiling.">
+							<path class="ln-thin" d="M8,158 H252"/>
+							<rect class="card" x="66" y="8" width="128" height="78" rx="8"/>
+							<text class="t-head" x="130" y="28" text-anchor="middle">SCORE</text>
+							<text class="t-score" x="130" y="62" text-anchor="middle">98%</text>
+							<text class="t-small t-main" x="130" y="79" text-anchor="middle">49 of 50</text>
+							<path class="ln-gold" d="M48,20 l-8,-6 M44,40 h-10 M212,20 l8,-6 M216,40 h10 M54,62 l-8,4 M206,62 l8,4"/>
+							<rect class="soft" x="44" y="100" width="44" height="34" rx="8"/>
+							<rect class="ink" x="53" y="110" width="7" height="7" rx="1"/>
+							<rect class="ink" x="72" y="110" width="7" height="7" rx="1"/>
+							<path class="ln-thin" d="M54,124 Q66,131 78,124"/>
+							<path class="ln" d="M66,100 V92"/>
+							<circle class="acc" cx="66" cy="89" r="3.5"/>
+							<rect class="soft" x="48" y="136" width="36" height="22" rx="5"/>
+							<path class="shirt" d="M168,158 Q170,124 190,120 Q210,124 212,158 Z"/>
+							<circle class="head" cx="190" cy="102" r="16"/>
+							<circle class="ink" cx="184" cy="100" r="2"/>
+							<circle class="ink" cx="196" cy="100" r="2"/>
+							<path class="ln-thin" d="M184,108 Q190,113 196,108"/>
+						</svg>
+						<p class="panel-text">With the key corrected, Astra&rsquo;s score climbs to 98%, or 49 of 50.</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 1.</b> Raju&rsquo;s story as Clark <a href="https://jack-clark.net/2026/10/19/import-ai-477-in-which-i-tell-the-imf-the-singularity-has-begun/" target="_blank" rel="noopener">read it out</a>. The speech bubbles and drawings are illustrative. The paper says the experts&rsquo; errors turned up in &ldquo;several&rdquo; problems.</figcaption>
+			</figure>
+
+			<p>Clark drew a wide conclusion from the result. If AI systems can solve problems creatively enough to succeed at science, he said, &ldquo;we should expect this to be a sign of their ability to generalize into many domains, including certainly AI research itself.&rdquo;</p>
+
+			<p>I first heard the term epistemic trespassing from the geneticist Benjamin Neale. It describes an expert who excels in one field making confident judgments in another, where that excellence does not reach. AI makes it easy to cross into a new field. Trespassing is about what happens to judgment on the far side. <strong>As AI makes it cheap to work in a field you never trained in, the ability to judge that work becomes the scarce part of science.</strong></p>
+
+			<h2>Fifty problems, eleven specialties</h2>
+
+			<p>The paper behind Raju&rsquo;s story is <a href="https://arxiv.org/abs/2610.16733" target="_blank" rel="noopener"><i>TheoPhysEval</i></a>, posted on 9 October 2026 by A. Ramesh Chandra, Raju and more than 30 co-authors. Its 50 problems come from 11 areas of theoretical physics, and each has an answer that can be checked. The authors estimate that, without AI, &ldquo;a typical problem in our collection could be solved by a world expert in about a day or less but would take considerably longer for experts in adjacent specialties.&rdquo; Raju was blunter. &ldquo;I don&rsquo;t know of any individual who can solve any significant fraction of our final collection of problems without AI assistance.&rdquo;</p>
+
+			<p>Five agents took the test twice, once with web search and once without. GPT-6-Astra, running in OpenAI&rsquo;s Codex, solved 49 problems at an average cost of under US$3 each. Opus 5.5, running in Anthropic&rsquo;s Claude Code, solved 46.</p>
+
+			<figure>
+				<div class="sim" id="f2">
+					<div class="seg" role="group" aria-label="Choose an agent">
+						<button type="button" data-agent="0" aria-pressed="true">GPT-6-Astra</button>
+						<button type="button" data-agent="1" aria-pressed="false">Opus 5.5</button>
+						<button type="button" data-agent="2" aria-pressed="false">Gemini 3.8 Flash</button>
+						<button type="button" data-agent="3" aria-pressed="false">DeepSeek-V4.1-Flash</button>
+						<button type="button" data-agent="4" aria-pressed="false">GLM 5.3</button>
+					</div>
+					<div class="seg seg-sm" role="group" aria-label="Choose a track">
+						<button type="button" data-track="0" aria-pressed="true">Web search on</button>
+						<button type="button" data-track="1" aria-pressed="false">Web search off</button>
+					</div>
+					<p class="sim-score" aria-live="polite"><b id="f2-n">49</b> of 50 solved</p>
+					<svg class="toon" viewBox="-20 0 460 420" role="img" aria-labelledby="f2-title f2-desc">
+						<title id="f2-title">Which of the 50 problems each agent solved</title>
+						<desc id="f2-desc">A grid of 50 squares, one per problem, in 11 rows, one per area of theoretical physics. A blue square with a tick is a solved problem. A pale red square with a cross is a missed one. The starting view shows GPT-6-Astra with web search on, which solved every problem except one in classical physics.</desc>
+						<text class="t-main sb-lab" x="182" y="26" text-anchor="end">Classical physics</text>
+						<g class="tile" id="f2-t0"><title>Boundary-layer perturbations</title><rect x="192" y="10" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,23 l5,5 l8,-9"/><path class="tk-x" d="M200,18 l10,10 M210,18 l-10,10"/></g>
+						<g class="tile miss" id="f2-t1"><title>Autonomous equation</title><rect x="223" y="10" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,23 l5,5 l8,-9"/><path class="tk-x" d="M231,18 l10,10 M241,18 l-10,10"/></g>
+						<g class="tile" id="f2-t2"><title>Inertial-particle attractors</title><rect x="254" y="10" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,23 l5,5 l8,-9"/><path class="tk-x" d="M262,18 l10,10 M272,18 l-10,10"/></g>
+						<g class="tile" id="f2-t3"><title>Radiation damping</title><rect x="285" y="10" width="26" height="26" rx="5"/><path class="tk-ok" d="M292,23 l5,5 l8,-9"/><path class="tk-x" d="M293,18 l10,10 M303,18 l-10,10"/></g>
+						<g class="tile" id="f2-t4"><title>Two-body electrodynamics</title><rect x="316" y="10" width="26" height="26" rx="5"/><path class="tk-ok" d="M323,23 l5,5 l8,-9"/><path class="tk-x" d="M324,18 l10,10 M334,18 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c1" x="436" y="26" text-anchor="end">4/5</text>
+						<text class="t-main sb-lab" x="182" y="60" text-anchor="end">Stochastic &amp; bio physics</text>
+						<g class="tile" id="f2-t5"><title>Theta-logistic growth</title><rect x="192" y="44" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,57 l5,5 l8,-9"/><path class="tk-x" d="M200,52 l10,10 M210,52 l-10,10"/></g>
+						<g class="tile" id="f2-t6"><title>Microbial cross-feeding</title><rect x="223" y="44" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,57 l5,5 l8,-9"/><path class="tk-x" d="M231,52 l10,10 M241,52 l-10,10"/></g>
+						<g class="tile" id="f2-t7"><title>Random-walk bridge minimum</title><rect x="254" y="44" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,57 l5,5 l8,-9"/><path class="tk-x" d="M262,52 l10,10 M272,52 l-10,10"/></g>
+						<g class="tile" id="f2-t8"><title>Three-hole minimax</title><rect x="285" y="44" width="26" height="26" rx="5"/><path class="tk-ok" d="M292,57 l5,5 l8,-9"/><path class="tk-x" d="M293,52 l10,10 M303,52 l-10,10"/></g>
+						<g class="tile" id="f2-t9"><title>Bacteriophage competition</title><rect x="316" y="44" width="26" height="26" rx="5"/><path class="tk-ok" d="M323,57 l5,5 l8,-9"/><path class="tk-x" d="M324,52 l10,10 M334,52 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c2" x="436" y="60" text-anchor="end">5/5</text>
+						<text class="t-main sb-lab" x="182" y="94" text-anchor="end">Nonequilibrium stat mech</text>
+						<g class="tile" id="f2-t10"><title>SLLOD thermostat</title><rect x="192" y="78" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,91 l5,5 l8,-9"/><path class="tk-x" d="M200,86 l10,10 M210,86 l-10,10"/></g>
+						<g class="tile" id="f2-t11"><title>Glass freezing threshold</title><rect x="223" y="78" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,91 l5,5 l8,-9"/><path class="tk-x" d="M231,86 l10,10 M241,86 l-10,10"/></g>
+						<g class="tile" id="f2-t12"><title>Cyclic-shear steady state</title><rect x="254" y="78" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,91 l5,5 l8,-9"/><path class="tk-x" d="M262,86 l10,10 M272,86 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c3" x="436" y="94" text-anchor="end">3/3</text>
+						<text class="t-main sb-lab" x="182" y="128" text-anchor="end">Lattice theories</text>
+						<g class="tile" id="f2-t13"><title>Chiral susceptibilities</title><rect x="192" y="112" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,125 l5,5 l8,-9"/><path class="tk-x" d="M200,120 l10,10 M210,120 l-10,10"/></g>
+						<g class="tile" id="f2-t14"><title>Three-state correlations</title><rect x="223" y="112" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,125 l5,5 l8,-9"/><path class="tk-x" d="M231,120 l10,10 M241,120 l-10,10"/></g>
+						<g class="tile" id="f2-t15"><title>Hubbard imaginary-time energy</title><rect x="254" y="112" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,125 l5,5 l8,-9"/><path class="tk-x" d="M262,120 l10,10 M272,120 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c4" x="436" y="128" text-anchor="end">3/3</text>
+						<text class="t-main sb-lab" x="182" y="162" text-anchor="end">Quantum phases of matter</text>
+						<g class="tile" id="f2-t16"><title>Fermion-parity pump</title><rect x="192" y="146" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,159 l5,5 l8,-9"/><path class="tk-x" d="M200,154 l10,10 M210,154 l-10,10"/></g>
+						<g class="tile" id="f2-t17"><title>Partial symmetry breaking</title><rect x="223" y="146" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,159 l5,5 l8,-9"/><path class="tk-x" d="M231,154 l10,10 M241,154 l-10,10"/></g>
+						<g class="tile" id="f2-t18"><title>Maple-leaf Dirac nodes</title><rect x="254" y="146" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,159 l5,5 l8,-9"/><path class="tk-x" d="M262,154 l10,10 M272,154 l-10,10"/></g>
+						<g class="tile" id="f2-t19"><title>Maple-leaf Chern number</title><rect x="285" y="146" width="26" height="26" rx="5"/><path class="tk-ok" d="M292,159 l5,5 l8,-9"/><path class="tk-x" d="M293,154 l10,10 M303,154 l-10,10"/></g>
+						<g class="tile" id="f2-t20"><title>Maple-leaf cluster spectrum</title><rect x="316" y="146" width="26" height="26" rx="5"/><path class="tk-ok" d="M323,159 l5,5 l8,-9"/><path class="tk-x" d="M324,154 l10,10 M334,154 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c5" x="436" y="162" text-anchor="end">5/5</text>
+						<text class="t-main sb-lab" x="182" y="196" text-anchor="end">Electronic structure</text>
+						<g class="tile" id="f2-t21"><title>All-electron atomic solver</title><rect x="192" y="180" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,193 l5,5 l8,-9"/><path class="tk-x" d="M200,188 l10,10 M210,188 l-10,10"/></g>
+						<g class="tile" id="f2-t22"><title>Norm-conserving potentials</title><rect x="223" y="180" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,193 l5,5 l8,-9"/><path class="tk-x" d="M231,188 l10,10 M241,188 l-10,10"/></g>
+						<g class="tile" id="f2-t23"><title>Pseudopotential ghost states</title><rect x="254" y="180" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,193 l5,5 l8,-9"/><path class="tk-x" d="M262,188 l10,10 M272,188 l-10,10"/></g>
+						<g class="tile" id="f2-t24"><title>Magnesium diboride SCF</title><rect x="285" y="180" width="26" height="26" rx="5"/><path class="tk-ok" d="M292,193 l5,5 l8,-9"/><path class="tk-x" d="M293,188 l10,10 M303,188 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c6" x="436" y="196" text-anchor="end">4/4</text>
+						<text class="t-main sb-lab" x="182" y="230" text-anchor="end">Quantum field theory</text>
+						<g class="tile" id="f2-t25"><title>Chern–Simons beta function</title><rect x="192" y="214" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,227 l5,5 l8,-9"/><path class="tk-x" d="M200,222 l10,10 M210,222 l-10,10"/></g>
+						<g class="tile" id="f2-t26"><title>Dynamical soft vacuum</title><rect x="223" y="214" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,227 l5,5 l8,-9"/><path class="tk-x" d="M231,222 l10,10 M241,222 l-10,10"/></g>
+						<g class="tile" id="f2-t27"><title>Simultaneous triple-soft photons</title><rect x="254" y="214" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,227 l5,5 l8,-9"/><path class="tk-x" d="M262,222 l10,10 M272,222 l-10,10"/></g>
+						<g class="tile" id="f2-t28"><title>Schur-index MLDE</title><rect x="285" y="214" width="26" height="26" rx="5"/><path class="tk-ok" d="M292,227 l5,5 l8,-9"/><path class="tk-x" d="M293,222 l10,10 M303,222 l-10,10"/></g>
+						<g class="tile" id="f2-t29"><title>Seiberg duality: 13 nodes</title><rect x="316" y="214" width="26" height="26" rx="5"/><path class="tk-ok" d="M323,227 l5,5 l8,-9"/><path class="tk-x" d="M324,222 l10,10 M334,222 l-10,10"/></g>
+						<g class="tile" id="f2-t30"><title>Seiberg duality: 14 nodes</title><rect x="347" y="214" width="26" height="26" rx="5"/><path class="tk-ok" d="M354,227 l5,5 l8,-9"/><path class="tk-x" d="M355,222 l10,10 M365,222 l-10,10"/></g>
+						<g class="tile" id="f2-t31"><title>Seiberg duality: 12 nodes</title><rect x="378" y="214" width="26" height="26" rx="5"/><path class="tk-ok" d="M385,227 l5,5 l8,-9"/><path class="tk-x" d="M386,222 l10,10 M396,222 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c7" x="436" y="230" text-anchor="end">7/7</text>
+						<text class="t-main sb-lab" x="182" y="264" text-anchor="end">Particle physics</text>
+						<g class="tile" id="f2-t32"><title>Axion conversion</title><rect x="192" y="248" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,261 l5,5 l8,-9"/><path class="tk-x" d="M200,256 l10,10 M210,256 l-10,10"/></g>
+						<g class="tile" id="f2-t33"><title>Tetraquark Lorentz structures</title><rect x="223" y="248" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,261 l5,5 l8,-9"/><path class="tk-x" d="M231,256 l10,10 M241,256 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c8" x="436" y="264" text-anchor="end">2/2</text>
+						<text class="t-main sb-lab" x="182" y="298" text-anchor="end">Scattering amplitudes</text>
+						<g class="tile" id="f2-t34"><title>Pi dispersion series</title><rect x="192" y="282" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,295 l5,5 l8,-9"/><path class="tk-x" d="M200,290 l10,10 M210,290 l-10,10"/></g>
+						<g class="tile" id="f2-t35"><title>Hidden-zero constraints</title><rect x="223" y="282" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,295 l5,5 l8,-9"/><path class="tk-x" d="M231,290 l10,10 M241,290 l-10,10"/></g>
+						<g class="tile" id="f2-t36"><title>Double-trace renormalization</title><rect x="254" y="282" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,295 l5,5 l8,-9"/><path class="tk-x" d="M262,290 l10,10 M272,290 l-10,10"/></g>
+						<g class="tile" id="f2-t37"><title>Two-loop subdivergences</title><rect x="285" y="282" width="26" height="26" rx="5"/><path class="tk-ok" d="M292,295 l5,5 l8,-9"/><path class="tk-x" d="M293,290 l10,10 M303,290 l-10,10"/></g>
+						<g class="tile" id="f2-t38"><title>Nested triple-soft photons</title><rect x="316" y="282" width="26" height="26" rx="5"/><path class="tk-ok" d="M323,295 l5,5 l8,-9"/><path class="tk-x" d="M324,290 l10,10 M334,290 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c9" x="436" y="298" text-anchor="end">5/5</text>
+						<text class="t-main sb-lab" x="182" y="332" text-anchor="end">Holography &amp; entanglement</text>
+						<g class="tile" id="f2-t39"><title>Interface transmission</title><rect x="192" y="316" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,329 l5,5 l8,-9"/><path class="tk-x" d="M200,324 l10,10 M210,324 l-10,10"/></g>
+						<g class="tile" id="f2-t40"><title>Radion effective action</title><rect x="223" y="316" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,329 l5,5 l8,-9"/><path class="tk-x" d="M231,324 l10,10 M241,324 l-10,10"/></g>
+						<g class="tile" id="f2-t41"><title>Interface entanglement</title><rect x="254" y="316" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,329 l5,5 l8,-9"/><path class="tk-x" d="M262,324 l10,10 M272,324 l-10,10"/></g>
+						<g class="tile" id="f2-t42"><title>Black-string Page time</title><rect x="285" y="316" width="26" height="26" rx="5"/><path class="tk-ok" d="M292,329 l5,5 l8,-9"/><path class="tk-x" d="M293,324 l10,10 M303,324 l-10,10"/></g>
+						<g class="tile" id="f2-t43"><title>Geometric-entropy flow</title><rect x="316" y="316" width="26" height="26" rx="5"/><path class="tk-ok" d="M323,329 l5,5 l8,-9"/><path class="tk-x" d="M324,324 l10,10 M334,324 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c10" x="436" y="332" text-anchor="end">5/5</text>
+						<text class="t-main sb-lab" x="182" y="366" text-anchor="end">Gravitation &amp; cosmology</text>
+						<g class="tile" id="f2-t44"><title>Topological near-horizon geometry</title><rect x="192" y="350" width="26" height="26" rx="5"/><path class="tk-ok" d="M199,363 l5,5 l8,-9"/><path class="tk-x" d="M200,358 l10,10 M210,358 l-10,10"/></g>
+						<g class="tile" id="f2-t45"><title>IIB scale separation</title><rect x="223" y="350" width="26" height="26" rx="5"/><path class="tk-ok" d="M230,363 l5,5 l8,-9"/><path class="tk-x" d="M231,358 l10,10 M241,358 l-10,10"/></g>
+						<g class="tile" id="f2-t46"><title>Hyperbolic compactification</title><rect x="254" y="350" width="26" height="26" rx="5"/><path class="tk-ok" d="M261,363 l5,5 l8,-9"/><path class="tk-x" d="M262,358 l10,10 M272,358 l-10,10"/></g>
+						<g class="tile" id="f2-t47"><title>IIB Euclidean wormholes</title><rect x="285" y="350" width="26" height="26" rx="5"/><path class="tk-ok" d="M292,363 l5,5 l8,-9"/><path class="tk-x" d="M293,358 l10,10 M303,358 l-10,10"/></g>
+						<g class="tile" id="f2-t48"><title>Bondi mass fluctuations</title><rect x="316" y="350" width="26" height="26" rx="5"/><path class="tk-ok" d="M323,363 l5,5 l8,-9"/><path class="tk-x" d="M324,358 l10,10 M334,358 l-10,10"/></g>
+						<g class="tile" id="f2-t49"><title>Microstate scalar spectrum</title><rect x="347" y="350" width="26" height="26" rx="5"/><path class="tk-ok" d="M354,363 l5,5 l8,-9"/><path class="tk-x" d="M355,358 l10,10 M365,358 l-10,10"/></g>
+						<text class="t-tick sb-cnt" id="f2-c11" x="436" y="366" text-anchor="end">6/6</text>
+						<rect class="tile-key" x="120" y="392" width="18" height="18" rx="4" style="fill: var(--accent); stroke: var(--accent);"/>
+						<path class="ln-thin" style="stroke: var(--paper-bg); stroke-width: 2.2;" d="M124,401 l3.5,3.5 l6,-7"/>
+						<text class="t-small" x="144" y="406">Solved</text>
+						<rect x="226" y="392" width="18" height="18" rx="4" style="fill: var(--warn-bg); stroke: var(--award); stroke-width: 1.5;"/>
+						<path class="ln-red" style="stroke-width: 2;" d="M230,396 l10,10 M240,396 l-10,10"/>
+						<text class="t-small" x="250" y="406">Missed</text>
+					</svg>
+				</div>
+				<figcaption><b>Figure 2.</b> Press the buttons to change the agent and the track. Each square is one problem, and hovering shows its name. Grades are from Table 4 of <a href="https://arxiv.org/abs/2610.16733" target="_blank" rel="noopener">Chandra et al. (2026)</a>, one run per agent. The square no agent solved, in the top row, asked for the differential equation behind a given curve.</figcaption>
+			</figure>
+
+			<p>Switching off search changed little. Astra and Opus each solved 46 without it, which the authors read as a sign of &ldquo;significant memorization of the literature.&rdquo;</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">What the test did not measure</span>
+				<p>The authors call their problems &ldquo;turn-the-crank&rdquo; research problems, &ldquo;where known techniques are used to generalize an extant result.&rdquo; Solving them &ldquo;does not require great originality or the ability to construct new physical theories.&rdquo; Some experts used AI tools on their own problems, so the authors &ldquo;cannot rule out data leakage,&rdquo; and each agent ran only once. Choosing a problem worth calculating was outside the test&rsquo;s scope.</p>
+			</div>
+
+			<p>The authors also describe, from their own experience, where agents fell short. When a problem proves too hard, a good researcher &ldquo;can then find a related but simpler and equally interesting problem to solve,&rdquo; and &ldquo;current agents are not adept at dynamically switching direction in this manner.&rdquo; Physicists share a rough sense of what makes a problem interesting, and &ldquo;agents do not appear to have the same &lsquo;taste&rsquo; in problems.&rdquo; The paper ends by suggesting that physicists, long told to &ldquo;shut up and calculate,&rdquo; &ldquo;might need to &lsquo;stop and think.&rsquo;&rdquo;</p>
+
+			<h2>A method travels further than its judgment</h2>
+
+			<p>In machine learning, generalization means doing well on cases unlike the ones a system learned from. Clark&rsquo;s argument is that agents which carry methods across eleven physics specialties may carry them across science. Generalization comes in degrees, though, and a method can travel further than the judgment needed to use it. Cardiology has a clean example.</p>
+
+			<p>People with high HDL cholesterol, often called good cholesterol, have fewer heart attacks. In a 2012 study in <i>The Lancet</i>, Benjamin Voight, Sekar Kathiresan and colleagues <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3419820/" target="_blank" rel="noopener">estimated</a> that each standard deviation of higher HDL went with 38% lower odds of a heart attack. The obvious conclusion, that raising HDL would prevent heart attacks, turned out to be wrong.</p>
+
+			<p>In 2007, a <a href="https://pubmed.ncbi.nlm.nih.gov/17984165/" target="_blank" rel="noopener">trial of the drug torcetrapib</a> in 15,067 high-risk patients raised HDL by 72%. It was stopped early because more patients on the drug died (hazard ratio 1.58). The investigators found signs of an off-target effect and could not rule out harm from the target itself.</p>
+
+			<p>Voight&rsquo;s team then turned to genes, using a method called Mendelian randomization. A variant in the <i>LIPG</i> gene gives its carriers higher HDL for life, enough to expect about 13% lower odds of a heart attack. Their odds were the same as those of non-carriers. Run on LDL cholesterol, the same method confirmed LDL&rsquo;s known harm, so the method itself was working.</p>
+
+			<figure>
+				<div class="sim" id="f3">
+					<div class="seg" role="group" aria-label="Step through the HDL story">
+						<button type="button" data-step="1" aria-pressed="true">1. The association</button>
+						<button type="button" data-step="2" aria-pressed="false">2. The drug</button>
+						<button type="button" data-step="3" aria-pressed="false">3. The genes</button>
+					</div>
+					<svg class="toon" viewBox="0 0 460 420" role="img" aria-labelledby="f3-title f3-desc">
+						<title id="f3-title">The HDL story in three steps</title>
+						<desc id="f3-desc">A forest plot on a log scale, with a dashed line at 1. Below 1 means lower risk. Step 1 shows the observational estimate: each standard deviation of higher HDL goes with an odds ratio for heart attack of 0.62. Step 2 adds the torcetrapib trial: a hazard ratio for death of 1.58. Step 3 adds the genetic estimates: the LIPG variant was predicted to give 0.87 and gave 0.99, and a 14-variant HDL score gave 0.93 per standard deviation, with a confidence interval crossing 1. A cartoon HDL particle wears a gold halo that falls off at step 3.</desc>
+
+						<g id="f3-mascot">
+							<ellipse id="f3-halo" class="halo" cx="58" cy="14" rx="20" ry="6"/>
+							<ellipse id="f3-halo-down" class="halo is-hidden" cx="94" cy="84" rx="16" ry="5" transform="rotate(-12 94 84)"/>
+							<circle class="hdl" cx="58" cy="50" r="26"/>
+							<text class="t-small t-good" x="58" y="40" text-anchor="middle">HDL</text>
+							<circle class="ink" cx="50" cy="52" r="2.2"/>
+							<circle class="ink" cx="66" cy="52" r="2.2"/>
+							<path id="f3-mouth" class="ln-thin" d="M51,61 Q58,67 65,61"/>
+						</g>
+						<text id="f3-cap" class="t-main" x="104" y="36">&ldquo;The good cholesterol&rdquo;</text>
+						<text id="f3-cap2" class="t-small" x="104" y="56">Higher HDL, fewer heart attacks</text>
+						<g id="f3-pill" class="is-hidden">
+							<rect class="soft" x="330" y="18" width="36" height="50" rx="6"/>
+							<rect class="card" x="326" y="10" width="44" height="12" rx="3"/>
+							<text class="t-small t-red" x="378" y="40">+72% HDL</text>
+							<text class="t-small" x="378" y="58">more deaths</text>
+						</g>
+						<g id="f3-dna" class="is-hidden">
+							<path class="helix" d="M344,10 C374,24 314,40 344,54 C374,68 314,80 344,90"/>
+							<path class="helix" d="M344,10 C314,24 374,40 344,54 C314,68 374,80 344,90" style="stroke: var(--good);"/>
+							<path class="rung" d="M336,20 H352 M334,46 H354 M336,62 H352 M334,80 H354"/>
+							<text class="t-small t-good" x="378" y="40">genes say</text>
+							<text class="t-small t-good" x="378" y="58">no effect</text>
+						</g>
+
+						<path class="ln-axis" d="M210,106 V352"/>
+						<path class="ln-null" d="M312.5,100 V352"/>
+
+						<g id="f3-r1">
+							<text class="t-main" x="198" y="128" text-anchor="end">Higher HDL, observed</text>
+							<text class="t-small" x="198" y="146" text-anchor="end">heart attack, OR 0.62 per SD</text>
+							<path class="ci" d="M231.9,134 H251.1"/>
+							<circle class="mk-obs" cx="241.8" cy="134" r="7"/>
+						</g>
+						<g id="f3-r2" class="is-hidden">
+							<text class="t-main" x="198" y="176" text-anchor="end">Torcetrapib trial</text>
+							<text class="t-small" x="198" y="194" text-anchor="end">death, HR 1.58</text>
+							<path class="ci-red" d="M331.9,182 H428.4"/>
+							<rect class="mk-red" x="373.1" y="175" width="14" height="14" rx="2"/>
+						</g>
+						<g id="f3-r3" class="is-hidden">
+							<text class="t-main" x="198" y="224" text-anchor="end"><tspan font-style="italic">LIPG</tspan> variant, predicted</text>
+							<text class="t-small" x="198" y="242" text-anchor="end">heart attack, OR 0.87</text>
+							<path class="ci" d="M286.7,230 H298.6" style="stroke: var(--ink-light);"/>
+							<path class="mk-hollow" d="M291.9,222 L299.9,230 L291.9,238 L283.9,230 Z"/>
+						</g>
+						<g id="f3-r4" class="is-hidden">
+							<text class="t-main" x="198" y="272" text-anchor="end"><tspan font-style="italic">LIPG</tspan> variant, observed</text>
+							<text class="t-small" x="198" y="290" text-anchor="end">heart attack, OR 0.99</text>
+							<path class="ci" d="M293.6,278 H327.9"/>
+							<circle class="mk-gene" cx="311.0" cy="278" r="7"/>
+						</g>
+						<g id="f3-r5" class="is-hidden">
+							<text class="t-main" x="198" y="320" text-anchor="end">14-variant HDL score</text>
+							<text class="t-small" x="198" y="338" text-anchor="end">heart attack, OR 0.93 per SD</text>
+							<path class="ci" d="M255.5,326 H346.7"/>
+							<circle class="mk-gene" cx="301.8" cy="326" r="7"/>
+						</g>
+
+						<path class="ln-axis" d="M210,352 H448"/>
+						<path class="ln-axis" d="M210,352 v5 M259.8,352 v5 M312.5,352 v5 M372.5,352 v5 M415,352 v5 M448,352 v5"/>
+						<text class="t-tick" x="210" y="372" text-anchor="middle">0.5</text>
+						<text class="t-tick" x="259.8" y="372" text-anchor="middle">0.7</text>
+						<text class="t-tick" x="312.5" y="372" text-anchor="middle">1</text>
+						<text class="t-tick" x="372.5" y="372" text-anchor="middle">1.5</text>
+						<text class="t-tick" x="415" y="372" text-anchor="middle">2</text>
+						<text class="t-small" x="329" y="394" text-anchor="middle">Odds ratio or hazard ratio, log scale</text>
+						<text class="t-small t-good" x="306" y="414" text-anchor="end">&larr; lower risk</text>
+						<text class="t-small t-red" x="319" y="414">higher risk &rarr;</text>
+					</svg>
+					<p class="sim-say" id="f3-say" aria-live="polite">People with higher HDL have fewer heart attacks. Each standard deviation higher goes with 38% lower odds. The statistics are sound.</p>
+				</div>
+				<figcaption><b>Figure 3.</b> Press the steps in order. Points are estimates and lines are 95% confidence intervals. Odds ratios (OR) for heart attack are from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3419820/" target="_blank" rel="noopener">Voight et al. (2012)</a>, per standard deviation (SD) of HDL where marked. The hazard ratio (HR) for death from any cause, 1.58 (1.14 to 2.19), is from the <a href="https://pubmed.ncbi.nlm.nih.gov/17984165/" target="_blank" rel="noopener">torcetrapib trial</a>. The rows measure different outcomes on one ratio scale.</figcaption>
+			</figure>
+
+			<p>Every step in the HDL story used correct statistics. The mistake was the inference from &ldquo;goes with fewer heart attacks&rdquo; to &ldquo;raising it prevents heart attacks.&rdquo; An agent that can run all of these analyses has the method. Knowing which conclusion each one can support is the judgment, and <i>TheoPhysEval</i> tested only the method.</p>
+
+			<h2>Expertise has a range</h2>
+
+			<p>The philosopher Nathan Ballantyne named the idea in a <a href="https://doi.org/10.1093/mind/fzx042" target="_blank" rel="noopener">2019 paper in <i>Mind</i></a> and in his book <a href="https://doi.org/10.1093/oso/9780190847289.003.0008" target="_blank" rel="noopener"><i>Knowing Our Limits</i></a>. The paper&rsquo;s abstract begins plainly. &ldquo;Epistemic trespassers judge matters outside their field of expertise.&rdquo;</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Epistemic trespassing</span>
+				<p>Ballantyne&rsquo;s term for judging a question with the evidence and skills of only some of the fields it needs. He argues that once we learn we have trespassed, we should often hold our view with less confidence. The charge concerns how a belief was reached. A trespasser can still turn out to be right.</p>
+			</div>
+
+			<p>One of Ballantyne&rsquo;s examples is Linus Pauling, who won the 1954 Nobel Prize in Chemistry for work on the chemical bond. In the 1970s he championed high doses of vitamin C, first against colds and then against cancer. The Mayo Clinic tested the cancer claim in <a href="https://pubmed.ncbi.nlm.nih.gov/384241/" target="_blank" rel="noopener">1979</a> and again in <a href="https://pubmed.ncbi.nlm.nih.gov/3880867/" target="_blank" rel="noopener">1985</a>, giving patients with advanced cancer 10 grams a day or a placebo. Neither trial found any benefit.</p>
+
+			<p>Pauling&rsquo;s chemistry was first-rate, and it gave him no special access to what a vitamin does for cancer patients. His reputation still made the claim travel.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 250" role="img" aria-labelledby="f4-title f4-desc">
+					<title id="f4-title">A chemist climbing into cancer medicine</title>
+					<desc id="f4-desc">On the left, under the label chemistry, is a ball-and-stick molecule. In the middle, a cartoon scientist wearing a gold Nobel medal climbs over a picket fence, holding up an orange marked C. On the right, under the label cancer medicine, two clipboards read: 1979 trial, 150 patients, no benefit; and 1985 trial, 100 patients, no benefit.</desc>
+
+					<path class="ln-thin" d="M16,232 H544"/>
+					<text class="t-head" x="110" y="30" text-anchor="middle">CHEMISTRY</text>
+					<path class="ln" d="M110,92 L72,70 M110,92 L148,70 M110,92 V136 M110,136 L80,160 M110,136 L140,160"/>
+					<circle class="soft" cx="110" cy="92" r="14"/>
+					<circle class="card" cx="72" cy="70" r="9"/>
+					<circle class="card" cx="148" cy="70" r="9"/>
+					<circle class="soft" cx="110" cy="136" r="12"/>
+					<circle class="card" cx="80" cy="160" r="9"/>
+					<circle class="card" cx="140" cy="160" r="9"/>
+					<text class="t-small" x="110" y="200" text-anchor="middle">where his Nobel</text>
+					<text class="t-small" x="110" y="217" text-anchor="middle">was earned</text>
+
+					<path class="soft" d="M236,232 V160 l8,-10 l8,10 V232 Z M258,232 V160 l8,-10 l8,10 V232 Z M280,232 V160 l8,-10 l8,10 V232 Z M302,232 V160 l8,-10 l8,10 V232 Z"/>
+					<path class="ln" d="M228,178 H332 M228,212 H332"/>
+
+					<path class="ln" d="M268,150 L256,172 M290,150 L306,170"/>
+					<path class="shirt" d="M262,152 Q262,112 280,108 Q298,112 298,152 Z"/>
+					<circle class="gold" cx="280" cy="128" r="7"/>
+					<path class="ln-gold" d="M275,110 L280,121 L285,110"/>
+					<circle class="head" cx="280" cy="88" r="17"/>
+					<circle class="ink" cx="274" cy="86" r="2"/>
+					<circle class="ink" cx="286" cy="86" r="2"/>
+					<path class="ln-thin" d="M273,95 Q280,101 287,95"/>
+					<path class="ln" d="M296,120 L318,82"/>
+					<circle class="gold" cx="322" cy="66" r="15"/>
+					<text class="t-onfill" x="322" y="72" text-anchor="middle">C</text>
+
+					<text class="t-head" x="455" y="30" text-anchor="middle">CANCER MEDICINE</text>
+					<rect class="card" x="380" y="50" width="150" height="78" rx="4"/>
+					<rect class="soft" x="436" y="44" width="38" height="12" rx="3"/>
+					<text class="t-main" x="394" y="78">1979 trial</text>
+					<text class="t-small" x="394" y="96">150 patients</text>
+					<text class="t-red" x="394" y="116">no benefit</text>
+					<rect class="card" x="380" y="144" width="150" height="78" rx="4"/>
+					<rect class="soft" x="436" y="138" width="38" height="12" rx="3"/>
+					<text class="t-main" x="394" y="172">1985 trial</text>
+					<text class="t-small" x="394" y="190">100 patients</text>
+					<text class="t-red" x="394" y="210">no benefit</text>
+				</svg>
+				<figcaption><b>Figure 4.</b> Linus Pauling as a cartoon. The drawing is not a likeness. Both Mayo Clinic trials compared 10 grams of vitamin C a day with a placebo, in <a href="https://pubmed.ncbi.nlm.nih.gov/384241/" target="_blank" rel="noopener">advanced cancer</a> (1979) and <a href="https://pubmed.ncbi.nlm.nih.gov/3880867/" target="_blank" rel="noopener">advanced colorectal cancer</a> (1985).</figcaption>
+			</figure>
+
+			<p>The philosopher Jamie Carlin Watson <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9510724/" target="_blank" rel="noopener">replied in 2022</a> that crossing is warranted more often than Ballantyne allows. Watson calls overlapping fields epistemic neighbours. Their experts &ldquo;have authority to speak in those other domains to the degree that their competence in their own domain constitutes competence in the neighboring domain.&rdquo; Read together, the two papers give a working test for any crossing. The question is how far the crosser&rsquo;s competence reaches into the new field, and the new field&rsquo;s own evidence answers it.</p>
+
+			<figure>
+				<div class="quiz" id="f5">
+					<div class="q-card" data-answer="n">
+						<svg class="toon" viewBox="0 0 230 56" role="img" aria-label="A badge reading blood, an arrow, and a badge reading cancer care.">
+							<rect class="soft" x="6" y="12" width="84" height="32" rx="16"/>
+							<text class="t-small t-main" x="48" y="33" text-anchor="middle">Blood</text>
+							<path class="ln" d="M98,28 H128 M120,21 L128,28 L120,35"/>
+							<rect class="soft" x="136" y="12" width="88" height="32" rx="16"/>
+							<text class="t-small t-main" x="180" y="33" text-anchor="middle">Cancer care</text>
+						</svg>
+						<p class="q-text">A haematologist gives an opinion on a cancer patient&rsquo;s treatment plan.</p>
+						<div class="q-btns"><button type="button" data-guess="n" aria-pressed="false">Neighbour</button><button type="button" data-guess="t" aria-pressed="false">Trespasser</button></div>
+						<p class="q-verdict"><span class="q-you"></span><b>Neighbour.</b> Watson&rsquo;s example. The fields overlap so much that neither specialist distrusts the other.</p>
+					</div>
+					<div class="q-card" data-answer="n">
+						<svg class="toon" viewBox="0 0 230 56" role="img" aria-label="A badge reading family medicine, an arrow, and a badge reading vaccines.">
+							<rect class="soft" x="6" y="12" width="84" height="32" rx="16"/>
+							<text class="t-small t-main" x="48" y="33" text-anchor="middle">Family med</text>
+							<path class="ln" d="M98,28 H128 M120,21 L128,28 L120,35"/>
+							<rect class="soft" x="136" y="12" width="88" height="32" rx="16"/>
+							<text class="t-small t-main" x="180" y="33" text-anchor="middle">Vaccines</text>
+						</svg>
+						<p class="q-text">A family physician tells a patient that a vaccine is safe.</p>
+						<div class="q-btns"><button type="button" data-guess="n" aria-pressed="false">Neighbour</button><button type="button" data-guess="t" aria-pressed="false">Trespasser</button></div>
+						<p class="q-verdict"><span class="q-you"></span><b>Neighbour.</b> Also Watson&rsquo;s. Vaccine advice rests on immunology and epidemiology, close enough to a physician&rsquo;s training.</p>
+					</div>
+					<div class="q-card" data-answer="t">
+						<svg class="toon" viewBox="0 0 230 56" role="img" aria-label="A badge reading chemistry, an arrow, and a badge reading cancer care.">
+							<rect class="soft" x="6" y="12" width="84" height="32" rx="16"/>
+							<text class="t-small t-main" x="48" y="33" text-anchor="middle">Chemistry</text>
+							<path class="ln" d="M98,28 H128 M120,21 L128,28 L120,35"/>
+							<rect class="soft" x="136" y="12" width="88" height="32" rx="16"/>
+							<text class="t-small t-main" x="180" y="33" text-anchor="middle">Cancer care</text>
+						</svg>
+						<p class="q-text">A Nobel-winning chemist promotes vitamin C as a treatment for cancer.</p>
+						<div class="q-btns"><button type="button" data-guess="n" aria-pressed="false">Neighbour</button><button type="button" data-guess="t" aria-pressed="false">Trespasser</button></div>
+						<p class="q-verdict"><span class="q-you"></span><b>Trespasser.</b> Ballantyne&rsquo;s example, Linus Pauling. Two trials found no benefit.</p>
+					</div>
+					<div class="q-card" data-answer="o">
+						<svg class="toon" viewBox="0 0 230 56" role="img" aria-label="A badge reading genetics, an arrow carrying a small robot, and a badge reading drug targets.">
+							<rect class="soft" x="6" y="12" width="84" height="32" rx="16"/>
+							<text class="t-small t-main" x="48" y="33" text-anchor="middle">Genetics</text>
+							<path class="ln" d="M98,40 H128 M120,33 L128,40 L120,47"/>
+							<rect class="soft" x="104" y="6" width="20" height="18" rx="4"/>
+							<rect class="ink" x="108" y="12" width="4" height="4"/>
+							<rect class="ink" x="116" y="12" width="4" height="4"/>
+							<rect class="soft" x="136" y="12" width="88" height="32" rx="16"/>
+							<text class="t-small t-main" x="180" y="33" text-anchor="middle">Drug targets</text>
+						</svg>
+						<p class="q-text">A geneticist asks an AI agent for a drug target and presents the agent&rsquo;s case as their own judgment.</p>
+						<div class="q-btns"><button type="button" data-guess="n" aria-pressed="false">Neighbour</button><button type="button" data-guess="t" aria-pressed="false">Trespasser</button></div>
+						<p class="q-verdict"><span class="q-you"></span><b>Open question.</b> Ballantyne wrote about people. The next section takes up the machine.</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 5.</b> Pick an answer on each card. Cases one and two are from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9510724/" target="_blank" rel="noopener">Watson (2022)</a>, three is Ballantyne&rsquo;s, and four is hypothetical.</figcaption>
+			</figure>
+
+			<h2>AI removes the friction that used to warn us</h2>
+
+			<p>Crossing into a new field used to take months of reading. The slowness did a job, because researchers ran into the gaps in their knowledge before they reached a confident conclusion. An AI agent removes most of that friction. A reader can now follow every sentence of an AI-written argument and still be unable to tell whether it is valid.</p>
+
+			<figure>
+				<div class="pair">
+					<div class="panel">
+						<p class="panel-beat">Before AI</p>
+						<svg class="toon" viewBox="0 0 260 208" role="img" aria-label="A winding road runs from a small house, your field, to a flag, conclusion. A signpost reads months of reading. The road has two potholes, labelled jargon and hidden assumption. A traveller has stumbled into the second pothole and is sweating.">
+							<path class="road" d="M40,176 C120,192 64,128 136,128 S 206,114 222,74"/>
+							<path class="road-mid" d="M40,176 C120,192 64,128 136,128 S 206,114 222,74"/>
+							<path class="soft" d="M14,186 V160 L30,146 L46,160 V186 Z"/>
+							<rect class="card" x="25" y="170" width="10" height="16"/>
+							<text class="t-small" x="30" y="202" text-anchor="middle">Your field</text>
+							<path class="ln" d="M222,74 V24"/>
+							<path class="gold" d="M222,24 L252,32 L222,42 Z"/>
+							<text class="t-small t-main" x="222" y="16" text-anchor="middle">Conclusion</text>
+							<path class="ln" d="M64,66 V120"/>
+							<rect class="card" x="10" y="38" width="108" height="30" rx="4"/>
+							<text class="t-small t-main" x="64" y="58" text-anchor="middle">Months of reading</text>
+							<ellipse class="hole" cx="94" cy="162" rx="12" ry="5"/>
+							<text class="t-small t-red" x="112" y="183">jargon</text>
+							<ellipse class="hole" cx="184" cy="118" rx="12" ry="5"/>
+							<text class="t-small t-red" x="214" y="150" text-anchor="middle">hidden</text>
+							<text class="t-small t-red" x="214" y="165" text-anchor="middle">assumption</text>
+							<path class="ln" d="M178,112 L172,98 M172,98 L162,104 M172,98 L180,90"/>
+							<circle class="head-sm" cx="168" cy="84" r="9"/>
+							<path class="acc" d="M158,74 q3,5 0,8 q-3,-3 0,-8 Z"/>
+						</svg>
+						<p class="panel-text">Entering a new field took months. On the way, you fell into the gaps in what you knew, and you noticed them.</p>
+					</div>
+					<div class="panel">
+						<p class="panel-beat">With an AI agent</p>
+						<svg class="toon" viewBox="0 0 260 208" role="img" aria-label="The same road, now empty. A dotted arc carries the traveller from the house straight to the flag, where the traveller stands next to a small robot and says: done already. The two potholes are still on the road, labelled still there.">
+							<path class="road" style="opacity: 0.55;" d="M40,176 C120,192 64,128 136,128 S 206,114 222,74"/>
+							<path class="road-mid" style="opacity: 0.55;" d="M40,176 C120,192 64,128 136,128 S 206,114 222,74"/>
+							<path class="soft" d="M14,186 V160 L30,146 L46,160 V186 Z"/>
+							<rect class="card" x="25" y="170" width="10" height="16"/>
+							<text class="t-small" x="30" y="202" text-anchor="middle">Your field</text>
+							<path class="ln-dash-arc" d="M30,140 C36,40 150,14 200,52"/>
+							<path class="ln" d="M222,74 V24"/>
+							<path class="gold" d="M222,24 L252,32 L222,42 Z"/>
+							<ellipse class="hole" cx="94" cy="162" rx="12" ry="5"/>
+							<ellipse class="hole" cx="184" cy="118" rx="12" ry="5"/>
+							<text class="t-small t-red" x="112" y="183">still there</text>
+							<text class="t-small t-red" x="214" y="150" text-anchor="middle">still there</text>
+							<path class="ln" d="M206,96 V78 M206,96 L200,108 M206,96 L212,108 M206,82 L198,90 M206,82 L214,76"/>
+							<circle class="head-sm" cx="206" cy="68" r="9"/>
+							<path class="ln-thin" d="M202,70 Q206,74 210,70"/>
+							<rect class="soft" x="232" y="86" width="20" height="18" rx="4"/>
+							<rect class="ink" x="236" y="92" width="4" height="4"/>
+							<rect class="ink" x="244" y="92" width="4" height="4"/>
+							<rect class="soft" x="234" y="104" width="16" height="10" rx="3"/>
+							<path class="bubble" d="M104,62 H184 A6,6 0 0 1 190,68 V70 L198,72 L190,78 V82 A6,6 0 0 1 184,88 H104 A6,6 0 0 1 98,82 V68 A6,6 0 0 1 104,62 Z"/>
+							<text class="t-small t-main" x="144" y="80" text-anchor="middle">Done already!</text>
+						</svg>
+						<p class="panel-text">An agent carries you to a confident conclusion in minutes. The gaps are still on the road you skipped.</p>
+					</div>
+				</div>
+				<figcaption><b>Figure 6.</b> Two ways into a new field. The road and its potholes are illustrative.</figcaption>
+			</figure>
+
+			<p>Take a hypothetical geneticist who asks an AI agent for a drug target. The agent combines genetic association studies with protein measurements from blood and builds a persuasive case that blocking one protein would lower the risk of a disease. Whether the case holds turns on questions that belong to different experts.</p>
+
+			<ul>
+				<li><b>Cause.</b> An association can exist without the protein causing the disease, as the HDL story showed.</li>
+				<li><b>Tissue.</b> A protein measured in blood may behave differently in the organ where the disease starts.</li>
+				<li><b>Side effects.</b> A drug can do harm elsewhere in the body, as torcetrapib did.</li>
+			</ul>
+
+			<p>A conclusion can also be right for bad reasons. If a target chosen through faulty reasoning later works, the same reasoning will be trusted on the next target, where it may fail.</p>
+
+			<div class="callout">
+				<span class="callout-label">Can an AI trespass?</span>
+				<p>Ballantyne wrote about people who trade on standing earned in one field to speak with authority in another. An AI agent has no standing of its own. The person who presents its conclusion as their own evaluated judgment borrows authority twice, from their own field and from the machine. People can now acquire conclusions faster than they acquire the ability to evaluate them.</p>
+			</div>
+
+			<h2>Testing becomes the bottleneck</h2>
+
+			<p>Clark asked his audience to picture science at a new scale. &ldquo;What happens when instead of ~10 million scientists, we have a billion virtual scientists directed by our own ten million?&rdquo; He also named the catch. &ldquo;An avalanche of new proposed drugs is of little use if only a handful can ever be tested.&rdquo;</p>
+
+			<p>Checking costs differ by field. A physics answer can often be checked with a computer run. A drug can need a trial of 15,067 patients. A second bottleneck sits in front of the first, because a lab with a fixed budget has to choose which ideas to test. In <a href="/blog/when-the-answer-is-cheap/">When the answer is cheap</a>, I argued that as answers get cheap, the premium moves to choosing the questions. Figure 7 is a toy model of that choice.</p>
+
+			<figure>
+				<div class="sim" id="f7">
+					<div class="sim-ctl">
+						<label for="f7-n"><span>Ideas proposed per year</span><output id="f7-n-out" for="f7-n">10,000</output></label>
+						<input type="range" id="f7-n" min="0" max="6" step="1" value="6">
+					</div>
+					<div class="sim-ctl">
+						<label for="f7-e"><span>How much better than chance the lab picks</span><output id="f7-e-out" for="f7-e">1&times; (random)</output></label>
+						<input type="range" id="f7-e" min="0" max="5" step="1" value="0">
+					</div>
+					<svg class="toon" viewBox="0 0 560 300" role="img" aria-labelledby="f7-title f7-desc">
+						<title id="f7-title">A toy model of a lab choosing which ideas to test</title>
+						<desc id="f7-desc">A band of dots at the top stands for the ideas proposed in a year. The blue dots are the ideas the lab tests. They pass through a funnel whose neck holds 100 tests a year, past a scientist with a magnifying glass, into a beaker. Green dots in the beaker are discoveries. At the starting setting, 10,000 ideas and random picks, the lab tests 1% of the ideas and makes 2 discoveries a year.</desc>
+						<text id="f7-lbl" class="t-small" x="280" y="16" text-anchor="middle">10,000 ideas proposed, each dot about 63 of them</text>
+							<circle class="idea" cx="125.9" cy="45.5" r="4.2"/>
+							<circle class="idea" cx="406.4" cy="56.1" r="4.2"/>
+							<circle class="idea" cx="334.4" cy="30.4" r="4.2"/>
+							<circle class="idea" cx="122.5" cy="69.8" r="4.2"/>
+							<circle class="idea" cx="454.4" cy="83.7" r="4.2"/>
+							<circle class="idea" cx="107.9" cy="44.0" r="4.2"/>
+							<circle class="idea" cx="231.1" cy="58.3" r="4.2"/>
+							<circle class="idea" cx="385.2" cy="43.3" r="4.2"/>
+							<circle class="idea" cx="499.4" cy="40.8" r="4.2"/>
+							<circle class="idea" cx="493.2" cy="81.1" r="4.2"/>
+							<circle class="idea" cx="163.1" cy="82.0" r="4.2"/>
+							<circle class="idea" cx="356.6" cy="70.9" r="4.2"/>
+							<circle class="idea" cx="316.2" cy="41.3" r="4.2"/>
+							<circle class="idea" cx="507.8" cy="54.6" r="4.2"/>
+							<circle class="idea" cx="188.0" cy="54.0" r="4.2"/>
+							<circle class="idea" cx="485.1" cy="43.7" r="4.2"/>
+							<circle class="idea" cx="194.9" cy="44.3" r="4.2"/>
+							<circle class="idea" cx="436.4" cy="81.9" r="4.2"/>
+							<circle class="idea" cx="209.8" cy="41.7" r="4.2"/>
+							<circle class="idea" cx="287.4" cy="69.8" r="4.2"/>
+							<circle class="idea" cx="65.2" cy="67.5" r="4.2"/>
+							<circle class="idea" cx="191.0" cy="29.5" r="4.2"/>
+							<circle class="idea" cx="200.3" cy="68.5" r="4.2"/>
+							<circle class="idea" cx="159.2" cy="28.6" r="4.2"/>
+							<circle class="idea" cx="421.6" cy="53.6" r="4.2"/>
+							<circle class="idea" cx="175.8" cy="55.9" r="4.2"/>
+							<circle class="idea" cx="298.2" cy="44.9" r="4.2"/>
+							<circle class="idea" cx="82.2" cy="71.0" r="4.2"/>
+							<circle class="idea" cx="340.9" cy="42.9" r="4.2"/>
+							<circle class="idea" cx="142.0" cy="70.4" r="4.2"/>
+							<circle class="idea" cx="111.4" cy="70.5" r="4.2"/>
+							<circle class="idea" cx="303.9" cy="28.5" r="4.2"/>
+							<circle class="idea" cx="130.1" cy="82.3" r="4.2"/>
+							<circle class="idea" cx="443.1" cy="68.8" r="4.2"/>
+							<circle class="idea" cx="118.7" cy="54.2" r="4.2"/>
+							<circle class="idea" cx="263.3" cy="53.6" r="4.2"/>
+							<circle class="idea" cx="204.1" cy="54.8" r="4.2"/>
+							<circle class="idea" cx="480.6" cy="81.2" r="4.2"/>
+							<circle class="idea" cx="176.4" cy="83.3" r="4.2"/>
+							<circle class="idea" cx="516.1" cy="67.4" r="4.2"/>
+							<circle class="idea" cx="459.0" cy="71.0" r="4.2"/>
+							<circle class="idea" cx="410.3" cy="84.3" r="4.2"/>
+							<circle class="idea" cx="193.0" cy="81.7" r="4.2"/>
+							<circle class="idea" cx="357.5" cy="41.8" r="4.2"/>
+							<circle class="idea" cx="398.9" cy="69.4" r="4.2"/>
+							<circle class="idea" cx="205.7" cy="82.0" r="4.2"/>
+							<circle class="idea" cx="182.0" cy="70.5" r="4.2"/>
+							<circle class="idea" cx="283.2" cy="42.6" r="4.2"/>
+							<circle class="idea" cx="460.7" cy="44.5" r="4.2"/>
+							<circle class="idea" cx="468.7" cy="55.7" r="4.2"/>
+							<circle class="idea" cx="58.9" cy="28.3" r="4.2"/>
+							<circle class="idea" cx="510.8" cy="79.6" r="4.2"/>
+							<circle class="idea" cx="100.8" cy="30.0" r="4.2"/>
+							<circle class="idea" cx="366.4" cy="58.4" r="4.2"/>
+							<circle class="idea" cx="497.7" cy="55.3" r="4.2"/>
+							<circle class="idea" cx="342.7" cy="71.2" r="4.2"/>
+							<circle class="idea" cx="181.0" cy="41.1" r="4.2"/>
+							<circle class="idea" cx="72.5" cy="81.9" r="4.2"/>
+							<circle class="idea" cx="255.8" cy="44.9" r="4.2"/>
+							<circle class="idea" cx="415.1" cy="43.6" r="4.2"/>
+							<circle class="idea" cx="227.8" cy="67.4" r="4.2"/>
+							<circle class="idea" cx="231.9" cy="28.1" r="4.2"/>
+							<circle class="idea" cx="318.7" cy="81.7" r="4.2"/>
+							<circle class="idea" cx="482.1" cy="30.4" r="4.2"/>
+							<circle class="idea" cx="449.4" cy="29.9" r="4.2"/>
+							<circle class="idea" cx="450.1" cy="57.0" r="4.2"/>
+							<circle class="idea" cx="384.5" cy="68.0" r="4.2"/>
+							<circle class="idea" cx="326.1" cy="41.7" r="4.2"/>
+							<circle class="idea" cx="514.8" cy="41.3" r="4.2"/>
+							<circle class="idea" cx="403.2" cy="44.0" r="4.2"/>
+							<circle class="idea" cx="247.4" cy="31.6" r="4.2"/>
+							<circle class="idea" cx="395.4" cy="57.2" r="4.2"/>
+							<circle class="idea" cx="510.7" cy="30.5" r="4.2"/>
+							<circle class="idea" cx="472.4" cy="42.5" r="4.2"/>
+							<circle class="idea" cx="71.5" cy="54.3" r="4.2"/>
+							<circle class="idea" cx="409.4" cy="28.9" r="4.2"/>
+							<circle class="idea" cx="57.0" cy="83.5" r="4.2"/>
+							<circle class="idea" cx="381.1" cy="57.5" r="4.2"/>
+							<circle class="idea" cx="319.0" cy="57.4" r="4.2"/>
+							<circle class="idea" cx="311.3" cy="66.6" r="4.2"/>
+							<circle class="idea" cx="464.0" cy="81.7" r="4.2"/>
+							<circle class="idea" cx="67.5" cy="42.8" r="4.2"/>
+							<circle class="idea" cx="472.5" cy="71.1" r="4.2"/>
+							<circle class="idea" cx="238.5" cy="42.7" r="4.2"/>
+							<circle class="idea" cx="211.4" cy="71.2" r="4.2"/>
+							<circle class="idea" cx="420.8" cy="84.3" r="4.2"/>
+							<circle class="idea" cx="59.0" cy="53.8" r="4.2"/>
+							<circle class="idea" cx="430.6" cy="40.8" r="4.2"/>
+							<circle class="idea" cx="141.4" cy="41.9" r="4.2"/>
+							<circle class="idea" cx="332.9" cy="80.7" r="4.2"/>
+							<circle class="idea" cx="427.3" cy="71.1" r="4.2"/>
+							<circle class="idea" cx="483.1" cy="58.4" r="4.2"/>
+							<circle class="idea" cx="294.2" cy="57.0" r="4.2"/>
+							<circle class="idea" cx="165.6" cy="42.8" r="4.2"/>
+							<circle class="idea" cx="425.4" cy="28.1" r="4.2"/>
+							<circle class="idea" cx="393.7" cy="31.9" r="4.2"/>
+							<circle class="idea" cx="146.5" cy="31.6" r="4.2"/>
+							<circle class="idea" cx="330.8" cy="69.7" r="4.2"/>
+							<circle class="idea" cx="349.7" cy="29.0" r="4.2"/>
+							<circle class="idea" cx="90.4" cy="82.3" r="4.2"/>
+							<circle class="idea" cx="497.3" cy="29.1" r="4.2"/>
+							<circle class="idea" cx="434.2" cy="54.9" r="4.2"/>
+							<circle class="idea" cx="308.5" cy="80.2" r="4.2"/>
+							<circle class="idea" cx="129.9" cy="28.0" r="4.2"/>
+							<circle class="idea" cx="376.9" cy="83.1" r="4.2"/>
+							<circle class="idea" cx="277.7" cy="58.4" r="4.2"/>
+							<circle class="idea" cx="145.5" cy="80.9" r="4.2"/>
+							<circle class="idea" cx="368.5" cy="42.6" r="4.2"/>
+							<circle class="idea" cx="146.2" cy="54.1" r="4.2"/>
+							<circle class="idea" cx="225.8" cy="44.9" r="4.2"/>
+							<circle class="idea" cx="75.4" cy="27.9" r="4.2"/>
+							<circle class="idea" cx="347.4" cy="82.8" r="4.2"/>
+							<circle class="idea" cx="278.3" cy="29.4" r="4.2"/>
+							<circle class="idea" cx="267.9" cy="70.6" r="4.2"/>
+							<circle class="idea" cx="487.5" cy="69.2" r="4.2"/>
+							<circle class="idea" cx="176.8" cy="32.2" r="4.2"/>
+							<circle class="idea" cx="366.2" cy="84.0" r="4.2"/>
+							<circle class="idea" cx="257.9" cy="70.5" r="4.2"/>
+							<circle class="idea" cx="248.7" cy="54.2" r="4.2"/>
+							<circle class="idea" cx="280.2" cy="80.8" r="4.2"/>
+							<circle class="idea" cx="233.7" cy="82.2" r="4.2"/>
+							<circle class="idea" cx="155.5" cy="68.9" r="4.2"/>
+							<circle class="idea" cx="221.7" cy="28.9" r="4.2"/>
+							<circle class="idea" cx="305.1" cy="55.3" r="4.2"/>
+							<circle class="idea" cx="89.2" cy="29.3" r="4.2"/>
+							<circle class="idea" cx="413.6" cy="68.6" r="4.2"/>
+							<circle class="idea" cx="95.8" cy="43.8" r="4.2"/>
+							<circle class="idea" cx="322.1" cy="29.6" r="4.2"/>
+							<circle class="idea" cx="219.6" cy="83.0" r="4.2"/>
+							<circle class="idea" cx="264.2" cy="83.9" r="4.2"/>
+							<circle class="idea" cx="261.1" cy="30.4" r="4.2"/>
+							<circle class="idea" cx="163.6" cy="58.5" r="4.2"/>
+							<circle class="idea" cx="377.5" cy="30.4" r="4.2"/>
+							<circle class="idea" cx="335.7" cy="57.4" r="4.2"/>
+							<circle class="idea" cx="502.1" cy="66.6" r="4.2"/>
+							<circle class="idea" cx="394.5" cy="80.2" r="4.2"/>
+							<circle class="idea" cx="153.3" cy="43.8" r="4.2"/>
+							<circle class="idea" cx="166.6" cy="70.4" r="4.2"/>
+							<circle class="idea" cx="86.6" cy="55.3" r="4.2"/>
+							<circle class="idea" cx="238.8" cy="67.3" r="4.2"/>
+							<circle class="idea" cx="83.5" cy="45.2" r="4.2"/>
+							<circle class="idea" cx="292.4" cy="84.2" r="4.2"/>
+							<circle class="idea" cx="271.9" cy="44.8" r="4.2"/>
+							<circle class="idea" cx="207.9" cy="27.7" r="4.2"/>
+							<circle class="idea" cx="131.0" cy="55.2" r="4.2"/>
+							<circle class="idea" cx="100.7" cy="57.9" r="4.2"/>
+							<circle class="idea" cx="366.3" cy="31.0" r="4.2"/>
+							<circle class="idea" cx="436.5" cy="31.3" r="4.2"/>
+							<circle class="idea" cx="446.4" cy="44.4" r="4.2"/>
+							<circle class="idea" cx="463.2" cy="30.8" r="4.2"/>
+							<circle class="idea" cx="292.3" cy="27.8" r="4.2"/>
+							<circle class="idea" cx="102.5" cy="82.1" r="4.2"/>
+							<circle class="idea" cx="221.5" cy="54.3" r="4.2"/>
+							<circle class="idea" cx="118.3" cy="83.4" r="4.2"/>
+							<circle class="idea" cx="349.0" cy="54.6" r="4.2"/>
+							<circle class="idea" cx="98.0" cy="68.9" r="4.2"/>
+							<circle class="idea" cx="115.2" cy="29.7" r="4.2"/>
+							<circle class="idea" cx="298.1" cy="69.2" r="4.2"/>
+							<circle class="idea" cx="373.5" cy="67.6" r="4.2"/>
+							<circle class="idea" cx="248.4" cy="84.2" r="4.2"/>
+						<path class="funnel" d="M50,98 H510 L292,186 H268 Z"/>
+						<path class="funnel" d="M268,186 H292 V206 H268 Z"/>
+						<text class="t-main" x="300" y="203">Lab: 100 tests a year</text>
+						<path class="card" d="M236,214 H324 V284 Q324,294 314,294 H246 Q236,294 236,284 Z"/>
+						<path class="ln" d="M230,214 H330"/>
+							<circle class="disc" cx="248" cy="281" r="3.3"/>
+							<circle class="disc" cx="256" cy="281" r="3.3"/>
+							<circle class="disc" cx="264" cy="281" r="3.3"/>
+							<circle class="disc" cx="272" cy="281" r="3.3"/>
+							<circle class="disc" cx="280" cy="281" r="3.3"/>
+							<circle class="disc" cx="288" cy="281" r="3.3"/>
+							<circle class="disc" cx="296" cy="281" r="3.3"/>
+							<circle class="disc" cx="304" cy="281" r="3.3"/>
+							<circle class="disc" cx="252" cy="273" r="3.3"/>
+							<circle class="disc" cx="260" cy="273" r="3.3"/>
+							<circle class="disc" cx="268" cy="273" r="3.3"/>
+							<circle class="disc" cx="276" cy="273" r="3.3"/>
+							<circle class="disc" cx="284" cy="273" r="3.3"/>
+							<circle class="disc" cx="292" cy="273" r="3.3"/>
+							<circle class="disc" cx="300" cy="273" r="3.3"/>
+							<circle class="disc" cx="308" cy="273" r="3.3"/>
+							<circle class="disc" cx="248" cy="265" r="3.3"/>
+							<circle class="disc" cx="256" cy="265" r="3.3"/>
+							<circle class="disc" cx="264" cy="265" r="3.3"/>
+							<circle class="disc" cx="272" cy="265" r="3.3"/>
+							<circle class="disc" cx="280" cy="265" r="3.3"/>
+							<circle class="disc" cx="288" cy="265" r="3.3"/>
+							<circle class="disc" cx="296" cy="265" r="3.3"/>
+							<circle class="disc" cx="304" cy="265" r="3.3"/>
+							<circle class="disc" cx="252" cy="257" r="3.3"/>
+							<circle class="disc" cx="260" cy="257" r="3.3"/>
+							<circle class="disc" cx="268" cy="257" r="3.3"/>
+							<circle class="disc" cx="276" cy="257" r="3.3"/>
+							<circle class="disc" cx="284" cy="257" r="3.3"/>
+							<circle class="disc" cx="292" cy="257" r="3.3"/>
+							<circle class="disc" cx="300" cy="257" r="3.3"/>
+							<circle class="disc" cx="308" cy="257" r="3.3"/>
+							<circle class="disc" cx="248" cy="249" r="3.3"/>
+							<circle class="disc" cx="256" cy="249" r="3.3"/>
+							<circle class="disc" cx="264" cy="249" r="3.3"/>
+							<circle class="disc" cx="272" cy="249" r="3.3"/>
+							<circle class="disc" cx="280" cy="249" r="3.3"/>
+							<circle class="disc" cx="288" cy="249" r="3.3"/>
+							<circle class="disc" cx="296" cy="249" r="3.3"/>
+							<circle class="disc" cx="304" cy="249" r="3.3"/>
+						<text id="f7-d" class="t-good t-big" x="336" y="268">2 discoveries a year</text>
+						<path class="shirt" d="M196,240 Q198,212 214,208 Q230,212 232,240 Z"/>
+						<circle class="head" cx="214" cy="190" r="14"/>
+						<circle class="ink" cx="210" cy="188" r="1.8"/>
+						<circle class="ink" cx="219" cy="188" r="1.8"/>
+						<path class="ln" d="M228,222 L246,204"/>
+						<circle id="f7-lens" class="lens-ring" cx="252" cy="196" r="9"/>
+					</svg>
+					<div class="sim-read">
+						<div class="sim-cell"><p class="sim-k">Ideas tested</p><p class="sim-v" id="f7-share">1%</p></div>
+						<div class="sim-cell"><p class="sim-k">True among tested</p><p class="sim-v" id="f7-prec">2%</p></div>
+						<div class="sim-cell"><p class="sim-k">Discoveries a year</p><p class="sim-v" id="f7-disc">2</p></div>
+					</div>
+					<p class="sim-say" id="f7-say" aria-live="polite">With 10,000 ideas a year and random picks, the lab tests 1% of them and makes about 2 discoveries a year, the same number it makes with 100 ideas.</p>
+				</div>
+				<figcaption><b>Figure 7.</b> Move the sliders. This toy model was written for this post and its numbers are invented. It assumes 2% of ideas are true and the lab tests 100 a year. &ldquo;Better than chance&rdquo; means a pick is that many times more likely to be true than a random idea, until the true ideas run out.</figcaption>
+			</figure>
+
+			<p>In the toy, a lab that picks at random makes two discoveries a year whether it receives 100 ideas or 10,000. More ideas pay off only when the picks get better. Picking well is what the <i>TheoPhysEval</i> authors called taste, and whether AI systems will develop it is an open question. Exams mostly test the skill the agents already have in abundance, solving a well-posed problem. They rarely test choosing one.</p>
+
+			<h2>How a method from economics learned genetics</h2>
+
+			<p>Some methods have crossed fields and held up. Mendelian randomization, the method behind the genetic half of the HDL story, is one of them, and it started with butter.</p>
+
+			<p>In 1928, the economist Philip Wright wanted to separate supply from demand for butter and flaxseed. In <a href="https://www.aeaweb.org/articles?id=10.1257/089533003769204416" target="_blank" rel="noopener">an appendix to a book on tariffs</a>, he used outside factors, such as the weather, that move one curve and leave the other in place. Economists now call this method instrumental variables.</p>
+
+			<p>In 1986, the nutrition scientist Martijn Katan <a href="https://pubmed.ncbi.nlm.nih.gov/2869248/" target="_blank" rel="noopener">proposed</a> the same logic for genes. Low cholesterol had been linked to cancer, and nobody could tell which caused which. Variants of the <i>APOE</i> gene shift cholesterol levels from conception, so comparing people by <i>APOE</i> type could settle it. George Davey Smith and Shah Ebrahim <a href="https://pubmed.ncbi.nlm.nih.gov/12689998/" target="_blank" rel="noopener">named the approach</a> Mendelian randomization in 2003.</p>
+
+			<p>The method crossed over intact, and its assumptions had to be argued again. An instrument must affect the outcome only through the variable being studied. A gene often has several effects, which geneticists call pleiotropy, so they built tools such as <a href="https://pubmed.ncbi.nlm.nih.gov/26050253/" target="_blank" rel="noopener">MR-Egger regression</a> to test for a second path.</p>
+
+			<figure class="diagram">
+				<svg class="toon" viewBox="0 0 560 260" role="img" aria-labelledby="f8-title f8-desc">
+					<title id="f8-title">A method crossing from economics into genetics</title>
+					<desc id="f8-desc">On the left, under economics, 1928, a butter dish and a sack of flaxseed. In the middle, a suitcase with legs labelled instrumental variables walks up to a customs booth on the border. The customs officer asks: does this gene act only through cholesterol? A red stamp reads pleiotropy check. On the right, under genetics, a DNA double helix and the notes Katan 1986 and named in 2003.</desc>
+
+					<path class="ln-thin" d="M12,236 H548"/>
+					<text class="t-head" x="90" y="28" text-anchor="middle">ECONOMICS, 1928</text>
+					<rect class="card" x="20" y="150" width="76" height="12" rx="4"/>
+					<rect class="gold" x="32" y="124" width="52" height="26" rx="4"/>
+					<text class="t-small" x="58" y="182" text-anchor="middle">butter</text>
+					<path class="soft" d="M104,162 Q100,120 116,112 L112,104 H142 L138,112 Q154,120 150,162 Z"/>
+					<path class="ln-thin" d="M112,108 H142"/>
+					<text class="t-small" x="127" y="182" text-anchor="middle">flaxseed</text>
+					<text class="t-small" x="85" y="214" text-anchor="middle">Philip Wright</text>
+
+					<path class="ln-rule" d="M300,40 V236"/>
+					<path class="soft" d="M276,236 V146 L300,128 L324,146 V236 Z"/>
+					<rect class="card" x="284" y="152" width="32" height="26" rx="3"/>
+					<circle class="head-sm" cx="300" cy="166" r="8"/>
+					<rect class="card" x="268" y="190" width="64" height="20" rx="3"/>
+					<text class="t-small t-head" x="300" y="205" text-anchor="middle" style="font-size: 11px;">CUSTOMS</text>
+
+					<path class="bubble" d="M222,46 H378 A6,6 0 0 1 384,52 V90 A6,6 0 0 1 378,96 H312 L302,118 L298,96 H222 A6,6 0 0 1 216,90 V52 A6,6 0 0 1 222,46 Z"/>
+					<text class="t-small t-main" x="300" y="67" text-anchor="middle">Does this gene act only</text>
+					<text class="t-small t-main" x="300" y="85" text-anchor="middle">through cholesterol?</text>
+
+					<rect class="card" x="182" y="170" width="84" height="50" rx="6"/>
+					<path class="ln" d="M210,170 V162 H238 V170"/>
+					<text class="t-small t-main" x="224" y="190" text-anchor="middle">instrumental</text>
+					<text class="t-small t-main" x="224" y="207" text-anchor="middle">variables</text>
+					<path class="ln" d="M200,220 L196,236 M248,220 L254,236"/>
+
+					<g transform="rotate(-8 212 136)">
+						<rect class="stamp" x="160" y="123" width="104" height="26" rx="4"/>
+						<text class="t-small t-red" x="212" y="141" text-anchor="middle" style="font-size: 12px;">PLEIOTROPY CHECK</text>
+					</g>
+
+					<text class="t-head" x="440" y="28" text-anchor="middle">GENETICS</text>
+					<path class="helix" d="M396,50 C436,72 356,96 396,118 C436,140 356,162 396,184"/>
+					<path class="helix" d="M396,50 C356,72 436,96 396,118 C356,140 436,162 396,184" style="stroke: var(--good);"/>
+					<path class="rung" d="M384,62 H408 M382,104 H410 M384,128 H408 M382,170 H410"/>
+					<text class="t-main" x="436" y="80">Katan, 1986</text>
+					<text class="t-small" x="436" y="98">genes as natural</text>
+					<text class="t-small" x="436" y="114">experiments</text>
+					<text class="t-main" x="436" y="150">2003</text>
+					<text class="t-small" x="436" y="168">named Mendelian</text>
+					<text class="t-small" x="436" y="184">randomization</text>
+				</svg>
+				<figcaption><b>Figure 8.</b> Dates are from <a href="https://www.aeaweb.org/articles?id=10.1257/089533003769204416" target="_blank" rel="noopener">Stock and Trebbi (2003)</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/2869248/" target="_blank" rel="noopener">Katan (1986)</a> and <a href="https://pubmed.ncbi.nlm.nih.gov/12689998/" target="_blank" rel="noopener">Davey Smith and Ebrahim (2003)</a>. The customs officer is illustrative. The question is the assumption that pleiotropy can break.</figcaption>
+			</figure>
+
+			<p>AI could make crossings like this far more common. Turning them into reliable science still runs through the destination field&rsquo;s evidence.</p>
+
+			<h2>Crossing boundaries without losing our standards</h2>
+
+			<p>Clark&rsquo;s vision goes after one of the oldest limits on research, the small number of people able to work on hard problems, and <i>TheoPhysEval</i> suggests that limit is already loosening in theoretical physics. Working in a field and holding the authority to draw conclusions in it are separate achievements. AI may in time manage both. The way to find out is to test it field by field, as the physicists tested calculation.</p>
+
+			<p>For most of history, the hard part of science was getting access to knowledge and expertise. Increasingly, the hard part is deciding which of the many available explanations deserve belief. Ideas can now cross between fields at the speed of a prompt, and each one still answers to the evidence of the field it lands in.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://www.youtube.com/watch?v=Rqt9kWoTJbc" target="_blank" rel="noopener">Jack Clark, <i>Inside the Event Horizon</i></a> (Per Jacobsson Foundation Lecture, IMF, 17 October 2026), and <a href="https://jack-clark.net/2026/10/19/import-ai-477-in-which-i-tell-the-imf-the-singularity-has-begun/" target="_blank" rel="noopener">the text of the speech</a>.</li>
+				<li><a href="https://arxiv.org/abs/2610.16733" target="_blank" rel="noopener">Chandra et al., <i>TheoPhysEval: Assessing AI agents at autonomous theoretical physics problem solving</i></a> (arXiv, 2026).</li>
+				<li><a href="https://doi.org/10.1093/mind/fzx042" target="_blank" rel="noopener">Nathan Ballantyne, <i>Epistemic trespassing</i></a> (<i>Mind</i>, 2019).</li>
+				<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9510724/" target="_blank" rel="noopener">Jamie Carlin Watson, <i>Epistemic neighbors: trespassing and the range of expert authority</i></a> (<i>Synthese</i>, 2022).</li>
+				<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3419820/" target="_blank" rel="noopener">Voight et al., <i>Plasma HDL cholesterol and risk of myocardial infarction: a mendelian randomisation study</i></a> (<i>The Lancet</i>, 2012).</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">scientific discovery</span>
+				<span class="tag">AI evaluation</span>
+				<span class="tag">expertise</span>
+				<span class="tag">philosophy of science</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+<script>
+/* Figures 2, 3, 5 and 7. Each starts in a state the static markup already
+   shows, so the page reads the same with JavaScript off. */
+(function () {
+	'use strict';
+
+	function press(group, btn) {
+		Array.prototype.forEach.call(group, function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+	}
+
+	/* ---- Figure 2: per-problem grades ----
+	   One string per problem, in the paper's Table 4 order. Its ten digits are
+	   Astra, Opus, Gemini, DeepSeek and GLM, each as realistic then isolated
+	   track; 1 is a pass. Rows hold 5, 5, 3, 3, 5, 4, 7, 2, 5, 5 and 6 problems. */
+	var f2 = document.getElementById('f2');
+	if (f2) {
+		var G = ["1011101000", "0000000000", "1101000000", "1011001110", "1111110000", "1111111111", "1111110000", "1111110111", "1111111111", "1111111111", "1111111111", "1111011111", "1111111111", "1111000000", "1111000000", "1111101101", "1111110010", "1110100111", "1111111111", "1111111111", "1111111011", "1111111101", "1111111101", "1111111101", "1111000001", "1101000000", "1111000010", "1111110110", "1110101000", "1111001001", "1111111111", "1011110100", "1111111011", "1111100000", "1100000000", "1111111111", "1111111101", "1111010000", "1111110001", "1111111110", "1111111101", "1111111110", "1111000000", "1111000000", "1111111111", "1111110000", "1111111101", "1111000000", "1111110001", "1111001000"];
+		var ROWS = [5, 5, 3, 3, 5, 4, 7, 2, 5, 5, 6];
+		var agent = 0, track = 0;
+		var aBtns = f2.querySelectorAll('[data-agent]'), tBtns = f2.querySelectorAll('[data-track]');
+		function draw2() {
+			var col = agent * 2 + track, k = 0, total = 0;
+			for (var r = 0; r < ROWS.length; r++) {
+				var n = 0;
+				for (var j = 0; j < ROWS[r]; j++, k++) {
+					var ok = G[k].charAt(col) === '1';
+					n += ok ? 1 : 0;
+					document.getElementById('f2-t' + k).setAttribute('class', ok ? 'tile' : 'tile miss');
+				}
+				document.getElementById('f2-c' + (r + 1)).textContent = n + '/' + ROWS[r];
+				total += n;
+			}
+			document.getElementById('f2-n').textContent = total;
+		}
+		Array.prototype.forEach.call(aBtns, function (b) {
+			b.addEventListener('click', function () { press(aBtns, b); agent = +b.getAttribute('data-agent'); draw2(); });
+		});
+		Array.prototype.forEach.call(tBtns, function (b) {
+			b.addEventListener('click', function () { press(tBtns, b); track = +b.getAttribute('data-track'); draw2(); });
+		});
+	}
+
+	/* ---- Figure 3: the HDL story, one step at a time ---- */
+	var f3 = document.getElementById('f3');
+	if (f3) {
+		var steps = {
+			1: { rows: 1, halo: true, pill: false, dna: false, mouth: 'M51,61 Q58,67 65,61',
+				cap: '“The good cholesterol”', cap2: 'Higher HDL, fewer heart attacks',
+				say: 'People with higher HDL have fewer heart attacks. Each standard deviation higher goes with 38% lower odds. The statistics are sound.' },
+			2: { rows: 2, halo: true, pill: true, dna: false, mouth: 'M51,63 Q58,59 65,63',
+				cap: 'Raise HDL with a drug?', cap2: 'Torcetrapib, 15,067 patients',
+				say: 'Torcetrapib raised HDL by 72%. Patients on it died at a higher rate, and the trial was stopped early.' },
+			3: { rows: 5, halo: false, pill: false, dna: true, mouth: 'M51,62 H65',
+				cap: 'Ask the genes', cap2: 'Variants that raise HDL from birth',
+				say: 'Variants that raise HDL for life should have cut heart-attack odds by about 13%. They did not, while the same method confirmed the harm of LDL.' }
+		};
+		var sBtns = f3.querySelectorAll('[data-step]');
+		function show(id, on) { document.getElementById(id).setAttribute('class', document.getElementById(id).getAttribute('class').replace(/\s*is-hidden/, '') + (on ? '' : ' is-hidden')); }
+		function draw3(n) {
+			var s = steps[n];
+			for (var r = 2; r <= 5; r++) show('f3-r' + r, r <= s.rows);
+			show('f3-halo', s.halo);
+			show('f3-halo-down', !s.halo);
+			show('f3-pill', s.pill);
+			show('f3-dna', s.dna);
+			document.getElementById('f3-mouth').setAttribute('d', s.mouth);
+			document.getElementById('f3-cap').textContent = s.cap;
+			document.getElementById('f3-cap2').textContent = s.cap2;
+			document.getElementById('f3-say').textContent = s.say;
+		}
+		Array.prototype.forEach.call(sBtns, function (b) {
+			b.addEventListener('click', function () { press(sBtns, b); draw3(+b.getAttribute('data-step')); });
+		});
+	}
+
+	/* ---- Figure 5: neighbour or trespasser ---- */
+	var f5 = document.getElementById('f5');
+	if (f5) {
+		f5.className += ' quiz-js';
+		var NAMES = { n: 'Neighbour', t: 'Trespasser' };
+		Array.prototype.forEach.call(f5.querySelectorAll('.q-card'), function (card) {
+			var btns = card.querySelectorAll('button'), you = card.querySelector('.q-you');
+			var answer = card.getAttribute('data-answer');
+			Array.prototype.forEach.call(btns, function (b) {
+				b.addEventListener('click', function () {
+					var g = b.getAttribute('data-guess');
+					press(btns, b);
+					card.className = 'q-card done';
+					you.textContent = 'You said ' + NAMES[g] + '. ' + (answer === 'o' ? 'Either answer is arguable. ' : (g === answer ? 'That matches. ' : 'The verdict differs. '));
+				});
+			});
+		});
+	}
+
+	/* ---- Figure 7: the toy lab ----
+	   N ideas a year, of which a share P are true. The lab tests C of them.
+	   Picks are E times more likely to be true than a random idea, capped so
+	   no more than every pick, and no more than every true idea, is true. */
+	var nIn = document.getElementById('f7-n'), eIn = document.getElementById('f7-e');
+	if (nIn && eIn) {
+		var NS = [100, 200, 500, 1000, 2000, 5000, 10000], ES = [1, 2, 3, 5, 10, 20];
+		var P = 0.02, C = 100;
+		var ideas = document.querySelectorAll('#f7 .idea'), discs = document.querySelectorAll('#f7 .disc');
+		function fmt(x) { return x.toLocaleString('en-US'); }
+		function pct(x) { return (x >= 0.1 ? Math.round(100 * x) : Math.round(1000 * x) / 10) + '%'; }
+		function draw7() {
+			var N = NS[+nIn.value], E = ES[+eIn.value];
+			var tested = Math.min(N, C);
+			var d = N <= C ? N * P : Math.min(N * P, C * Math.min(1, P * E));
+			d = Math.round(d);
+			var share = tested / N, prec = d / tested;
+			var on = Math.max(1, Math.round(ideas.length * share));
+			for (var i = 0; i < ideas.length; i++) ideas[i].setAttribute('class', i < on ? 'idea on' : 'idea');
+			for (var j = 0; j < discs.length; j++) discs[j].setAttribute('class', j < d ? 'disc' : 'disc is-hidden');
+			document.getElementById('f7-lens').setAttribute('r', (9 + 3 * Math.log(E) / Math.log(2)).toFixed(1));
+			var per = N / ideas.length;
+			document.getElementById('f7-lbl').textContent = fmt(N) + ' ideas proposed, each dot ' + (per < 1 ? 'less than one' : 'about ' + fmt(Math.round(per))) + (per === 1 ? '' : ' of them');
+			document.getElementById('f7-d').textContent = d + (d === 1 ? ' discovery' : ' discoveries') + ' a year';
+			document.getElementById('f7-n-out').textContent = fmt(N);
+			document.getElementById('f7-e-out').textContent = E === 1 ? '1× (random)' : E + '×';
+			document.getElementById('f7-share').textContent = pct(share);
+			document.getElementById('f7-prec').textContent = pct(prec);
+			document.getElementById('f7-disc').textContent = d;
+			var picks = E === 1 ? 'random picks' : 'picks ' + E + ' times better than chance';
+			var tail = (E === 1 && N > C) ? ', the same number it makes with 100 ideas.' : '.';
+			document.getElementById('f7-say').textContent = 'With ' + fmt(N) + ' ideas a year and ' + picks + ', the lab tests ' + pct(share) + ' of them and makes about ' + d + (d === 1 ? ' discovery' : ' discoveries') + ' a year' + tail;
+		}
+		nIn.addEventListener('input', draw7);
+		eIn.addEventListener('input', draw7);
+		draw7();
+	}
+})();
+</script>
+
+</body>
+</html>
