@@ -41,24 +41,10 @@
 		.seg-sm button { font-size: 13.5px; padding: 5px 12px; }
 		.seg button:hover, .q-btns button:hover { border-color: var(--accent); }
 		.seg button[aria-pressed="true"], .q-btns button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
-		.seg button:focus-visible, .q-btns button:focus-visible, .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.seg button:focus-visible, .q-btns button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 		.prose .say { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); text-align: center; max-width: 520px; margin: 10px auto 0; min-height: 3em; }
 
-		/* Figure 2: the two messages */
-		.phone { max-width: 360px; margin: 0 auto; background: var(--panel-bg); border: 2px solid var(--ink); border-radius: 30px; padding: 12px 14px 20px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
-		.phone-notch { width: 70px; height: 7px; border-radius: 99px; background: var(--ink); opacity: 0.85; margin: 0 auto 12px; }
-		.phone-head { display: flex; align-items: center; gap: 10px; padding: 0 0 10px; border-bottom: 1px solid var(--rule); }
-		.prose .phone-head svg { width: 40px; height: 40px; flex: none; border-radius: 0; margin: 0; }
-		.prose .phone-name { font-weight: 900; font-size: 15px; color: var(--ink); margin: 0; }
-		.prose .phone-sub { font-size: 12.5px; color: var(--ink-light); margin: 0; }
-		.msg { background: var(--paper-bg); border: 1.5px solid var(--tag-border); border-radius: 16px 16px 16px 4px; padding: 10px 12px 12px; margin: 14px 24px 0 0; }
-		.prose .msg-k { font-size: 11.5px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-dark); margin: 0 0 4px; }
-		.prose .msg-t { font-size: 15px; line-height: 1.4; color: var(--ink); margin: 0 0 8px; }
-		.chips { display: flex; flex-wrap: wrap; gap: 6px; }
-		.prose a.chip { font-size: 13px; font-weight: 700; padding: 4px 11px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--tag-bg); color: var(--accent); text-decoration: none; }
-		.prose a.chip:hover { border-color: var(--accent); }
-
-		/* Figure 3: the version history */
+		/* Figure 2: the version history */
 		.win { background: var(--panel-bg); border: 1.5px solid var(--ink); border-radius: 12px; overflow: hidden; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
 		.win-bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1.5px solid var(--ink); background: var(--chip-bg); }
 		.win-bar i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--ink); display: inline-block; }
@@ -74,7 +60,7 @@
 		.ver-js .ver-note { display: none; }
 		.ver-js .ver-note.on { display: block; margin-top: 0; padding-top: 0; border-top: 0; }
 
-		/* Figure 4: the gears */
+		/* Figure 3: the gears */
 		.toon .spin { animation: gear-cw 27s linear infinite; }
 		.toon .spin-ccw { animation: gear-ccw 21s linear infinite; }
 		.toon .spin-3 { animation-duration: 24s; }
@@ -89,7 +75,7 @@
 		.toon .bulb { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.2; }
 		.toon .bulb.lit { fill: var(--gold-hl-ink); }
 
-		/* Figure 5: the 54 job changers */
+		/* Figure 4: the 54 job changers */
 		.toon .pp { transition: transform 0.9s ease, fill 0.5s ease; }
 		.toon .p-wait { fill: var(--tag-border); }
 		.toon .p-often { fill: var(--accent); }
@@ -99,10 +85,10 @@
 		.toon.f5-wait .f5-lbl { opacity: 0; transition: none; }
 		.prose .ask { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15.5px; font-weight: 700; line-height: 1.45; color: var(--ink); text-align: center; margin: 0 0 10px; }
 
-		/* Figure 6: the trapeze */
+		/* Figure 5: the trapeze */
 		.toon .flyer { transition: transform 1s cubic-bezier(.5,-0.2,.4,1.2); }
 
-		/* Figure 7: quiz cards */
+		/* Figure 6: quiz cards */
 		.quiz { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
 		.q-card { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px 14px; }
 		.q-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
@@ -327,47 +313,7 @@
 				<figcaption><b>Figure 1.</b> Press the steps. The sequence and numbers are from Parker&rsquo;s <a href="https://time.com/collections/2015-time-100/3822665/reid-hoffman-2015-time-100/" target="_blank" rel="noopener"><i>TIME</i> tribute</a>, Hoffman&rsquo;s <a href="https://achievement.org/achiever/reid-hoffman/" target="_blank" rel="noopener">Academy of Achievement profile</a> and <a href="https://techcrunch.com/2010/05/06/facebook-david-kirkpatrick/" target="_blank" rel="noopener">Kirkpatrick&rsquo;s account</a>. The thought bubble paraphrases Hoffman&rsquo;s reasoning and is not a quotation. The people are cartoons.</figcaption>
 			</figure>
 
-			<p>My grandfather recently sent me two messages on LINE about Hoffman. One listed three ways Hoffman says a successful career gets built. The other said to manage a career the way a founder manages a startup. Both ideas come from <a href="https://www.startupofyou.com/" target="_blank" rel="noopener"><i>The Start-Up of You</i></a>, the book Hoffman wrote with Ben Casnocha in 2012. I started at Stanford this month, where Hoffman and Thiel once argued about philosophy, and reading the book here, I kept finding its best examples in Hoffman&rsquo;s own career.</p>
-
-			<figure>
-				<div class="phone">
-					<div class="phone-notch"></div>
-					<div class="phone-head">
-						<svg class="toon" viewBox="0 0 40 40" aria-hidden="true">
-							<circle class="head" cx="20" cy="20" r="17"/>
-							<path class="ln-thin" d="M8,15 Q12,9 16,13 M32,15 Q28,9 24,13"/>
-							<circle class="bubble" cx="14" cy="20" r="4.2"/>
-							<circle class="bubble" cx="26" cy="20" r="4.2"/>
-							<path class="ln-thin" d="M18.2,20 H21.8"/>
-							<circle class="ink" cx="14" cy="20" r="1.4"/>
-							<circle class="ink" cx="26" cy="20" r="1.4"/>
-							<path class="ln-thin" d="M15,28 Q20,32 25,28"/>
-						</svg>
-						<div>
-							<p class="phone-name">Grandpa</p>
-							<p class="phone-sub">Two messages about Reid Hoffman</p>
-						</div>
-					</div>
-					<div class="msg">
-						<p class="msg-k">Message 1</p>
-						<p class="msg-t">Three ways Reid Hoffman says a successful career gets built.</p>
-						<div class="chips">
-							<a class="chip" href="#gears">A competitive advantage</a>
-							<a class="chip" href="#ties">A network</a>
-							<a class="chip" href="#risk">Intelligent risks</a>
-						</div>
-					</div>
-					<div class="msg">
-						<p class="msg-k">Message 2</p>
-						<p class="msg-t">Manage your career the way a founder manages a startup.</p>
-						<div class="chips">
-							<a class="chip" href="#beta">Permanent beta</a>
-							<a class="chip" href="#abz">Plans A, B and Z</a>
-						</div>
-					</div>
-				</div>
-				<figcaption><b>Figure 2.</b> My grandfather&rsquo;s two messages, paraphrased, with each idea linked to its section of this post. Tap a chip to jump ahead.</figcaption>
-			</figure>
+			<p>Eight years later, Hoffman and Ben Casnocha published <a href="https://www.startupofyou.com/" target="_blank" rel="noopener"><i>The Start-Up of You</i></a>. The book argues that a person should manage a career the way a founder manages a startup. Hoffman&rsquo;s own career supplies many of its examples.</p>
 
 			<h2 id="beta">There is no final version</h2>
 
@@ -513,7 +459,7 @@
 						</div>
 					</div>
 				</div>
-				<figcaption><b>Figure 3.</b> Hoffman&rsquo;s career as a startup&rsquo;s version history. Press a version to read its release notes. Dates and events are from his <a href="https://achievement.org/achiever/reid-hoffman/" target="_blank" rel="noopener">Academy of Achievement profile</a>, <a href="https://en.wikipedia.org/wiki/Reid_Hoffman" target="_blank" rel="noopener">Wikipedia</a> and his own account in <a href="https://www.startupofyou.com/podcasts/planning-to-adapt/" target="_blank" rel="noopener">&ldquo;Planning to Adapt&rdquo;</a>. The version numbers and drawings are mine.</figcaption>
+				<figcaption><b>Figure 2.</b> Hoffman&rsquo;s career as a startup&rsquo;s version history. Press a version to read its release notes. Dates and events are from his <a href="https://achievement.org/achiever/reid-hoffman/" target="_blank" rel="noopener">Academy of Achievement profile</a>, <a href="https://en.wikipedia.org/wiki/Reid_Hoffman" target="_blank" rel="noopener">Wikipedia</a> and his own account in <a href="https://www.startupofyou.com/podcasts/planning-to-adapt/" target="_blank" rel="noopener">&ldquo;Planning to Adapt&rdquo;</a>. The version numbers and drawings are mine.</figcaption>
 			</figure>
 
 			<p>Each version kept something from the one before. At Apple he tested product management while still in his old job, and two product jobs came before he co-founded SocialNet in 1997. When SocialNet stalled, what he had learned from it was what Thiel and Max Levchin wanted on the board of the company that became PayPal. <strong>Each move in Hoffman&rsquo;s career was an experiment run from the one before, with a fallback in place before he needed it.</strong></p>
@@ -555,7 +501,7 @@
 					<text id="f4-state" class="t-good" x="484" y="146">Turning</text>
 				</svg>
 				<p class="say" id="f4-say" aria-live="polite">All three gears turn. In Casnocha&rsquo;s telling, Sara Blakely&rsquo;s years of selling fax machines door to door became an asset when she started Spanx.</p>
-				<figcaption><b>Figure 4.</b> Press a button to take out a gear. The three gears are Hoffman and Casnocha&rsquo;s metaphor, and the examples are theirs, from <a href="https://www.startupofyou.com/podcasts/develop-your-competitive-edge/" target="_blank" rel="noopener">&ldquo;Develop Your Competitive Edge&rdquo;</a>. The machine and the light bulb are decoration.</figcaption>
+				<figcaption><b>Figure 3.</b> Press a button to take out a gear. The three gears are Hoffman and Casnocha&rsquo;s metaphor, and the examples are theirs, from <a href="https://www.startupofyou.com/podcasts/develop-your-competitive-edge/" target="_blank" rel="noopener">&ldquo;Develop Your Competitive Edge&rdquo;</a>. The machine and the light bulb are decoration.</figcaption>
 			</figure>
 
 			<p>A hypothetical biology student who has also learned to program holds two assets that are common on their own. Together they can let the student automate a lab&rsquo;s image analysis. A lab that needs that done may choose this student over a stronger biologist or a stronger programmer. The test is whether the student solves one group&rsquo;s problem better than the other options that group has.</p>
@@ -650,7 +596,7 @@
 					</g>
 				</svg>
 				<p class="say" id="f5-say" aria-live="polite">Only 9 of the 54 had seen their contact often. The other 45 heard about the job from someone they saw occasionally or rarely.</p>
-				<figcaption><b>Figure 5.</b> Make a guess to sort the 54. Counts are from <a href="https://smg.media.mit.edu/classes/library/granovetter.weak.ties/granovetter.html" target="_blank" rel="noopener">Granovetter (1973)</a>, who reported them as 16.7%, 55.6% and 27.8% of 54 recent white-collar job changers in a Boston suburb. One figure stands for one person.</figcaption>
+				<figcaption><b>Figure 4.</b> Make a guess to sort the 54. Counts are from <a href="https://smg.media.mit.edu/classes/library/granovetter.weak.ties/granovetter.html" target="_blank" rel="noopener">Granovetter (1973)</a>, who reported them as 16.7%, 55.6% and 27.8% of 54 recent white-collar job changers in a Boston suburb. One figure stands for one person.</figcaption>
 			</figure>
 
 			<p>Only 9 of the 54 had seen their contact often, meaning at least twice a week. Thirty had seen the contact occasionally, and 15 once a year or less. The contact was often &ldquo;an old college friend or a former workmate or employer,&rdquo; someone kept up with only sporadically. &ldquo;Chance meetings or mutual friends operated to reactivate such ties,&rdquo; Granovetter wrote. His explanation was that close friends move in the same circles you do, so they tend to hear about the same openings. An acquaintance moves in a different circle and hears about different ones. He called these looser connections weak ties.</p>
@@ -709,7 +655,7 @@
 					</g>
 				</svg>
 				<p class="say" id="f6-say" aria-live="polite">By 2000, SocialNet was not going to become what Hoffman wanted. He swung to PayPal, where he already sat on the board, and became its chief operating officer.</p>
-				<figcaption><b>Figure 6.</b> Press the buttons. The plans are Hoffman&rsquo;s own, as he describes them in <a href="https://www.startupofyou.com/podcasts/planning-to-adapt/" target="_blank" rel="noopener">&ldquo;Planning to Adapt&rdquo;</a>. The circus is a drawing, and only the middle button shows what happened.</figcaption>
+				<figcaption><b>Figure 5.</b> Press the buttons. The plans are Hoffman&rsquo;s own, as he describes them in <a href="https://www.startupofyou.com/podcasts/planning-to-adapt/" target="_blank" rel="noopener">&ldquo;Planning to Adapt&rdquo;</a>. The circus is a drawing, and only the middle button shows what happened.</figcaption>
 			</figure>
 
 			<div class="callout callout-warn">
@@ -721,7 +667,7 @@
 
 			<p>Putting your savings into a startup sounds reckless. The guest bedroom changed what was at stake. If SocialNet failed, Hoffman would lose money and keep a place to live while he started again. He would also have learned how an online network grows, and he co-founded LinkedIn in December 2002 with two former SocialNet colleagues.</p>
 
-			<p>Casnocha described the test behind a bet like this in <a href="https://www.nbcnews.com/id/wbna52300353" target="_blank" rel="noopener">a 2013 interview</a>. It starts from the worst outcome. &ldquo;If I feel like the worst-case scenario is my company goes under, I go bankrupt and my reputation is destroyed,&rdquo; he said, then he is wary of the risk. Hoffman and Casnocha call bets made this way intelligent risks. Figure 7 has five risks to sort.</p>
+			<p>Casnocha described the test behind a bet like this in <a href="https://www.nbcnews.com/id/wbna52300353" target="_blank" rel="noopener">a 2013 interview</a>. It starts from the worst outcome. &ldquo;If I feel like the worst-case scenario is my company goes under, I go bankrupt and my reputation is destroyed,&rdquo; he said, then he is wary of the risk. Hoffman and Casnocha call bets made this way intelligent risks. Figure 6 has five risks to sort.</p>
 
 			<figure>
 				<div class="quiz" id="f7">
@@ -787,23 +733,21 @@
 					</div>
 				</div>
 				<p class="q-score" id="f7-score" aria-live="polite"></p>
-				<figcaption><b>Figure 7.</b> Sort each card. Cards two and three are Hoffman&rsquo;s own bets, and the other three are hypothetical. The verdicts apply Casnocha&rsquo;s worst-case test from <a href="https://www.nbcnews.com/id/wbna52300353" target="_blank" rel="noopener">his 2013 interview</a>.</figcaption>
+				<figcaption><b>Figure 6.</b> Sort each card. Cards two and three are Hoffman&rsquo;s own bets, and the other three are hypothetical. The verdicts apply Casnocha&rsquo;s worst-case test from <a href="https://www.nbcnews.com/id/wbna52300353" target="_blank" rel="noopener">his 2013 interview</a>.</figcaption>
 			</figure>
 
 			<p>The risks that are hard to reverse share one feature. Their worst case damages something slow to rebuild, such as a credit record or other people&rsquo;s trust.</p>
 
-			<h2 id="interesting">The most interesting version of the job</h2>
+			<h2 id="next">The next job starts inside the current one</h2>
 
-			<p>One line in my grandfather&rsquo;s messages was about ambition. He wrote that I should picture the most interesting version of what I am doing and work toward it.</p>
-
-			<p>At Apple, Hoffman worked in user experience, and he suspected product management would suit him better. The most interesting version of his job was one he did not have yet. He wrote sample product requirement documents on his own and took them to the director of product management, James Isaacs. As Hoffman tells it in <a href="https://www.startupofyou.com/podcasts/planning-to-adapt/" target="_blank" rel="noopener">&ldquo;Planning to Adapt&rdquo;</a>, he asked Isaacs, &ldquo;will you assemble a group and review and give me feedback on them?&rdquo;</p>
+			<p>At Apple, Hoffman worked in user experience, and he suspected product management would suit him better. He wrote sample product requirement documents on his own and took them to the director of product management, James Isaacs. As Hoffman tells it in <a href="https://www.startupofyou.com/podcasts/planning-to-adapt/" target="_blank" rel="noopener">&ldquo;Planning to Adapt&rdquo;</a>, he asked Isaacs, &ldquo;will you assemble a group and review and give me feedback on them?&rdquo;</p>
 
 			<p>Isaacs liked the work. He became Hoffman&rsquo;s reference for a product-management job at Fujitsu, the last job Hoffman held before he started SocialNet in 1997.</p>
 
 			<h2>Further reading</h2>
 
 			<ul>
-				<li><a href="https://www.startupofyou.com/" target="_blank" rel="noopener">Reid Hoffman and Ben Casnocha, <i>The Start-Up of You</i></a> (2012, revised 2022), the book behind both of my grandfather&rsquo;s messages.</li>
+				<li><a href="https://www.startupofyou.com/" target="_blank" rel="noopener">Reid Hoffman and Ben Casnocha, <i>The Start-Up of You</i></a> (2012, revised 2022), the book this post is built around.</li>
 				<li><a href="https://www.startupofyou.com/podcasts/develop-your-competitive-edge/" target="_blank" rel="noopener">Hoffman and Casnocha, &ldquo;Develop Your Competitive Edge&rdquo;</a>, the podcast episode on the three gears.</li>
 				<li><a href="https://www.startupofyou.com/podcasts/planning-to-adapt/" target="_blank" rel="noopener">Hoffman and Casnocha, &ldquo;Planning to Adapt&rdquo;</a>, on Plans A, B and Z, with the guest-bedroom story and the Apple documents.</li>
 				<li><a href="https://achievement.org/achiever/reid-hoffman/" target="_blank" rel="noopener">Academy of Achievement, <i>Reid Hoffman</i></a>, a biography that runs from Oxford to PayPal and the Facebook decision.</li>
@@ -883,7 +827,7 @@
 		go1(1);
 	}
 
-	/* ---- Figure 3: the version history ---- */
+	/* ---- Figure 2: the version history ---- */
 	var f3 = document.getElementById('f3');
 	if (f3) {
 		f3.className += ' ver-js';
@@ -901,7 +845,7 @@
 
 	var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-	/* ---- Figure 4: the gears ----
+	/* ---- Figure 3: the gears ----
 	   Taking out any gear stops the other two and puts out the bulb. */
 	var f4b = document.querySelectorAll('#f4-btns button');
 	if (f4b.length) {
@@ -932,7 +876,7 @@
 		});
 	}
 
-	/* ---- Figure 5: guess, then sort the 54 ----
+	/* ---- Figure 4: guess, then sort the 54 ----
 	   Before a guess, the figures stand unsorted in an 18 by 3 grid. A guess
 	   sends each one to its group, which is where the static markup has them. */
 	var f5 = document.getElementById('f5');
@@ -978,7 +922,7 @@
 		});
 	}
 
-	/* ---- Figure 6: the trapeze ---- */
+	/* ---- Figure 5: the trapeze ---- */
 	var f6b = document.querySelectorAll('#f6-btns button');
 	if (f6b.length) {
 		var flyer = document.getElementById('f6-flyer');
@@ -997,7 +941,7 @@
 		});
 	}
 
-	/* ---- Figure 7: recoverable or hard to reverse ---- */
+	/* ---- Figure 6: recoverable or hard to reverse ---- */
 	var f7 = document.getElementById('f7');
 	if (f7) {
 		f7.className += ' quiz-js';
