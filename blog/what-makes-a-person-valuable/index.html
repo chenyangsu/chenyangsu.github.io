@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>When answers are cheap, what makes a person valuable? | Chen-Yang Su</title>
+	<meta name="description" content="A computer once learned that asthma protects pneumonia patients. As AI makes answers cheap, value moves to knowing when one is wrong and being trusted to act." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/what-makes-a-person-valuable/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="When answers are cheap, what makes a person valuable?">
+	<meta property="og:description" content="A computer once learned that asthma protects pneumonia patients. As AI makes answers cheap, value moves to knowing when one is wrong and being trusted to act.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/what-makes-a-person-valuable/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-30">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="When answers are cheap, what makes a person valuable?">
+	<meta name="twitter:description" content="A computer once learned that asthma protects pneumonia patients. As AI makes answers cheap, value moves to knowing when one is wrong and being trusted to act.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The cartoons and controls in this post are inline SVG and HTML
+		   coloured with the site's tokens, so they follow the light and dark
+		   themes. With JavaScript off, every figure shows a complete static
+		   state and its caption carries the facts. Motion is skipped for
+		   readers who ask for reduced motion. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Buttons shared by the interactive figures */
+		.seg { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.seg button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 7px 15px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.seg-sm button { font-size: 13.5px; padding: 5px 12px; }
+		.seg button:hover { border-color: var(--accent); }
+		.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose .say { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); text-align: center; max-width: 520px; margin: 10px auto 0; min-height: 3em; }
+		.prose .ask { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15.5px; font-weight: 700; line-height: 1.45; color: var(--ink); text-align: center; margin: 0 0 10px; }
+		.prose .card-kick { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 12.5px; font-weight: 900; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); margin: 40px 0 -8px; }
+
+		/* Figure 1: the asthma rule */
+		.toon .f1-pt { transition: transform 1.1s cubic-bezier(.5,-0.2,.4,1.2); transform: translate(280px, 136px); }
+		.toon .f1-hl { fill: var(--warn-bg); stroke: var(--award); stroke-width: 1.4; }
+		.toon .f1-sm { fill: var(--tag-border); }
+		.toon .f1-dash { fill: none; stroke: var(--award); stroke-width: 2.4; stroke-dasharray: 8 7; stroke-linecap: round; }
+		.toon .f1-dim { opacity: 0.18; }
+		.toon .f1-fade { transition: opacity 0.7s ease; }
+
+		/* Figure 2: the clip and the telephone game */
+		.clip { display: block; position: relative; border: 1.5px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--panel-bg); }
+		.clip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose figure .clip svg { border-radius: 0; }
+		.clip iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+		.toon .clip-bg { fill: var(--panel-bg); }
+		.toon .clip-sun { fill: var(--flag-bg); stroke: var(--gold-hl-ink); stroke-width: 2; }
+		.toon .clip-floor { fill: var(--chip-bg); }
+		.toon .clip-play { fill: var(--accent); transition: transform 0.25s ease; transform-origin: 280px 110px; }
+		.toon .clip-tri { fill: var(--paper-bg); pointer-events: none; }
+		.clip:hover .clip-play { transform: scale(1.1); }
+		.f2 { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; }
+		.f2-n + .f2-n { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--tag-border); }
+		.f2-js .f2-n { display: none; }
+		.f2-js .f2-n.on { display: block; margin-top: 0; padding-top: 0; border-top: 0; }
+		.prose .f2-q { font-size: 15.5px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; }
+		.prose .f2-by { font-size: 13px; font-weight: 700; color: var(--ink-light); margin: 6px 0 0; }
+		.f2 mark { background: var(--flag-bg); color: var(--ink); border-bottom: 2px solid var(--gold-hl-ink); padding: 0 2px; }
+		.f2-phone { max-width: 420px; margin: 0 auto; border: 1.5px solid var(--ink); border-radius: 14px; padding: 12px 14px; background: var(--paper-bg); }
+		.prose .f2-list { margin: 0 0 8px; padding-left: 20px; font-size: 15px; line-height: 1.4; }
+		.prose .f2-list li { margin: 0 0 3px; }
+		.f2-n.on .f2-list li { animation: f2-in 0.35s ease both; }
+		.f2-n.on .f2-list li:nth-child(2) { animation-delay: 0.08s; }
+		.f2-n.on .f2-list li:nth-child(3) { animation-delay: 0.16s; }
+		.f2-n.on .f2-list li:nth-child(4) { animation-delay: 0.24s; }
+		.f2-n.on .f2-list li:nth-child(5) { animation-delay: 0.32s; }
+		.f2-n.on .f2-list li:nth-child(6) { animation-delay: 0.40s; }
+		.f2-n.on .f2-list li:nth-child(7) { animation-delay: 0.48s; font-weight: 700; }
+		@keyframes f2-in { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+		.prose .f2-diff { list-style: none; margin: 0; padding: 0; font-size: 15px; line-height: 1.45; }
+		.prose .f2-diff li { margin: 0 0 8px; }
+		.f2-mark { display: inline-block; min-width: 54px; text-align: center; font-size: 11.5px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; border-radius: 999px; padding: 1px 8px; margin-right: 6px; background: var(--warn-bg); color: var(--award); border: 1px solid var(--warn-border); }
+		.f2-add { background: var(--tag-bg); color: var(--accent); border-color: var(--tag-border); }
+
+		@media (max-width: 720px) {
+			.toon text { font-size: 16.5px; }
+			.toon .t-small { font-size: 14.5px; }
+			.toon .t-head { font-size: 13px; }
+		}
+
+		/* Figure 3: the answer machine */
+		.seg > button:not([aria-pressed]) { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg > button:not([aria-pressed]):hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+		.toon .f3-led { fill: var(--ink); }
+		.toon .f3-led-t { fill: var(--paper-bg); font-weight: 700; }
+		.toon .f3-led-big { fill: var(--paper-bg); font-size: 34px; font-weight: 900; font-variant-numeric: tabular-nums; }
+		.toon .f3-cap circle { fill: var(--tag-bg); stroke: var(--accent); stroke-width: 2; }
+		.toon .f3-cap path { fill: none; stroke: var(--accent); stroke-width: 2; }
+		.toon .f3-cap.f3-b circle { fill: var(--flag-bg); stroke: var(--gold-hl-ink); }
+		.toon .f3-cap.f3-b path { stroke: var(--gold-hl-ink); }
+		.toon .f3-cap.f3-c circle { fill: var(--good-bg); stroke: var(--good); }
+		.toon .f3-cap.f3-c path { stroke: var(--good); }
+		.toon .f3-lever { transition: transform 0.25s ease; transform-origin: 251px 226px; }
+		.toon .f3-lever.down { transform: rotate(38deg); }
+		.toon .f3-card { transition: transform 0.45s cubic-bezier(.3,1.5,.5,1), opacity 0.3s ease; transform-origin: 430px 200px; }
+		.toon .f3-card.out { transform: translate(-90px, 90px) scale(0.2); opacity: 0; }
+		.toon .f3-stick { font-size: 13px; font-weight: 900; letter-spacing: 1px; fill: var(--paper-bg); }
+		.toon .f3-drop { transition: opacity 0.2s ease; }
+		@media (prefers-reduced-motion: reduce) {
+			.toon .f1-pt, .toon .f3-lever, .toon .f3-card, .toon .f3-drop, .toon .f1-fade { transition: none; }
+			.f2-n.on .f2-list li { animation: none; }
+		}
+		@media (max-width: 720px) {
+			.toon .f3-led-t { font-size: 11.5px; }
+			.toon .f3-stick { font-size: 13px; }
+		}
+
+		/* Figure 4: the jagged frontier */
+		.toon .f4-ridge { fill: var(--tag-bg); stroke: none; transition: transform 1.2s cubic-bezier(.2,1.1,.3,1); transform-origin: 0 240px; }
+		.toon .f4-edge { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linejoin: round; transition: transform 1.2s cubic-bezier(.2,1.1,.3,1); transform-origin: 0 240px; }
+		.toon.f4-flat .f4-ridge, .toon.f4-flat .f4-edge { transform: scaleY(0.04); }
+		.toon .f4-pen { fill: var(--accent); stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; }
+		.toon .f4-pen-out { fill: var(--award); stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; }
+		.toon.f4-flat .f4-pen-out { fill: var(--accent); }
+		.toon .f4-lbl { transition: opacity 0.5s ease 0.8s; }
+		.toon.f4-flat .f4-lbl { opacity: 0; transition: none; }
+		.toon .f4-dot { fill: var(--accent); stroke: var(--accent); stroke-width: 1.3; transition: fill 0.35s ease; }
+		.toon .f4-dot.miss { fill: transparent; stroke: var(--ink-light); }
+		.toon.f4-wait .f4-dot { fill: transparent; stroke: var(--tag-border); }
+
+		/* Figure 5: the guess line */
+		.f5-guess { display: grid; grid-template-columns: 1fr auto; gap: 8px 14px; align-items: center; max-width: 520px; margin: 0 auto 8px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.f5-guess input { width: 100%; accent-color: var(--gold-hl-ink); height: 28px; }
+		.f5-val { font-weight: 900; font-size: 15px; color: var(--ink); min-width: 92px; text-align: right; font-variant-numeric: tabular-nums; }
+		.f5-guess .seg { grid-column: 1 / -1; }
+		.toon .f5-ci { fill: none; stroke: var(--award); stroke-width: 9; stroke-linecap: butt; opacity: 0.28; }
+		.toon .f5-pin { transition: transform 0.08s linear; }
+		.toon .f5-mark { transition: opacity 0.5s ease, transform 0.6s cubic-bezier(.3,1.6,.5,1); }
+		.toon.f5-wait .f5-mark { opacity: 0; transform: translateY(-14px); }
+		.toon.f5-wait .f5-ci { opacity: 0; }
+		@media (prefers-reduced-motion: reduce) {
+			.toon .f4-ridge, .toon .f4-edge, .toon .f4-lbl, .toon .f4-dot, .toon .f5-pin, .toon .f5-mark { transition: none; }
+		}
+
+		/* Figure 6: Deming's four kinds of job */
+		.toon .f6-grid { fill: none; stroke: var(--rule); stroke-width: 1; }
+		.toon .f6-bar { transition: transform 0.9s cubic-bezier(.2,1.2,.3,1); }
+		.toon .f6-a { fill: var(--accent); transform-origin: 340px 0; }
+		.toon .f6-b { fill: var(--gold-hl-ink); transform-origin: 340px 0; }
+		.toon .f6-c { fill: url(#f6-h); stroke: var(--ink-light); stroke-width: 1.2; transform-origin: 340px 0; }
+		.toon .f6-hb { fill: var(--panel-bg); }
+		.toon .f6-hl { stroke: var(--ink-light); stroke-width: 2; }
+		.toon .f6-v { transition: opacity 0.4s ease 0.5s; }
+		.toon.f6-wait .f6-bar { transform: scaleX(0); }
+		.toon.f6-wait .f6-v { opacity: 0; transition: none; }
+		.toon .f6-row.pick .f6-bar { stroke: var(--ink); stroke-width: 2.4; }
+
+		/* Figure 7: the seven cards, and the tray that collects them */
+		.hand { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; perspective: 900px; }
+		.cc { --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 50%; position: relative; width: calc(25% - 9px); aspect-ratio: 5 / 7; transition: transform 0.15s ease; transform: rotateX(var(--rx)) rotateY(var(--ry)); }
+		.cc-in { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+		.cc-in.turn { animation: cc-turn 0.32s ease; }
+		@keyframes cc-turn { 0% { transform: perspective(700px) rotateY(0); } 50% { transform: perspective(700px) rotateY(90deg); } 100% { transform: perspective(700px) rotateY(0); } }
+		.cc-f, .cc-b { position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: 0; border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; text-align: left; color: var(--ink); font: inherit; transition: visibility 0s linear 0.16s; }
+		.cc-f { display: block; width: 100%; height: 100%; padding: 0; cursor: pointer; background: var(--panel-bg); visibility: hidden; }
+		.cc-b { display: flex; flex-direction: column; padding: 10px 11px; cursor: pointer; background: var(--tag-bg); }
+		.hand-js .cc-f { visibility: visible; }
+		.hand-js .cc-b { visibility: hidden; }
+		.hand-js .cc.flip .cc-f { visibility: hidden; }
+		.hand-js .cc.flip .cc-b { visibility: visible; }
+		.cc-f:focus-visible, .cc-turn:focus-visible, .cc-go:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+		.cc-fi { position: relative; display: flex; flex-direction: column; height: 100%; padding: 10px 11px; }
+		.cc-f::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; background: radial-gradient(circle at var(--mx) var(--my), var(--accent), transparent 42%), linear-gradient(115deg, transparent 22%, var(--gold-hl-ink) 40%, var(--good) 52%, var(--accent) 64%, transparent 78%); background-blend-mode: screen; mix-blend-mode: soft-light; }
+		.cc:hover .cc-f::after { opacity: 0.9; }
+		.cc-num { font-size: 13px; font-weight: 900; color: var(--accent); }
+		.prose figure .cc-art { display: block; width: 100%; height: auto; margin: auto 0; border-radius: 0; }
+		.cc-name { font-size: 16.5px; font-weight: 900; color: var(--ink); line-height: 1.15; }
+		.cc-sub { font-size: 12px; color: var(--ink-light); line-height: 1.25; min-height: 1.25em; }
+		.prose .cc-stat { font-size: 13px; line-height: 1.35; color: var(--ink); margin: 0; flex: 1; overflow: hidden; }
+		.cc-v { align-self: flex-start; font-size: 11px; font-weight: 900; letter-spacing: 0.3px; border-radius: 999px; padding: 2px 8px; margin: 6px 0 5px; border: 1px solid; }
+		.cc-v-ok { color: var(--good); background: var(--good-bg); border-color: var(--good-border); }
+		.cc-v-ai { color: var(--accent); background: var(--paper-bg); border-color: var(--tag-border); }
+		.cc-v-warn { color: var(--award); background: var(--warn-bg); border-color: var(--warn-border); }
+		.cc-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+		.cc-go { font-size: 12.5px; font-weight: 700; }
+		.cc-turn { display: none; font: 700 15px 'Lato', 'Helvetica Neue', Arial, sans-serif; line-height: 1; padding: 2px 6px; border: 1px solid var(--tag-border); border-radius: 6px; background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.hand-js .cc-turn { display: block; }
+		.tray { position: fixed; left: 14px; bottom: 16px; z-index: 150; display: flex; align-items: center; gap: 4px; padding: 7px 10px; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14); font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; transition: transform 0.35s ease, opacity 0.35s ease; }
+		.tray.off { transform: translateY(70px); opacity: 0; pointer-events: none; }
+		.tray a { display: flex; align-items: center; justify-content: center; width: 19px; height: 26px; border: 1.5px dashed var(--tag-border); border-radius: 4px; font-size: 11px; font-weight: 900; color: var(--ink-light); text-decoration: none; transition: transform 0.4s cubic-bezier(.3,1.9,.5,1), background 0.3s ease, color 0.3s ease; }
+		.tray a.got { border: 1.5px solid var(--accent); background: var(--accent); color: var(--paper-bg); transform: rotate(-3deg); }
+		.tray span { font-size: 12px; font-weight: 700; color: var(--ink-light); margin-left: 5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+		@media (max-width: 720px) {
+			.cc { width: calc(50% - 6px); }
+			.tray { left: 8px; bottom: 10px; padding: 5px 7px; gap: 3px; }
+			.tray a { width: 16px; height: 22px; font-size: 10px; }
+			.tray span { display: none; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.toon .f6-bar, .toon .f6-v, .cc, .cc-f, .cc-b, .tray, .tray a { transition: none; }
+			.cc-in.turn { animation: none; }
+		}
+
+		/* Figure 8: a weak tie */
+		.toon .f8-count { font-size: 16px; font-weight: 900; fill: var(--ink); font-variant-numeric: tabular-nums; }
+		.toon .f8-strong { fill: none; stroke: var(--ink-light); stroke-width: 2; opacity: 0.55; }
+		.toon .f8-thin { fill: none; stroke: var(--ink-light); stroke-width: 1.4; opacity: 0.55; }
+		.toon .f8-bridge { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-dasharray: 7 6; }
+		.toon .f8-n { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; transition: fill 0.3s ease; }
+		.toon .f8-n.lit { fill: var(--accent); }
+		.toon .f8-you { fill: var(--flag-bg); }
+		.toon .f8-j { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.5; transition: opacity 0.25s ease, transform 0.35s cubic-bezier(.3,1.9,.5,1); }
+		.toon .f8-j.dim { opacity: 0; transform: translateY(6px); }
+		.toon .f8-p { fill: var(--award); }
+
+		/* Figure 9: the tug of war */
+		.toon .f9-big { font-size: 34px; font-weight: 900; fill: var(--ink); font-variant-numeric: tabular-nums; }
+		.toon .f9-rope { transition: transform 1s cubic-bezier(.3,1.5,.5,1); }
+		.toon .f9-line { fill: none; stroke: var(--gold-ink); stroke-width: 5; stroke-linecap: round; }
+		.toon .f9-mud { fill: var(--chip-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .f9-centre { fill: none; stroke: var(--ink-light); stroke-width: 1.4; stroke-dasharray: 3 5; }
+
+		/* Figure 10: the comic */
+		.comic { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+		.prose figure .comic svg { border-radius: 8px; }
+		.toon .cm-fr { fill: var(--panel-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon.cm text { font-size: 13px; }
+		.toon.cm .cm-t { font-size: 14.5px; }
+		.toon.cm .cm-s { font-size: 12px; }
+		.toon .cm-gavel { transform-origin: 104px 96px; }
+		.comic.go svg { animation: cm-in 0.5s ease both; }
+		.comic.go svg:nth-child(2) { animation-delay: 0.75s; }
+		.comic.go svg:nth-child(3) { animation-delay: 1.5s; }
+		.comic.go .cm-gavel { animation: cm-bang 0.5s ease 2s both; }
+		.comic.wait svg { opacity: 0; }
+		@keyframes cm-in { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+		@keyframes cm-bang { 0% { transform: rotate(-22deg); } 55% { transform: rotate(14deg); } 75% { transform: rotate(6deg); } 100% { transform: rotate(0); } }
+
+		/* Figure 11: who gets picked */
+		.toon .f11-big { font-size: 42px; font-weight: 900; fill: var(--ink); font-variant-numeric: tabular-nums; }
+		.toon .pq { transition: fill 0.45s ease, stroke 0.45s ease; }
+		.toon .pq-b { fill: var(--accent); stroke: var(--accent); stroke-width: 1; }
+		.toon .pq-o { fill: var(--paper-bg); stroke: var(--ink-light); stroke-width: 1.2; }
+		@media (max-width: 720px) {
+			.comic { grid-template-columns: 1fr; max-width: 300px; margin: 0 auto; }
+			.toon .f8-count { font-size: 17px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.toon .f8-n, .toon .f8-j, .toon .f9-rope, .toon .pq { transition: none; }
+			.comic.go svg, .comic.go .cm-gavel { animation: none; }
+		}
+
+		/* Figure 12: the failure lab */
+		.toon .f12-cell { fill: var(--accent); }
+		.toon .f12-box { fill: none; stroke: var(--ink-light); stroke-width: 1; }
+		.toon .f12-l { fill: none; stroke: var(--ink-light); stroke-opacity: 0.45; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .f12-l.on { stroke: var(--accent); stroke-opacity: 1; stroke-width: 3; }
+		.toon .f12-t { fill: var(--ink-light); font-size: 12px; }
+		.toon .f12-t.on { fill: var(--accent); font-weight: 900; }
+
+		/* Figure 13: the putting green */
+		.toon .f13-g { fill: var(--good-bg); stroke: var(--good); stroke-width: 2; }
+		.toon .f13-tree circle { fill: var(--good-bg); stroke: var(--good); stroke-width: 2; }
+		.toon .f13-tree path { fill: none; stroke: var(--good); stroke-width: 3; }
+		#f13-putt { touch-action: none; user-select: none; -webkit-user-select: none; }
+		#f13-card tr.hid td:not(:first-child) { color: transparent; text-shadow: 0 0 7px var(--ink-light); }
+		#f13-card tr { transition: background 0.4s ease; }
+		#f13-card tr.fresh { background: var(--good-bg); }
+
+		/* Figure 14: the scroll */
+		.toon .f14-sheet { fill: var(--flag-bg); stroke: var(--flag-border); stroke-width: 1.5; }
+		.toon .f14-tex { stroke: none; }
+		.toon .f14-c { fill: none; stroke: var(--gold-hl-ink); stroke-width: 0.8; opacity: 0.4; }
+		.toon .f14-ink path { fill: none; stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .f14-rod { fill: var(--flag-bg); stroke: var(--ink); stroke-width: 2.2; }
+		#f14-notes .f2-q { margin: 0; }
+		@media (prefers-reduced-motion: reduce) {
+			#f13-card tr { transition: none; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-gold { font-weight: 700; fill: var(--gold-hl-ink); }
+		.toon .t-big { font-size: 22px; font-weight: 900; fill: var(--ink); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-acc { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-call { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: 2 7; stroke-linecap: round; }
+		.toon .ln-gold { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-net { fill: none; stroke: var(--ink-light); stroke-width: 1.4; stroke-linecap: round; }
+		.toon .ln-red { fill: none; stroke: var(--award); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-g { fill: var(--good-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-y { fill: var(--flag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-r { fill: var(--warn-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .card { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .bubble { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .red { fill: var(--award); }
+		.toon .ok { fill: var(--good); }
+		.toon .is-hidden { display: none; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "When answers are cheap, what makes a person valuable?",
+		"description": "A computer once learned that asthma protects pneumonia patients. As AI makes answers cheap, value moves to knowing when one is wrong and being trusted to act.",
+		"datePublished": "2026-10-30",
+		"url": "https://chenyangsu.github.io/blog/what-makes-a-person-valuable/",
+		"keywords": "careers, AI evaluation, expertise, social skills",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/what-makes-a-person-valuable/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI and careers</p>
+
+		<h1 class="post-title">When answers are cheap, what makes a person valuable?</h1>
+
+		<p class="post-standfirst">In the 1990s, a computer studying hospital records learned that asthma lowers a pneumonia patient&rsquo;s risk of dying. The pattern was real, and acting on it could have killed people. AI has since made answers almost free, and a viral post now says knowledge is worth $0. The evidence points to the people who can tell when an answer is wrong and whom others trust to act on it.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-30">30 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li><strong>Peter Thiel did not give a list.</strong> He told Walter Isaacson that human relationships &ldquo;maybe are very core and will become more important.&rdquo; The seven career skills and the $0 came from a post on X about the interview.</li>
+				<li><strong>The price of an answer fell more than 280-fold in two years.</strong> The need to check it stayed. In an experiment at Boston Consulting Group, 84.5% of consultants working alone solved a tricky problem. With GPT-4, 60% to 71% did.</li>
+				<li><strong>Social skills were paying off before ChatGPT.</strong> From 1980 to 2012, US jobs that demand both math and social skill grew the most. Jobs heavy in math and light on people shrank.</li>
+				<li><strong>No skill on the list is safe by itself.</strong> GPT-4 out-argued people 64.4% of the time when it knew a few facts about them. When a chatbot invented court cases, the lawyers paid the $5,000 penalty.</li>
+				<li><strong>Golf has surprisingly good evidence behind it.</strong> At a bank in Southeast Asia, smokers who got a boss who smoked were promoted faster, with no difference in how well they worked. Men there rose faster under male bosses in a similar way, and that helps explain why women fell behind.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>In the mid-1990s, a large research project set out to teach computers which pneumonia patients needed a hospital bed and which could safely recover at home. <a href="https://people.dbmi.columbia.edu/noemie/papers/15kdd.pdf" target="_blank" rel="noopener">Rich Caruana and his colleagues later told the story</a> of one program in that project. It studied real patient records and learned a rule. Pneumonia patients with a history of asthma were less likely to die.</p>
+
+			<figure class="diagram">
+				<p class="ask">The program hands you its rule. A patient with asthma and pneumonia is waiting. What do you do?</p>
+				<div class="seg" id="f1-btns" role="group" aria-label="Your decision">
+					<button type="button" data-c="home" aria-pressed="false">Send them home</button>
+					<button type="button" data-c="why" aria-pressed="false">Ask why first</button>
+				</div>
+				<svg class="toon" id="f1" viewBox="0 0 560 330" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">A rule from patient records, and what it left out</title>
+					<desc id="f1-desc">A computer screen shows the learned rule, asthma means lower risk. A cartoon patient stands in the middle. A dashed red path leads down to a house, labelled much higher risk without hospital care. A dotted blue path leads up to a hospital, labelled straight to intensive care, fewer deaths. A patient record at the lower left has a row for straight to the ICU, which the rule did not account for.</desc>
+
+					<!-- The computer and its rule -->
+					<rect class="soft" x="22" y="18" width="186" height="100" rx="8"/>
+					<rect class="card" x="32" y="28" width="166" height="80" rx="4"/>
+					<text class="t-head" x="115" y="50" text-anchor="middle">RULE LEARNED</text>
+					<text class="t-main" x="115" y="74" text-anchor="middle">Has asthma &#8594;</text>
+					<text class="t-main" x="115" y="94" text-anchor="middle">lower risk of dying</text>
+					<path class="ln" d="M115,118 V130 M86,132 H144"/>
+
+					<!-- The record -->
+					<rect class="card" x="22" y="156" width="210" height="160" rx="6"/>
+					<text class="t-head" x="36" y="180">PATIENT RECORD</text>
+					<path class="ln-thin" d="M36,190 H218"/>
+					<text class="t-small t-main" x="36" y="214">History of asthma</text>
+					<text class="t-small t-main" x="218" y="214" text-anchor="end">yes</text>
+					<text class="t-small t-main" x="36" y="240">Pneumonia</text>
+					<text class="t-small t-main" x="218" y="240" text-anchor="end">yes</text>
+					<text class="t-small t-main" x="36" y="266">Survived</text>
+					<text class="t-small t-main" x="218" y="266" text-anchor="end">yes</text>
+					<g id="f1-hidden">
+						<rect class="f1-hl" x="29" y="276" width="196" height="30" rx="5"/>
+						<text class="t-small t-red" x="36" y="296">Straight to the ICU</text>
+						<text class="t-small t-red" x="218" y="296" text-anchor="end">yes</text>
+					</g>
+					<g id="f1-smudge" class="is-hidden">
+						<text class="t-small" x="36" y="296">Treatment</text>
+						<rect class="f1-sm" x="150" y="282" width="68" height="18" rx="4"/>
+					</g>
+
+					<!-- The two places -->
+					<g id="f1-hosp">
+						<rect class="soft" x="430" y="24" width="112" height="92" rx="4"/>
+						<rect class="card" x="490" y="80" width="32" height="36"/>
+						<path class="ln-red" d="M458,44 V72 M444,58 H472"/>
+						<text class="t-small t-good" x="486" y="136" text-anchor="middle">Fewer deaths</text>
+						<text class="t-small t-main" x="486" y="154" text-anchor="middle">after intensive care</text>
+					</g>
+					<g id="f1-house">
+						<path class="shirt-y" d="M438,256 L486,216 L534,256 V312 H438 Z"/>
+						<rect class="card" x="474" y="276" width="24" height="36"/>
+						<text class="t-small t-red" x="486" y="206" text-anchor="middle">Much higher risk</text>
+					</g>
+					<path id="f1-up" class="ln-call" d="M320,146 C360,120 390,96 424,80"/>
+					<path id="f1-down" class="f1-dash" d="M320,186 C360,214 392,246 432,266"/>
+
+					<!-- The patient -->
+					<g id="f1-pt" class="f1-pt">
+						<path class="shirt" d="M-22,62 Q-20,8 0,4 Q20,8 22,62 Z"/>
+						<circle class="head" cx="0" cy="-18" r="18"/>
+						<circle class="ink" cx="-6" cy="-20" r="2"/>
+						<circle class="ink" cx="6" cy="-20" r="2"/>
+						<path id="f1-mouth" class="ln-thin" d="M-6,-10 Q0,-6 6,-10"/>
+						<path class="ln-thin" d="M-16,-26 Q-8,-40 4,-37 Q14,-36 17,-26"/>
+					</g>
+				</svg>
+				<p class="say" id="f1-say" aria-live="polite">The record the rule learned from left out the most important fact. These patients went straight to intensive care, and that care is why fewer of them died.</p>
+				<figcaption><b>Figure 1.</b> Make the call. The rule and the explanation are from <a href="https://people.dbmi.columbia.edu/noemie/papers/15kdd.pdf" target="_blank" rel="noopener">Caruana et al. (2015)</a>. The record and the buildings are illustrative. The researchers caught the rule during the project.</figcaption>
+			</figure>
+
+			<p>The rule was true of the data. Asthma patients who arrived with pneumonia usually went straight to the intensive care unit. The care they got there worked so well that they died less often than other pneumonia patients. Sent home, they would have faced a much higher risk. The program saw the result of the treatment and gave the asthma the credit.</p>
+
+			<p>This program wrote its rules in a form people could read, so the researchers could spot the problem and remove it. Their most accurate models were neural networks, programs whose predictions are hard to trace back to a reason. The team reasoned that if the simple program had learned the asthma rule, the neural networks had learned it too, and they judged those models too risky to try on patients. Catching the error took someone who knew what hospitals do with asthma patients.</p>
+
+			<h2 id="list">A career plan with seven skills, ending in golf</h2>
+
+			<p>Three decades later, that kind of knowledge is being declared worthless. On 22 October 2026, <a href="https://www.youtube.com/watch?v=H9Bdv3t5VtQ&amp;t=3197s" target="_blank" rel="noopener">the biographer Walter Isaacson asked the investor Peter Thiel</a> whether there was anything humans could uniquely do in the age of AI. Thiel talked about watching a sunset, an experience he doubts a computer will ever have. He also talked about the way people relate to each other &ldquo;in families and companies in our larger society.&rdquo;</p>
+
+			<p>Five days later, John LeFevre, the author of the finance memoir <i>Straight to Hell</i>, <a href="https://x.com/JohnLeFevre/status/2115110713500864718" target="_blank" rel="noopener">posted a clip of the answer on X</a>. &ldquo;When knowledge is worth $0,&rdquo; he wrote, &ldquo;the only career skills that matter&rdquo; are seven. The seventh is &ldquo;golfing with clients (or equivalent).&rdquo; The post has been viewed more than 500,000 times.</p>
+
+			<figure>
+				<a class="clip" id="f2-clip" href="https://www.youtube.com/watch?v=H9Bdv3t5VtQ&amp;t=3197s" target="_blank" rel="noopener" aria-label="Play Peter Thiel's answer, from 53:17 in the interview">
+					<svg class="toon" viewBox="0 0 560 250" aria-hidden="true">
+						<rect class="clip-bg" x="0" y="0" width="560" height="250"/>
+						<circle class="clip-sun" cx="280" cy="150" r="58"/>
+						<path class="ln-thin" d="M0,190 H560"/>
+						<path class="clip-floor" d="M0,190 H560 V250 H0 Z"/>
+						<!-- Walter Isaacson -->
+						<path class="soft" d="M108,190 V150 Q108,136 122,136 H140 Q150,136 150,150 V190 Z"/>
+						<path class="shirt" d="M104,190 Q106,134 128,130 Q150,134 152,190 Z"/>
+						<circle class="head" cx="128" cy="108" r="19"/>
+						<path class="ln-thin" d="M111,102 Q118,88 132,90 Q143,91 146,102"/>
+						<circle class="ink" cx="136" cy="107" r="2"/>
+						<path class="ln-thin" d="M132,117 Q138,120 142,116"/>
+						<!-- Peter Thiel -->
+						<path class="soft" d="M410,190 V150 Q410,136 424,136 H442 Q452,136 452,150 V190 Z"/>
+						<path class="shirt-g" d="M408,190 Q410,134 432,130 Q454,134 456,190 Z"/>
+						<circle class="head" cx="432" cy="108" r="19"/>
+						<path class="ln-thin" d="M415,101 Q424,90 440,91 Q448,93 450,101"/>
+						<circle class="ink" cx="424" cy="107" r="2"/>
+						<path class="ln-thin" d="M418,117 Q424,121 430,117"/>
+						<!-- Play -->
+						<circle class="clip-play" cx="280" cy="110" r="36"/>
+						<path class="clip-tri" d="M268,90 L300,110 L268,130 Z"/>
+						<text class="t-main" x="280" y="218" text-anchor="middle">Play Thiel&rsquo;s answer, from 53:17</text>
+						<text class="t-small" x="280" y="238" text-anchor="middle">Plays from YouTube. Nothing loads until you press.</text>
+					</svg>
+				</a>
+				<div class="seg seg-sm" id="f2-btns" role="group" aria-label="Choose a version" style="margin-top:14px">
+					<button type="button" data-v="said" aria-pressed="true">Thiel&rsquo;s words</button>
+					<button type="button" data-v="post" aria-pressed="false">The post on X</button>
+					<button type="button" data-v="diff" aria-pressed="false">What changed</button>
+				</div>
+				<div class="f2" id="f2">
+					<div class="f2-n" data-v="said">
+						<p class="f2-q">&ldquo;If there were no humans in the world, I don&rsquo;t think the computer would experience the sunset in the same way&hellip; I think the Girardian intuition, we&rsquo;re also very relational&hellip; So I think these relational dimensions <mark>maybe are very core and</mark> will become more important.&rdquo;</p>
+						<p class="f2-by">Peter Thiel, 54:45 to 56:00</p>
+					</div>
+					<div class="f2-n" data-v="post">
+						<div class="f2-phone">
+							<p class="f2-q">Thiel: &ldquo;We&rsquo;re very relational&hellip; these relational dimensions will become more important.&rdquo;</p>
+							<p class="f2-q">When knowledge is worth $0, the only career skills that matter:</p>
+							<ul class="f2-list">
+								<li>networking / social calibration</li>
+								<li>persuasion (sales)</li>
+								<li>curiosity (harnessing AI)</li>
+								<li>taste (curation)</li>
+								<li>storytelling</li>
+								<li>grit</li>
+								<li>golfing with clients (or equivalent)</li>
+							</ul>
+							<p class="f2-q">We&rsquo;ll get so sick of a fake world that we&rsquo;ll go back to doing business like it&rsquo;s the 1800s. A handshake at the local saloon.</p>
+						</div>
+						<p class="f2-by">John LeFevre on X, 27 October 2026</p>
+					</div>
+					<div class="f2-n" data-v="diff">
+						<ul class="f2-diff">
+							<li><span class="f2-mark">Cut</span> Thiel&rsquo;s &ldquo;maybe are very core and.&rdquo; His hedge is gone from the quotation.</li>
+							<li><span class="f2-mark">Cut</span> the sunset. The 58-second clip jumps from Isaacson&rsquo;s question to &ldquo;the Girardian intuition.&rdquo;</li>
+							<li><span class="f2-mark f2-add">Added</span> &ldquo;When knowledge is worth $0.&rdquo; Thiel never says this.</li>
+							<li><span class="f2-mark f2-add">Added</span> the seven skills. Thiel never lists them.</li>
+						</ul>
+					</div>
+				</div>
+				<figcaption><b>Figure 2.</b> Thiel&rsquo;s words are from the <a href="https://realalpha.app/v/H9Bdv3t5VtQ/" target="_blank" rel="noopener">episode transcript</a>, and I checked them against the audio of the clip. The post is quoted in full from <a href="https://x.com/JohnLeFevre/status/2115110713500864718" target="_blank" rel="noopener">X</a>. &ldquo;Girardian&rdquo; refers to the thinker Ren&eacute; Girard, who argued that people learn what to want by copying each other. The drawing of the interview is a cartoon.</figcaption>
+			</figure>
+
+			<p>Thiel&rsquo;s answer was about what the world would lose if computers replaced people, and he hedged it. The $0 and the list are LeFevre&rsquo;s. Even so, LeFevre is asking what every student about to graduate is asking. If a machine can supply what used to take years to learn, what is left to get paid for? The part of his claim that holds up is a good place to start.</p>
+
+			<h2 id="price">The price of an answer really did collapse</h2>
+
+			<p><a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/research-and-development" target="_blank" rel="noopener">Stanford&rsquo;s AI Index</a> tracks the cost of getting answers from a system as capable as GPT-3.5, the kind of model behind the first ChatGPT. In November 2022 the price was $20.00 per million tokens. A token is a small piece of text, about three-quarters of a word. By October 2024 the price was $0.07, more than 280 times cheaper.</p>
+
+			<figure class="diagram">
+				<div class="seg" id="f3-btns">
+					<button type="button" id="f3-buy">Buy an answer</button>
+				</div>
+				<svg class="toon" id="f3" viewBox="0 0 560 390" role="img" aria-labelledby="f3-title f3-desc">
+					<title id="f3-title">The answer machine</title>
+					<desc id="f3-desc">A cartoon vending machine with a price display reading seven cents per million tokens, down from twenty dollars. Round capsules sit on its shelves. A sticker on its side says checking not included. An answer card beside it holds an answer and an empty box labelled checked.</desc>
+
+					<!-- The machine -->
+					<rect class="soft" x="24" y="10" width="268" height="370" rx="14"/>
+					<rect class="f3-led" x="40" y="24" width="236" height="74" rx="6"/>
+					<text class="f3-led-t" x="158" y="44" text-anchor="middle" style="font-size:11.5px;letter-spacing:1px">PRICE PER MILLION TOKENS</text>
+					<text class="f3-led-big" id="f3-price" x="158" y="82" text-anchor="middle">$0.07</text>
+
+					<!-- Shelves of capsules -->
+					<rect class="card" x="40" y="108" width="176" height="182" rx="6"/>
+					<path class="ln-thin" d="M40,168 H216 M40,228 H216 M40,288 H216"/>
+					<g id="f3-shelf">
+						<g class="f3-cap"><circle cx="68" cy="148" r="17"/><path d="M51,148 H85"/></g>
+						<g class="f3-cap"><circle cx="128" cy="148" r="17"/><path d="M111,148 H145"/></g>
+						<g class="f3-cap"><circle cx="188" cy="148" r="17"/><path d="M171,148 H205"/></g>
+						<g class="f3-cap f3-b"><circle cx="68" cy="208" r="17"/><path d="M51,208 H85"/></g>
+						<g class="f3-cap f3-b"><circle cx="128" cy="208" r="17"/><path d="M111,208 H145"/></g>
+						<g class="f3-cap f3-b"><circle cx="188" cy="208" r="17"/><path d="M171,208 H205"/></g>
+						<g class="f3-cap f3-c"><circle cx="68" cy="268" r="17"/><path d="M51,268 H85"/></g>
+						<g class="f3-cap f3-c"><circle cx="128" cy="268" r="17"/><path d="M111,268 H145"/></g>
+						<g class="f3-cap f3-c"><circle cx="188" cy="268" r="17"/><path d="M171,268 H205"/></g>
+					</g>
+
+					<!-- Coin slot and lever -->
+					<rect class="card" x="226" y="108" width="50" height="62" rx="6"/>
+					<rect class="ink" x="247" y="120" width="8" height="26" rx="2"/>
+					<g id="f3-lever" class="f3-lever">
+						<path class="ln" d="M251,182 V226"/>
+						<circle class="red" cx="251" cy="178" r="10"/>
+					</g>
+					<rect class="card" x="238" y="226" width="26" height="12" rx="3"/>
+
+					<!-- Tray -->
+					<rect class="card" x="40" y="302" width="236" height="62" rx="6"/>
+					<path class="ln" d="M52,332 H264"/>
+					<g id="f3-drop" class="f3-cap f3-drop" style="opacity:0"><circle cx="158" cy="0" r="17"/><path d="M141,0 H175"/></g>
+
+					<!-- Sticker -->
+					<g transform="rotate(-9 150 340)">
+						<rect class="gold" x="66" y="316" width="168" height="46" rx="5"/>
+						<text class="f3-stick" x="150" y="335" text-anchor="middle">CHECKING</text>
+						<text class="f3-stick" x="150" y="353" text-anchor="middle">NOT INCLUDED</text>
+					</g>
+
+					<!-- The answer card -->
+					<g id="f3-card" class="f3-card">
+						<rect class="card" x="316" y="98" width="228" height="210" rx="10"/>
+						<text class="t-head" id="f3-n" x="332" y="124">YOUR ANSWER</text>
+						<text id="f3-a" class="t-main" x="332" y="152">
+							<tspan x="332" dy="0">Pneumonia patients</tspan>
+							<tspan x="332" dy="22">with asthma are at</tspan>
+							<tspan x="332" dy="22">lower risk of dying.</tspan>
+						</text>
+						<path class="ln-thin" d="M332,250 H528"/>
+						<rect class="card" x="332" y="264" width="22" height="22" rx="3"/>
+						<text class="t-small" x="364" y="280">Checked?</text>
+					</g>
+					<text class="t-small" id="f3-tab" x="430" y="340" text-anchor="middle">At 500 tokens, this answer cost</text>
+					<text class="t-big" id="f3-cost" x="430" y="368" text-anchor="middle">$0.000035</text>
+				</svg>
+				<p class="say" id="f3-say" aria-live="polite">Three answers come out of this machine. Each one looks fine. You will meet all three again, and none of them holds up.</p>
+				<figcaption><b>Figure 3.</b> Press the button. The two prices are from the <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/research-and-development" target="_blank" rel="noopener">2025 AI Index</a>, for systems performing at the level of GPT-3.5. The spin between them is decoration, and the 500-token answer is my assumption for the arithmetic. Answer one is the asthma rule. Answer two is what ChatGPT told a lawyer. Answer three paraphrases what a real algorithm implied about a patient.</figcaption>
+			</figure>
+
+			<p>Cheap answers also hand experience to beginners. In <a href="https://doi.org/10.1093/qje/qjae044" target="_blank" rel="noopener">a study of 5,172 customer-support agents</a>, an AI assistant raised the number of problems solved per hour by 15% on average. The least experienced agents gained the most. The most experienced gained a little speed and lost a little quality. If the job were only knowing the answer, LeFevre&rsquo;s $0 would be close to right. In <a href="/blog/when-the-answer-is-cheap/">When the answer is cheap</a> I followed where the money goes for firms. This essay follows the people.</p>
+
+			<h2 id="frontier">Nobody can see where the tool stops working</h2>
+
+			<p>The job also includes knowing when the answer is wrong. <a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">An experiment with 758 consultants at Boston Consulting Group</a> tested this. Researchers randomly gave some consultants GPT-4 and left others without it, so a large gap between the groups could be credited to the tool. On 18 tasks, such as proposing ideas for a new shoe, the consultants with AI finished 12.2% more of the work and worked 25.1% faster. Then came one more task, which asked them to combine spreadsheet figures with clues buried in interview notes. The researchers picked it because <a href="https://www.oneusefulthing.org/p/centaurs-and-cyborgs-on-the-jagged" target="_blank" rel="noopener">GPT-4 would give a wrong but convincing answer</a>.</p>
+
+			<figure class="diagram">
+				<p class="ask">Three of these four tasks sit inside what GPT-4 could do. Which one sits outside?</p>
+				<div class="seg seg-sm" id="f4-btns" role="group" aria-label="Your guess">
+					<button type="button" data-t="1" aria-pressed="false">1. Ten ideas for a new shoe</button>
+					<button type="button" data-t="2" aria-pressed="false">2. Segment the footwear market</button>
+					<button type="button" data-t="3" aria-pressed="false">3. Draft a press release</button>
+					<button type="button" data-t="4" aria-pressed="false">4. Advise on a brand from data and interviews</button>
+				</div>
+				<svg class="toon" id="f4" viewBox="0 0 560 250" role="img" aria-labelledby="f4-title f4-desc">
+					<title id="f4-title">The jagged frontier</title>
+					<desc id="f4-desc">Four numbered flags at the same height. A jagged ridge rises behind them. Flags one, two and three sit below the ridge line, in the area marked inside the frontier, where AI helped. Flag four sits above the ridge, in the area marked outside the frontier, where AI misled people.</desc>
+					<path id="f4-ridge" class="f4-ridge" d="M0,240 L0,192 L80,70 L148,136 L210,62 L280,128 L350,72 L420,176 L480,196 L530,128 L560,150 L560,240 Z"/>
+					<path id="f4-edge" class="f4-edge" d="M0,192 L80,70 L148,136 L210,62 L280,128 L350,72 L420,176 L480,196 L530,128 L560,150"/>
+					<text class="t-head" id="f4-in" x="212" y="226" text-anchor="middle">INSIDE THE FRONTIER, AI HELPED</text>
+					<text class="t-head" id="f4-out" x="412" y="30" text-anchor="middle" style="fill:var(--award)">OUTSIDE, AI MISLED</text>
+					<g id="f4-flags">
+						<g class="f4-flag" data-t="1"><path class="ln" d="M80,150 V104"/><path class="f4-pen" d="M80,104 L112,114 L80,124 Z"/><circle class="card" cx="80" cy="150" r="13"/><text class="t-main" x="80" y="155" text-anchor="middle">1</text></g>
+						<g class="f4-flag" data-t="2"><path class="ln" d="M210,150 V104"/><path class="f4-pen" d="M210,104 L242,114 L210,124 Z"/><circle class="card" cx="210" cy="150" r="13"/><text class="t-main" x="210" y="155" text-anchor="middle">2</text></g>
+						<g class="f4-flag" data-t="3"><path class="ln" d="M340,150 V104"/><path class="f4-pen" d="M340,104 L372,114 L340,124 Z"/><circle class="card" cx="340" cy="150" r="13"/><text class="t-main" x="340" y="155" text-anchor="middle">3</text></g>
+						<g class="f4-flag" data-t="4"><path class="ln" d="M480,150 V104"/><path class="f4-pen-out" d="M480,104 L512,114 L480,124 Z"/><circle class="card" cx="480" cy="150" r="13"/><text class="t-main" x="480" y="155" text-anchor="middle">4</text></g>
+					</g>
+				</svg>
+				<p class="say" id="f4-say" aria-live="polite" style="margin-bottom:16px">Task 4 sat outside. It needed spreadsheet figures combined with clues in interview notes, and GPT-4 gave a wrong answer that sounded convincing.</p>
+				<svg class="toon" id="f4d" viewBox="0 0 560 226" role="img" aria-labelledby="f4d-title f4d-desc">
+					<title id="f4d-title">Consultants who got task 4 right, by group</title>
+					<desc id="f4d-desc">Three grids of 100 dots, one for each group. Without AI, 84.5 percent answered correctly. With GPT-4, 70.6 percent. With GPT-4 and an overview of writing prompts, 60 percent. Filled dots are correct answers and hollow dots are wrong answers.</desc>
+					<text class="t-head" x="280" y="16" text-anchor="middle">TASK 4, OUT OF EVERY 100 CONSULTANTS</text>
+					<g id="f4-dots"></g>
+					<text class="t-big" x="93" y="192" text-anchor="middle">84.5%</text>
+					<text class="t-small t-main" x="93" y="214" text-anchor="middle">No AI</text>
+					<text class="t-big" x="280" y="192" text-anchor="middle">70.6%</text>
+					<text class="t-small t-main" x="280" y="214" text-anchor="middle">GPT-4</text>
+					<text class="t-big" x="467" y="192" text-anchor="middle">60%</text>
+					<text class="t-small t-main" x="467" y="214" text-anchor="middle">GPT-4 plus prompt overview</text>
+				</svg>
+				<figcaption><b>Figure 4.</b> Make a guess. The ridge is a picture of the idea, and its shape is not data. Filled dots got the answer right and hollow dots got it wrong, rounded to whole dots. The tasks are from <a href="https://www.oneusefulthing.org/p/centaurs-and-cyborgs-on-the-jagged" target="_blank" rel="noopener">Mollick&rsquo;s account</a> and the rates from <a href="https://aiinstitute.hbs.edu/back-to-the-beginnings-of-ai-at-work/" target="_blank" rel="noopener">Harvard&rsquo;s summary</a> of <a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">Dell&rsquo;Acqua et al.</a></figcaption>
+			</figure>
+
+			<div class="callout callout-note">
+				<span class="callout-label">The jagged frontier</span>
+				<p>The researchers call the edge of what AI can do a jagged technological frontier. Two tasks can look equally hard to a person, and AI can be excellent at one and misleading on the other. The edge carries no warning sign, and it moves every time models improve.</p>
+			</div>
+
+			<p>On that last task, <a href="https://aiinstitute.hbs.edu/back-to-the-beginnings-of-ai-at-work/" target="_blank" rel="noopener">84.5% of the consultants working alone got it right</a>. With GPT-4, 70.6% did. With GPT-4 and an overview of how to write prompts, only 60% did. Harvard&rsquo;s summary of the study blames over-reliance on the AI&rsquo;s output. Consultants like these could solve the problem by themselves, and once they had the tool, many took its answer.</p>
+
+			<p>You might expect to notice when a tool stops helping. <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR, a research group that evaluates AI</a>, tested this in early 2025. Sixteen experienced programmers worked on 246 real tasks from their own projects, and each task was randomly assigned to allow AI tools or ban them.</p>
+
+			<figure class="diagram">
+				<p class="ask">How did allowing AI change the time these programmers took? Drag to guess.</p>
+				<div class="f5-guess">
+					<input type="range" id="f5-r" min="-40" max="40" value="0" step="1" aria-label="Your guess for the change in time taken, from 40 percent faster to 40 percent slower">
+					<span class="f5-val" id="f5-val">No change</span>
+					<div class="seg" style="margin:0"><button type="button" id="f5-go">Show what happened</button></div>
+				</div>
+				<svg class="toon" id="f5" viewBox="0 0 560 210" role="img" aria-labelledby="f5-title f5-desc">
+					<title id="f5-title">Expected, felt and measured change in time taken</title>
+					<desc id="f5-desc">A number line from 40 percent faster on the left to 40 percent slower on the right, with no change in the middle. The programmers expected to be 24 percent faster. Afterward they felt 20 percent faster. Measured, they were 19 percent slower, with a 95 percent confidence interval from 2 to 39 percent slower.</desc>
+					<path class="ln" d="M40,130 H520"/>
+					<path class="ln-thin" d="M40,124 V136 M100,124 V136 M160,124 V136 M220,124 V136 M340,124 V136 M400,124 V136 M460,124 V136 M520,124 V136"/>
+					<path class="ln" d="M280,118 V142"/>
+					<text class="t-small" x="40" y="156" text-anchor="middle">40%</text>
+					<text class="t-small" x="160" y="156" text-anchor="middle">20%</text>
+					<text class="t-small t-main" x="280" y="156" text-anchor="middle">No change</text>
+					<text class="t-small" x="400" y="156" text-anchor="middle">20%</text>
+					<text class="t-small" x="520" y="156" text-anchor="middle">40%</text>
+					<text class="t-head" x="40" y="180">&#8592; FASTER WITH AI</text>
+					<text class="t-head" x="520" y="180" text-anchor="end">SLOWER WITH AI &#8594;</text>
+
+					<!-- The reader's guess -->
+					<g id="f5-you" class="f5-pin" style="transform: translate(280px, 0)">
+						<path class="ln-gold" d="M0,130 V106"/>
+						<circle class="gold" cx="0" cy="130" r="7"/>
+						<text class="t-small t-gold" x="0" y="98" text-anchor="middle">You</text>
+					</g>
+
+					<g id="f5-truth">
+						<!-- 95% interval of the measured effect: +2% to +39% -->
+						<path class="f5-ci" d="M292,130 H514"/>
+						<g class="f5-mark" data-d="0"><path class="ln-acc" d="M136,130 V58"/><circle class="acc" cx="136" cy="130" r="7"/><text class="t-small t-blue" x="136" y="30" text-anchor="middle">Expected</text><text class="t-small t-blue" x="136" y="48" text-anchor="middle">24% faster</text></g>
+						<g class="f5-mark" data-d="1"><path class="ln-acc" d="M160,130 V70 H164"/><circle class="soft" cx="160" cy="130" r="7"/><text class="t-small t-blue" x="208" y="60" text-anchor="middle">Felt afterward</text><text class="t-small t-blue" x="208" y="78" text-anchor="middle">20% faster</text></g>
+						<g class="f5-mark" data-d="2"><path class="ln-red" d="M394,130 V62"/><circle class="red" cx="394" cy="130" r="8"/><text class="t-red" x="394" y="32" text-anchor="middle">Measured</text><text class="t-red" x="394" y="52" text-anchor="middle">19% slower</text></g>
+					</g>
+				</svg>
+				<p class="say" id="f5-say" aria-live="polite">Measured, the programmers were 19% slower with AI. They expected to be 24% faster and still felt 20% faster afterward.</p>
+				<figcaption><b>Figure 5.</b> The red band is the 95% confidence interval on the measured result, the range of effects the data are consistent with, from 2% to 39% slower. All numbers are from <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR (2025)</a>, with 16 programmers and 246 tasks.</figcaption>
+			</figure>
+
+			<p>The programmers took 19% longer with AI. They had expected to be 24% faster, and after doing the work they still believed they had been 20% faster. Tools improve quickly, and <a href="https://metr.org/blog/2026-02-24-uplift-update/" target="_blank" rel="noopener">METR&rsquo;s 2026 follow-up</a> leaned toward a speed-up, although METR calls that data &ldquo;only very weak evidence.&rdquo; The gap between how the tool felt and what it did is the part to remember.</p>
+
+			<p>Trust seems to feed that gap. In <a href="https://doi.org/10.1145/3706598.3713778" target="_blank" rel="noopener">a survey of 319 knowledge workers</a>, whose jobs mostly involve handling information, people with more confidence in AI reported less critical thinking when using it. People with more confidence in their own ability reported more. A survey cannot show which causes which, but the pattern fits the consultants&rsquo; results.</p>
+
+			<p>This is where the $0 claim fails. <strong>AI has made answers cheap, which leaves two things to pay a person for, knowing when an answer is wrong and being someone others trust to act on it.</strong> The first depends on knowing a subject well. The second depends on other people, and that is the part of Thiel&rsquo;s answer with data behind it.</p>
+
+			<h2 id="social">Social skills were paying off before ChatGPT</h2>
+
+			<p>In 2017, the Harvard economist <a href="https://doi.org/10.1093/qje/qjx022" target="_blank" rel="noopener">David Deming sorted US jobs</a> by how much math and how much social skill they demand. He then followed each group&rsquo;s share of employment from 1980 to 2012, a decade before ChatGPT.</p>
+
+			<figure class="diagram">
+				<p class="ask">Four kinds of job, 1980 to 2012. Which grew the most as a share of US employment?</p>
+				<div class="seg seg-sm" id="f6-btns" role="group" aria-label="Your guess">
+					<button type="button" data-g="hh" aria-pressed="false">Math and people</button>
+					<button type="button" data-g="lh" aria-pressed="false">People, little math</button>
+					<button type="button" data-g="hl" aria-pressed="false">Math, few people</button>
+					<button type="button" data-g="ll" aria-pressed="false">Little of either</button>
+				</div>
+				<svg class="toon" id="f6" viewBox="0 0 560 276" role="img" aria-labelledby="f6-title f6-desc">
+					<title id="f6-title">Change in share of US employment, 1980 to 2012, by the skills a job demands</title>
+					<desc id="f6-desc">Four horizontal bars from a zero line. High math, high social skill jobs grew by 7.2 percentage points. Low math, high social grew by 4.6. High math, low social shrank by 3.3. Low math, low social shrank by about 8.5, which is the remainder of the other three.</desc>
+					<text class="t-small" x="310" y="16" text-anchor="middle">Change in share of US employment, 1980 to 2012 (percentage points)</text>
+					<path class="f6-grid" d="M196,28 V232 M268,28 V232 M412,28 V232 M484,28 V232"/>
+					<path class="ln" d="M340,28 V232"/>
+					<text class="t-small" x="196" y="250" text-anchor="middle">&#8722;10</text>
+					<text class="t-small" x="268" y="250" text-anchor="middle">&#8722;5</text>
+					<text class="t-small" x="340" y="250" text-anchor="middle">0</text>
+					<text class="t-small" x="412" y="250" text-anchor="middle">+5</text>
+					<text class="t-small" x="484" y="250" text-anchor="middle">+10</text>
+
+					<text class="t-main" x="8" y="60">Math and people</text>
+					<g class="f6-row" data-g="hh"><rect class="f6-bar f6-a" x="340" y="42" width="103.7" height="30" rx="3"/><text class="t-main f6-v" x="451" y="63">+7.2</text></g>
+					<text class="t-main" x="8" y="110">People, little math</text>
+					<g class="f6-row" data-g="lh"><rect class="f6-bar f6-a" x="340" y="92" width="66.2" height="30" rx="3"/><text class="t-main f6-v" x="414" y="113">+4.6</text></g>
+					<text class="t-main" x="8" y="160">Math, few people</text>
+					<g class="f6-row" data-g="hl"><rect class="f6-bar f6-b" x="292.5" y="142" width="47.5" height="30" rx="3"/><text class="t-main f6-v" x="285" y="163" text-anchor="end">&#8722;3.3</text></g>
+					<text class="t-main" x="8" y="210">Little of either</text>
+					<g class="f6-row" data-g="ll"><rect class="f6-bar f6-c" x="217.6" y="192" width="122.4" height="30" rx="3"/><text class="t-main f6-v" x="210" y="213" text-anchor="end">&#8722;8.5</text></g>
+					<text class="t-small" x="280" y="272" text-anchor="middle">Deming reports three of the four. The hatched bar is the remainder.</text>
+					<defs><pattern id="f6-h" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" class="f6-hb"/><path d="M0,0 V7" class="f6-hl"/></pattern></defs>
+				</svg>
+				<p class="say" id="f6-say" aria-live="polite">Jobs heavy in both math and social skill grew the most. Jobs heavy in math and light on people shrank.</p>
+				<figcaption><b>Figure 6.</b> Jobs are sorted as above or below the median on math and on social skill, as in <a href="https://www.nber.org/papers/w21473" target="_blank" rel="noopener">Deming (2017)</a>. He reports +7.2, +4.6 and &#8722;3.3. The four shares of employment must sum to zero, so &#8722;8.5 is my arithmetic. Bars show changes in share, and they say nothing about pay.</figcaption>
+			</figure>
+
+			<p>Jobs heavy in both math and social skill grew the most, by 7.2 percentage points of US employment. A percentage point is the plain difference between two percentages, so going from 10% to 12% is a rise of 2 points. Jobs heavy in math and light on social skill shrank by 3.3 points. Among the fastest-growing knowledge jobs Deming lists are physicians and lawyers, who need both. Nothing in these data supports trading math for networking.</p>
+
+			<p>His explanation is about trade. A team gets more done when each person does what they do best and hands the rest to someone else, and every handover has a cost. Social skills lower that cost. In 2021, <a href="https://doi.org/10.3982/ECTA18461" target="_blank" rel="noopener">Deming and Ben Weidmann tested the idea</a> by randomly assigning people to several teams and predicting each team&rsquo;s score from its members&rsquo; individual skills. Some people&rsquo;s teams kept beating the prediction, whichever team they joined. These team players matched everyone else on IQ and personality and scored higher on a test of social intelligence. Social skill raised a team&rsquo;s performance about as much as IQ did.</p>
+
+			<p>So LeFevre&rsquo;s list points at something real. Here are his seven skills, each on its own card. A press turns a card over to show what the evidence says, and the tray in the corner collects each card as you reach its section below.</p>
+
+			<figure>
+				<div class="hand" id="f7">
+					<div class="cc" data-n="1"><div class="cc-in">
+						<button type="button" class="cc-f" aria-label="Turn over the Networking card"><span class="cc-fi"><span class="cc-num">1</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="ln-thin" d="M50,35 L18,16 M50,35 L82,14 M50,35 L20,56 M50,35 L84,54 M18,16 L82,14"/><circle class="head" cx="50" cy="35" r="10"/><circle class="soft" cx="18" cy="16" r="7"/><circle class="soft" cx="82" cy="14" r="7"/><circle class="soft" cx="20" cy="56" r="7"/><circle class="soft" cx="84" cy="54" r="7"/></svg><span class="cc-name">Networking</span><span class="cc-sub">social calibration</span></span></button>
+						<div class="cc-b"><p class="cc-stat"><b>Networking.</b> 20 million LinkedIn users tracked for five years. Moderately weak ties moved people into new jobs most.</p><span class="cc-v cc-v-ok">Holds up</span><span class="cc-row"><a class="cc-go" href="#networking">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Networking card back">&#8634;</button></span></div>
+					</div></div>
+					<div class="cc" data-n="2"><div class="cc-in">
+						<button type="button" class="cc-f" aria-label="Turn over the Persuasion card"><span class="cc-fi"><span class="cc-num">2</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="soft" d="M24,28 L66,10 V60 L24,42 Z"/><rect class="card" x="12" y="26" width="14" height="18" rx="3"/><path class="ln" d="M36,47 L42,64 H52 L46,50"/><path class="ln-acc" d="M74,26 Q84,35 74,44 M82,18 Q98,35 82,52"/></svg><span class="cc-name">Persuasion</span><span class="cc-sub">sales</span></span></button>
+						<div class="cc-b"><p class="cc-stat"><b>Persuasion.</b> GPT-4 out-argued people 64.4% of the time when it knew a few facts about them.</p><span class="cc-v cc-v-ai">AI does this too</span><span class="cc-row"><a class="cc-go" href="#persuasion">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Persuasion card back">&#8634;</button></span></div>
+					</div></div>
+					<div class="cc" data-n="3"><div class="cc-in">
+						<button type="button" class="cc-f" aria-label="Turn over the Curiosity card"><span class="cc-fi"><span class="cc-num">3</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><circle class="soft" cx="42" cy="30" r="22"/><path class="ln" d="M58,46 L82,64"/><text class="t-big" x="42" y="38" text-anchor="middle">?</text></svg><span class="cc-name">Curiosity</span><span class="cc-sub">harnessing AI</span></span></button>
+						<div class="cc-b"><p class="cc-stat"><b>Curiosity.</b> An algorithm predicted cost when patients needed it to predict illness. Removing the bias would move one share from 17.7% to 46.5%.</p><span class="cc-v cc-v-ok">Holds up</span><span class="cc-row"><a class="cc-go" href="#curiosity">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Curiosity card back">&#8634;</button></span></div>
+					</div></div>
+					<div class="cc" data-n="4"><div class="cc-in">
+						<button type="button" class="cc-f" aria-label="Turn over the Taste card"><span class="cc-fi"><span class="cc-num">4</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><rect class="soft" x="10" y="14" width="22" height="30" rx="2"/><rect class="soft" x="39" y="14" width="22" height="30" rx="2"/><rect class="soft" x="68" y="14" width="22" height="30" rx="2"/><path class="ln-red" d="M13,17 L29,41 M29,17 L13,41 M71,17 L87,41 M87,17 L71,41"/><path class="ln-gold" d="M43,31 L49,38 L58,22"/><path class="ln-thin" d="M50,50 V62"/></svg><span class="cc-name">Taste</span><span class="cc-sub">curation</span></span></button>
+						<div class="cc-b"><p class="cc-stat"><b>Taste.</b> Image tools raised output 25% and the average artwork got less novel. Someone has to filter.</p><span class="cc-v cc-v-ok">Holds up</span><span class="cc-row"><a class="cc-go" href="#curiosity">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Taste card back">&#8634;</button></span></div>
+					</div></div>
+					<div class="cc" data-n="5"><div class="cc-in">
+						<button type="button" class="cc-f" aria-label="Turn over the Storytelling card"><span class="cc-fi"><span class="cc-num">5</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="soft" d="M50,20 Q32,8 12,14 V58 Q32,52 50,62 Z"/><path class="shirt-y" d="M50,20 Q68,8 88,14 V58 Q68,52 50,62 Z"/><path class="ln-thin" d="M20,26 Q32,24 42,28 M20,36 Q32,34 42,38 M58,28 Q68,24 80,26 M58,38 Q68,34 80,36"/></svg><span class="cc-name">Storytelling</span><span class="cc-sub">&nbsp;</span></span></button>
+						<div class="cc-b"><p class="cc-stat"><b>Storytelling.</b> Theranos raised more than $700 million on a story its evidence did not support.</p><span class="cc-v cc-v-warn">Needs checking</span><span class="cc-row"><a class="cc-go" href="#persuasion">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Storytelling card back">&#8634;</button></span></div>
+					</div></div>
+					<div class="cc" data-n="6"><div class="cc-in">
+						<button type="button" class="cc-f" aria-label="Turn over the Grit card"><span class="cc-fi"><span class="cc-num">6</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="soft" d="M6,62 L38,20 L52,36 L68,12 L94,62 Z"/><path class="ln-red" d="M68,12 V2"/><path class="red" d="M68,2 L80,7 L68,11 Z"/><path class="ln-thin" d="M22,62 L38,44 L50,56 L66,34"/></svg><span class="cc-name">Grit</span><span class="cc-sub">&nbsp;</span></span></button>
+						<div class="cc-b"><p class="cc-stat"><b>Grit.</b> People who succeed do not try more often. They keep more from each failure.</p><span class="cc-v cc-v-warn">Needs a fix</span><span class="cc-row"><a class="cc-go" href="#grit">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Grit card back">&#8634;</button></span></div>
+					</div></div>
+					<div class="cc" data-n="7"><div class="cc-in">
+						<button type="button" class="cc-f" aria-label="Turn over the Golf card"><span class="cc-fi"><span class="cc-num">7</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="shirt-g" d="M4,58 Q50,40 96,58 V68 H4 Z"/><path class="ln" d="M66,50 V10"/><path class="red" d="M66,10 L84,17 L66,24 Z"/><circle class="head" cx="24" cy="50" r="5"/><ellipse class="ink" cx="66" cy="51" rx="7" ry="2.4"/></svg><span class="cc-name">Golf</span><span class="cc-sub">with clients, or equivalent</span></span></button>
+						<div class="cc-b"><p class="cc-stat"><b>Golf.</b> Shared breaks with the boss led to 0.70 pay grades, with no difference in performance.</p><span class="cc-v cc-v-warn">Holds up, unfairly</span><span class="cc-row"><a class="cc-go" href="#golf">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Golf card back">&#8634;</button></span></div>
+					</div></div>
+				</div>
+				<figcaption><b>Figure 7.</b> Press a card to turn it over. The seven skills are <a href="https://x.com/JohnLeFevre/status/2115110713500864718" target="_blank" rel="noopener">LeFevre&rsquo;s</a>. The verdicts are my reading of the evidence below, which is linked from each card. The tray in the corner fills up as you read.</figcaption>
+			</figure>
+
+			<p class="card-kick" data-card="1">Networking</p>
+			<h2 id="networking">Job news travels through people you barely know</h2>
+
+			<p>In 2022, <a href="https://pubmed.ncbi.nlm.nih.gov/36107999/" target="_blank" rel="noopener">researchers tested networking on LinkedIn</a> by changing whom its &ldquo;People You May Know&rdquo; feature suggested to more than 20 million users over five years. Those users made 2 billion new connections and took 600,000 new jobs. The connections most useful for finding a new job were moderately weak ones. <a href="https://news.mit.edu/2022/weak-ties-linkedin-employment-0915" target="_blank" rel="noopener">Usefulness peaked at about 10 mutual connections</a>, and closer ties than that helped less. I went through the older evidence for this in <a href="/blog/your-career-is-a-startup/">Your career is a startup</a>. Close friends tend to hear the same news you hear. An acquaintance sits in another circle.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f8-btns" role="group" aria-label="Who do you ask">
+					<button type="button" data-a="close" aria-pressed="false">Ask your close friends</button>
+					<button type="button" data-a="weak" aria-pressed="false">Ask an acquaintance</button>
+				</div>
+				<svg class="toon" id="f8" viewBox="0 0 560 320" role="img" aria-labelledby="f8-title f8-desc">
+					<title id="f8-title">Why an acquaintance hears different news</title>
+					<desc id="f8-desc">Two clusters of people. On the left, you and five close friends, all connected to each other, who know of the same two job openings. On the right, a separate circle of five people who know of four other openings. One dashed line, an acquaintance, is the only link between the circles.</desc>
+					<text class="f8-count" id="f8-count" x="280" y="26" text-anchor="middle">Job openings you have heard about: 6</text>
+
+					<!-- Close friends: everyone knows everyone -->
+					<path class="f8-strong" d="M140,170 L72,104 M140,170 L150,74 M140,170 L216,112 M140,170 L218,216 M140,170 L84,250 M72,104 L150,74 M150,74 L216,112 M216,112 L218,216 M218,216 L84,250 M84,250 L72,104 M72,104 L216,112 M150,74 L218,216 M150,74 L84,250 M72,104 L218,216 M216,112 L84,250"/>
+					<!-- The other circle -->
+					<path class="f8-thin" d="M356,170 L424,84 M356,170 L430,262 M424,84 L514,112 M514,112 L522,214 M522,214 L430,262 M424,84 L522,214 M514,112 L430,262"/>
+					<!-- The bridge -->
+					<path class="f8-bridge" d="M140,170 Q250,130 356,170"/>
+					<text class="t-small t-blue" x="250" y="136" text-anchor="middle" style="paint-order:stroke;stroke:var(--paper-bg);stroke-width:5px">a weak tie</text>
+
+					<g id="f8-nodes">
+						<circle class="f8-n f8-you" cx="140" cy="170" r="20"/>
+						<circle class="f8-n" data-c="close" cx="72" cy="104" r="14"/>
+						<circle class="f8-n" data-c="close" cx="150" cy="74" r="14"/>
+						<circle class="f8-n" data-c="close" cx="216" cy="112" r="14"/>
+						<circle class="f8-n" data-c="close" cx="218" cy="216" r="14"/>
+						<circle class="f8-n" data-c="close" cx="84" cy="250" r="14"/>
+						<circle class="f8-n" data-c="weak" cx="356" cy="170" r="14"/>
+						<circle class="f8-n" data-c="weak2" cx="424" cy="84" r="14"/>
+						<circle class="f8-n" data-c="weak2" cx="514" cy="112" r="14"/>
+						<circle class="f8-n" data-c="weak2" cx="522" cy="214" r="14"/>
+						<circle class="f8-n" data-c="weak2" cx="430" cy="262" r="14"/>
+					</g>
+					<text class="t-small t-main" x="140" y="175" text-anchor="middle">You</text>
+
+					<!-- Job openings -->
+					<defs><g id="f8-job"><rect x="-10" y="-6" width="20" height="14" rx="2"/><path d="M-4,-6 V-10 H4 V-6" fill="none"/></g></defs>
+					<g id="f8-jobs">
+						<use href="#f8-job" class="f8-j" data-c="close" x="150" y="46"/>
+						<use href="#f8-job" class="f8-j" data-c="close" x="84" y="282"/>
+						<use href="#f8-job" class="f8-j f8-j2" data-c="weak2" x="424" y="56"/>
+						<use href="#f8-job" class="f8-j f8-j2" data-c="weak2" x="530" y="82"/>
+						<use href="#f8-job" class="f8-j f8-j2" data-c="weak2" x="540" y="248"/>
+						<use href="#f8-job" class="f8-j f8-j2" data-c="weak2" x="430" y="294"/>
+					</g>
+					<text class="t-head" x="140" y="314" text-anchor="middle">YOUR CIRCLE</text>
+					<text class="t-head" x="440" y="314" text-anchor="middle">ANOTHER CIRCLE</text>
+				</svg>
+				<p class="say" id="f8-say" aria-live="polite">Your friends all know the same two openings. One weak tie reaches a circle that knows four others.</p>
+				<figcaption><b>Figure 8.</b> Press the buttons. The picture is an illustration of the mechanism, and its people and counts are invented. The measured results are in <a href="https://pubmed.ncbi.nlm.nih.gov/36107999/" target="_blank" rel="noopener">Rajkumar et al. (2022)</a>.</figcaption>
+			</figure>
+
+			<p>Written applications are telling employers less. <a href="https://arxiv.org/abs/2511.08785" target="_blank" rel="noopener">Ana&iuml;s Galdin and Jesse Silbert studied</a> coding jobs on Freelancer.com. Before large language models, the kind of AI behind ChatGPT, employers paid more for applications tailored to the job. Afterward they did not, because anyone could produce a tailored application. The authors simulated a market where written applications tell employers nothing about ability, and workers in the top fifth by ability were hired 19% less often. Those in the bottom fifth were hired 14% more often. A professor who has watched you solve a hard problem can now tell an employer what your cover letter cannot.</p>
+
+			<p class="card-kick" data-card="2">Persuasion and storytelling</p>
+			<h2 id="persuasion">A machine can now out-argue you</h2>
+
+			<p>Persuasion is the skill on the list that AI has reached most clearly. In <a href="https://doi.org/10.1038/s41562-025-02194-6" target="_blank" rel="noopener">a 2025 experiment</a>, 900 people debated a randomly assigned opponent online, either a person or GPT-4, and reported how far they agreed with the topic before and after. Some opponents also received a few facts about the person they were debating, such as age and political affiliation.</p>
+
+			<figure class="diagram">
+				<p class="ask">Pick who debates you. The rope shows how often they out-argue a plain human opponent.</p>
+				<div class="seg seg-sm" id="f9-btns" role="group" aria-label="Choose an opponent">
+					<button type="button" data-o="h" aria-pressed="false">A person</button>
+					<button type="button" data-o="hf" aria-pressed="false">A person who knows your facts</button>
+					<button type="button" data-o="g" aria-pressed="false">GPT-4</button>
+					<button type="button" data-o="gf" aria-pressed="true">GPT-4 that knows your facts</button>
+				</div>
+				<svg class="toon" id="f9" viewBox="0 0 560 262" role="img" aria-labelledby="f9-title f9-desc">
+					<title id="f9-title">A tug of war between a plain human debater and an opponent</title>
+					<desc id="f9-desc">Two cartoon figures pull a rope over a mud pit. On the left is a person with no extra facts. On the right is the opponent you picked. The ribbon on the rope shifts right as the opponent becomes more persuasive. A person sits at 50 percent by definition, a person with facts at 45.7, GPT-4 at 54.9, and GPT-4 with facts at 64.4.</desc>
+					<text class="f9-big" id="f9-n" x="280" y="40" text-anchor="middle">64.4%</text>
+					<text class="t-small" x="280" y="62" text-anchor="middle">of debates with a clear winner, won by the opponent</text>
+
+					<path class="f9-mud" d="M210,204 Q280,186 350,204 L350,226 H210 Z"/>
+					<path class="ln" d="M20,204 H210 M350,204 H540"/>
+					<path class="f9-centre" d="M280,74 V200"/>
+					<text class="t-small t-main" x="280" y="246" text-anchor="middle">Even</text>
+
+					<g id="f9-rope" class="f9-rope" style="transform: translateX(72px)">
+						<path class="f9-line" d="M92,132 C150,138 200,138 280,134 C340,130 380,132 422,130"/>
+						<path class="red" d="M272,132 L288,132 L284,158 L280,150 L276,158 Z"/>
+
+						<!-- Left: a plain human -->
+						<g transform="rotate(-11 80 200)">
+							<path class="shirt" d="M58,200 Q58,144 80,140 Q102,144 102,200 Z"/>
+							<circle class="head" cx="80" cy="118" r="18"/>
+							<circle class="ink" cx="86" cy="116" r="2"/>
+							<circle class="ink" cx="74" cy="116" r="2"/>
+							<path class="ln-thin" d="M74,126 H86"/>
+							<path class="ln" d="M96,152 L114,134"/>
+						</g>
+
+						<!-- Right: the opponent -->
+						<g transform="translate(-30,0) rotate(11 470 200)">
+							<g id="f9-person" class="is-hidden">
+								<path class="shirt-y" d="M448,200 Q448,144 470,140 Q492,144 492,200 Z"/>
+								<circle class="head" cx="470" cy="118" r="18"/>
+								<circle class="ink" cx="464" cy="116" r="2"/>
+								<circle class="ink" cx="476" cy="116" r="2"/>
+								<path class="ln-thin" d="M464,126 H476"/>
+							</g>
+							<g id="f9-robot">
+								<rect class="shirt-g" x="448" y="142" width="44" height="58" rx="6"/>
+								<rect class="soft" x="452" y="100" width="36" height="36" rx="6"/>
+								<circle class="ink" cx="462" cy="116" r="3"/>
+								<circle class="ink" cx="478" cy="116" r="3"/>
+								<path class="ln-thin" d="M462,126 H478 M470,100 V90"/>
+								<circle class="acc" cx="470" cy="88" r="4"/>
+							</g>
+							<path class="ln" d="M452,152 L436,134"/>
+						</g>
+
+						<!-- The facts about you -->
+						<g id="f9-facts">
+							<rect class="card" x="356" y="146" width="44" height="56" rx="3"/>
+							<text class="t-small t-main" x="378" y="161" text-anchor="middle" style="font-size:10.5px">YOU</text>
+							<path class="ln-thin" d="M363,170 H393 M363,180 H389 M363,190 H393"/>
+						</g>
+					</g>
+				</svg>
+				<p class="say" id="f9-say" aria-live="polite">GPT-4 with a few facts about you was more persuasive 64.4% of the time. This is the one result here that clearly differs from a plain human opponent.</p>
+				<figcaption><b>Figure 9.</b> Press the buttons. <a href="https://doi.org/10.1038/s41562-025-02194-6" target="_blank" rel="noopener">Salvi et al. (2025)</a> report 64.4% (P &lt; 0.01). They give the other two as changes in the odds of ending up more persuaded, +21.9% for GPT-4 (P = 0.30) and &#8722;15.7% for a person with facts (P = 0.38). I converted those two to 54.9% and 45.7% using the paper&rsquo;s own method. A P value above 0.05 means the difference could easily be chance. The rope is a drawing.</figcaption>
+			</figure>
+
+			<p>Given those facts, GPT-4 was more persuasive than a human opponent 64.4% of the time, counting only the pairs where one was more persuasive than the other. Short online debates differ from closing a sale, and this study says little about trust built over years. It does rule out treating persuasion as a permanent human specialty.</p>
+
+			<p>A machine can make the argument. It cannot answer for it. In 2023, the New York lawyer Steven Schwartz needed cases to support a client&rsquo;s lawsuit against an airline. He turned to ChatGPT, which he <a href="https://storage.courtlistener.com/recap/gov.uscourts.nysd.575368/gov.uscourts.nysd.575368.54.0.pdf" target="_blank" rel="noopener">told the court</a> he &ldquo;falsely assumed was like a super search engine.&rdquo; It gave him court decisions that did not exist. When he grew suspicious, he asked it to check its own work.</p>
+
+			<figure>
+				<div class="comic" id="f10">
+					<svg class="toon cm" viewBox="0 0 220 220" role="img" aria-label="Panel 1. A lawyer at a desk types into his phone, Is Varghese a real case.">
+						<rect class="cm-fr" x="2" y="2" width="216" height="216" rx="8"/>
+						<rect class="bubble" x="14" y="14" width="192" height="50" rx="14"/>
+						<path class="bubble" d="M84,64 L100,64 L84,80 Z"/>
+						<text class="t-main cm-t" x="110" y="44" text-anchor="middle">&ldquo;Is Varghese a real case&rdquo;</text>
+						<path class="shirt" d="M46,196 Q48,132 76,128 Q104,132 106,196 Z"/>
+						<circle class="head" cx="76" cy="106" r="20"/>
+						<path class="ln-thin" d="M58,98 Q66,84 80,86 Q92,88 95,98"/>
+						<circle class="ink" cx="72" cy="105" r="2"/>
+						<circle class="ink" cx="84" cy="105" r="2"/>
+						<path class="ln-thin" d="M72,116 Q78,113 84,116"/>
+						<path class="ln" d="M100,146 L126,134"/>
+						<rect class="card" x="124" y="116" width="16" height="28" rx="3"/>
+						<path class="ln" d="M14,196 H206"/>
+					</svg>
+					<svg class="toon cm" viewBox="0 0 220 220" role="img" aria-label="Panel 2. The phone shows ChatGPT's reply, does indeed exist.">
+						<rect class="cm-fr" x="2" y="2" width="216" height="216" rx="8"/>
+						<rect class="soft" x="42" y="14" width="136" height="192" rx="16"/>
+						<rect class="card" x="50" y="30" width="120" height="160" rx="6"/>
+						<text class="t-head cm-s" x="110" y="50" text-anchor="middle">CHATGPT</text>
+						<path class="ln-thin" d="M58,58 H162"/>
+						<text class="t-main cm-t" x="110" y="90" text-anchor="middle">&ldquo;does indeed</text>
+						<text class="t-main cm-t" x="110" y="110" text-anchor="middle">exist&rdquo;</text>
+						<text class="cm-s" x="110" y="140" text-anchor="middle">It is on Westlaw</text>
+						<text class="cm-s" x="110" y="156" text-anchor="middle">and LexisNexis,</text>
+						<text class="cm-s" x="110" y="172" text-anchor="middle">it added.</text>
+					</svg>
+					<svg class="toon cm" viewBox="0 0 220 220" role="img" aria-label="Panel 3. A judge brings down a gavel. Penalty for the lawyers and their firm, five thousand dollars. Penalty for ChatGPT, zero.">
+						<rect class="cm-fr" x="2" y="2" width="216" height="216" rx="8"/>
+						<rect class="soft" x="14" y="120" width="192" height="84" rx="4"/>
+						<path class="shirt-r" d="M50,120 Q52,72 78,68 Q104,72 106,120 Z"/>
+						<circle class="head" cx="78" cy="46" r="20"/>
+						<circle class="ink" cx="72" cy="45" r="2"/>
+						<circle class="ink" cx="84" cy="45" r="2"/>
+						<path class="ln-thin" d="M72,56 H84"/>
+						<path class="ln-thin" d="M60,38 Q68,24 82,26 Q94,28 97,38"/>
+						<g class="cm-gavel" id="f10-gavel">
+							<path class="ln" d="M104,96 L158,70"/>
+							<rect class="gold" x="150" y="46" width="24" height="40" rx="4" transform="rotate(-26 162 66)"/>
+						</g>
+						<ellipse class="ink" cx="170" cy="116" rx="18" ry="4"/>
+						<text class="t-main cm-t" x="110" y="150" text-anchor="middle">Lawyers: $5,000</text>
+						<text class="t-red cm-t" x="110" y="178" text-anchor="middle">ChatGPT: $0</text>
+					</svg>
+				</div>
+				<figcaption><b>Figure 10.</b> The quotations are from the <a href="https://storage.courtlistener.com/recap/gov.uscourts.nysd.575368/gov.uscourts.nysd.575368.54.0.pdf" target="_blank" rel="noopener">court&rsquo;s opinion</a>, which reproduces the screenshots. The case was not real. The drawings are cartoons.</figcaption>
+			</figure>
+
+			<p>Judge P. Kevin Castel imposed a $5,000 penalty on the lawyers and their firm. He wrote that there is &ldquo;nothing inherently improper about using a reliable artificial intelligence tool for assistance,&rdquo; and that &ldquo;existing rules impose a gatekeeping role on attorneys to ensure the accuracy of their filings.&rdquo; That gatekeeping is what a client pays a lawyer for once the text itself costs almost nothing.</p>
+
+			<p data-card="5">Storytelling carries the same risk. A good story tells people what the problem is and what has changed, and it can travel faster than the evidence. Theranos told a story about blood testing that, <a href="https://www.sec.gov/newsroom/press-releases/2018-41" target="_blank" rel="noopener">in the words of the US Securities and Exchange Commission</a>, raised &ldquo;more than $700 million from investors through an elaborate, years-long fraud.&rdquo;</p>
+
+			<p class="card-kick" data-card="3">Curiosity and taste</p>
+			<h2 id="curiosity">The right answer to the wrong question</h2>
+
+			<p>Curiosity on LeFevre&rsquo;s list means &ldquo;harnessing AI,&rdquo; and that undersells it. <a href="https://doi.org/10.1126/science.aax2342" target="_blank" rel="noopener">Ziad Obermeyer and his colleagues examined</a> a commercial algorithm that US health systems used to pick patients for extra care. By some measures of accuracy it did its job well. What it predicted was next year&rsquo;s health-care costs, and people treated cost as a stand-in for how sick a patient was. Because of unequal access to care, less money is spent on Black patients with the same needs as white patients, so the algorithm scored Black patients as healthier than they were.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f11-btns" role="group" aria-label="Choose how patients are ranked">
+					<button type="button" data-n="18" aria-pressed="false">As the algorithm ranked them</button>
+					<button type="button" data-n="47" aria-pressed="true">With the bias removed</button>
+				</div>
+				<svg class="toon" id="f11" viewBox="0 0 560 310" role="img" aria-labelledby="f11-title f11-desc">
+					<title id="f11-title">Who gets picked for extra care</title>
+					<desc id="f11-desc">One hundred small figures stand for the people automatically picked for extra care. As the algorithm ranked patients, 17.7 percent of them were Black. With the bias removed, 46.5 percent would be.</desc>
+					<defs><g id="f11-p"><circle cx="0" cy="-6" r="4.4"/><path d="M-7,9 Q-7,0 0,0 Q7,0 7,9 Z"/></g></defs>
+					<text class="t-head" x="139" y="26" text-anchor="middle">100 PLACES IN THE PROGRAM</text>
+					<g id="f11-people">
+						<use href="#f11-p" class="pq pq-o" data-o="82" x="26" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="72" x="51" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="51" x="76" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="58" x="101" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="54" x="126" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="47" x="151" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="49" x="176" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="87" x="201" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="69" x="226" y="52"/> <use href="#f11-p" class="pq pq-o" data-o="53" x="251" y="52"/>
+						<use href="#f11-p" class="pq pq-o" data-o="90" x="26" y="77"/> <use href="#f11-p" class="pq pq-b" data-o="37" x="51" y="77"/> <use href="#f11-p" class="pq pq-o" data-o="52" x="76" y="77"/> <use href="#f11-p" class="pq pq-b" data-o="27" x="101" y="77"/> <use href="#f11-p" class="pq pq-b" data-o="28" x="126" y="77"/> <use href="#f11-p" class="pq pq-b" data-o="34" x="151" y="77"/> <use href="#f11-p" class="pq pq-b" data-o="19" x="176" y="77"/> <use href="#f11-p" class="pq pq-b" data-o="9" x="201" y="77"/> <use href="#f11-p" class="pq pq-o" data-o="62" x="226" y="77"/> <use href="#f11-p" class="pq pq-b" data-o="10" x="251" y="77"/>
+						<use href="#f11-p" class="pq pq-o" data-o="73" x="26" y="102"/> <use href="#f11-p" class="pq pq-b" data-o="21" x="51" y="102"/> <use href="#f11-p" class="pq pq-b" data-o="39" x="76" y="102"/> <use href="#f11-p" class="pq pq-o" data-o="48" x="101" y="102"/> <use href="#f11-p" class="pq pq-o" data-o="84" x="126" y="102"/> <use href="#f11-p" class="pq pq-b" data-o="2" x="151" y="102"/> <use href="#f11-p" class="pq pq-b" data-o="46" x="176" y="102"/> <use href="#f11-p" class="pq pq-o" data-o="91" x="201" y="102"/> <use href="#f11-p" class="pq pq-b" data-o="22" x="226" y="102"/> <use href="#f11-p" class="pq pq-o" data-o="86" x="251" y="102"/>
+						<use href="#f11-p" class="pq pq-b" data-o="15" x="26" y="127"/> <use href="#f11-p" class="pq pq-o" data-o="81" x="51" y="127"/> <use href="#f11-p" class="pq pq-b" data-o="33" x="76" y="127"/> <use href="#f11-p" class="pq pq-b" data-o="13" x="101" y="127"/> <use href="#f11-p" class="pq pq-o" data-o="74" x="126" y="127"/> <use href="#f11-p" class="pq pq-b" data-o="44" x="151" y="127"/> <use href="#f11-p" class="pq pq-b" data-o="43" x="176" y="127"/> <use href="#f11-p" class="pq pq-o" data-o="70" x="201" y="127"/> <use href="#f11-p" class="pq pq-o" data-o="88" x="226" y="127"/> <use href="#f11-p" class="pq pq-o" data-o="55" x="251" y="127"/>
+						<use href="#f11-p" class="pq pq-o" data-o="64" x="26" y="152"/> <use href="#f11-p" class="pq pq-b" data-o="6" x="51" y="152"/> <use href="#f11-p" class="pq pq-b" data-o="36" x="76" y="152"/> <use href="#f11-p" class="pq pq-o" data-o="98" x="101" y="152"/> <use href="#f11-p" class="pq pq-o" data-o="94" x="126" y="152"/> <use href="#f11-p" class="pq pq-o" data-o="61" x="151" y="152"/> <use href="#f11-p" class="pq pq-b" data-o="32" x="176" y="152"/> <use href="#f11-p" class="pq pq-b" data-o="14" x="201" y="152"/> <use href="#f11-p" class="pq pq-o" data-o="79" x="226" y="152"/> <use href="#f11-p" class="pq pq-b" data-o="16" x="251" y="152"/>
+						<use href="#f11-p" class="pq pq-b" data-o="45" x="26" y="177"/> <use href="#f11-p" class="pq pq-o" data-o="77" x="51" y="177"/> <use href="#f11-p" class="pq pq-b" data-o="35" x="76" y="177"/> <use href="#f11-p" class="pq pq-b" data-o="26" x="101" y="177"/> <use href="#f11-p" class="pq pq-b" data-o="17" x="126" y="177"/> <use href="#f11-p" class="pq pq-o" data-o="66" x="151" y="177"/> <use href="#f11-p" class="pq pq-o" data-o="63" x="176" y="177"/> <use href="#f11-p" class="pq pq-o" data-o="89" x="201" y="177"/> <use href="#f11-p" class="pq pq-b" data-o="42" x="226" y="177"/> <use href="#f11-p" class="pq pq-b" data-o="0" x="251" y="177"/>
+						<use href="#f11-p" class="pq pq-b" data-o="31" x="26" y="202"/> <use href="#f11-p" class="pq pq-o" data-o="83" x="51" y="202"/> <use href="#f11-p" class="pq pq-b" data-o="40" x="76" y="202"/> <use href="#f11-p" class="pq pq-b" data-o="29" x="101" y="202"/> <use href="#f11-p" class="pq pq-b" data-o="25" x="126" y="202"/> <use href="#f11-p" class="pq pq-o" data-o="56" x="151" y="202"/> <use href="#f11-p" class="pq pq-b" data-o="41" x="176" y="202"/> <use href="#f11-p" class="pq pq-o" data-o="97" x="201" y="202"/> <use href="#f11-p" class="pq pq-b" data-o="3" x="226" y="202"/> <use href="#f11-p" class="pq pq-b" data-o="30" x="251" y="202"/>
+						<use href="#f11-p" class="pq pq-o" data-o="93" x="26" y="227"/> <use href="#f11-p" class="pq pq-b" data-o="4" x="51" y="227"/> <use href="#f11-p" class="pq pq-b" data-o="7" x="76" y="227"/> <use href="#f11-p" class="pq pq-b" data-o="8" x="101" y="227"/> <use href="#f11-p" class="pq pq-o" data-o="67" x="126" y="227"/> <use href="#f11-p" class="pq pq-b" data-o="1" x="151" y="227"/> <use href="#f11-p" class="pq pq-b" data-o="20" x="176" y="227"/> <use href="#f11-p" class="pq pq-o" data-o="85" x="201" y="227"/> <use href="#f11-p" class="pq pq-o" data-o="50" x="226" y="227"/> <use href="#f11-p" class="pq pq-o" data-o="76" x="251" y="227"/>
+						<use href="#f11-p" class="pq pq-b" data-o="5" x="26" y="252"/> <use href="#f11-p" class="pq pq-o" data-o="68" x="51" y="252"/> <use href="#f11-p" class="pq pq-b" data-o="11" x="76" y="252"/> <use href="#f11-p" class="pq pq-b" data-o="18" x="101" y="252"/> <use href="#f11-p" class="pq pq-b" data-o="38" x="126" y="252"/> <use href="#f11-p" class="pq pq-o" data-o="96" x="151" y="252"/> <use href="#f11-p" class="pq pq-b" data-o="12" x="176" y="252"/> <use href="#f11-p" class="pq pq-o" data-o="92" x="201" y="252"/> <use href="#f11-p" class="pq pq-o" data-o="78" x="226" y="252"/> <use href="#f11-p" class="pq pq-o" data-o="80" x="251" y="252"/>
+						<use href="#f11-p" class="pq pq-o" data-o="60" x="26" y="277"/> <use href="#f11-p" class="pq pq-o" data-o="95" x="51" y="277"/> <use href="#f11-p" class="pq pq-b" data-o="23" x="76" y="277"/> <use href="#f11-p" class="pq pq-b" data-o="24" x="101" y="277"/> <use href="#f11-p" class="pq pq-o" data-o="75" x="126" y="277"/> <use href="#f11-p" class="pq pq-o" data-o="65" x="151" y="277"/> <use href="#f11-p" class="pq pq-o" data-o="99" x="176" y="277"/> <use href="#f11-p" class="pq pq-o" data-o="59" x="201" y="277"/> <use href="#f11-p" class="pq pq-o" data-o="71" x="226" y="277"/> <use href="#f11-p" class="pq pq-o" data-o="57" x="251" y="277"/>
+					</g>
+					<text class="f11-big" id="f11-n" x="412" y="118" text-anchor="middle">46.5%</text>
+					<text class="t-main" x="412" y="148" text-anchor="middle">of those picked</text>
+					<text class="t-main" x="412" y="168" text-anchor="middle">are Black patients</text>
+					<path class="ln-thin" d="M320,192 H504"/>
+					<use href="#f11-p" class="pq pq-b" x="326" y="214"/>
+					<text class="t-small t-main" x="342" y="219">Black patients</text>
+					<use href="#f11-p" class="pq pq-o" x="326" y="244"/>
+					<text class="t-small t-main" x="342" y="249">Other patients</text>
+				</svg>
+				<p class="say" id="f11-say" aria-live="polite">With the bias removed, 46.5% of those picked would be Black patients, up from 17.7%.</p>
+				<figcaption><b>Figure 11.</b> Press the buttons. The percentages are from <a href="https://doi.org/10.1126/science.aax2342" target="_blank" rel="noopener">Obermeyer et al. (2019)</a>, for patients the algorithm automatically picks. One figure stands for one place out of 100, rounded to 18 and 47, and which places change is arbitrary.</figcaption>
+			</figure>
+
+			<p>Correcting this would raise the share of Black patients among those automatically chosen for extra help from 17.7% to 46.5%. A sharper prediction of cost would not have fixed it. Someone had to ask what the number measured. That is curiosity as a working skill.</p>
+
+			<p data-card="4">Taste comes next, once a machine has produced twenty options. <a href="https://doi.org/10.1093/pnasnexus/pgae052" target="_blank" rel="noopener">Eric Zhou and Dokyun Lee studied</a> more than 50,000 artists and 4 million artworks as text-to-image AI arrived. The tools raised output by 25% and favorites per view by 50%, and the average artwork became less novel. The authors read this as evidence that the skills that count are coming up with ideas and filtering the results. Filtering well depends on having seen enough good and bad work to tell them apart.</p>
+
+			<p class="card-kick" data-card="6">Grit</p>
+			<h2 id="grit">People who succeed do not try more often</h2>
+
+			<p>LeFevre&rsquo;s sixth skill is grit. <a href="https://arxiv.org/abs/1903.07562" target="_blank" rel="noopener">Yian Yin and his colleagues</a> measured failure directly, using 776,721 grant applications to the US National Institutes of Health and 58,111 startups. They also studied 170,350 terrorist attacks, a grim third case of repeated attempts. People who eventually succeeded did not try more often than people who stopped. The two groups&rsquo; runs of failure were about the same length.</p>
+
+			<p>What differed was how much each attempt kept from the ones before. Their model treats an attempt as many parts, like the budget and the data sections of a grant application. For each part, you either write a new version or reuse the best version from your last few attempts. A single setting, called k, decides how many past attempts you look back on.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f12-btns" role="group" aria-label="How many past attempts you look back on">
+					<button type="button" data-k="0" aria-pressed="false">k = 0</button>
+					<button type="button" data-k="1" aria-pressed="false">k = 1</button>
+					<button type="button" data-k="2" aria-pressed="true">k = 2</button>
+					<button type="button" data-k="all" aria-pressed="false">k = all</button>
+				</div>
+				<svg class="toon" id="f12" viewBox="0 0 560 366" role="img" aria-labelledby="f12-title f12-desc">
+					<title id="f12-title">Quality of each attempt, by how many past attempts you look back on</title>
+					<desc id="f12-desc">The top panel is a grid with one column per attempt and one row per part. Dark cells are good versions. With k above 1, good versions persist as horizontal stripes. The lower panel plots average quality against attempt number over 30 attempts. At k equal to 0 quality stays at 0.5. At k equal to 1 it levels off near 0.69. At k equal to 2 it reaches 0.81. Looking back at all attempts reaches 0.85.</desc>
+					<text class="t-head" x="70" y="14">ONE SIMULATED PERSON, ATTEMPT BY ATTEMPT</text>
+					<g id="f12-grid"></g>
+					<rect class="f12-box" x="70" y="22" width="450" height="132"/>
+					<text class="t-small" x="60" y="92" text-anchor="end">Parts</text>
+
+					<!-- The plot: quality 0.4 to 0.9 over 30 attempts -->
+					<path class="f6-grid" d="M70,310 H520 M70,288 H520 M70,266 H520 M70,244 H520 M70,222 H520 M70,200 H520"/>
+					<path class="ln-thin" d="M70,200 V310 H520"/>
+					<text class="t-small" x="62" y="314" text-anchor="end">0.4</text>
+					<text class="t-small" x="62" y="270" text-anchor="end">0.6</text>
+					<text class="t-small" x="62" y="226" text-anchor="end">0.8</text>
+					<text class="t-small" x="70" y="330" text-anchor="middle">1</text>
+					<text class="t-small" x="295" y="330" text-anchor="middle">15</text>
+					<text class="t-small" x="520" y="330" text-anchor="middle">30</text>
+					<text class="t-small t-main" x="295" y="350" text-anchor="middle">Attempt number</text>
+					<text class="t-small t-main" x="16" y="255" text-anchor="middle" transform="rotate(-90 16 255)">Average quality</text>
+					<path class="f12-l" data-k="0" d="M70.0,288.1 L85.5,288.3 L101.0,288.0 L116.6,288.1 L132.1,287.7 L147.6,287.8 L163.1,288.0 L178.6,288.2 L194.1,288.1 L209.7,287.8 L225.2,287.8 L240.7,288.2 L256.2,288.1 L271.7,288.1 L287.2,287.8 L302.8,288.0 L318.3,288.1 L333.8,288.1 L349.3,288.1 L364.8,287.9 L380.3,288.3 L395.9,287.8 L411.4,288.2 L426.9,287.6 L442.4,287.9 L457.9,288.2 L473.4,288.1 L489.0,288.2 L504.5,288.2 L520.0,288.1"/>
+					<path class="f12-l" data-k="1" d="M70.0,287.9 L85.5,271.6 L101.0,264.6 L116.6,260.7 L132.1,258.3 L147.6,256.2 L163.1,255.0 L178.6,253.8 L194.1,253.0 L209.7,252.4 L225.2,251.4 L240.7,250.6 L256.2,250.4 L271.7,249.9 L287.2,249.5 L302.8,249.2 L318.3,248.9 L333.8,248.6 L349.3,248.3 L364.8,247.9 L380.3,247.6 L395.9,247.7 L411.4,247.6 L426.9,247.3 L442.4,247.1 L457.9,247.2 L473.4,247.1 L489.0,247.0 L504.5,246.8 L520.0,246.3"/>
+					<path class="f12-l on" data-k="2" d="M70.0,288.2 L85.5,272.4 L101.0,261.2 L116.6,254.0 L132.1,249.1 L147.6,245.1 L163.1,242.3 L178.6,239.6 L194.1,237.6 L209.7,235.6 L225.2,234.2 L240.7,232.7 L256.2,231.4 L271.7,230.3 L287.2,228.9 L302.8,228.2 L318.3,227.1 L333.8,226.5 L349.3,225.8 L364.8,225.2 L380.3,224.6 L395.9,223.7 L411.4,223.3 L426.9,222.2 L442.4,222.2 L457.9,221.7 L473.4,221.1 L489.0,220.7 L504.5,220.2 L520.0,219.8"/>
+					<path class="f12-l" data-k="all" d="M70.0,288.0 L85.5,272.5 L101.0,260.8 L116.6,253.0 L132.1,247.2 L147.6,242.9 L163.1,239.2 L178.6,235.9 L194.1,233.5 L209.7,231.0 L225.2,229.2 L240.7,227.2 L256.2,226.0 L271.7,224.4 L287.2,223.1 L302.8,221.8 L318.3,220.8 L333.8,220.1 L349.3,218.9 L364.8,217.9 L380.3,217.3 L395.9,216.4 L411.4,215.5 L426.9,215.0 L442.4,214.3 L457.9,213.8 L473.4,213.3 L489.0,212.5 L504.5,212.1 L520.0,211.7"/>
+					<text class="t-small f12-t" data-k="0" x="526" y="292.1">k = 0</text>
+					<text class="t-small f12-t" data-k="1" x="526" y="250.3">k = 1</text>
+					<text class="t-small f12-t on" data-k="2" x="526" y="227.8">k = 2</text>
+					<text class="t-small f12-t" data-k="all" x="526" y="209.7">all</text>
+				</svg>
+				<p class="say" id="f12-say" aria-live="polite">You look back two attempts. That is enough to hold on to good versions, and quality keeps climbing.</p>
+				<figcaption><b>Figure 12.</b> Press a setting and watch the stripes form. In the grid, each column is an attempt, each row is a part, and darker cells are better versions. This is a small version of the model in <a href="https://arxiv.org/abs/1903.07562" target="_blank" rel="noopener">Yin et al. (2019)</a>, at their setting &alpha; = 0.6, where the tipping point falls between k = 1 and k = 2. The people are simulated. Each line averages 5,000 of them, and quality runs from 0 to 1 by the model&rsquo;s definition.</figcaption>
+			</figure>
+
+			<p>With k at 0, every attempt starts from scratch and quality never improves. At k of 1 it climbs for a while and stalls. At k of 2 it keeps climbing. Two people who work equally hard can land on different sides of that line. In the data, the people who eventually succeeded got faster from one attempt to the next, as the model predicts, and the people who stopped did not. The two groups were already distinguishable by the second failure.</p>
+
+			<p class="card-kick" data-card="7">Golf</p>
+			<h2 id="golf">The joke on the list has real evidence behind it</h2>
+
+			<p>Golfing with clients sounds like a joke, and the best test of it involves cigarettes. <a href="https://www.nber.org/papers/w26530" target="_blank" rel="noopener">Zo&euml; Cullen and Ricardo Perez-Truglia studied</a> a large commercial bank in Southeast Asia where managers rotate between teams. The rotation works like a natural experiment, because employees do not choose when a new boss arrives. Some smokers got a new boss who smoked, and others got a new boss who did not.</p>
+
+			<figure class="diagram">
+				<div class="seg" id="f13-btns">
+					<button type="button" id="f13-putt">Hold to putt</button>
+					<button type="button" id="f13-skip" aria-pressed="false">Skip to the scorecard</button>
+				</div>
+				<svg class="toon" id="f13" viewBox="0 0 560 190" role="img" aria-labelledby="f13-title f13-desc">
+					<title id="f13-title">A putting green</title>
+					<desc id="f13-desc">A putting green with a ball on the left, a hole with a red flag on the right and a power bar along the top. Holding the button charges the bar and letting go hits the ball. Each ball in the hole adds a line to the scorecard below.</desc>
+					<path class="f13-g" id="f13-green" d="M0,150 Q140,128 280,138 T560,134 V190 H0 Z"/>
+					<g class="f13-tree"><circle cx="206" cy="86" r="20"/><path d="M206,106 V134"/></g>
+					<g class="f13-tree"><circle cx="522" cy="74" r="24"/><path d="M522,98 V130"/></g>
+					<rect class="card" x="140" y="16" width="280" height="14" rx="7"/>
+					<rect class="acc" id="f13-pow" x="140" y="16" width="0" height="14" rx="7"/>
+					<text class="t-small" x="132" y="28" text-anchor="end">Power</text>
+					<g id="f13-hole" transform="translate(440,0)">
+						<ellipse class="ink" cx="0" cy="138" rx="13" ry="4"/>
+						<path class="ln" d="M0,138 V62"/>
+						<path class="red" d="M0,62 L28,72 L0,82 Z"/>
+					</g>
+					<circle class="head" id="f13-ball" cx="50" cy="128" r="7"/>
+				</svg>
+				<p class="say" id="f13-say" aria-live="polite">Hold the button to charge, and let go to putt. Each ball in the hole adds a line to the scorecard.</p>
+				<div class="table-wrap" style="margin:10px 0 0">
+					<table id="f13-card">
+						<thead><tr><th>Hole</th><th>Smokers who got a smoking boss, compared with those who did not</th><th>Result</th></tr></thead>
+						<tbody>
+							<tr><td>1</td><td>Share of their breaks spent with the boss</td><td><b>+24 points</b>, a 63% increase</td></tr>
+							<tr><td>2</td><td>Pay grades gained after ten quarters</td><td><b>+0.70</b></td></tr>
+							<tr><td>3</td><td>Difference in effort or performance</td><td><b>None found</b></td></tr>
+						</tbody>
+					</table>
+				</div>
+				<figcaption><b>Figure 13.</b> The scorecard is from <a href="https://www.nber.org/papers/w26530" target="_blank" rel="noopener">Cullen and Perez-Truglia (2023)</a>. A quarter is three months, so ten quarters is two and a half years. The study measured smoking breaks, and the golf is decoration.</figcaption>
+			</figure>
+
+			<p>Smokers who got a smoking boss spent an extra 24 percentage points of their breaks with that boss, a 63% increase. Ten quarters later they were 0.70 pay grades ahead of smokers who got a non-smoking boss. Non-smokers gained nothing from the boss&rsquo;s habit. The researchers found no difference in effort or performance, so the extra promotions do not appear to come from extra output. They suggest the breaks let employees win favor with the boss and pick up useful information, such as which tasks to ask for.</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">Who the golf course leaves out</span>
+				<p>The same bank shows the cost. Men who moved to a male manager were promoted faster, and women did no better under female managers than under male ones. The authors estimate that this male-to-male advantage could explain about a third of the gender gap in promotions at the bank. Informal time rewards whoever already gets invited, and in this bank it tracked no difference in the work.</p>
+			</div>
+
+			<h2 id="scroll">An undergraduate, a burnt scroll and the whole list</h2>
+
+			<p>In 79 AD, the eruption of Vesuvius buried a library under 20 meters of volcanic mud and turned its papyrus scrolls to charcoal. They crumble if anyone tries to open them. Brent Seales at the University of Kentucky spent nearly <a href="https://bigthink.com/the-past/vesuvius-challenge-prize/" target="_blank" rel="noopener">20 years</a> on the problem, and in 2019 he <a href="https://scrollprize.org/firstletters" target="_blank" rel="noopener">scanned some of the scrolls in a particle accelerator</a>. In 2023, the tech entrepreneurs Nat Friedman and Daniel Gross turned that work into an open contest with a $700,000 grand prize.</p>
+
+			<p>That August, the contestant Casey Handmer stared at the scans for hours until he noticed <a href="https://caseyhandmer.wordpress.com/2023/08/05/reading-ancient-scrolls/" target="_blank" rel="noopener">a cracked-mud texture</a> that turned out to be ink. Luke Farritor, a 21-year-old computer science student and SpaceX intern, saw people discussing it on the contest&rsquo;s Discord chat server. He spent his evenings and late nights training a machine-learning model on that texture. Before long the model was finding traces &ldquo;invisible to his own eye.&rdquo; One result was a word. When papyrologists, scholars of ancient papyrus, saw it, &ldquo;they gasped.&rdquo; It read <i>porphyras</i>, the Greek for &ldquo;purple.&rdquo;</p>
+
+			<figure class="diagram" id="f14-wrap">
+				<svg class="toon" id="f14" viewBox="0 0 560 170" role="img" aria-labelledby="f14-title f14-desc">
+					<title id="f14-title">The word read from inside a sealed scroll</title>
+					<desc id="f14-desc">A strip of papyrus unrolls from left to right as you scroll the page, and the eight Greek letters of porphyras, meaning purple, appear in ink as it passes.</desc>
+					<defs>
+						<filter id="f14-rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4"/></filter>
+						<pattern id="f14-crackle" width="46" height="34" patternUnits="userSpaceOnUse"><path class="f14-c" d="M0,10 L12,6 L20,16 L34,10 L46,16 M12,6 L10,0 M20,16 L16,34 M34,10 L38,0 M30,34 L34,22 L46,16 M0,26 L16,24"/></pattern>
+					</defs>
+					<rect class="f14-sheet" id="f14-sheet" x="24" y="26" width="486" height="118"/>
+					<rect class="f14-tex" id="f14-tex" x="24" y="26" width="486" height="118" fill="url(#f14-crackle)"/>
+					<g id="f14-word" class="f14-ink" filter="url(#f14-rough)">
+						<g transform="translate(46,54)"><path pathLength="1" d="M0,0 H34 M6,0 V62 M28,0 V62"/></g>
+						<g transform="translate(102,54)"><path pathLength="1" d="M17,0 C36,0 36,62 17,62 C-2,62 -2,0 17,0"/></g>
+						<g transform="translate(156,54)"><path pathLength="1" d="M6,62 V0 H20 C36,0 36,30 20,30 H6"/></g>
+						<g transform="translate(206,54)"><path pathLength="1" d="M19,-6 V70 M19,12 C42,12 42,48 19,48 C-4,48 -4,12 19,12"/></g>
+						<g transform="translate(264,54)"><path pathLength="1" d="M0,0 L17,28 L34,0 M17,28 V62"/></g>
+						<g transform="translate(318,54)"><path pathLength="1" d="M6,62 V0 H20 C36,0 36,30 20,30 H6"/></g>
+						<g transform="translate(368,54)"><path pathLength="1" d="M0,62 L17,0 L34,62 M7,40 H27"/></g>
+						<g transform="translate(424,54)"><path pathLength="1" d="M32,8 C20,-6 0,6 0,31 C0,56 20,68 32,54"/></g>
+					</g>
+					<g id="f14-roll" style="transform: translateX(510px)">
+						<rect class="f14-rod" x="-13" y="16" width="26" height="138" rx="10"/>
+						<path class="ln-thin" id="f14-spin" d="M-7,16 V154 M7,16 V154"/>
+					</g>
+				</svg>
+				<p class="say" style="min-height:0"><i>porphyras</i>, &ldquo;purple&rdquo;</p>
+				<div class="seg seg-sm" id="f14-btns" role="group" aria-label="Choose a card" style="margin-top:12px">
+					<button type="button" data-c="1" aria-pressed="false">Networking</button>
+					<button type="button" data-c="2" aria-pressed="false">Persuasion</button>
+					<button type="button" data-c="3" aria-pressed="true">Curiosity</button>
+					<button type="button" data-c="4" aria-pressed="false">Taste</button>
+					<button type="button" data-c="5" aria-pressed="false">Storytelling</button>
+					<button type="button" data-c="6" aria-pressed="false">Grit</button>
+					<button type="button" data-c="7" aria-pressed="false">Golf</button>
+				</div>
+				<div class="f2" id="f14-notes">
+					<div class="f2-n" data-c="1"><p class="f2-q"><b>Networking.</b> Farritor heard about the contest on a podcast and saw Handmer&rsquo;s finding on its Discord server. He later teamed up with two other contestants.</p></div>
+					<div class="f2-n" data-c="2"><p class="f2-q"><b>Persuasion.</b> Each papyrologist, working independently, recovered more text from the winning entry than from any other. The evidence did the persuading.</p></div>
+					<div class="f2-n" data-c="3"><p class="f2-q"><b>Curiosity.</b> Casey Handmer stared at the scans for hours and found ink nobody had yet seen inside the scrolls.</p></div>
+					<div class="f2-n" data-c="4"><p class="f2-q"><b>Taste.</b> Farritor picked out a few dozen ink strokes to label and train on. Choosing what a model learns from is curation.</p></div>
+					<div class="f2-n" data-c="5"><p class="f2-q"><b>Storytelling.</b> The contest describes itself as &ldquo;Resurrecting an ancient library from the ashes of a volcano.&rdquo;</p></div>
+					<div class="f2-n" data-c="6"><p class="f2-q"><b>Grit.</b> Seales spent nearly 20 years on the problem. Farritor gave it his evenings and late nights during an internship.</p></div>
+					<div class="f2-n" data-c="7"><p class="f2-q"><b>Golf, or equivalent.</b> Seales did not answer Friedman&rsquo;s emails, so Friedman had his assistant phone the department. He then invited Seales to California to &ldquo;hang out,&rdquo; and &ldquo;to my shock he did.&rdquo;</p></div>
+				</div>
+				<figcaption><b>Figure 14.</b> The strip unrolls as you scroll, and the buttons show where each card turned up in the contest. The drawn letters follow the transcription in the <a href="https://scrollprize.org/firstletters" target="_blank" rel="noopener">first-word announcement</a>, where you can see the real image. The story is from there, from the <a href="https://scrollprize.org/grandprize" target="_blank" rel="noopener">grand prize announcement</a> and from <a href="https://www.dwarkesh.com/p/nat-friedman" target="_blank" rel="noopener">Friedman&rsquo;s interview</a>. Matching events to cards is my reading.</figcaption>
+			</figure>
+
+			<p>Farritor then joined Youssef Nader, an Egyptian PhD student in Berlin who had found the same word on his own, and Julian Schilliger, a Swiss robotics student whose mapping tools made the scans readable. On 5 February 2024, the three won <a href="https://scrollprize.org/grandprize" target="_blank" rel="noopener">the grand prize</a> for 15 columns of text, more than 2,000 characters. Papyrologists reviewed the entries without knowing whose they were, and a technical team audited and reproduced the code. The model could see what no person could. The prize was paid once people had checked it.</p>
+
+			<p>Farritor could do this because he had already learned to train models, and that learning does not come free. In <a href="/blog/who-will-produce-the-knowledge-ai-depends-on/">an earlier essay</a> I described high-school students in Turkey who practised maths with GPT-4. Their practice scores rose 48%, and then they scored 17% lower on the exam than classmates who had used only a textbook.</p>
+
+			<div class="callout">
+				<span class="callout-label">What these studies cover</span>
+				<p>Each study here covers one setting. The bank is one bank in Southeast Asia. The debates were short and online. The consultants used GPT-4, which newer models have passed. These results describe where value sits today, and they cannot say which skills will pay in 2040.</p>
+			</div>
+
+			<p>About 95% of that scroll is still unread. In the columns already read, the author, a follower of the philosopher Epicurus, asks whether things available in small quantities give more pleasure than things available in abundance. The answer, on a scroll no one could read for 2,000 years, is &ldquo;we do not right away believe things that are scarce to be absolutely more pleasant than those which are abundant.&rdquo;</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://www.youtube.com/watch?v=H9Bdv3t5VtQ&amp;t=3197s" target="_blank" rel="noopener">Walter Isaacson, <i>The Builders</i>, interview with Peter Thiel</a> (22 October 2026), with a <a href="https://realalpha.app/v/H9Bdv3t5VtQ/" target="_blank" rel="noopener">searchable transcript</a>. The question comes at 53:17.</li>
+				<li><a href="https://x.com/JohnLeFevre/status/2115110713500864718" target="_blank" rel="noopener">John LeFevre, post on X</a> (27 October 2026), the source of the seven skills.</li>
+				<li><a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">Dell&rsquo;Acqua et al., <i>Navigating the jagged technological frontier</i></a> (<i>Organization Science</i>, 2026), and <a href="https://www.oneusefulthing.org/p/centaurs-and-cyborgs-on-the-jagged" target="_blank" rel="noopener">Ethan Mollick&rsquo;s plain-language account</a> by one of its authors.</li>
+				<li><a href="https://people.dbmi.columbia.edu/noemie/papers/15kdd.pdf" target="_blank" rel="noopener">Caruana et al., <i>Intelligible models for healthcare</i></a> (KDD, 2015), the source of the asthma rule.</li>
+				<li><a href="https://doi.org/10.1093/qje/qjx022" target="_blank" rel="noopener">David Deming, <i>The growing importance of social skills in the labor market</i></a> (<i>Quarterly Journal of Economics</i>, 2017), and <a href="https://doi.org/10.3982/ECTA18461" target="_blank" rel="noopener">Weidmann and Deming, <i>Team players</i></a> (<i>Econometrica</i>, 2021).</li>
+				<li><a href="https://doi.org/10.1126/science.aax2342" target="_blank" rel="noopener">Obermeyer et al., <i>Dissecting racial bias in an algorithm used to manage the health of populations</i></a> (<i>Science</i>, 2019).</li>
+				<li><a href="https://arxiv.org/abs/1903.07562" target="_blank" rel="noopener">Yin et al., <i>Quantifying the dynamics of failure across science, startups and security</i></a> (<i>Nature</i>, 2019), the model behind the grit figure.</li>
+				<li><a href="https://www.nber.org/papers/w26530" target="_blank" rel="noopener">Cullen and Perez-Truglia, <i>The old boys&rsquo; club</i></a> (<i>American Economic Review</i>, 2023), the smoking-break study.</li>
+				<li><a href="https://storage.courtlistener.com/recap/gov.uscourts.nysd.575368/gov.uscourts.nysd.575368.54.0.pdf" target="_blank" rel="noopener">Judge Castel&rsquo;s opinion in <i>Mata v. Avianca</i></a> (2023), which reproduces the ChatGPT screenshots.</li>
+				<li><a href="https://scrollprize.org/grandprize" target="_blank" rel="noopener">Vesuvius Challenge, 2023 Grand Prize announcement</a>, with images of the recovered columns.</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">careers</span>
+				<span class="tag">AI evaluation</span>
+				<span class="tag">expertise</span>
+				<span class="tag">social skills</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+<script>
+/* The interactive figures. Each one's static markup is a complete state,
+   so the post reads the same with JavaScript off. */
+(function () {
+	'use strict';
+	var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	function press(group, on) {
+		Array.prototype.forEach.call(group, function (b) { b.setAttribute('aria-pressed', b === on ? 'true' : 'false'); });
+	}
+	function show(el, yes) {
+		var c = (el.getAttribute('class') || '').replace(/\s*is-hidden/g, '');
+		el.setAttribute('class', yes ? c : (c + ' is-hidden').trim());
+	}
+	function whenSeen(el, fn, threshold) {
+		if (!window.IntersectionObserver) { fn(); return; }
+		var io = new IntersectionObserver(function (es) {
+			es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); fn(); } });
+		}, { threshold: threshold || 0.35 });
+		io.observe(el);
+	}
+
+	/* ---- Reading time ----
+	   blog.js counts every word on the page, and this post's figures hold a lot
+	   of text. Count the prose at the same 220 words a minute and name the figures. */
+	var slot = document.querySelector('[data-reading-time]'), body = document.querySelector('.prose');
+	if (slot && body) {
+		var figs = body.querySelectorAll('figure').length, copy = body.cloneNode(true);
+		Array.prototype.forEach.call(copy.querySelectorAll('figure'), function (f) { f.parentNode.removeChild(f); });
+		slot.textContent = Math.round(copy.textContent.trim().split(/\s+/).length / 220) + ' min read, plus ' + figs + ' figures to play with';
+	}
+
+	/* ---- Figure 1: the decision ----
+	   Before a choice, the buildings wait, faded, and the record hides the
+	   treatment. Either choice shows what the rule left out. */
+	var f1b = document.querySelectorAll('#f1-btns button');
+	if (f1b.length) {
+		var f1pt = document.getElementById('f1-pt'), f1say = document.getElementById('f1-say');
+		var f1ids = ['f1-hosp', 'f1-house', 'f1-up', 'f1-down'];
+		f1ids.forEach(function (id) { document.getElementById(id).setAttribute('class', document.getElementById(id).getAttribute('class') + ' f1-fade f1-dim'); });
+		show(document.getElementById('f1-hidden'), false);
+		show(document.getElementById('f1-smudge'), true);
+		f1say.textContent = 'Press a button to decide.';
+		var f1light = function (id) { var e = document.getElementById(id); e.setAttribute('class', e.getAttribute('class').replace(' f1-dim', '')); };
+		Array.prototype.forEach.call(f1b, function (b) {
+			b.addEventListener('click', function () {
+				press(f1b, b);
+				f1ids.forEach(f1light);
+				show(document.getElementById('f1-hidden'), true);
+				show(document.getElementById('f1-smudge'), false);
+				if (b.getAttribute('data-c') === 'home') {
+					f1pt.style.transform = 'translate(486px, 275px) scale(0.6)';
+					document.getElementById('f1-mouth').setAttribute('d', 'M-6,-7 Q0,-12 6,-7');
+					f1say.textContent = 'The rule says this patient is low risk, so home they go. Without hospital care, asthma patients face a much higher risk. The record never showed this, because they had almost always gone straight to intensive care.';
+				} else {
+					f1pt.style.transform = 'translate(506px, 79px) scale(0.6)';
+					document.getElementById('f1-mouth').setAttribute('d', 'M-6,-10 Q0,-6 6,-10');
+					f1say.textContent = 'Good instinct. Asthma patients usually went straight to intensive care, and that care is why fewer of them died. The rule read the treatment as a trait of the patient.';
+				}
+			});
+		});
+	}
+
+	/* ---- Figure 2: the clip and the telephone game ---- */
+	var f2clip = document.getElementById('f2-clip');
+	if (f2clip) {
+		f2clip.addEventListener('click', function (e) {
+			e.preventDefault();
+			var fr = document.createElement('iframe');
+			fr.src = 'https://www.youtube-nocookie.com/embed/H9Bdv3t5VtQ?start=3197&autoplay=1&rel=0';
+			fr.title = 'Peter Thiel on The Builders with Walter Isaacson, from 53:17';
+			fr.allow = 'autoplay; encrypted-media; picture-in-picture';
+			fr.allowFullscreen = true;
+			var box = document.createElement('div');
+			box.className = 'clip';
+			box.appendChild(fr);
+			f2clip.parentNode.replaceChild(box, f2clip);
+		});
+		var f2 = document.getElementById('f2'), f2b = document.querySelectorAll('#f2-btns button');
+		f2.className += ' f2-js';
+		var go2 = function (v) {
+			Array.prototype.forEach.call(f2.querySelectorAll('.f2-n'), function (n) { n.className = 'f2-n' + (n.getAttribute('data-v') === v ? ' on' : ''); });
+		};
+		Array.prototype.forEach.call(f2b, function (b) {
+			b.addEventListener('click', function () { press(f2b, b); go2(b.getAttribute('data-v')); });
+		});
+		go2('said');
+	}
+
+	/* ---- Figure 3: the answer machine ----
+	   The first press spins the price from $20.00 to $0.07. Each press drops a
+	   capsule with one of three answers that turn up again later in the post. */
+	var f3buy = document.getElementById('f3-buy');
+	if (f3buy) {
+		var A3 = [
+			{ n: 'ANSWER 1 OF 3', t: ['Pneumonia patients', 'with asthma are at', 'lower risk of dying.'], say: 'A real rule from real records. You have already met this one.' },
+			{ n: 'ANSWER 2 OF 3', t: ['Varghese v. China', 'Southern Airlines is a', 'real court case.'], say: 'ChatGPT told a New York lawyer this in 2023. That one comes up further down.' },
+			{ n: 'ANSWER 3 OF 3', t: ['This patient is healthy', 'enough to skip the', 'extra-care program.'], say: 'A commercial algorithm affecting millions of patients implied this. That one comes up further down too.' }
+		];
+		var f3p = document.getElementById('f3-price'), f3card = document.getElementById('f3-card'), f3lever = document.getElementById('f3-lever');
+		var f3drop = document.getElementById('f3-drop'), f3say = document.getElementById('f3-say'), f3tab = document.getElementById('f3-tab'), f3cost = document.getElementById('f3-cost');
+		var f3i = 0, f3spun = false, f3busy = false;
+		f3p.textContent = '$20.00';
+		f3card.setAttribute('class', 'f3-card out');
+		f3tab.textContent = 'At 500 tokens, one answer in 2022 cost';
+		f3cost.textContent = '$0.01';
+		f3say.textContent = 'November 2022. Press the button to buy an answer.';
+		var f3fill = function (a) {
+			document.getElementById('f3-n').textContent = a.n;
+			var ts = document.getElementById('f3-a').querySelectorAll('tspan');
+			a.t.forEach(function (l, i) { ts[i].textContent = l; });
+		};
+		var f3spin = function (done) {
+			if (reduce) { f3p.textContent = '$0.07'; done(); return; }
+			var t0 = null, from = Math.log(20), to = Math.log(0.07);
+			var step = function (t) {
+				if (!t0) t0 = t;
+				var u = Math.min(1, (t - t0) / 1500), e = 1 - Math.pow(1 - u, 3);
+				f3p.textContent = '$' + Math.exp(from + (to - from) * e).toFixed(2);
+				if (u < 1) requestAnimationFrame(step); else done();
+			};
+			requestAnimationFrame(step);
+		};
+		var f3give = function () {
+			f3fill(A3[f3i % 3]);
+			f3say.textContent = A3[f3i % 3].say;
+			var total = 0.000035 * (f3i + 1);
+			f3tab.textContent = 'At 500 tokens, ' + (f3i + 1) + (f3i ? ' answers' : ' answer') + ' cost';
+			f3cost.textContent = '$' + total.toFixed(6);
+			f3i++;
+			if (reduce) {
+				f3card.setAttribute('class', 'f3-card');
+				f3busy = false;
+				return;
+			}
+			f3lever.setAttribute('class', 'f3-lever down');
+			f3drop.style.transition = 'none';
+			f3drop.style.opacity = '1';
+			var t0 = null;
+			var fall = function (t) {
+				if (!t0) t0 = t;
+				var u = Math.min(1, (t - t0) / 450);
+				f3drop.setAttribute('transform', 'translate(0,' + (260 + 56 * u * u) + ')');
+				if (u < 1) { requestAnimationFrame(fall); return; }
+				f3lever.setAttribute('class', 'f3-lever');
+				f3drop.style.opacity = '0';
+				f3card.setAttribute('class', 'f3-card');
+				f3busy = false;
+			};
+			requestAnimationFrame(fall);
+		};
+		f3buy.addEventListener('click', function () {
+			if (f3busy) return;
+			f3busy = true;
+			f3card.setAttribute('class', 'f3-card out');
+			if (!f3spun) {
+				f3spun = true;
+				f3say.textContent = 'Twenty-three months later the same kind of answer costs far less.';
+				f3spin(f3give);
+			} else {
+				setTimeout(f3give, reduce ? 0 : 280);
+			}
+			if (f3i >= 2) f3buy.textContent = 'Buy another';
+		});
+	}
+
+	/* ---- Figure 4: guess, then the ridge rises and the dots fill ---- */
+	var f4dots = document.getElementById('f4-dots');
+	if (f4dots) {
+		var NS = 'http://www.w3.org/2000/svg';
+		[[85, 25], [71, 212], [60, 399]].forEach(function (g) {
+			for (var i = 0; i < 100; i++) {
+				var c = document.createElementNS(NS, 'circle');
+				c.setAttribute('cx', g[1] + 15 * (i % 10) + 1);
+				c.setAttribute('cy', 32 + 13.5 * Math.floor(i / 10));
+				c.setAttribute('r', 5);
+				c.setAttribute('class', 'f4-dot' + (i < g[0] ? '' : ' miss'));
+				c.style.transitionDelay = (reduce ? 0 : i * 0.012) + 's';
+				f4dots.appendChild(c);
+			}
+		});
+		var f4 = document.getElementById('f4'), f4d = document.getElementById('f4d'), f4say = document.getElementById('f4-say');
+		var f4b = document.querySelectorAll('#f4-btns button');
+		document.getElementById('f4-in').setAttribute('class', 't-head f4-lbl');
+		document.getElementById('f4-out').setAttribute('class', 't-head f4-lbl');
+		f4.setAttribute('class', 'toon f4-flat');
+		f4d.setAttribute('class', 'toon f4-wait');
+		f4say.textContent = 'From here all four look about equally hard. Make a guess.';
+		Array.prototype.forEach.call(f4b, function (b) {
+			b.addEventListener('click', function () {
+				press(f4b, b);
+				f4.setAttribute('class', 'toon');
+				f4d.setAttribute('class', 'toon');
+				var t = b.getAttribute('data-t');
+				f4say.textContent = (t === '4' ? 'Right. ' : 'Most people would struggle to tell. ') + 'Task 4 sat outside. It needed spreadsheet figures combined with clues in interview notes, and GPT-4 gave a wrong answer that sounded convincing.';
+			});
+		});
+	}
+
+	/* ---- Figure 5: drag a guess, then drop the three real marks ---- */
+	var f5r = document.getElementById('f5-r');
+	if (f5r) {
+		var f5 = document.getElementById('f5'), f5you = document.getElementById('f5-you'), f5val = document.getElementById('f5-val'), f5say2 = document.getElementById('f5-say');
+		f5.setAttribute('class', 'toon f5-wait');
+		f5say2.textContent = 'The gold mark is your guess.';
+		var f5word = function (v) { return v === 0 ? 'No change' : Math.abs(v) + (v < 0 ? '% faster' : '% slower'); };
+		var f5move = function () {
+			var v = +f5r.value;
+			f5val.textContent = f5word(v);
+			f5you.style.transform = 'translate(' + (280 + v * 6) + 'px, 0)';
+		};
+		f5r.addEventListener('input', f5move);
+		f5move();
+		document.getElementById('f5-go').addEventListener('click', function () {
+			f5.setAttribute('class', 'toon');
+			Array.prototype.forEach.call(f5.querySelectorAll('.f5-mark'), function (m) { m.style.transitionDelay = (reduce ? 0 : +m.getAttribute('data-d') * 0.45) + 's'; });
+			var v = +f5r.value;
+			f5say2.textContent = 'You guessed ' + f5word(v).toLowerCase() + '. Measured, the programmers were 19% slower with AI. They expected to be 24% faster and still felt 20% faster afterward.';
+		});
+	}
+
+	/* ---- Figure 6: guess, then the bars grow out of the zero line ---- */
+	var f6b = document.querySelectorAll('#f6-btns button');
+	if (f6b.length) {
+		var f6 = document.getElementById('f6'), f6say = document.getElementById('f6-say');
+		f6.setAttribute('class', 'toon f6-wait');
+		f6say.textContent = 'Make a guess to grow the bars.';
+		var S6 = {
+			hh: 'Right. Jobs heavy in both math and social skill grew the most, by 7.2 points.',
+			lh: 'These grew by 4.6 points. Jobs heavy in both math and social skill grew more, by 7.2.',
+			hl: 'These shrank by 3.3 points, and they include many STEM jobs. Jobs heavy in both math and social skill grew by 7.2.',
+			ll: 'These shrank the most. Jobs heavy in both math and social skill grew by 7.2 points.'
+		};
+		Array.prototype.forEach.call(f6b, function (b) {
+			b.addEventListener('click', function () {
+				press(f6b, b);
+				f6.setAttribute('class', 'toon');
+				var g = b.getAttribute('data-g');
+				Array.prototype.forEach.call(f6.querySelectorAll('.f6-row'), function (r) { r.setAttribute('class', 'f6-row' + (r.getAttribute('data-g') === g ? ' pick' : '')); });
+				f6say.textContent = S6[g];
+			});
+		});
+	}
+
+	/* ---- Figure 7: cards that tilt under the pointer and flip when pressed ---- */
+	var f7cards = document.querySelectorAll('#f7 .cc');
+	if (f7cards.length) {
+		document.getElementById('f7').className += ' hand-js';
+		Array.prototype.forEach.call(f7cards, function (c) {
+			var inner = c.querySelector('.cc-in'), front = c.querySelector('.cc-f'), turn = c.querySelector('.cc-turn');
+			var flip = function () {
+				inner.classList.remove('turn');
+				void inner.offsetWidth;
+				inner.classList.add('turn');
+				var back = c.classList.toggle('flip');
+				setTimeout(function () { (back ? turn : front).focus({ preventScroll: true }); }, reduce ? 0 : 170);
+			};
+			front.addEventListener('click', flip);
+			c.querySelector('.cc-b').addEventListener('click', function (e) {
+				if (!e.target.closest('a')) flip();
+			});
+			if (reduce) return;
+			c.addEventListener('pointermove', function (e) {
+				if (e.pointerType !== 'mouse') return;
+				var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+				c.style.setProperty('--ry', ((x - 0.5) * 16) + 'deg');
+				c.style.setProperty('--rx', ((0.5 - y) * 16) + 'deg');
+				c.style.setProperty('--mx', (x * 100) + '%');
+				c.style.setProperty('--my', (y * 100) + '%');
+			});
+			c.addEventListener('pointerleave', function () {
+				c.style.setProperty('--rx', '0deg');
+				c.style.setProperty('--ry', '0deg');
+			});
+		});
+
+		/* The tray: one slot per card, filled as its passage comes into view. */
+		var tray = document.createElement('nav');
+		tray.className = 'tray off';
+		tray.setAttribute('aria-label', 'Cards collected');
+		var TARGETS = { 1: 'networking', 2: 'persuasion', 3: 'curiosity', 4: 'curiosity', 5: 'persuasion', 6: 'grit', 7: 'golf' };
+		var slots = {}, got = 0;
+		for (var n = 1; n <= 7; n++) {
+			var a = document.createElement('a');
+			a.href = '#' + TARGETS[n];
+			a.textContent = n;
+			a.setAttribute('aria-label', 'Card ' + n);
+			tray.appendChild(a);
+			slots[n] = a;
+		}
+		var tally = document.createElement('span');
+		tally.textContent = '0 of 7';
+		tray.appendChild(tally);
+		document.body.appendChild(tray);
+		if (window.IntersectionObserver) {
+			var collect = new IntersectionObserver(function (es) {
+				es.forEach(function (e) {
+					if (!e.isIntersecting) return;
+					var k = e.target.getAttribute('data-card');
+					if (slots[k] && slots[k].className !== 'got') {
+						slots[k].className = 'got';
+						got++;
+						tally.textContent = got + ' of 7';
+					}
+					collect.unobserve(e.target);
+				});
+			}, { rootMargin: '0px 0px -30% 0px' });
+			Array.prototype.forEach.call(document.querySelectorAll('[data-card]'), function (el) { collect.observe(el); });
+			var f7fig = document.getElementById('f7'), f7foot = document.querySelector('.post-foot'), trayTick = false;
+			var trayShow = function () {
+				trayTick = false;
+				var vh = window.innerHeight;
+				tray.className = 'tray' + (f7fig.getBoundingClientRect().top < vh * 0.8 && f7foot.getBoundingClientRect().top > vh * 0.9 ? '' : ' off');
+			};
+			window.addEventListener('scroll', function () {
+				if (!trayTick) { trayTick = true; requestAnimationFrame(trayShow); }
+			}, { passive: true });
+			trayShow();
+		}
+	}
+
+	/* ---- Figure 8: asking along strong ties and along the weak one ---- */
+	var f8b = document.querySelectorAll('#f8-btns button');
+	if (f8b.length) {
+		var f8 = document.getElementById('f8'), f8count = document.getElementById('f8-count'), f8say = document.getElementById('f8-say');
+		var f8n = f8.querySelectorAll('.f8-n[data-c]'), f8j = f8.querySelectorAll('.f8-j');
+		var SVGNS = 'http://www.w3.org/2000/svg';
+		Array.prototype.forEach.call(f8j, function (j) { j.setAttribute('class', j.getAttribute('class') + ' dim'); });
+		f8count.textContent = 'Job openings you have heard about: 0';
+		f8say.textContent = 'Press a button to ask around.';
+		var f8heard = function () {
+			f8count.textContent = 'Job openings you have heard about: ' + f8.querySelectorAll('.f8-j:not(.dim)').length;
+		};
+		var f8pulse = function (x1, y1, cx, cy, x2, y2, delay, done) {
+			if (reduce) { done(); return; }
+			var c = document.createElementNS(SVGNS, 'circle');
+			c.setAttribute('r', 6);
+			c.setAttribute('class', 'f8-p');
+			f8.appendChild(c);
+			var t0 = null;
+			var step = function (t) {
+				if (!t0) t0 = t + delay;
+				var u = Math.max(0, Math.min(1, (t - t0) / 520)), v = 1 - u;
+				c.setAttribute('cx', v * v * x1 + 2 * v * u * cx + u * u * x2);
+				c.setAttribute('cy', v * v * y1 + 2 * v * u * cy + u * u * y2);
+				if (u < 1) { requestAnimationFrame(step); return; }
+				f8.removeChild(c);
+				done();
+			};
+			requestAnimationFrame(step);
+		};
+		var f8reach = function (kind, fromX, fromY, after) {
+			var nodes = f8.querySelectorAll('.f8-n[data-c="' + kind + '"]'), left = nodes.length;
+			Array.prototype.forEach.call(nodes, function (n, i) {
+				var x = +n.getAttribute('cx'), y = +n.getAttribute('cy');
+				f8pulse(fromX, fromY, (fromX + x) / 2, (fromY + y) / 2, x, y, i * 90, function () {
+					n.setAttribute('class', 'f8-n lit');
+					left--;
+					if (!left && after) after();
+				});
+			});
+		};
+		var f8show = function (kind) {
+			Array.prototype.forEach.call(f8.querySelectorAll('.f8-j[data-c="' + kind + '"]'), function (j) { j.setAttribute('class', j.getAttribute('class').replace(' dim', '')); });
+			f8heard();
+		};
+		Array.prototype.forEach.call(f8b, function (b) {
+			b.addEventListener('click', function () {
+				press(f8b, b);
+				if (b.getAttribute('data-a') === 'close') {
+					f8reach('close', 140, 170, function () { f8show('close'); });
+					f8say.textContent = 'Your friends all talk to each other, so they all know the same two openings. Asking a sixth friend would add nothing.';
+				} else {
+					f8pulse(140, 170, 250, 130, 356, 170, 0, function () {
+						f8.querySelector('.f8-n[data-c="weak"]').setAttribute('class', 'f8-n lit');
+						f8reach('weak2', 356, 170, function () { f8show('weak2'); });
+					});
+					f8say.textContent = 'One acquaintance sits in another circle, and that circle knows four openings your friends have never heard of.';
+				}
+			});
+		});
+	}
+
+	/* ---- Figure 9: the tug of war ---- */
+	var f9b = document.querySelectorAll('#f9-btns button');
+	if (f9b.length) {
+		var f9rope = document.getElementById('f9-rope'), f9say = document.getElementById('f9-say'), f9n = document.getElementById('f9-n');
+		var S9 = {
+			h: { p: 50, robot: false, facts: false, say: 'The baseline. In debates with a clear winner, each person wins half the time, by definition.' },
+			hf: { p: 45.7, robot: false, facts: true, say: 'A person given the same facts did no better. The small dip could easily be chance.' },
+			g: { p: 54.9, robot: true, facts: false, say: 'GPT-4 with no facts about you edged ahead, by an amount that could easily be chance.' },
+			gf: { p: 64.4, robot: true, facts: true, say: 'GPT-4 with a few facts about you was more persuasive 64.4% of the time. This is the one result here that clearly differs from a plain human opponent.' }
+		};
+		Array.prototype.forEach.call(f9b, function (b) {
+			b.addEventListener('click', function () {
+				press(f9b, b);
+				var s = S9[b.getAttribute('data-o')];
+				f9rope.style.transform = 'translateX(' + ((s.p - 50) * 5) + 'px)';
+				f9n.textContent = (s.p === 50 ? '50' : s.p) + '%';
+				show(document.getElementById('f9-robot'), s.robot);
+				show(document.getElementById('f9-person'), !s.robot);
+				show(document.getElementById('f9-facts'), s.facts);
+				f9say.textContent = s.say;
+			});
+		});
+	}
+
+	/* ---- Figure 10: the comic plays once, when it comes into view ---- */
+	var f10 = document.getElementById('f10');
+	if (f10 && !reduce) {
+		f10.className = 'comic wait';
+		whenSeen(f10, function () { f10.className = 'comic go'; }, 0.3);
+	}
+
+	/* ---- Figure 11: who gets picked for extra care ---- */
+	var f11b = document.querySelectorAll('#f11-btns button');
+	if (f11b.length) {
+		var f11ppl = document.querySelectorAll('#f11-people .pq'), f11n = document.getElementById('f11-n'), f11say = document.getElementById('f11-say');
+		var go11 = function (n) {
+			Array.prototype.forEach.call(f11ppl, function (p) {
+				var o = +p.getAttribute('data-o');
+				p.style.transitionDelay = (reduce ? 0 : Math.abs(o - 18) * 0.015) + 's';
+				p.setAttribute('class', 'pq ' + (o < n ? 'pq-b' : 'pq-o'));
+			});
+			f11n.textContent = n === 18 ? '17.7%' : '46.5%';
+			f11say.textContent = n === 18
+				? 'The algorithm scores on cost. Less is spent on Black patients with the same needs, so few of them reach the cut-off.'
+				: 'With the bias removed, 46.5% of those picked would be Black patients, up from 17.7%.';
+		};
+		Array.prototype.forEach.call(f11b, function (b) {
+			b.addEventListener('click', function () { press(f11b, b); go11(+b.getAttribute('data-n')); });
+		});
+		press(f11b, f11b[0]);
+		go11(18);
+	}
+
+	/* ---- Figure 12: the failure lab ----
+	   The curves are precomputed in the markup. This draws one simulated person's
+	   notebook: for each part, a new version with probability (1 - x*)^0.6, else
+	   the best version x* from the last k attempts. */
+	var f12b = document.querySelectorAll('#f12-btns button');
+	if (f12b.length) {
+		var f12 = document.getElementById('f12'), f12g = document.getElementById('f12-grid'), f12say = document.getElementById('f12-say');
+		var A12 = 30, N12 = 12, CW = 15, CH = 11, cells12 = [];
+		for (var a12 = 0; a12 < A12; a12++) {
+			cells12.push([]);
+			for (var p12 = 0; p12 < N12; p12++) {
+				var r12 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+				r12.setAttribute('x', 70 + a12 * CW + 0.5);
+				r12.setAttribute('y', 22 + p12 * CH + 0.5);
+				r12.setAttribute('width', CW - 1);
+				r12.setAttribute('height', CH - 1);
+				r12.setAttribute('class', 'f12-cell');
+				r12.setAttribute('opacity', '0');
+				f12g.appendChild(r12);
+				cells12[a12].push(r12);
+			}
+		}
+		var f12run = function (k) {
+			var seed = 12345, rnd = function () { seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; };
+			var hist = [];
+			for (var n = 0; n < A12; n++) {
+				var cur = [];
+				for (var i = 0; i < N12; i++) {
+					var best = -1;
+					for (var j = Math.max(0, n - k); j < n; j++) best = Math.max(best, hist[j][i]);
+					var fresh = rnd(), val = rnd();
+					cur.push(best < 0 || fresh < Math.pow(1 - best, 0.6) ? val : best);
+				}
+				hist.push(cur);
+			}
+			return hist;
+		};
+		var S12 = {
+			'0': 'Nothing carries over. Every attempt is a fresh roll of the dice, so average quality stays at 0.5 however long you keep going.',
+			'1': 'You look back one attempt. Quality climbs and then stalls, because a good version is lost as soon as the next attempt replaces it.',
+			'2': 'You look back two attempts. That is enough to hold on to good versions, and quality keeps climbing.',
+			'all': 'You look back at every attempt. Quality climbs only a little faster than at k = 2, so a short memory is nearly enough.'
+		};
+		var f12timer = null;
+		var go12 = function (key, animate) {
+			var k = key === 'all' ? 1e9 : +key, hist = f12run(k);
+			Array.prototype.forEach.call(f12.querySelectorAll('[data-k]'), function (el) {
+				var on = el.getAttribute('data-k') === key, base = el.getAttribute('class').replace(/\s*on\b/, '');
+				el.setAttribute('class', on ? base + ' on' : base);
+			});
+			f12say.textContent = S12[key];
+			clearInterval(f12timer);
+			var paint = function (n) {
+				for (var i = 0; i < N12; i++) cells12[n][i].setAttribute('opacity', (0.06 + 0.94 * Math.pow(hist[n][i], 2.2)).toFixed(3));
+			};
+			if (!animate || reduce) { for (var n = 0; n < A12; n++) paint(n); return; }
+			cells12.forEach(function (col) { col.forEach(function (c) { c.setAttribute('opacity', '0'); }); });
+			var at = 0;
+			f12timer = setInterval(function () {
+				paint(at);
+				at++;
+				if (at >= A12) clearInterval(f12timer);
+			}, 55);
+		};
+		Array.prototype.forEach.call(f12b, function (b) {
+			b.addEventListener('click', function () { press(f12b, b); go12(b.getAttribute('data-k'), true); });
+		});
+		go12('2', false);
+		whenSeen(f12, function () { go12('2', true); }, 0.5);
+	}
+
+	/* ---- Figure 13: the putting game. The scorecard hides until each hole is
+	   sunk, and the skip button shows it all, since the text repeats it anyway. ---- */
+	var f13putt = document.getElementById('f13-putt');
+	if (f13putt) {
+		var f13ball = document.getElementById('f13-ball'), f13pow = document.getElementById('f13-pow'), f13holeG = document.getElementById('f13-hole'), f13say = document.getElementById('f13-say');
+		var f13rows = document.querySelectorAll('#f13-card tbody tr'), HOLES = [440, 340, 480], f13lvl = 0, f13busy = false, f13charging = false, f13t0 = 0, f13power = 0;
+		Array.prototype.forEach.call(f13rows, function (r) { r.className = 'hid'; });
+		var f13g = document.getElementById('f13-green'), f13ground = [];
+		for (var d13 = 0; d13 < 600; d13 += 2) {
+			var pt13 = f13g.getPointAtLength(d13);
+			f13ground[Math.round(pt13.x)] = pt13.y;
+		}
+		var f13y = function (x) { var i = Math.round(x); while (i > 0 && f13ground[i] === undefined) i--; return f13ground[i]; };
+		var f13place = function (x, y) { f13ball.setAttribute('cx', x); f13ball.setAttribute('cy', y === undefined ? f13y(x) - 7 : y); };
+		var f13setHole = function () { var h = HOLES[f13lvl % 3]; f13holeG.setAttribute('transform', 'translate(' + h + ',' + (f13y(h) - 138) + ')'); };
+		f13setHole();
+		f13place(50);
+		var f13reveal = function (i) {
+			if (!f13rows[i]) return;
+			f13rows[i].className = 'fresh';
+			setTimeout(function () { if (f13rows[i].className === 'fresh') f13rows[i].className = ''; }, 900);
+		};
+		var f13done = function () {
+			f13putt.textContent = 'Play again';
+			f13say.textContent = 'Three for three. The scorecard is complete, and the numbers are the study’s.';
+		};
+		var f13charge = function (t) {
+			if (!f13charging) return;
+			var u = ((t - f13t0) / 1500) % 2;
+			f13power = u < 1 ? u : 2 - u;
+			f13pow.setAttribute('width', 280 * f13power);
+			requestAnimationFrame(f13charge);
+		};
+		var f13start = function () {
+			if (f13busy || f13charging) return;
+			if (f13lvl >= 3 && f13putt.textContent === 'Play again') {
+				f13lvl = 0;
+				f13putt.textContent = 'Hold to putt';
+				Array.prototype.forEach.call(f13rows, function (r) { r.className = 'hid'; });
+				f13setHole();
+			}
+			f13charging = true;
+			f13t0 = performance.now();
+			requestAnimationFrame(f13charge);
+		};
+		var f13release = function () {
+			if (!f13charging) return;
+			f13charging = false;
+			f13busy = true;
+			var dist = f13power * 500, x0 = 50, t0 = null, hole = HOLES[f13lvl % 3];
+			var settle = function (x) {
+				f13pow.setAttribute('width', 0);
+				if (Math.abs(x - hole) <= 24) {
+					f13place(hole, f13y(hole) + 2);
+					f13reveal(f13lvl);
+					f13lvl++;
+					if (f13lvl >= 3) f13done();
+					else {
+						f13say.textContent = 'In the hole. That is line ' + f13lvl + ' of the scorecard. On to the next.';
+						f13setHole();
+					}
+					setTimeout(function () { f13place(50); f13busy = false; }, reduce ? 0 : 700);
+				} else {
+					f13say.textContent = (x < hole ? 'Short.' : 'Too long.') + ' Hold for ' + (x < hole ? 'more' : 'less') + ' power and try again.';
+					setTimeout(function () { f13place(50); f13busy = false; }, reduce ? 0 : 500);
+				}
+			};
+			if (reduce) { settle(x0 + dist); return; }
+			var roll = function (t) {
+				if (!t0) t0 = t;
+				var u = Math.min(1, (t - t0) / 1000), x = x0 + dist * (1 - (1 - u) * (1 - u));
+				f13place(Math.min(x, 556));
+				if (u < 1) requestAnimationFrame(roll); else settle(x);
+			};
+			requestAnimationFrame(roll);
+		};
+		f13putt.addEventListener('pointerdown', function (e) { e.preventDefault(); f13start(); });
+		window.addEventListener('pointerup', f13release);
+		window.addEventListener('pointercancel', f13release);
+		f13putt.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+		f13putt.addEventListener('keydown', function (e) { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); f13start(); } });
+		f13putt.addEventListener('keyup', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); f13release(); } });
+		var f13skip = document.getElementById('f13-skip');
+		f13skip.addEventListener('click', function () {
+			f13skip.setAttribute('aria-pressed', 'true');
+			Array.prototype.forEach.call(f13rows, function (r) { r.className = ''; });
+			f13lvl = 3;
+			f13done();
+			f13say.textContent = 'The scorecard is complete, and the numbers are the study’s.';
+		});
+	}
+
+	/* ---- Figure 14: the strip unrolls as the page scrolls, and the buttons
+	   show where each card turned up. ---- */
+	var f14 = document.getElementById('f14');
+	if (f14) {
+		var f14n = document.getElementById('f14-notes'), f14b = document.querySelectorAll('#f14-btns button');
+		f14n.className += ' f2-js';
+		var go14 = function (c) {
+			Array.prototype.forEach.call(f14n.querySelectorAll('.f2-n'), function (n) { n.className = 'f2-n' + (n.getAttribute('data-c') === c ? ' on' : ''); });
+		};
+		Array.prototype.forEach.call(f14b, function (b) {
+			b.addEventListener('click', function () { press(f14b, b); go14(b.getAttribute('data-c')); });
+		});
+		go14('3');
+
+		var f14strokes = f14.querySelectorAll('#f14-word path'), XS = [46, 102, 156, 206, 264, 318, 368, 424];
+		Array.prototype.forEach.call(f14strokes, function (p) { p.setAttribute('stroke-dasharray', '1'); });
+		var f14sheet = document.getElementById('f14-sheet'), f14tex = document.getElementById('f14-tex'), f14roll = document.getElementById('f14-roll'), f14spin = document.getElementById('f14-spin');
+		var f14paint = function (u) {
+			var edge = 40 + 470 * u;
+			f14sheet.setAttribute('width', edge - 24);
+			f14tex.setAttribute('width', edge - 24);
+			f14roll.style.transform = 'translateX(' + edge + 'px)';
+			f14spin.setAttribute('d', 'M' + (-7 + 4 * Math.sin(edge / 9)).toFixed(1) + ',16 V154 M' + (7 + 4 * Math.sin(edge / 9)).toFixed(1) + ',16 V154');
+			Array.prototype.forEach.call(f14strokes, function (p, i) {
+				var v = Math.max(0, Math.min(1, (edge - XS[i] - 6) / 34));
+				p.setAttribute('stroke-dashoffset', (1 - v).toFixed(3));
+				p.setAttribute('opacity', v > 0 ? '1' : '0');
+			});
+		};
+		if (reduce) {
+			f14paint(1);
+		} else {
+			var f14tick = false;
+			var f14scroll = function () {
+				f14tick = false;
+				var r = f14.getBoundingClientRect(), vh = window.innerHeight;
+				f14paint(Math.max(0, Math.min(1, (vh * 0.95 - r.bottom) / (vh * 0.4))));
+			};
+			window.addEventListener('scroll', function () {
+				if (!f14tick) { f14tick = true; requestAnimationFrame(f14scroll); }
+			}, { passive: true });
+			window.addEventListener('resize', f14scroll);
+			f14scroll();
+		}
+	}
+
+})();
+</script>
+
+</body>
+</html>
