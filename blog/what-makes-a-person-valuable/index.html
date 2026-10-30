@@ -54,7 +54,7 @@
 		.toon .f1-dim { opacity: 0.18; }
 		.toon .f1-fade { transition: opacity 0.7s ease; }
 
-		/* Figure 2: the clip and the telephone game */
+		/* Figure 2: the clip */
 		.clip { display: block; position: relative; border: 1.5px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--panel-bg); }
 		.clip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 		.prose figure .clip svg { border-radius: 0; }
@@ -71,22 +71,6 @@
 		.f2-js .f2-n.on { display: block; margin-top: 0; padding-top: 0; border-top: 0; }
 		.prose .f2-q { font-size: 15.5px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; }
 		.prose .f2-by { font-size: 13px; font-weight: 700; color: var(--ink-light); margin: 6px 0 0; }
-		.f2 mark { background: var(--flag-bg); color: var(--ink); border-bottom: 2px solid var(--gold-hl-ink); padding: 0 2px; }
-		.f2-phone { max-width: 420px; margin: 0 auto; border: 1.5px solid var(--ink); border-radius: 14px; padding: 12px 14px; background: var(--paper-bg); }
-		.prose .f2-list { margin: 0 0 8px; padding-left: 20px; font-size: 15px; line-height: 1.4; }
-		.prose .f2-list li { margin: 0 0 3px; }
-		.f2-n.on .f2-list li { animation: f2-in 0.35s ease both; }
-		.f2-n.on .f2-list li:nth-child(2) { animation-delay: 0.08s; }
-		.f2-n.on .f2-list li:nth-child(3) { animation-delay: 0.16s; }
-		.f2-n.on .f2-list li:nth-child(4) { animation-delay: 0.24s; }
-		.f2-n.on .f2-list li:nth-child(5) { animation-delay: 0.32s; }
-		.f2-n.on .f2-list li:nth-child(6) { animation-delay: 0.40s; }
-		.f2-n.on .f2-list li:nth-child(7) { animation-delay: 0.48s; font-weight: 700; }
-		@keyframes f2-in { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
-		.prose .f2-diff { list-style: none; margin: 0; padding: 0; font-size: 15px; line-height: 1.45; }
-		.prose .f2-diff li { margin: 0 0 8px; }
-		.f2-mark { display: inline-block; min-width: 54px; text-align: center; font-size: 11.5px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; border-radius: 999px; padding: 1px 8px; margin-right: 6px; background: var(--warn-bg); color: var(--award); border: 1px solid var(--warn-border); }
-		.f2-add { background: var(--tag-bg); color: var(--accent); border-color: var(--tag-border); }
 
 		@media (max-width: 720px) {
 			.toon text { font-size: 16.5px; }
@@ -114,8 +98,7 @@
 		.toon .f3-drop { transition: opacity 0.2s ease; }
 		@media (prefers-reduced-motion: reduce) {
 			.toon .f1-pt, .toon .f3-lever, .toon .f3-card, .toon .f3-drop, .toon .f1-fade { transition: none; }
-			.f2-n.on .f2-list li { animation: none; }
-		}
+			}
 		@media (max-width: 720px) {
 			.toon .f3-led-t { font-size: 11.5px; }
 			.toon .f3-stick { font-size: 13px; }
@@ -363,7 +346,7 @@
 
 		<h1 class="post-title">When answers are cheap, what makes a person valuable?</h1>
 
-		<p class="post-standfirst">In the 1990s, a computer studying hospital records learned that asthma lowers a pneumonia patient&rsquo;s risk of dying. The pattern was real, and acting on it could have killed people. AI has since made answers almost free, and a viral post now says knowledge is worth $0. The evidence points to the people who can tell when an answer is wrong and whom others trust to act on it.</p>
+		<p class="post-standfirst">In the 1990s, a computer studying hospital records learned that asthma lowers a pneumonia patient&rsquo;s risk of dying. The pattern was real, and acting on it could have killed people. AI has since made answers almost free. The evidence points to the people who can tell when an answer is wrong and whom others trust to act on it.</p>
 
 		<p class="post-byline">
 			<b>Chen-Yang Su</b>
@@ -376,11 +359,11 @@
 		<div class="takeaways">
 			<span class="takeaways-label">Main takeaways</span>
 			<ul>
-				<li><strong>Peter Thiel did not give a list.</strong> He told Walter Isaacson that human relationships &ldquo;maybe are very core and will become more important.&rdquo; The seven career skills and the $0 came from a post on X about the interview.</li>
-				<li><strong>The price of an answer fell more than 280-fold in two years.</strong> The need to check it stayed. In an experiment at Boston Consulting Group, 84.5% of consultants working alone solved a tricky problem. With GPT-4, 60% to 71% did.</li>
+				<li><strong>The price of an answer fell more than 280-fold in two years, and the need to check it stayed.</strong> In an experiment at Boston Consulting Group, 84.5% of consultants working alone solved a tricky problem. With GPT-4, 60% to 71% did.</li>
+				<li><strong>People often cannot feel when a tool stops helping.</strong> In a 2025 trial, experienced programmers took 19% longer with AI and still believed they had been 20% faster.</li>
 				<li><strong>Social skills were paying off before ChatGPT.</strong> From 1980 to 2012, US jobs that demand both math and social skill grew the most. Jobs heavy in math and light on people shrank.</li>
-				<li><strong>No skill on the list is safe by itself.</strong> GPT-4 out-argued people 64.4% of the time when it knew a few facts about them. When a chatbot invented court cases, the lawyers paid the $5,000 penalty.</li>
-				<li><strong>Golf has surprisingly good evidence behind it.</strong> At a bank in Southeast Asia, smokers who got a boss who smoked were promoted faster, with no difference in how well they worked. Men there rose faster under male bosses in a similar way, and that helps explain why women fell behind.</li>
+				<li><strong>No single skill is safe by itself.</strong> GPT-4 out-argued people 64.4% of the time when it knew a few facts about them. When a chatbot invented court cases, the lawyers paid the $5,000 penalty.</li>
+				<li><strong>Time with the boss pays, and it can be unfair.</strong> At a bank in Southeast Asia, smokers who got a boss who smoked were promoted faster, with no difference in how well they worked. Men there rose faster under male bosses in a similar way, and that helps explain why women fell behind.</li>
 			</ul>
 		</div>
 
@@ -460,11 +443,9 @@
 
 			<p>This program wrote its rules in a form people could read, so the researchers could spot the problem and remove it. Their most accurate models were neural networks, programs whose predictions are hard to trace back to a reason. The team reasoned that if the simple program had learned the asthma rule, the neural networks had learned it too, and they judged those models too risky to try on patients. Catching the error took someone who knew what hospitals do with asthma patients.</p>
 
-			<h2 id="list">A career plan with seven skills, ending in golf</h2>
+			<h2 id="list">What is left to get paid for?</h2>
 
-			<p>Three decades later, that kind of knowledge is being declared worthless. On 22 October 2026, <a href="https://www.youtube.com/watch?v=H9Bdv3t5VtQ&amp;t=3197s" target="_blank" rel="noopener">the biographer Walter Isaacson asked the investor Peter Thiel</a> whether there was anything humans could uniquely do in the age of AI. Thiel talked about watching a sunset, an experience he doubts a computer will ever have. He also talked about the way people relate to each other &ldquo;in families and companies in our larger society.&rdquo;</p>
-
-			<p>Five days later, John LeFevre, the author of the finance memoir <i>Straight to Hell</i>, <a href="https://x.com/JohnLeFevre/status/2115110713500864718" target="_blank" rel="noopener">posted a clip of the answer on X</a>. &ldquo;When knowledge is worth $0,&rdquo; he wrote, &ldquo;the only career skills that matter&rdquo; are seven. The seventh is &ldquo;golfing with clients (or equivalent).&rdquo; The post has been viewed more than 500,000 times.</p>
+			<p>Three decades later, machines answer far more than questions about pneumonia, and people are asking what is left for humans. On 22 October 2026, <a href="https://www.youtube.com/watch?v=H9Bdv3t5VtQ&amp;t=3197s" target="_blank" rel="noopener">the biographer Walter Isaacson put that question to the investor Peter Thiel</a>. Thiel talked about watching a sunset, an experience he doubts a computer will ever have. He also talked about the way people relate to each other &ldquo;in families and companies in our larger society.&rdquo;</p>
 
 			<figure>
 				<a class="clip" id="f2-clip" href="https://www.youtube.com/watch?v=H9Bdv3t5VtQ&amp;t=3197s" target="_blank" rel="noopener" aria-label="Play Peter Thiel's answer, from 53:17 in the interview">
@@ -494,46 +475,14 @@
 						<text class="t-small" x="280" y="238" text-anchor="middle">Plays from YouTube. Nothing loads until you press.</text>
 					</svg>
 				</a>
-				<div class="seg seg-sm" id="f2-btns" role="group" aria-label="Choose a version" style="margin-top:14px">
-					<button type="button" data-v="said" aria-pressed="true">Thiel&rsquo;s words</button>
-					<button type="button" data-v="post" aria-pressed="false">The post on X</button>
-					<button type="button" data-v="diff" aria-pressed="false">What changed</button>
+				<div class="f2" id="f2" style="margin-top:14px">
+					<p class="f2-q">&ldquo;If there were no humans in the world, I don&rsquo;t think the computer would experience the sunset in the same way&hellip; It&rsquo;s the way we relate to other people, you know, in families and companies in our larger society&hellip; So I think these relational dimensions maybe are very core and will become more important.&rdquo;</p>
+					<p class="f2-by">Peter Thiel, 54:45 to 56:00</p>
 				</div>
-				<div class="f2" id="f2">
-					<div class="f2-n" data-v="said">
-						<p class="f2-q">&ldquo;If there were no humans in the world, I don&rsquo;t think the computer would experience the sunset in the same way&hellip; I think the Girardian intuition, we&rsquo;re also very relational&hellip; So I think these relational dimensions <mark>maybe are very core and</mark> will become more important.&rdquo;</p>
-						<p class="f2-by">Peter Thiel, 54:45 to 56:00</p>
-					</div>
-					<div class="f2-n" data-v="post">
-						<div class="f2-phone">
-							<p class="f2-q">Thiel: &ldquo;We&rsquo;re very relational&hellip; these relational dimensions will become more important.&rdquo;</p>
-							<p class="f2-q">When knowledge is worth $0, the only career skills that matter:</p>
-							<ul class="f2-list">
-								<li>networking / social calibration</li>
-								<li>persuasion (sales)</li>
-								<li>curiosity (harnessing AI)</li>
-								<li>taste (curation)</li>
-								<li>storytelling</li>
-								<li>grit</li>
-								<li>golfing with clients (or equivalent)</li>
-							</ul>
-							<p class="f2-q">We&rsquo;ll get so sick of a fake world that we&rsquo;ll go back to doing business like it&rsquo;s the 1800s. A handshake at the local saloon.</p>
-						</div>
-						<p class="f2-by">John LeFevre on X, 27 October 2026</p>
-					</div>
-					<div class="f2-n" data-v="diff">
-						<ul class="f2-diff">
-							<li><span class="f2-mark">Cut</span> Thiel&rsquo;s &ldquo;maybe are very core and.&rdquo; His hedge is gone from the quotation.</li>
-							<li><span class="f2-mark">Cut</span> the sunset. The 58-second clip jumps from Isaacson&rsquo;s question to &ldquo;the Girardian intuition.&rdquo;</li>
-							<li><span class="f2-mark f2-add">Added</span> &ldquo;When knowledge is worth $0.&rdquo; Thiel never says this.</li>
-							<li><span class="f2-mark f2-add">Added</span> the seven skills. Thiel never lists them.</li>
-						</ul>
-					</div>
-				</div>
-				<figcaption><b>Figure 2.</b> Thiel&rsquo;s words are from the <a href="https://realalpha.app/v/H9Bdv3t5VtQ/" target="_blank" rel="noopener">episode transcript</a>, and I checked them against the audio of the clip. The post is quoted in full from <a href="https://x.com/JohnLeFevre/status/2115110713500864718" target="_blank" rel="noopener">X</a>. &ldquo;Girardian&rdquo; refers to the thinker Ren&eacute; Girard, who argued that people learn what to want by copying each other. The drawing of the interview is a cartoon.</figcaption>
+				<figcaption><b>Figure 2.</b> Press play to hear the answer. The words are from the <a href="https://realalpha.app/v/H9Bdv3t5VtQ/" target="_blank" rel="noopener">episode transcript</a>. The drawing of the interview is a cartoon.</figcaption>
 			</figure>
 
-			<p>Thiel&rsquo;s answer was about what the world would lose if computers replaced people, and he hedged it. The $0 and the list are LeFevre&rsquo;s. Even so, LeFevre is asking what every student about to graduate is asking. If a machine can supply what used to take years to learn, what is left to get paid for? The part of his claim that holds up is a good place to start.</p>
+			<p>For a student about to graduate, this is a practical question. If a machine can supply what used to take years to learn, what is left to get paid for? The answer starts with what has really become cheap.</p>
 
 			<h2 id="price">The price of an answer really did collapse</h2>
 
@@ -609,7 +558,7 @@
 				<figcaption><b>Figure 3.</b> Press the button. The two prices are from the <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/research-and-development" target="_blank" rel="noopener">2025 AI Index</a>, for systems performing at the level of GPT-3.5. The spin between them is decoration, and the 500-token answer is my assumption for the arithmetic. Answer one is the asthma rule. Answer two is what ChatGPT told a lawyer. Answer three paraphrases what a real algorithm implied about a patient.</figcaption>
 			</figure>
 
-			<p>Cheap answers also hand experience to beginners. In <a href="https://doi.org/10.1093/qje/qjae044" target="_blank" rel="noopener">a study of 5,172 customer-support agents</a>, an AI assistant raised the number of problems solved per hour by 15% on average. The least experienced agents gained the most. The most experienced gained a little speed and lost a little quality. If the job were only knowing the answer, LeFevre&rsquo;s $0 would be close to right. In <a href="/blog/when-the-answer-is-cheap/">When the answer is cheap</a> I followed where the money goes for firms. This essay follows the people.</p>
+			<p>Cheap answers also hand experience to beginners. In <a href="https://doi.org/10.1093/qje/qjae044" target="_blank" rel="noopener">a study of 5,172 customer-support agents</a>, an AI assistant raised the number of problems solved per hour by 15% on average. The least experienced agents gained the most. The most experienced gained a little speed and lost a little quality. If the job were only knowing the answer, that job would be worth close to nothing. In <a href="/blog/when-the-answer-is-cheap/">When the answer is cheap</a> I followed where the money goes for firms. This essay follows the people.</p>
 
 			<h2 id="frontier">Nobody can see where the tool stops working</h2>
 
@@ -706,7 +655,7 @@
 
 			<p>Trust seems to feed that gap. In <a href="https://doi.org/10.1145/3706598.3713778" target="_blank" rel="noopener">a survey of 319 knowledge workers</a>, whose jobs mostly involve handling information, people with more confidence in AI reported less critical thinking when using it. People with more confidence in their own ability reported more. A survey cannot show which causes which, but the pattern fits the consultants&rsquo; results.</p>
 
-			<p>This is where the $0 claim fails. <strong>AI has made answers cheap, which leaves two things to pay a person for, knowing when an answer is wrong and being someone others trust to act on it.</strong> The first depends on knowing a subject well. The second depends on other people, and that is the part of Thiel&rsquo;s answer with data behind it.</p>
+			<p>This is why cheap answers do not make knowledge worthless. <strong>AI has made answers cheap, which leaves two things to pay a person for, knowing when an answer is wrong and being someone others trust to act on it.</strong> The first depends on knowing a subject well. The second depends on other people, and that is the part of Thiel&rsquo;s answer with data behind it.</p>
 
 			<h2 id="social">Social skills were paying off before ChatGPT</h2>
 
@@ -751,12 +700,12 @@
 
 			<p>His explanation is about trade. A team gets more done when each person does what they do best and hands the rest to someone else, and every handover has a cost. Social skills lower that cost. In 2021, <a href="https://doi.org/10.3982/ECTA18461" target="_blank" rel="noopener">Deming and Ben Weidmann tested the idea</a> by randomly assigning people to several teams and predicting each team&rsquo;s score from its members&rsquo; individual skills. Some people&rsquo;s teams kept beating the prediction, whichever team they joined. These team players matched everyone else on IQ and personality and scored higher on a test of social intelligence. Social skill raised a team&rsquo;s performance about as much as IQ did.</p>
 
-			<p>So LeFevre&rsquo;s list points at something real. Here are his seven skills, each on its own card. A press turns a card over to show what the evidence says, and the tray in the corner collects each card as you reach its section below.</p>
+			<p>A popular answer to what people should learn now names seven skills, and golf is one of them. Here they are, each on its own card. A press turns a card over to show what the evidence says, and the tray in the corner collects each card as you reach its section below.</p>
 
 			<figure>
 				<div class="hand" id="f7">
 					<div class="cc" data-n="1"><div class="cc-in">
-						<button type="button" class="cc-f" aria-label="Turn over the Networking card"><span class="cc-fi"><span class="cc-num">1</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="ln-thin" d="M50,35 L18,16 M50,35 L82,14 M50,35 L20,56 M50,35 L84,54 M18,16 L82,14"/><circle class="head" cx="50" cy="35" r="10"/><circle class="soft" cx="18" cy="16" r="7"/><circle class="soft" cx="82" cy="14" r="7"/><circle class="soft" cx="20" cy="56" r="7"/><circle class="soft" cx="84" cy="54" r="7"/></svg><span class="cc-name">Networking</span><span class="cc-sub">social calibration</span></span></button>
+						<button type="button" class="cc-f" aria-label="Turn over the Networking card"><span class="cc-fi"><span class="cc-num">1</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="ln-thin" d="M50,35 L18,16 M50,35 L82,14 M50,35 L20,56 M50,35 L84,54 M18,16 L82,14"/><circle class="head" cx="50" cy="35" r="10"/><circle class="soft" cx="18" cy="16" r="7"/><circle class="soft" cx="82" cy="14" r="7"/><circle class="soft" cx="20" cy="56" r="7"/><circle class="soft" cx="84" cy="54" r="7"/></svg><span class="cc-name">Networking</span><span class="cc-sub">reading a room</span></span></button>
 						<div class="cc-b"><p class="cc-stat"><b>Networking.</b> 20 million LinkedIn users tracked for five years. Moderately weak ties moved people into new jobs most.</p><span class="cc-v cc-v-ok">Holds up</span><span class="cc-row"><a class="cc-go" href="#networking">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Networking card back">&#8634;</button></span></div>
 					</div></div>
 					<div class="cc" data-n="2"><div class="cc-in">
@@ -764,11 +713,11 @@
 						<div class="cc-b"><p class="cc-stat"><b>Persuasion.</b> GPT-4 out-argued people 64.4% of the time when it knew a few facts about them.</p><span class="cc-v cc-v-ai">AI does this too</span><span class="cc-row"><a class="cc-go" href="#persuasion">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Persuasion card back">&#8634;</button></span></div>
 					</div></div>
 					<div class="cc" data-n="3"><div class="cc-in">
-						<button type="button" class="cc-f" aria-label="Turn over the Curiosity card"><span class="cc-fi"><span class="cc-num">3</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><circle class="soft" cx="42" cy="30" r="22"/><path class="ln" d="M58,46 L82,64"/><text class="t-big" x="42" y="38" text-anchor="middle">?</text></svg><span class="cc-name">Curiosity</span><span class="cc-sub">harnessing AI</span></span></button>
+						<button type="button" class="cc-f" aria-label="Turn over the Curiosity card"><span class="cc-fi"><span class="cc-num">3</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><circle class="soft" cx="42" cy="30" r="22"/><path class="ln" d="M58,46 L82,64"/><text class="t-big" x="42" y="38" text-anchor="middle">?</text></svg><span class="cc-name">Curiosity</span><span class="cc-sub">asking better questions</span></span></button>
 						<div class="cc-b"><p class="cc-stat"><b>Curiosity.</b> An algorithm predicted cost when patients needed it to predict illness. Removing the bias would move one share from 17.7% to 46.5%.</p><span class="cc-v cc-v-ok">Holds up</span><span class="cc-row"><a class="cc-go" href="#curiosity">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Curiosity card back">&#8634;</button></span></div>
 					</div></div>
 					<div class="cc" data-n="4"><div class="cc-in">
-						<button type="button" class="cc-f" aria-label="Turn over the Taste card"><span class="cc-fi"><span class="cc-num">4</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><rect class="soft" x="10" y="14" width="22" height="30" rx="2"/><rect class="soft" x="39" y="14" width="22" height="30" rx="2"/><rect class="soft" x="68" y="14" width="22" height="30" rx="2"/><path class="ln-red" d="M13,17 L29,41 M29,17 L13,41 M71,17 L87,41 M87,17 L71,41"/><path class="ln-gold" d="M43,31 L49,38 L58,22"/><path class="ln-thin" d="M50,50 V62"/></svg><span class="cc-name">Taste</span><span class="cc-sub">curation</span></span></button>
+						<button type="button" class="cc-f" aria-label="Turn over the Taste card"><span class="cc-fi"><span class="cc-num">4</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><rect class="soft" x="10" y="14" width="22" height="30" rx="2"/><rect class="soft" x="39" y="14" width="22" height="30" rx="2"/><rect class="soft" x="68" y="14" width="22" height="30" rx="2"/><path class="ln-red" d="M13,17 L29,41 M29,17 L13,41 M71,17 L87,41 M87,17 L71,41"/><path class="ln-gold" d="M43,31 L49,38 L58,22"/><path class="ln-thin" d="M50,50 V62"/></svg><span class="cc-name">Taste</span><span class="cc-sub">choosing what is good</span></span></button>
 						<div class="cc-b"><p class="cc-stat"><b>Taste.</b> Image tools raised output 25% and the average artwork got less novel. Someone has to filter.</p><span class="cc-v cc-v-ok">Holds up</span><span class="cc-row"><a class="cc-go" href="#curiosity">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Taste card back">&#8634;</button></span></div>
 					</div></div>
 					<div class="cc" data-n="5"><div class="cc-in">
@@ -780,11 +729,11 @@
 						<div class="cc-b"><p class="cc-stat"><b>Grit.</b> People who succeed do not try more often. They keep more from each failure.</p><span class="cc-v cc-v-warn">Needs a fix</span><span class="cc-row"><a class="cc-go" href="#grit">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Grit card back">&#8634;</button></span></div>
 					</div></div>
 					<div class="cc" data-n="7"><div class="cc-in">
-						<button type="button" class="cc-f" aria-label="Turn over the Golf card"><span class="cc-fi"><span class="cc-num">7</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="shirt-g" d="M4,58 Q50,40 96,58 V68 H4 Z"/><path class="ln" d="M66,50 V10"/><path class="red" d="M66,10 L84,17 L66,24 Z"/><circle class="head" cx="24" cy="50" r="5"/><ellipse class="ink" cx="66" cy="51" rx="7" ry="2.4"/></svg><span class="cc-name">Golf</span><span class="cc-sub">with clients, or equivalent</span></span></button>
+						<button type="button" class="cc-f" aria-label="Turn over the Golf card"><span class="cc-fi"><span class="cc-num">7</span><svg class="toon cc-art" viewBox="0 0 100 70" aria-hidden="true"><path class="shirt-g" d="M4,58 Q50,40 96,58 V68 H4 Z"/><path class="ln" d="M66,50 V10"/><path class="red" d="M66,10 L84,17 L66,24 Z"/><circle class="head" cx="24" cy="50" r="5"/><ellipse class="ink" cx="66" cy="51" rx="7" ry="2.4"/></svg><span class="cc-name">Golf</span><span class="cc-sub">time with clients</span></span></button>
 						<div class="cc-b"><p class="cc-stat"><b>Golf.</b> Shared breaks with the boss led to 0.70 pay grades, with no difference in performance.</p><span class="cc-v cc-v-warn">Holds up, unfairly</span><span class="cc-row"><a class="cc-go" href="#golf">Read the test</a><button type="button" class="cc-turn" aria-label="Turn the Golf card back">&#8634;</button></span></div>
 					</div></div>
 				</div>
-				<figcaption><b>Figure 7.</b> Press a card to turn it over. The seven skills are <a href="https://x.com/JohnLeFevre/status/2115110713500864718" target="_blank" rel="noopener">LeFevre&rsquo;s</a>. The verdicts are my reading of the evidence below, which is linked from each card. The tray in the corner fills up as you read.</figcaption>
+				<figcaption><b>Figure 7.</b> Press a card to turn it over. The verdicts are my reading of the evidence below, which is linked from each card. The tray in the corner fills up as you read.</figcaption>
 			</figure>
 
 			<p class="card-kick" data-card="1">Networking</p>
@@ -975,7 +924,7 @@
 			<p class="card-kick" data-card="3">Curiosity and taste</p>
 			<h2 id="curiosity">The right answer to the wrong question</h2>
 
-			<p>Curiosity on LeFevre&rsquo;s list means &ldquo;harnessing AI,&rdquo; and that undersells it. <a href="https://doi.org/10.1126/science.aax2342" target="_blank" rel="noopener">Ziad Obermeyer and his colleagues examined</a> a commercial algorithm that US health systems used to pick patients for extra care. By some measures of accuracy it did its job well. What it predicted was next year&rsquo;s health-care costs, and people treated cost as a stand-in for how sick a patient was. Because of unequal access to care, less money is spent on Black patients with the same needs as white patients, so the algorithm scored Black patients as healthier than they were.</p>
+			<p>Curiosity can change what a whole project is measuring. <a href="https://doi.org/10.1126/science.aax2342" target="_blank" rel="noopener">Ziad Obermeyer and his colleagues examined</a> a commercial algorithm that US health systems used to pick patients for extra care. By some measures of accuracy it did its job well. What it predicted was next year&rsquo;s health-care costs, and people treated cost as a stand-in for how sick a patient was. Because of unequal access to care, less money is spent on Black patients with the same needs as white patients, so the algorithm scored Black patients as healthier than they were.</p>
 
 			<figure class="diagram">
 				<div class="seg seg-sm" id="f11-btns" role="group" aria-label="Choose how patients are ranked">
@@ -1019,7 +968,7 @@
 			<p class="card-kick" data-card="6">Grit</p>
 			<h2 id="grit">People who succeed do not try more often</h2>
 
-			<p>LeFevre&rsquo;s sixth skill is grit. <a href="https://arxiv.org/abs/1903.07562" target="_blank" rel="noopener">Yian Yin and his colleagues</a> measured failure directly, using 776,721 grant applications to the US National Institutes of Health and 58,111 startups. They also studied 170,350 terrorist attacks, a grim third case of repeated attempts. People who eventually succeeded did not try more often than people who stopped. The two groups&rsquo; runs of failure were about the same length.</p>
+			<p>Grit sounds simple, since it seems to mean trying again. <a href="https://arxiv.org/abs/1903.07562" target="_blank" rel="noopener">Yian Yin and his colleagues</a> measured failure directly, using 776,721 grant applications to the US National Institutes of Health and 58,111 startups. They also studied 170,350 terrorist attacks, a grim third case of repeated attempts. People who eventually succeeded did not try more often than people who stopped. The two groups&rsquo; runs of failure were about the same length.</p>
 
 			<p>What differed was how much each attempt kept from the ones before. Their model treats an attempt as many parts, like the budget and the data sections of a grant application. For each part, you either write a new version or reuse the best version from your last few attempts. A single setting, called k, decides how many past attempts you look back on.</p>
 
@@ -1179,7 +1128,6 @@
 
 			<ul>
 				<li><a href="https://www.youtube.com/watch?v=H9Bdv3t5VtQ&amp;t=3197s" target="_blank" rel="noopener">Walter Isaacson, <i>The Builders</i>, interview with Peter Thiel</a> (22 October 2026), with a <a href="https://realalpha.app/v/H9Bdv3t5VtQ/" target="_blank" rel="noopener">searchable transcript</a>. The question comes at 53:17.</li>
-				<li><a href="https://x.com/JohnLeFevre/status/2115110713500864718" target="_blank" rel="noopener">John LeFevre, post on X</a> (27 October 2026), the source of the seven skills.</li>
 				<li><a href="https://doi.org/10.1287/orsc.2025.21838" target="_blank" rel="noopener">Dell&rsquo;Acqua et al., <i>Navigating the jagged technological frontier</i></a> (<i>Organization Science</i>, 2026), and <a href="https://www.oneusefulthing.org/p/centaurs-and-cyborgs-on-the-jagged" target="_blank" rel="noopener">Ethan Mollick&rsquo;s plain-language account</a> by one of its authors.</li>
 				<li><a href="https://people.dbmi.columbia.edu/noemie/papers/15kdd.pdf" target="_blank" rel="noopener">Caruana et al., <i>Intelligible models for healthcare</i></a> (KDD, 2015), the source of the asthma rule.</li>
 				<li><a href="https://doi.org/10.1093/qje/qjx022" target="_blank" rel="noopener">David Deming, <i>The growing importance of social skills in the labor market</i></a> (<i>Quarterly Journal of Economics</i>, 2017), and <a href="https://doi.org/10.3982/ECTA18461" target="_blank" rel="noopener">Weidmann and Deming, <i>Team players</i></a> (<i>Econometrica</i>, 2021).</li>
@@ -1285,7 +1233,7 @@
 		});
 	}
 
-	/* ---- Figure 2: the clip and the telephone game ---- */
+	/* ---- Figure 2: the clip loads only when pressed ---- */
 	var f2clip = document.getElementById('f2-clip');
 	if (f2clip) {
 		f2clip.addEventListener('click', function (e) {
@@ -1300,15 +1248,6 @@
 			box.appendChild(fr);
 			f2clip.parentNode.replaceChild(box, f2clip);
 		});
-		var f2 = document.getElementById('f2'), f2b = document.querySelectorAll('#f2-btns button');
-		f2.className += ' f2-js';
-		var go2 = function (v) {
-			Array.prototype.forEach.call(f2.querySelectorAll('.f2-n'), function (n) { n.className = 'f2-n' + (n.getAttribute('data-v') === v ? ' on' : ''); });
-		};
-		Array.prototype.forEach.call(f2b, function (b) {
-			b.addEventListener('click', function () { press(f2b, b); go2(b.getAttribute('data-v')); });
-		});
-		go2('said');
 	}
 
 	/* ---- Figure 3: the answer machine ----
