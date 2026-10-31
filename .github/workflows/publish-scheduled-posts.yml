@@ -4,19 +4,14 @@ name: Publish scheduled posts
 
 on:
   schedule:
-    # 08:07 Pacific, then retries at 10:37, 13:17 and 16:47, since GitHub can drop a run.
-    - cron: '7 15 31 10 *'    # 31 October (PDT)
-    - cron: '37 17 31 10 *'
-    - cron: '17 20 31 10 *'
-    - cron: '47 23 31 10 *'
-    - cron: '7 16 1 11 *'     # 1 November (PST)
-    - cron: '37 18 1 11 *'
-    - cron: '17 21 1 11 *'
-    - cron: '47 0 2 11 *'
-    - cron: '7 16 2 11 *'     # 2 November (PST)
-    - cron: '37 18 2 11 *'
-    - cron: '17 21 2 11 *'
-    - cron: '47 0 3 11 *'
+    # Every 15 minutes from 08:07 Pacific to the end of the day, since GitHub drops many
+    # scheduled runs. A run with nothing due exits at once. Hours are UTC.
+    - cron: '7,22,37,52 8-23 31 10 *'  # 31 October: nothing due, measures how often runs fire
+    - cron: '7,22,37,52 0-5 1 11 *'
+    - cron: '7,22,37,52 16-23 1 11 *'  # 1 November (PST)
+    - cron: '7,22,37,52 0-7 2 11 *'
+    - cron: '7,22,37,52 16-23 2 11 *'  # 2 November (PST)
+    - cron: '7,22,37,52 0-7 3 11 *'
   workflow_dispatch:
 
 permissions:
