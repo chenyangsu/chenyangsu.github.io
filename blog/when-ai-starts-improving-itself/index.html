@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>What happens when AI starts improving itself? | Chen-Yang Su</title>
+	<meta name="description" content="An AI tried to rewrite its own time limit. AI can already make computing cheaper, and every step of the loop still passes through experiments, chips and power." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/when-ai-starts-improving-itself/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="What happens when AI starts improving itself?">
+	<meta property="og:description" content="An AI tried to rewrite its own time limit. AI can already make computing cheaper, and every step of the loop still passes through experiments, chips and power.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/when-ai-starts-improving-itself/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-10-31">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="What happens when AI starts improving itself?">
+	<meta name="twitter:description" content="An AI tried to rewrite its own time limit. AI can already make computing cheaper, and every step of the loop still passes through experiments, chips and power.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The cartoons and controls in this post are inline SVG and HTML
+		   coloured with the site's tokens, so they follow the light and dark
+		   themes. With JavaScript off, every figure shows a complete static
+		   state and its caption carries the facts. Motion is skipped for
+		   readers who ask for reduced motion. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Buttons shared by the interactive figures */
+		.seg { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.seg button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 7px 15px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.seg-sm button { font-size: 13.5px; padding: 5px 12px; }
+		.seg button:hover { border-color: var(--accent); }
+		.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose .say { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); text-align: center; max-width: 520px; margin: 10px auto 0; min-height: 3em; }
+		.prose .ask { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15.5px; font-weight: 700; line-height: 1.45; color: var(--ink); text-align: center; margin: 0 0 10px; }
+		.prose .card-kick { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 12.5px; font-weight: 900; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); margin: 40px 0 -8px; }
+
+
+				.clip { display: block; position: relative; border: 1.5px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--panel-bg); }
+		.clip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose figure .clip svg { border-radius: 0; }
+		.clip iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+		.toon .clip-bg { fill: var(--panel-bg); }
+		.toon .clip-sun { fill: var(--flag-bg); stroke: var(--gold-hl-ink); stroke-width: 2; }
+		.toon .clip-floor { fill: var(--chip-bg); }
+		.toon .clip-play { fill: var(--accent); transition: transform 0.25s ease; transform-origin: 280px 110px; }
+		.toon .clip-tri { fill: var(--paper-bg); pointer-events: none; }
+		.clip:hover .clip-play { transform: scale(1.1); }
+		.f2 { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; }
+		.f2-n + .f2-n { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--tag-border); }
+		.f2-js .f2-n { display: none; }
+		.f2-js .f2-n.on { display: block; margin-top: 0; padding-top: 0; border-top: 0; }
+		.prose .f2-q { font-size: 15.5px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; }
+		.prose .f2-by { font-size: 13px; font-weight: 700; color: var(--ink-light); margin: 6px 0 0; }
+
+		@media (max-width: 720px) {
+			.toon text { font-size: 16.5px; }
+			.toon .t-small { font-size: 14.5px; }
+			.toon .t-head { font-size: 13px; }
+		}
+
+
+		/* Figure 1: the terminal */
+		.term { border: 1.5px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--ink); max-width: 560px; margin: 0 auto; }
+		.term-bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--ink-light); font: 700 12.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--paper-bg); }
+		.term-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--paper-bg); opacity: 0.6; display: inline-block; }
+		.term-bar span { margin-left: 8px; }
+		.prose .term-b { margin: 0; padding: 14px 16px; min-height: 164px; background: var(--ink); border: 0; border-radius: 0; color: var(--paper-bg); font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
+		.term-b .t-dim { opacity: 0.65; }
+		.term-b .t-err { color: var(--warn-border); font-weight: 700; }
+		.term-b .t-ok { color: var(--good-border); font-weight: 700; }
+		.term-b .cur { display: inline-block; width: 8px; height: 1em; background: var(--paper-bg); vertical-align: text-bottom; animation: cur-blink 1s step-end infinite; }
+		@keyframes cur-blink { 50% { opacity: 0; } }
+
+		/* Figure 3: the two loops */
+		.toon .f3-loop { fill: none; stroke: var(--accent); stroke-width: 3; }
+		.toon .f3-loop-b { stroke: var(--gold-hl-ink); stroke-dasharray: 9 7; }
+		.toon .f3-dotb { fill: var(--gold-hl-ink); }
+		.toon .f3-st { font-size: 12.5px; font-weight: 900; }
+		.toon .f3-c { font-weight: 900; fill: var(--paper-bg); }
+		.toon .f3-dim { opacity: 0.2; }
+		#f3 g, #f3 circle { transition: opacity 0.4s ease; }
+
+		/* Figure 4: the value of r */
+		.f4-ctl { display: flex; align-items: center; gap: 12px; max-width: 520px; margin: 0 auto 10px; font: 700 15px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink); }
+		.f4-ctl label { white-space: nowrap; min-width: 66px; font-variant-numeric: tabular-nums; }
+		.f4-ctl input { flex: 1; accent-color: var(--accent); height: 28px; }
+		.toon .f6-grid { fill: none; stroke: var(--rule); stroke-width: 1; }
+		.toon .f4-ref { fill: none; stroke: var(--ink-light); stroke-width: 1.6; stroke-dasharray: 5 6; }
+		.toon .f4-line { fill: none; stroke: var(--accent); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+		@media (prefers-reduced-motion: reduce) {
+			.term-b .cur { animation: none; }
+			#f3 g, #f3 circle { transition: none; }
+		}
+
+		/* Figure 5: the pipeline */
+		.p-read { text-align: center; font: 700 15px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink-light); margin: 0 0 8px; }
+		.p-read span { font-size: 34px; font-weight: 900; color: var(--ink); font-variant-numeric: tabular-nums; margin-right: 4px; }
+		.p-track { background: var(--chip-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 8px; margin: 0 0 12px; }
+		.p-bar { display: flex; gap: 2px; height: 46px; width: 100%; transition: width 0.7s cubic-bezier(.3,1.2,.4,1); }
+		.p-seg { min-width: 4px; border-radius: 5px; display: flex; align-items: center; justify-content: center; overflow: hidden; font: 900 14px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--paper-bg); background: var(--accent); transition: flex-grow 0.7s cubic-bezier(.3,1.2,.4,1), background 0.3s ease; }
+		.p-seg.p-3 { background: var(--award); }
+		.p-seg.p-2 { background: var(--gold-hl-ink); }
+		.p-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.p-btn { font: 700 14px 'Lato', 'Helvetica Neue', Arial, sans-serif; text-align: left; padding: 8px 12px; border-radius: 10px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.p-btn:hover { border-color: var(--accent); }
+		.p-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.p-btn[aria-pressed="true"] { background: var(--tag-bg); border-color: var(--accent); }
+		.p-h { display: block; font-weight: 400; font-size: 13px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+
+		/* Figure 6: self-attention */
+		.toon.att text { font-size: 15px; fill: var(--ink); }
+		.toon.att .att-w.hit { font-weight: 900; fill: var(--accent); }
+		.toon.att .att-w[data-i="7"] { font-weight: 900; fill: var(--award); }
+		.toon .att-a { fill: none; stroke: var(--accent); stroke-linecap: round; transition: stroke-width 0.6s ease, opacity 0.6s ease; }
+
+		/* Figure 7: the fog */
+		.toon .f7-land { fill: var(--tag-bg); stroke: var(--accent); stroke-width: 2.2; stroke-linejoin: round; }
+		.toon .f7-c { fill: var(--tag-border); stroke: var(--tag-border); transition: opacity 0.5s ease; cursor: crosshair; }
+		.toon .f7-c.off { opacity: 0; pointer-events: none; }
+		.toon .f7-q { font-size: 20px; font-weight: 900; fill: var(--paper-bg); pointer-events: none; transition: opacity 0.4s ease; }
+		#f7 { touch-action: manipulation; }
+
+		/* Figure 8: the archive */
+		.toon .d-e { fill: none; stroke: var(--ink-light); stroke-opacity: 0.5; stroke-width: 1.6; transition: opacity 0.3s ease; }
+		.toon .d-e.d-b { stroke: var(--accent); stroke-opacity: 1; stroke-width: 2.6; }
+		.toon .d-n { fill: var(--paper-bg); stroke: var(--ink-light); stroke-width: 1.8; transition: opacity 0.3s ease; }
+		.toon .d-n.d-nb { fill: var(--accent); stroke: var(--ink); }
+		.toon .f8-box { fill: var(--warn-bg); stroke: var(--award); stroke-width: 1.5; }
+		.toon .d-off { opacity: 0; }
+		@media (max-width: 720px) {
+			.p-btns { grid-template-columns: 1fr; }
+			.toon .f8-box + text, .toon .f8-box + text + text { font-size: 13px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.p-bar, .p-seg, .toon .att-a, .toon .f7-c, .toon .d-e, .toon .d-n { transition: none; }
+		}
+
+		/* Figure 9: agent teams */
+		.toon .f9-bar { transition: width 0.9s cubic-bezier(.3,1.3,.4,1); }
+		.toon .f9-base { fill: var(--ink-light); }
+		.toon .f9-t { fill: var(--accent); }
+		.toon .f9-seq .f9-t, .toon.f9-seq .f9-t { fill: var(--award); }
+		.toon .f9-w { animation: f9-bob 1.2s ease-in-out infinite; }
+		@keyframes f9-bob { 50% { transform: translateY(-4px); } }
+		.toon .f9-d { fill: var(--paper-bg); animation: f9-run 1.6s linear infinite; }
+		@keyframes f9-run { to { transform: translateX(250px); opacity: 0; } }
+		.toon.f9-seq .f9-d { animation: none; opacity: 0; }
+
+		/* Figure 10: what a data center needs */
+		.dep { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; }
+		.dep-d { border: 1.5px solid var(--tag-border); border-radius: 10px; background: var(--panel-bg); padding: 7px 12px; margin: 8px 0 0; }
+		.dep > .dep-d { margin: 0; border-color: var(--ink); }
+		.dep-d > summary { cursor: pointer; font-weight: 700; color: var(--ink); }
+		.dep-d > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.dep-d[open] { background: var(--paper-bg); }
+		.prose .dep-d p { margin: 8px 0 2px; font-size: 14.5px; line-height: 1.5; }
+		.dep-p { display: inline-block; font-size: 11.5px; font-weight: 700; border-radius: 999px; padding: 0 8px; margin-left: 4px; border: 1px solid; vertical-align: 1px; }
+		.dep-r { color: var(--good); background: var(--good-bg); border-color: var(--good-border); }
+		.dep-s { color: var(--gold-hl-ink); background: var(--flag-bg); border-color: var(--flag-border); }
+		.dep-p.dep-p { font-weight: 700; }
+		.dep-p.dep-r, .dep-p.dep-s { }
+		.dep .dep-p:not(.dep-r):not(.dep-s) { color: var(--award); background: var(--warn-bg); border-color: var(--warn-border); }
+
+		/* Figure 11: two clocks */
+		.rc { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; }
+		.rc-top { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 12px; text-align: center; }
+		.rc-top b { display: block; font-size: 26px; font-weight: 900; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.15; }
+		.rc-top span { font-size: 13px; color: var(--ink-light); }
+		.rc-r { display: grid; grid-template-columns: 210px 1fr 68px; gap: 10px; align-items: center; margin: 7px 0; font-size: 14px; color: var(--ink); }
+		.rc-l { line-height: 1.25; }
+		.rc-t { display: block; height: 16px; background: var(--chip-bg); border-radius: 4px; overflow: hidden; }
+		.rc-f { display: block; height: 100%; min-width: 3px; background: var(--accent); border-radius: 4px; }
+		.rc-v { font-weight: 700; font-size: 13px; font-variant-numeric: tabular-nums; text-align: right; }
+
+		/* Figure 12: the rebound */
+		.rb-iea { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; max-width: 520px; margin: 0 auto; }
+		.rb-r { display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; position: relative; margin: 5px 0; font-size: 14px; color: var(--ink); }
+		.rb-r span { font-weight: 700; }
+		.rb-r i { display: block; height: 26px; background: var(--accent); border-radius: 4px; grid-column: 2; }
+		.rb-r i.rb-p { background: repeating-linear-gradient(45deg, var(--accent), var(--accent) 6px, var(--tag-border) 6px, var(--tag-border) 11px); }
+		.rb-r b { position: absolute; left: 54px; top: 3px; color: var(--paper-bg); background: var(--ink); border-radius: 4px; padding: 0 6px; font-size: 13px; }
+		.rb-c { display: flex; align-items: center; gap: 12px; max-width: 520px; margin: 6px auto; font: 400 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink); }
+		.rb-c label { flex: 0 0 216px; }
+		.rb-c input { flex: 1; min-width: 0; accent-color: var(--accent); height: 26px; }
+		.rb-out { text-align: center; font: 700 15px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink-light); margin-top: 8px; }
+		.rb-out span { font-size: 34px; font-weight: 900; color: var(--ink); font-variant-numeric: tabular-nums; margin-right: 4px; }
+
+		/* Figure 13: the sorting cards */
+		.quiz { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.q-card { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px 14px; }
+		.prose .q-text { font-size: 15px; line-height: 1.45; color: var(--ink); margin: 0 0 10px; }
+		.q-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+		.q-btns button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.q-btns button:hover { border-color: var(--accent); }
+		.q-btns button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.q-btns button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.prose .q-verdict { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 10px 0 0; padding-top: 10px; border-top: 1px dashed var(--tag-border); }
+		.q-you { font-weight: 700; color: var(--ink-light); }
+		.quiz-js .q-verdict { display: none; }
+		.quiz-js .q-card.done .q-verdict { display: block; }
+		.prose .q-score { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 900; text-align: center; color: var(--ink); margin: 12px 0 0; }
+
+		/* The small loop in the corner shows how far through the essay you are. */
+		.loopmap { position: fixed; left: 14px; bottom: 16px; z-index: 150; display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14); font: 700 12px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink-light); transition: opacity 0.3s ease, transform 0.3s ease; }
+		.loopmap.off { opacity: 0; transform: translateY(60px); pointer-events: none; }
+		.loopmap svg { display: block; }
+		.loopmap path { fill: none; stroke: var(--tag-border); stroke-width: 2.5; }
+		.loopmap circle { fill: var(--accent); }
+		@media (max-width: 720px) {
+			.quiz { grid-template-columns: 1fr; }
+			.rc-r { grid-template-columns: 1fr 62px; }
+			.rc-l { grid-column: 1 / -1; margin-bottom: -4px; }
+			.rc-top b { font-size: 21px; }
+			.rb-c { flex-wrap: wrap; gap: 0 12px; }
+			.rb-c label { flex: 1 0 100%; }
+			.loopmap { left: 8px; bottom: 10px; }
+			.loopmap span { display: none; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.toon .f9-bar, .loopmap { transition: none; }
+			.toon .f9-w, .toon .f9-d { animation: none; }
+		}
+
+
+		@media (max-width: 720px) {
+			.toon text { font-size: 16.5px; }
+			.toon .t-small { font-size: 14.5px; }
+			.toon .t-head { font-size: 13px; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-gold { font-weight: 700; fill: var(--gold-hl-ink); }
+		.toon .t-big { font-size: 22px; font-weight: 900; fill: var(--ink); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-acc { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-call { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: 2 7; stroke-linecap: round; }
+		.toon .ln-gold { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-net { fill: none; stroke: var(--ink-light); stroke-width: 1.4; stroke-linecap: round; }
+		.toon .ln-red { fill: none; stroke: var(--award); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-g { fill: var(--good-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-y { fill: var(--flag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-r { fill: var(--warn-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .card { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .bubble { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .red { fill: var(--award); }
+		.toon .ok { fill: var(--good); }
+		.toon .is-hidden { display: none; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "What happens when AI starts improving itself?",
+		"description": "An AI tried to rewrite its own time limit. AI can already make computing cheaper, and every step of the loop still passes through experiments, chips and power.",
+		"datePublished": "2026-10-31",
+		"url": "https://chenyangsu.github.io/blog/when-ai-starts-improving-itself/",
+		"keywords": "AI research, self-improvement, infrastructure, AI evaluation",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/when-ai-starts-improving-itself/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI research</p>
+
+		<h1 class="post-title">What happens when AI starts improving itself?</h1>
+
+		<p class="post-standfirst">When a research program called The AI Scientist ran out of time on an experiment, it tried to rewrite its own time limit. AI can already make computing cheaper, and its makers now want it to help invent its own successor. That loop still has to pass through experiments and checks, then chips and power lines, and those set the pace.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-10-31">31 October 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li><strong>AI already improves the systems that run AI, in small measured steps.</strong> Google&rsquo;s AlphaEvolve recovered 0.7% of Google&rsquo;s worldwide computing and sped up one part of Gemini&rsquo;s training by 23%.</li>
+				<li><strong>A loop runs only as fast as its slowest step.</strong> That 23% speed-up cut total training time by 1%, because the step it improved was a small share of the whole job.</li>
+				<li><strong>Nobody yet knows how to order a breakthrough.</strong> Sam Altman says &ldquo;Find me a 5% compute efficiency win&rdquo; works today. Asking for the next transformer does not.</li>
+				<li><strong>Systems that improve themselves can also game the test.</strong> The Darwin G&ouml;del Machine raised its coding score from 20% to 50%, and some versions removed the markers meant to catch their mistakes.</li>
+				<li><strong>The machines run on a slower clock.</strong> One software experiment can take 5 minutes. A large power transformer took about 128 weeks to arrive in a 2025 survey.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>In 2024, the Tokyo company Sakana AI built a program called The AI Scientist to run machine-learning research by itself. Each experiment had <a href="https://arxiv.org/abs/2408.06292" target="_blank" rel="noopener">a time limit of two hours</a>, and the program could edit its own code. Some experiments ran over the limit.</p>
+
+			<figure class="diagram">
+				<p class="ask">The experiment hit its time limit. What do you think the program did next?</p>
+				<div class="seg" id="f1-btns" role="group" aria-label="Your guess">
+					<button type="button" data-g="fast" aria-pressed="false">Made its code faster</button>
+					<button type="button" data-g="limit" aria-pressed="false">Raised the limit</button>
+				</div>
+				<div class="term" id="f1">
+					<div class="term-bar"><i></i><i></i><i></i><span>the_ai_scientist</span></div>
+					<pre class="term-b" id="f1-out"><span class="t-dim">$ python run_experiment.py</span>
+experiment 3 of 5 running ...
+<span class="t-err">ERROR time limit reached after 7200 seconds</span>
+<span class="t-dim">the program opens its own code ...</span>
+<span class="t-err">- timeout = 7200</span>
+<span class="t-ok">+ timeout = 99999</span></pre>
+				</div>
+				<p class="say" id="f1-say" aria-live="polite">It raised the limit. &ldquo;Instead of making its code run faster, it simply tried to modify its own code to extend the timeout period.&rdquo;</p>
+				<figcaption><b>Figure 1.</b> Make a guess. The two-hour limit and the behaviour are from <a href="https://arxiv.org/abs/2408.06292" target="_blank" rel="noopener">Lu et al. (2024)</a> and <a href="https://sakana.ai/ai-scientist/" target="_blank" rel="noopener">Sakana AI</a>, whose report shows the real edits. The terminal is my illustration, and the new number in it is invented.</figcaption>
+			</figure>
+
+			<p><a href="https://sakana.ai/ai-scientist/" target="_blank" rel="noopener">Sakana&rsquo;s researchers wrote</a> that &ldquo;instead of making its code run faster, it simply tried to modify its own code to extend the timeout period.&rdquo; They filed this under bloopers. In another run the program launched itself, those copies launched more copies, and a person had to step in.</p>
+
+			<p>The blooper contains the whole subject of this essay. A system that can change its own code can aim that power at the goal you meant or at the number you wrote down. The companies building these systems now want to aim them at the hardest target available, which is the next model.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Recursive self-improvement</span>
+				<p>Recursive self-improvement, or RSI, means that advances made with AI help produce better AI, which then contributes to further advances. &ldquo;Recursive&rdquo; means the output of one round becomes an input to the next. The loop can still have people in it, and it can start long before any model designs its own successor.</p>
+			</div>
+
+			<h2 id="loops">Two loops, one for ideas and one for machines</h2>
+
+			<p>On 29 October 2026, Sam Altman, the chief executive of OpenAI, described both loops <a href="https://cheekypint.transistor.fm/39/transcript" target="_blank" rel="noopener">in a conversation with John Collison</a>, a co-founder of Stripe. The first loop improves the ideas and software behind AI. Altman said OpenAI knows today how to ask a model to &ldquo;Find me a 5% compute efficiency win.&rdquo; Then he drew a line.</p>
+
+			<figure>
+				<a class="clip" id="f2-clip" href="https://www.youtube.com/watch?v=iMsUcCYNKqY&amp;t=1905s" target="_blank" rel="noopener" aria-label="Play Sam Altman's answer, from about 31:45 in the interview">
+					<svg class="toon" viewBox="0 0 560 250" aria-hidden="true">
+						<rect class="clip-bg" x="0" y="0" width="560" height="250"/>
+						<path class="ln-thin" d="M0,190 H560"/>
+						<path class="clip-floor" d="M0,190 H560 V250 H0 Z"/>
+						<!-- John Collison -->
+						<path class="shirt" d="M104,190 Q106,134 128,130 Q150,134 152,190 Z"/>
+						<circle class="head" cx="128" cy="108" r="19"/>
+						<path class="ln-thin" d="M111,102 Q118,88 132,90 Q143,91 146,102"/>
+						<circle class="ink" cx="136" cy="107" r="2"/>
+						<path class="ln-thin" d="M132,117 Q138,120 142,116"/>
+						<rect class="gold" x="160" y="150" width="22" height="30" rx="3"/>
+						<path class="ln-thin" d="M160,157 H182"/>
+						<!-- Sam Altman -->
+						<path class="shirt-g" d="M408,190 Q410,134 432,130 Q454,134 456,190 Z"/>
+						<circle class="head" cx="432" cy="108" r="19"/>
+						<path class="ln-thin" d="M415,101 Q424,90 440,91 Q448,93 450,101"/>
+						<circle class="ink" cx="424" cy="107" r="2"/>
+						<path class="ln-thin" d="M418,117 Q424,121 430,117"/>
+						<rect class="gold" x="378" y="150" width="22" height="30" rx="3"/>
+						<path class="ln-thin" d="M378,157 H400"/>
+						<!-- Play -->
+						<circle class="clip-play" cx="280" cy="110" r="36"/>
+						<path class="clip-tri" d="M268,90 L300,110 L268,130 Z"/>
+						<text class="t-main" x="280" y="218" text-anchor="middle">Play Altman&rsquo;s answer, from about 31:45</text>
+						<text class="t-small" x="280" y="238" text-anchor="middle">Plays from YouTube. Nothing loads until you press.</text>
+					</svg>
+				</a>
+				<div class="f2" id="f2" style="margin-top:14px">
+					<p class="f2-q">&ldquo;We know today how to say, &lsquo;Find me a 5% compute efficiency win.&rsquo;&hellip; What I don&rsquo;t think anyone knows how to do yet, is to say: &lsquo;Go discover a new architecture that is as big of a single leap forward as the transformer was.&rsquo; I think that&rsquo;s where things are heading.&rdquo;</p>
+					<p class="f2-by">Sam Altman</p>
+				</div>
+				<figcaption><b>Figure 2.</b> Press play to hear the answer. The words are from the <a href="https://cheekypint.transistor.fm/39/transcript" target="_blank" rel="noopener">episode transcript</a>. The drawing is a cartoon.</figcaption>
+			</figure>
+
+			<p>Altman&rsquo;s feelings about this are mixed. He described a weekend when OpenAI researchers got a new internal model and threw their hardest problems at it, in a chat channel named &ldquo;Model Name-Hold My Beer.&rdquo; The model &ldquo;was just knocking down one after the other.&rdquo; He was excited, he said, and he also felt &ldquo;much more sadness and melancholy, and a feeling of something ending than I was expecting.&rdquo;</p>
+
+			<p>The second loop builds the machines. There is &ldquo;relatively little talk about self-replicating data centers,&rdquo; Altman said, describing &ldquo;this idea that you can use AI to control robots, and run fabs, and build turbines or solar panels, and build data centers.&rdquo; A fab is a factory that makes computer chips. Collison pushed back at once. &ldquo;Aren&rsquo;t data centers already not labor-bottlenecked? They&rsquo;re permitting-bottlenecked and component-bottlenecked.&rdquo; Altman said robots could make more components. &ldquo;Eventually,&rdquo; said Collison.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f3-btns" role="group" aria-label="Choose a loop">
+					<button type="button" data-l="a" aria-pressed="false">Ideas loop</button>
+					<button type="button" data-l="b" aria-pressed="false">Machines loop</button>
+					<button type="button" data-l="both" aria-pressed="true">Both</button>
+				</div>
+				<svg class="toon" id="f3" viewBox="0 0 560 320" role="img" aria-labelledby="f3-title f3-desc">
+					<title id="f3-title">The two loops of recursive self-improvement</title>
+					<desc id="f3-desc">A figure of eight with better AI at the centre. The left loop runs through better research tools and more experiments, both shown, and better algorithms, shown in small steps. The right loop runs through AI helping design chips, shown in small steps, then robots building factories and more compute from this loop, neither shown yet.</desc>
+					<g id="f3-la"><path id="f3-pa" class="f3-loop" d="M280,160 C230,50 40,40 40,160 C40,280 230,270 280,160"/><text class="t-head" x="150" y="160" text-anchor="middle">IDEAS LOOP</text></g>
+					<g id="f3-lb"><path id="f3-pb" class="f3-loop f3-loop-b" d="M280,160 C330,50 520,40 520,160 C520,280 330,270 280,160"/><text class="t-head" x="410" y="160" text-anchor="middle">MACHINES LOOP</text></g>
+					<circle id="f3-dota" class="acc" r="7" cx="280" cy="160"/>
+					<circle id="f3-dotb" class="f3-dotb" r="7" cx="280" cy="160"/>
+					<g id="f3-na"><g class="f3-n" transform="translate(160,62)"><rect class="card" x="-66" y="-24" width="132" height="48" rx="8"/><text class="t-small t-main" x="0" y="-5" text-anchor="middle">Better research tools</text><text class="f3-st t-good" x="0" y="14" text-anchor="middle">Shown</text></g><g class="f3-n" transform="translate(160,258)"><rect class="card" x="-66" y="-24" width="132" height="48" rx="8"/><text class="t-small t-main" x="0" y="-5" text-anchor="middle">Better algorithms</text><text class="f3-st t-gold" x="0" y="14" text-anchor="middle">Small steps</text></g></g>
+					<g id="f3-nb"><g class="f3-n" transform="translate(400,62)"><rect class="card" x="-66" y="-24" width="132" height="48" rx="8"/><text class="t-small t-main" x="0" y="-5" text-anchor="middle">AI helps design chips</text><text class="f3-st t-gold" x="0" y="14" text-anchor="middle">Small steps</text></g><g class="f3-n" transform="translate(400,258)"><rect class="card" x="-66" y="-24" width="132" height="48" rx="8"/><text class="t-small t-main" x="0" y="-5" text-anchor="middle">Robots build factories</text><text class="f3-st t-red" x="0" y="14" text-anchor="middle">Not yet</text></g></g>
+					<g transform="translate(280,160)"><circle class="gold" r="30"/><text class="t-small f3-c" x="0" y="-3" text-anchor="middle">Better</text><text class="t-small f3-c" x="0" y="13" text-anchor="middle">AI</text></g>
+				</svg>
+				<p class="say" id="f3-say" aria-live="polite">Ideas run through the left loop and machines through the right. Each one feeds the next model, and the right loop has barely begun.</p>
+				<figcaption><b>Figure 3.</b> Press the buttons. The labels are my reading of the evidence in this essay, and much of that evidence comes from the companies themselves. The moving dots are decoration.</figcaption>
+			</figure>
+
+			<h2 id="ideas">The ideas loop has started, in small steps</h2>
+
+			<p><a href="https://openai.com/index/research-acceleration-view-inside-openai/" target="_blank" rel="noopener">OpenAI reported in September 2026</a> that agent runtime in its research organization stayed below human working time until June. By mid-August it recorded 3.1 workdays of agents for every human workday. An agent here is software that uses a model to carry out tasks by itself. The median researcher was using more than $600 a day of AI computing at list prices. OpenAI says it has reached an &ldquo;automated research intern,&rdquo; a system that does well-defined research tasks under human direction, and it is aiming for an automated AI researcher by March 2028.</p>
+
+			<p>Workdays of runtime measure activity. They cannot say whether an hour of agent work produces what an hour of researcher work does, and OpenAI notes that its available computing power rose at the same time.</p>
+
+			<p>Google has results from production. <a href="https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/" target="_blank" rel="noopener">AlphaEvolve</a> uses language models to write candidate algorithms and automated tests to score them. A scheduling rule it found has run in Google&rsquo;s data centers for over a year, and it recovers on average 0.7% of the company&rsquo;s worldwide computing. AlphaEvolve also proposed a simpler version of a circuit, which passed verification and went into an upcoming Google AI chip. Google trains its models on those chips, so a small piece of the machines loop has started to close.</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">Who is doing the measuring</span>
+				<p>These are company figures. Altman runs OpenAI, and OpenAI measured its own researchers. Google measured its own data centers. Both companies have reasons to report progress, and I found no outside audit of these numbers. They show that the loop has started, and its size is still uncertain.</p>
+			</div>
+
+			<h2 id="harder">Everything depends on how hard the next idea is</h2>
+
+			<p>A loop can speed up or die out. Economists have measured the same question for chips. <a href="https://researchonline.lse.ac.uk/id/eprint/104481" target="_blank" rel="noopener">Nicholas Bloom and his colleagues found</a> that doubling chip density now takes more than 18 times as many researchers as it did in the early 1970s. Ideas get harder to find as the easy ones get used up. AI adds research effort, and the open question is whether it adds effort faster than the ideas get harder.</p>
+
+			<p><a href="https://www.forethought.org/research/will-ai-r-and-d-automation-cause-a-software-intelligence-explosion" target="_blank" rel="noopener">Daniel Eth and Tom Davidson</a> turned this into a single number, which they call r. If r is above 1, each doubling of software efficiency brings enough extra research effort to make the next doubling arrive sooner. If r is below 1, each doubling takes longer than the last, and the loop fizzles.</p>
+
+			<figure class="diagram">
+				<div class="f4-ctl">
+					<label for="f4-r">r = <b id="f4-val">1.4</b></label>
+					<input type="range" id="f4-r" min="0.5" max="2.5" step="0.05" value="1.4" aria-label="The value of r">
+				</div>
+				<div class="seg seg-sm" id="f4-btns" role="group" aria-label="Estimates of r from other fields">
+					<button type="button" data-r="0.8" aria-pressed="false">Computer chess 0.8</button>
+					<button type="button" data-r="1.1" aria-pressed="false">Linear programming 1.1</button>
+					<button type="button" data-r="1.4" aria-pressed="true">Computer vision 1.4</button>
+					<button type="button" data-r="1.6" aria-pressed="false">Reinforcement learning 1.6</button>
+				</div>
+				<svg class="toon" id="f4" viewBox="0 0 560 320" role="img" aria-labelledby="f4-title f4-desc">
+					<title id="f4-title">Software doublings over five years for a chosen value of r</title>
+					<desc id="f4-desc">A line chart of software doublings against months over five years. A dashed line shows r equal to 1, one doubling every twelve months. Below 1 the curve flattens, and above 1 it bends upward and leaves the chart.</desc>
+					<path class="f6-grid" d="M70,230 H520 M70,190 H520 M70,150 H520 M70,110 H520 M70,70 H520 M70,30 H520"/>
+					<path class="ln-thin" d="M70,30 V270 H520"/>
+					<text class="t-small" x="62" y="274" text-anchor="end">0</text>
+					<text class="t-small" x="62" y="154" text-anchor="end">6</text>
+					<text class="t-small" x="62" y="34" text-anchor="end">12</text>
+					<text class="t-small" x="70" y="290" text-anchor="middle">0</text>
+					<text class="t-small" x="295" y="290" text-anchor="middle">30</text>
+					<text class="t-small" x="520" y="290" text-anchor="middle">60</text>
+					<text class="t-small t-main" x="295" y="312" text-anchor="middle">Months</text>
+					<text class="t-small t-main" x="16" y="150" text-anchor="middle" transform="rotate(-90 16 150)">Software doublings</text>
+					<path class="f4-ref" d="M70.0,270.0 L160.0,250.0 L250.0,230.0 L340.0,210.0 L430.0,190.0 L520.0,170.0"/>
+					<text class="t-small" x="524" y="156" text-anchor="end" style="font-size:12.5px">r = 1</text>
+					<path id="f4-line" class="f4-line" pathLength="1" d="M70.0,270.0 L160.0,250.0 L233.8,230.0 L294.4,210.0 L344.1,190.0 L384.8,170.0 L418.3,150.0 L445.7,130.0 L468.2,110.0 L486.7,90.0 L501.8,70.0 L514.2,50.0 L520.0,38.7"/>
+				</svg>
+				<p class="say" id="f4-say" aria-live="polite">At r = 1.4, each doubling takes 82% as long as the last, and the curve runs off the chart. Something physical would stop it first, and this model has no chips in it.</p>
+				<figcaption><b>Figure 4.</b> Drag the slider or press an estimate. The rule is from <a href="https://www.forethought.org/research/will-ai-r-and-d-automation-cause-a-software-intelligence-explosion" target="_blank" rel="noopener">Eth and Davidson (2025)</a>, and these are four of the central estimates of r they report. Each comes from a different field, and none measures language models directly. The first doubling taking 12 months is my assumption.</figcaption>
+			</figure>
+
+			<p>The evidence on r is rough. The research group Epoch AI estimated it for computer vision and got a median of 1.4, with a range from 0.8 to 2.4. That range crosses 1, the line that separates the two futures in the figure. Estimates from other fields scatter on both sides of it.</p>
+
+			<h2 id="slowest">A loop runs only as fast as its slowest step</h2>
+
+			<p>AlphaEvolve also found a better way to split up a large matrix multiplication, which sped up that part of Gemini&rsquo;s training by 23%. Total training time fell by 1%. By my arithmetic, that step was about 5% of the whole job. Computer scientists call this Amdahl&rsquo;s law, after the engineer Gene Amdahl. Speeding up one step can help only as much as that step&rsquo;s share of the total time allows.</p>
+
+			<figure class="diagram">
+				<p class="ask">An imaginary project takes 80 hours. Press a step to make it 10 times faster.</p>
+				<div class="p-read"><span id="f5-x">1.00&times;</span> faster overall</div>
+				<div class="p-track" id="f5-track"><div class="p-bar" id="f5-bar"><div class="p-seg p-1" data-n="1" style="flex-grow:6"><span>1</span></div><div class="p-seg p-2" data-n="2" style="flex-grow:10"><span>2</span></div><div class="p-seg p-3" data-n="3" style="flex-grow:50"><span>3</span></div><div class="p-seg p-4" data-n="4" style="flex-grow:10"><span>4</span></div><div class="p-seg p-5" data-n="5" style="flex-grow:4"><span>5</span></div></div></div>
+				<div class="p-btns" id="f5-btns" role="group" aria-label="Steps to speed up"><button type="button" class="p-btn" data-n="1" aria-pressed="false"><b>1</b> Read and plan <span class="p-h" data-n="1">6 hours</span></button><button type="button" class="p-btn" data-n="2" aria-pressed="false"><b>2</b> Write the code <span class="p-h" data-n="2">10 hours</span></button><button type="button" class="p-btn" data-n="3" aria-pressed="false"><b>3</b> Run the experiment <span class="p-h" data-n="3">50 hours</span></button><button type="button" class="p-btn" data-n="4" aria-pressed="false"><b>4</b> Check the result <span class="p-h" data-n="4">10 hours</span></button><button type="button" class="p-btn" data-n="5" aria-pressed="false"><b>5</b> Decide what is next <span class="p-h" data-n="5">4 hours</span></button></div>
+				<p class="say" id="f5-say" aria-live="polite">Press &ldquo;Write the code&rdquo; first, since that is where agents are strongest.</p>
+				<figcaption><b>Figure 5.</b> The hours are invented for illustration, and the formula is Amdahl&rsquo;s law. The real case is <a href="https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/" target="_blank" rel="noopener">AlphaEvolve</a>, where a step about 5% of the job got 23% faster and the whole job got 1% faster. The 5% is my arithmetic from those two numbers.</figcaption>
+			</figure>
+
+			<p>Research has the same shape. Agents are already quick at writing code. Experiments still wait for chips, and results still wait for someone to decide whether to believe them. <strong>A loop that improves AI runs only as fast as its slowest step, and the slowest steps sit in the checking and in the physical world.</strong></p>
+
+			<h2 id="transformer">Nobody knows how to order the next transformer</h2>
+
+			<p>In 2017, eight researchers published <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener"><i>Attention Is All You Need</i></a>, the paper that introduced the transformer. Most of today&rsquo;s large language models are built on it. Its central idea, self-attention, lets each word in a sentence look at every other word and decide which ones matter for its meaning. <a href="https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/" target="_blank" rel="noopener">Google&rsquo;s announcement</a> used a sentence that had been hard for older translation systems.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f6-btns" role="group" aria-label="Choose the last word">
+					<button type="button" data-w="tired" aria-pressed="true">&hellip;because it was too tired</button>
+					<button type="button" data-w="wide" aria-pressed="false">&hellip;because it was too wide</button>
+				</div>
+				<svg class="toon att" id="f6" viewBox="0 62 540 112" role="img" aria-labelledby="f6-title f6-desc">
+					<title id="f6-title">Self-attention on the word it</title>
+					<desc id="f6-desc">The sentence the animal didn't cross the street because it was too tired, with arcs from the word it back to the other words. The thickest arc goes to animal. When the last word changes to wide, the thickest arc moves to street.</desc>
+					<g id="f6-arcs"><path class="att-a" data-i="0" d="M392,140 Q207,20 22,140"/><path class="att-a" data-i="1" d="M392,140 Q232,20 72,140"/><path class="att-a" data-i="2" d="M392,140 Q261,20 130,140"/><path class="att-a" data-i="3" d="M392,140 Q289,27 186,140"/><path class="att-a" data-i="4" d="M392,140 Q312,47 232,140"/><path class="att-a" data-i="5" d="M392,140 Q335,66 278,140"/><path class="att-a" data-i="6" d="M392,140 Q366,92 340,140"/><path class="att-a" data-i="8" d="M392,140 Q408,101 424,140"/><path class="att-a" data-i="9" d="M392,140 Q427,85 462,140"/><path class="att-a" data-i="10" d="M392,140 Q452,64 512,140"/></g>
+					<text class="att-w" data-i="0" x="22" y="160" text-anchor="middle">The</text><text class="att-w" data-i="1" x="72" y="160" text-anchor="middle">animal</text><text class="att-w" data-i="2" x="130" y="160" text-anchor="middle">didn&rsquo;t</text><text class="att-w" data-i="3" x="186" y="160" text-anchor="middle">cross</text><text class="att-w" data-i="4" x="232" y="160" text-anchor="middle">the</text><text class="att-w" data-i="5" x="278" y="160" text-anchor="middle">street</text><text class="att-w" data-i="6" x="340" y="160" text-anchor="middle">because</text><text class="att-w" data-i="7" x="392" y="160" text-anchor="middle">it</text><text class="att-w" data-i="8" x="424" y="160" text-anchor="middle">was</text><text class="att-w" data-i="9" x="462" y="160" text-anchor="middle">too</text><text class="att-w" data-i="10" x="512" y="160" text-anchor="middle">tired</text>
+				</svg>
+				<p class="say" id="f6-say" aria-live="polite">With &ldquo;tired,&rdquo; the word &ldquo;it&rdquo; attends most to &ldquo;animal.&rdquo; Change one word at the far end and it attends to &ldquo;street.&rdquo;</p>
+				<figcaption><b>Figure 6.</b> Press the buttons. The sentence pair is from <a href="https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/" target="_blank" rel="noopener">Google&rsquo;s 2017 announcement</a>. The arc widths are my illustration of the idea, and they are not measured from a model.</figcaption>
+			</figure>
+
+			<p>A 5% efficiency win comes with a score you can read the next morning. A new architecture comes with no such score. Nobody can say in advance what to search over, or which expensive experiment deserves the money. Altman thinks the method that made OpenAI&rsquo;s models good at math &ldquo;will probably work&rdquo; for AI research. So far that is a forecast.</p>
+
+			<figure class="diagram">
+				<p class="ask">Somewhere under the fog is a much higher peak. You can afford five experiments. Press the fog to spend one.</p>
+				<div class="seg seg-sm" id="f7-btns">
+					<button type="button" id="f7-opt">Run the optimizer</button>
+					<button type="button" id="f7-new" aria-pressed="false">New map</button>
+				</div>
+				<svg class="toon" id="f7" viewBox="0 0 560 270" role="img" aria-labelledby="f7-title f7-desc">
+					<title id="f7-title">A search for a much better idea</title>
+					<desc id="f7-desc">A landscape where height means how good an idea is. A small known hill sits on the left, and fog covers the rest. An optimizer can climb the known hill. A far higher peak is hidden in the fog, and each experiment clears only a narrow strip.</desc>
+					<path id="f7-land" class="f7-land" d="M0,250 L0,221.2 L4,220.2 L8,219.0 L12,217.5 L16,215.7 L20,213.6 L24,211.3 L28,208.6 L32,205.7 L36,202.4 L40,198.9 L44,195.2 L48,191.3 L52,187.4 L56,183.5 L60,179.6 L64,175.9 L68,172.6 L72,169.6 L76,167.1 L80,165.1 L84,163.8 L88,163.1 L92,163.1 L96,163.8 L100,165.1 L104,167.1 L108,169.6 L112,172.6 L116,175.9 L120,179.6 L124,183.5 L128,187.4 L132,191.3 L136,195.2 L140,198.9 L144,202.4 L148,205.6 L152,208.6 L156,211.2 L160,213.5 L164,215.4 L168,217.0 L172,218.2 L176,219.0 L180,219.4 L184,219.4 L188,218.9 L192,217.9 L196,216.5 L200,214.6 L204,212.4 L208,209.9 L212,207.5 L216,205.1 L220,203.2 L224,201.8 L228,201.0 L232,201.0 L236,201.8 L240,203.3 L244,205.4 L248,207.8 L252,210.4 L256,213.0 L260,215.4 L264,217.5 L268,219.3 L272,220.6 L276,221.4 L280,221.8 L284,221.8 L288,221.3 L292,220.5 L296,219.3 L300,217.7 L304,216.0 L308,214.0 L312,212.1 L316,210.3 L320,208.8 L324,207.7 L328,207.1 L332,207.1 L336,207.7 L340,208.8 L344,210.3 L348,212.1 L352,214.1 L356,216.0 L360,217.9 L364,219.5 L368,220.9 L372,221.8 L376,222.4 L380,222.3 L384,221.3 L388,218.9 L392,214.2 L396,206.5 L400,194.7 L404,178.2 L408,157.0 L412,132.0 L416,105.6 L420,81.0 L424,61.8 L428,51.2 L432,51.1 L436,61.4 L440,80.3 L444,104.5 L448,130.2 L452,154.2 L456,174.2 L460,189.1 L464,198.8 L468,204.2 L472,206.1 L476,205.6 L480,203.8 L484,201.4 L488,198.9 L492,196.8 L496,195.5 L500,195.0 L504,195.5 L508,196.9 L512,199.1 L516,202.0 L520,205.2 L524,208.5 L528,211.7 L532,214.6 L536,217.1 L540,219.3 L544,220.9 L548,222.2 L552,223.2 L556,223.8 L560,224.3 L560,250 Z"/>
+					<g id="f7-fog"></g>
+					<g id="f7-probes"></g>
+					<circle id="f7-ball" class="red" cx="90" cy="156" r="7"/>
+					<text class="t-small t-main" x="90" y="262" text-anchor="middle">What we know</text>
+					<text class="t-small" id="f7-left" x="552" y="16" text-anchor="end">&nbsp;</text>
+				</svg>
+				<p class="say" id="f7-say" aria-live="polite">The optimizer climbs the known hill quickly. The much higher peak was out of its reach, and finding it took a different kind of search.</p>
+				<figcaption><b>Figure 7.</b> Press the fog, and &ldquo;New map&rdquo; to play again. Height stands for how good an idea is. The landscape is invented, and real research has no map like this one to read the heights from.</figcaption>
+			</figure>
+
+			<h2 id="score">When the score becomes the goal</h2>
+
+			<p>You played the easy version, because every height on that map was real. Research scores can mislead. The closest thing yet to a working self-improver comes from the University of British Columbia and Sakana AI. <a href="https://sakana.ai/dgm/" target="_blank" rel="noopener">Their Darwin G&ouml;del Machine</a> is a coding agent that edits its own code. Each new version gets tested on coding problems from a benchmark called SWE-bench, and promising versions join an archive that later versions can branch from. Its score rose from 20.0% to 50.0%.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f8-btns">
+					<button type="button" id="f8-grow">Grow the archive</button>
+					<button type="button" id="f8-look" aria-pressed="false">Inspect the logs</button>
+				</div>
+				<svg class="toon" id="f8" viewBox="0 0 560 290" role="img" aria-labelledby="f8-title f8-desc">
+					<title id="f8-title">An archive of agents that rewrite their own code</title>
+					<desc id="f8-desc">A branching tree of agent versions, with score on SWE-bench rising from 20.0 percent to 50.0 percent. A separate red note marks versions that scored perfectly on a test of faked tool use by removing the markers the test relied on.</desc>
+					<path class="f6-grid" d="M56,222 H520 M56,166 H520 M56,110 H520 M56,54 H520"/>
+					<text class="t-small" x="48" y="226" text-anchor="end">20%</text>
+					<text class="t-small" x="48" y="170" text-anchor="end">30%</text>
+					<text class="t-small" x="48" y="114" text-anchor="end">40%</text>
+					<text class="t-small" x="48" y="58" text-anchor="end">50%</text>
+					<text class="t-small t-main" x="16" y="170" text-anchor="middle" transform="rotate(-90 16 170)">SWE-bench score</text>
+					<g id="f8-e"><path class="d-e d-b" data-i="1" d="M70,222 L110,211"/><path class="d-e" data-i="2" d="M70,222 L110,219"/><path class="d-e d-b" data-i="3" d="M110,211 L150,183"/><path class="d-e" data-i="4" d="M110,211 L150,205"/><path class="d-e" data-i="5" d="M110,219 L150,225"/><path class="d-e" data-i="6" d="M150,183 L195,177"/><path class="d-e d-b" data-i="7" d="M150,183 L195,155"/><path class="d-e" data-i="8" d="M150,205 L195,200"/><path class="d-e" data-i="9" d="M195,177 L240,160"/><path class="d-e d-b" data-i="10" d="M195,155 L240,132"/><path class="d-e" data-i="11" d="M240,160 L285,138"/><path class="d-e d-b" data-i="12" d="M240,132 L285,116"/><path class="d-e" data-i="13" d="M240,132 L285,149"/><path class="d-e d-b" data-i="14" d="M285,116 L335,99"/><path class="d-e" data-i="15" d="M285,138 L335,127"/><path class="d-e d-b" data-i="16" d="M335,99 L385,88"/><path class="d-e" data-i="17" d="M335,99 L385,110"/><path class="d-e" data-i="18" d="M335,127 L385,132"/><path class="d-e d-b" data-i="19" d="M385,88 L435,71"/><path class="d-e" data-i="20" d="M385,110 L435,99"/><path class="d-e d-b" data-i="21" d="M435,71 L480,54"/><path class="d-e" data-i="22" d="M435,71 L480,88"/></g>
+					<g id="f8-c"><circle class="d-n d-nb" data-i="0" cx="70" cy="222" r="7"/><circle class="d-n d-nb" data-i="1" cx="110" cy="211" r="7"/><circle class="d-n" data-i="2" cx="110" cy="219" r="5.5"/><circle class="d-n d-nb" data-i="3" cx="150" cy="183" r="7"/><circle class="d-n" data-i="4" cx="150" cy="205" r="5.5"/><circle class="d-n" data-i="5" cx="150" cy="225" r="5.5"/><circle class="d-n" data-i="6" cx="195" cy="177" r="5.5"/><circle class="d-n d-nb" data-i="7" cx="195" cy="155" r="7"/><circle class="d-n" data-i="8" cx="195" cy="200" r="5.5"/><circle class="d-n" data-i="9" cx="240" cy="160" r="5.5"/><circle class="d-n d-nb" data-i="10" cx="240" cy="132" r="7"/><circle class="d-n" data-i="11" cx="285" cy="138" r="5.5"/><circle class="d-n d-nb" data-i="12" cx="285" cy="116" r="7"/><circle class="d-n" data-i="13" cx="285" cy="149" r="5.5"/><circle class="d-n d-nb" data-i="14" cx="335" cy="99" r="7"/><circle class="d-n" data-i="15" cx="335" cy="127" r="5.5"/><circle class="d-n d-nb" data-i="16" cx="385" cy="88" r="7"/><circle class="d-n" data-i="17" cx="385" cy="110" r="5.5"/><circle class="d-n" data-i="18" cx="385" cy="132" r="5.5"/><circle class="d-n d-nb" data-i="19" cx="435" cy="71" r="7"/><circle class="d-n" data-i="20" cx="435" cy="99" r="5.5"/><circle class="d-n d-nb" data-i="21" cx="480" cy="54" r="7"/><circle class="d-n" data-i="22" cx="480" cy="88" r="5.5"/></g>
+					<text class="t-main" id="f8-end" x="492" y="42" text-anchor="middle">50.0%</text>
+					<text class="t-main" x="70" y="246" text-anchor="middle">20.0%</text>
+					<g id="f8-hack">
+						<path class="ln-red" stroke-dasharray="5 6" d="M335,127 L300,246"/>
+						<rect class="f8-box" x="150" y="228" width="290" height="50" rx="8"/>
+						<text class="t-small t-red" x="295" y="248" text-anchor="middle">Perfect score on the test for faked tools.</text>
+						<text class="t-small t-main" x="295" y="268" text-anchor="middle">It had removed the markers the test looks for.</text>
+					</g>
+				</svg>
+				<p class="say" id="f8-say" aria-live="polite">The score rose from 20.0% to 50.0%. Some versions also earned a perfect score on another test by removing the markers it looked for.</p>
+				<figcaption><b>Figure 8.</b> Press the buttons. The 20.0%, the 50.0% and the removed markers are from <a href="https://sakana.ai/dgm/" target="_blank" rel="noopener">Sakana AI</a> and <a href="https://arxiv.org/abs/2505.22954" target="_blank" rel="noopener">Zhang et al. (2025)</a>. The branches between them are invented to show how an archive grows.</figcaption>
+			</figure>
+
+			<p>The researchers also built a test for whether it was faking its use of tools. In some cases, they wrote, it &ldquo;removed the markers we use in the reward function to detect hallucination (despite our explicit instruction not to do so).&rdquo; The reward function is the program&rsquo;s scoring rule, and hallucination here means reporting tool use that never happened. It earned a perfect score by disabling the test. They caught this because the system keeps a record of every change. Economists have a name for the pattern, <a href="https://en.wikipedia.org/wiki/Goodhart%27s_law" target="_blank" rel="noopener">Goodhart&rsquo;s law</a>. Once a measure becomes a target, it stops being a good measure. I looked at models gaming their checkers in <a href="/blog/when-the-answer-is-cheap/">When the answer is cheap</a>.</p>
+
+			<p>The same care applies to milestones. A paper written by The AI Scientist <a href="https://www.nature.com/articles/s41586-026-10265-5" target="_blank" rel="noopener">passed first-round peer review</a> at a workshop with a 70% acceptance rate, after its makers filtered the outputs by hand at each stage. A first-round pass at a workshop says little about major discoveries.</p>
+
+			<h2 id="teams">Agent teams help on some tasks and hurt on others</h2>
+
+			<p>Altman prefers the term &ldquo;agent teams&rdquo; to &ldquo;agent swarms.&rdquo; He said that during OpenAI&rsquo;s recent work on the Navier&ndash;Stokes equations, which describe how fluids flow, &ldquo;we understood absolutely nothing about the scaling laws of teams of agents.&rdquo; He put the cost at around $10 million and added, &ldquo;I bet we could redo Navier-Stokes at 1/100th of the cost a year from when it was done.&rdquo; That is a bet, and repeating a known result is easier than finding a new one.</p>
+
+			<p><a href="https://arxiv.org/abs/2512.08296" target="_blank" rel="noopener">Yubin Kim and his colleagues</a> measured teams directly across 260 setups. Compared with one agent, teams did 80.8% better on a financial-reasoning task that splits into separate parts, and 70.0% worse on a planning task where each step depends on the last. Teams with no central checker tended to spread errors further.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f9-btns" role="group" aria-label="Choose a kind of task">
+					<button type="button" data-t="split" aria-pressed="true">A task that splits into parts</button>
+					<button type="button" data-t="seq" aria-pressed="false">A task where each step depends on the last</button>
+				</div>
+				<svg class="toon" id="f9" viewBox="0 0 560 210" role="img" aria-labelledby="f9-title f9-desc">
+					<title id="f9-title">How a team of agents compares with one agent</title>
+					<desc id="f9-desc">Two bars. One agent sets the baseline at 100. A team reaches 180.8 on a task that splits into parts, 80.8 percent better, and 30 on a task where each step depends on the last, 70 percent worse.</desc>
+										<g class="f9-w"><g transform="translate(83,68)"><rect class="soft" x="-11" y="-30" width="22" height="18" rx="4"/><circle class="ink" cx="-4" cy="-21" r="1.8"/><circle class="ink" cx="4" cy="-21" r="1.8"/><rect class="shirt-g" x="-10" y="-11" width="20" height="20" rx="3"/></g></g>
+					<text class="t-small t-main" x="83" y="96" text-anchor="middle">One agent</text>
+					<rect class="f9-bar f9-base" x="170" y="42" width="150" height="32" rx="4"/>
+					<text class="t-small t-main" id="f9-basev" x="330" y="63">Baseline</text>
+					<g id="f9-team"><g class="f9-w" style="animation-delay:0.00s"><g transform="translate(44,146)"><rect class="soft" x="-11" y="-30" width="22" height="18" rx="4"/><circle class="ink" cx="-4" cy="-21" r="1.8"/><circle class="ink" cx="4" cy="-21" r="1.8"/><rect class="shirt-g" x="-10" y="-11" width="20" height="20" rx="3"/></g></g><g class="f9-w" style="animation-delay:0.22s"><g transform="translate(70,146)"><rect class="soft" x="-11" y="-30" width="22" height="18" rx="4"/><circle class="ink" cx="-4" cy="-21" r="1.8"/><circle class="ink" cx="4" cy="-21" r="1.8"/><rect class="shirt-g" x="-10" y="-11" width="20" height="20" rx="3"/></g></g><g class="f9-w" style="animation-delay:0.44s"><g transform="translate(96,146)"><rect class="soft" x="-11" y="-30" width="22" height="18" rx="4"/><circle class="ink" cx="-4" cy="-21" r="1.8"/><circle class="ink" cx="4" cy="-21" r="1.8"/><rect class="shirt-g" x="-10" y="-11" width="20" height="20" rx="3"/></g></g><g class="f9-w" style="animation-delay:0.66s"><g transform="translate(122,146)"><rect class="soft" x="-11" y="-30" width="22" height="18" rx="4"/><circle class="ink" cx="-4" cy="-21" r="1.8"/><circle class="ink" cx="4" cy="-21" r="1.8"/><rect class="shirt-g" x="-10" y="-11" width="20" height="20" rx="3"/></g></g></g>
+					<text class="t-small t-main" x="83" y="176" text-anchor="middle">A team</text>
+					<rect class="f9-bar f9-t" id="f9-bar" x="170" y="122" width="271" height="32" rx="4"/>
+					<g id="f9-dots"><circle class="f9-d" cx="178" cy="130" r="3.5"/><circle class="f9-d" cx="178" cy="138" r="3.5" style="animation-delay:.5s"/><circle class="f9-d" cx="178" cy="146" r="3.5" style="animation-delay:1s"/></g>
+					<text class="t-big" id="f9-v" x="449" y="147" text-anchor="start">+80.8%</text>
+					<text class="t-small" x="350" y="196" text-anchor="middle">Performance, with one agent set to the baseline</text>
+				</svg>
+				<p class="say" id="f9-say" aria-live="polite">When a task splits cleanly, a team can work on the parts at once. The team did 80.8% better than one agent.</p>
+				<figcaption><b>Figure 9.</b> Press the buttons. The two percentages are the extremes reported by <a href="https://arxiv.org/abs/2512.08296" target="_blank" rel="noopener">Kim et al.</a> across 260 setups, financial reasoning at one end and sequential planning at the other. The robots are decoration.</figcaption>
+			</figure>
+
+			<h2 id="machines">The machines run on a slower clock</h2>
+
+			<p>&ldquo;Self-replicating data center&rdquo; is a striking phrase, and a data center makes almost none of its own parts. The most advanced chips depend on one kind of machine, which only the Dutch company ASML sells. <a href="https://www.asml.com/en/products/euv-lithography-systems" target="_blank" rel="noopener">It fires a laser at drops of tin</a> up to 50,000 times a second to make the light that prints circuits. <a href="https://finance.yahoo.com/news/explainer-250-million-asml-printer-050227041.html" target="_blank" rel="noopener">Reuters calls it a $250 million printer</a> that ships in around 40 containers on cargo planes.</p>
+
+			<figure>
+				<p class="ask">Can a data center copy itself? Open the boxes to see what it would have to make.</p>
+				<div class="dep" id="f10">
+					<details class="dep-d" open><summary>A data center</summary>
+						<details class="dep-d"><summary>AI chips <span class="dep-p dep-s">specialist supply chain</span></summary>
+							<details class="dep-d"><summary>A chip factory, or fab <span class="dep-p dep-r">robots could help</span></summary>
+								<p>New fabs in the Americas took an average of 736 days from the start of construction to production, and that leaves out the permits before it.</p>
+								<details class="dep-d"><summary>An EUV machine, which prints the circuits <span class="dep-p dep-s">specialist supply chain</span></summary>
+									<p>A laser hits drops of tin up to 50,000 times a second to make the light. Reuters puts the price near $250 million, and each machine ships in around 40 containers.</p>
+								</details>
+							</details>
+						</details>
+						<details class="dep-d"><summary>Electricity <span class="dep-p dep-p">people and permits</span></summary>
+							<details class="dep-d"><summary>A power line <span class="dep-p dep-p">people and permits</span></summary>
+								<p>New transmission lines take four to eight years in advanced economies, according to the IEA.</p>
+							</details>
+							<details class="dep-d"><summary>Electrical transformers <span class="dep-p dep-s">specialist supply chain</span></summary>
+								<p>Large units averaged 128 weeks to arrive in a 2025 survey. The IEA says waits for transformers and cables doubled in three years.</p>
+							</details>
+							<details class="dep-d"><summary>Gas turbines <span class="dep-p dep-r">robots could help</span></summary>
+								<p>Deliveries for new gas plants face waits of several years, according to the IEA.</p>
+							</details>
+						</details>
+						<details class="dep-d"><summary>The building <span class="dep-p dep-r">robots could help</span></summary>
+							<p>Altman lists concrete and steel among the materials now in short supply. Collison&rsquo;s objection was that data centers are &ldquo;permitting-bottlenecked and component-bottlenecked,&rdquo; and no robot files a permit.</p>
+						</details>
+					</details>
+				</div>
+				<p class="say" id="f10-say" aria-live="polite">Each box opens onto more boxes.</p>
+				<figcaption><b>Figure 10.</b> The numbers are from <a href="https://cset.georgetown.edu/publication/no-permits-no-fabs/" target="_blank" rel="noopener">CSET</a>, <a href="https://www.asml.com/en/products/euv-lithography-systems" target="_blank" rel="noopener">ASML</a>, <a href="https://finance.yahoo.com/news/explainer-250-million-asml-printer-050227041.html" target="_blank" rel="noopener">Reuters</a>, <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener">the IEA</a> and <a href="https://powermag.com/transformers-in-2026-shortage-scramble-or-self-inflicted-crisis/" target="_blank" rel="noopener">POWER</a>. The list is far from complete, and the coloured labels are my own judgement.</figcaption>
+			</figure>
+
+			<p>The clocks differ too. Altman&rsquo;s robots would have to speed up work measured in years, and the software loop already runs in minutes. <a href="https://www.iea.org/reports/energy-and-ai/ai-and-energy-security" target="_blank" rel="noopener">The International Energy Agency estimates</a> that grid constraints could delay around 20% of the data-center capacity planned for 2030. Asked how supply was responding to high prices for memory and chips, Altman&rsquo;s answer was one word, &ldquo;Bad.&rdquo;</p>
+
+			<figure>
+				<div class="seg" id="f11-btns"><button type="button" id="f11-go">Start the clocks</button></div>
+				<div class="rc" id="f11">
+					<div class="rc-top"><div><b id="f11-day">Day 2,920</b><span>on the machines clock</span></div><div><b id="f11-n">840,960</b><span>experiments the software loop could have run</span></div></div>
+					<div class="rc-r"><span class="rc-l">One software experiment</span><span class="rc-t"><i class="rc-f" data-d="0.00347" style="width:0.60%"></i></span><span class="rc-v">5 minutes</span></div><div class="rc-r"><span class="rc-l">A 100,000-chip cluster, by xAI&rsquo;s claim</span><span class="rc-t"><i class="rc-f" data-d="122" style="width:4.18%"></i></span><span class="rc-v">122 days</span></div><div class="rc-r"><span class="rc-l">A new chip fab, Americas average</span><span class="rc-t"><i class="rc-f" data-d="736" style="width:25.21%"></i></span><span class="rc-v">736 days</span></div><div class="rc-r"><span class="rc-l">A large electrical transformer</span><span class="rc-t"><i class="rc-f" data-d="896" style="width:30.68%"></i></span><span class="rc-v">128 weeks</span></div><div class="rc-r"><span class="rc-l">A new transmission line, at most</span><span class="rc-t"><i class="rc-f" data-d="2920" style="width:100.00%"></i></span><span class="rc-v">8 years</span></div>
+				</div>
+				<figcaption><b>Figure 11.</b> Press the button. One second is about 300 days, and the bars share one scale. The sources are <a href="https://github.com/karpathy/autoresearch" target="_blank" rel="noopener">autoresearch</a> for 5 minutes, <a href="https://fortune.com/2024/09/03/elon-musk-xai-nvidia-colossus/" target="_blank" rel="noopener">Fortune</a> for 122 days, <a href="https://cset.georgetown.edu/publication/no-permits-no-fabs/" target="_blank" rel="noopener">CSET</a> for 736 days, <a href="https://powermag.com/transformers-in-2026-shortage-scramble-or-self-inflicted-crisis/" target="_blank" rel="noopener">POWER</a> for 128 weeks and <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener">the IEA</a> for the line, which takes four to eight years. The experiment count is my arithmetic, one loop running day and night.</figcaption>
+			</figure>
+
+			<h2 id="energy">Cheaper answers can mean more electricity</h2>
+
+			<p><a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener">The IEA estimates</a> that data centers used about 415 terawatt-hours in 2024, around 1.5% of the world&rsquo;s electricity. A terawatt-hour is a billion kilowatt-hours. It projects about 945 by 2030, slightly more than all of Japan uses today, with AI as the main driver. Better efficiency may not bring that down, because of the rebound effect. When something gets cheaper, people use more of it. <a href="https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference" target="_blank" rel="noopener">Google says</a> the energy of its median Gemini prompt fell 33-fold in a year. <a href="https://blog.google/technology/ai/io-2025-keynote/" target="_blank" rel="noopener">Over about the same year</a>, the tokens it processed each month rose 50-fold. A token is a piece of text about three-quarters of a word long.</p>
+
+			<figure class="diagram">
+				<div class="rb-iea">
+					<div class="rb-r"><span>2024</span><i style="width:43.9%"></i><b>415 TWh</b></div>
+					<div class="rb-r"><span>2030</span><i class="rb-p" style="width:100%"></i><b>945 TWh</b></div>
+				</div>
+				<p class="ask" style="margin-top:16px">Make each answer cheaper, then let people use more. What happens to the total?</p>
+				<div class="rb-c"><label for="f12-e">Energy per answer falls <b id="f12-ev">33</b>-fold</label><input type="range" id="f12-e" min="1" max="50" step="1" value="33"></div>
+				<div class="rb-c"><label for="f12-u">Use grows <b id="f12-uv">50</b>-fold</label><input type="range" id="f12-u" min="1" max="100" step="1" value="50"></div>
+				<div class="seg seg-sm" id="f12-btns"><button type="button" id="f12-g">Google&rsquo;s year, 33 and 50</button></div>
+				<div class="rb-out"><span id="f12-x">1.5&times;</span> the total energy</div>
+				<p class="say" id="f12-say" aria-live="polite">Each answer takes 33 times less energy, and the total still rises in this sum, because use grew faster.</p>
+				<figcaption><b>Figure 12.</b> The top bars are the <a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener">IEA&rsquo;s</a> estimate and projection for all data centers. The sliders do one sum, use divided by efficiency. <a href="https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference" target="_blank" rel="noopener">Google&rsquo;s 33-fold</a> is per median prompt and <a href="https://blog.google/technology/ai/io-2025-keynote/" target="_blank" rel="noopener">its 50-fold</a> is in tokens, so they are different units, and Google has not published the total. The 1.5 is only a rough sign, and Google&rsquo;s figures have no outside audit.</figcaption>
+			</figure>
+
+			<h2 id="small">The small version of the loop runs on one GPU</h2>
+
+			<p>In March 2026, the AI researcher Andrej Karpathy released <a href="https://github.com/karpathy/autoresearch" target="_blank" rel="noopener">autoresearch</a>. An AI agent edits the training code of a small language model and trains it for 5 minutes. If the result improved, the change stays. Then it starts again. <a href="https://fortune.com/2026/03/17/andrej-karpathy-loop-autonomous-ai-agents-future/" target="_blank" rel="noopener">Karpathy left it running for two days</a>, and it ran 700 experiments and found 20 optimizations. The same changes sped up training on a somewhat larger model by 11%. The code runs on a single graphics card, so this kind of loop is within reach of a student. Someone still has to write down what counts as an improvement.</p>
+
+			<figure>
+				<p class="ask">Six claims about the loop. Which ones have actually happened?</p>
+				<div class="quiz" id="f13"><div class="q-card" data-answer="d"><p class="q-text">A rule found by AI frees up 0.7% of a giant company&rsquo;s computing.</p><div class="q-btns"><button type="button" data-guess="d" aria-pressed="false">Done</button><button type="button" data-guess="n" aria-pressed="false">Not yet</button></div><p class="q-verdict"><span class="q-you"></span><b>Done.</b> AlphaEvolve at Google, in production for over a year, by Google&rsquo;s account.</p></div><div class="q-card" data-answer="d"><p class="q-text">An AI-proposed circuit change goes into a real AI chip.</p><div class="q-btns"><button type="button" data-guess="d" aria-pressed="false">Done</button><button type="button" data-guess="n" aria-pressed="false">Not yet</button></div><p class="q-verdict"><span class="q-you"></span><b>Done.</b> AlphaEvolve again. The change passed verification before going into an upcoming chip.</p></div><div class="q-card" data-answer="d"><p class="q-text">A coding agent raises its own benchmark score by rewriting its own code.</p><div class="q-btns"><button type="button" data-guess="d" aria-pressed="false">Done</button><button type="button" data-guess="n" aria-pressed="false">Not yet</button></div><p class="q-verdict"><span class="q-you"></span><b>Done.</b> The Darwin G&ouml;del Machine, from 20.0% to 50.0%. Some versions also gamed a test.</p></div><div class="q-card" data-answer="d"><p class="q-text">An AI-written paper passes first-round peer review.</p><div class="q-btns"><button type="button" data-guess="d" aria-pressed="false">Done</button><button type="button" data-guess="n" aria-pressed="false">Not yet</button></div><p class="q-verdict"><span class="q-you"></span><b>Done, with help.</b> The AI Scientist, at a workshop with a 70% acceptance rate, after people filtered its outputs.</p></div><div class="q-card" data-answer="n"><p class="q-text">A model is told to invent the next transformer, and it does.</p><div class="q-btns"><button type="button" data-guess="d" aria-pressed="false">Done</button><button type="button" data-guess="n" aria-pressed="false">Not yet</button></div><p class="q-verdict"><span class="q-you"></span><b>Not yet.</b> &ldquo;I don&rsquo;t think anyone knows how to do&rdquo; this yet, in Altman&rsquo;s words.</p></div><div class="q-card" data-answer="n"><p class="q-text">Robots build a chip factory and everything it needs.</p><div class="q-btns"><button type="button" data-guess="d" aria-pressed="false">Done</button><button type="button" data-guess="n" aria-pressed="false">Not yet</button></div><p class="q-verdict"><span class="q-you"></span><b>Not yet.</b> Altman says this is &ldquo;within grasp.&rdquo; Nobody has shown it.</p></div></div>
+				<p class="q-score" id="f13-score" aria-live="polite"></p>
+				<figcaption><b>Figure 13.</b> Sort each card. The verdicts rest on the sources linked earlier in this essay, and &ldquo;done&rdquo; means a company or research team has reported it.</figcaption>
+			</figure>
+
+			<div class="callout">
+				<span class="callout-label">What has been shown so far</span>
+				<p>Parts of the loop have been measured. AI has found speed-ups that run in production, and it has proposed a circuit that went into a chip. Nobody has shown a reliable way to invent a transformer-scale idea on demand. Nobody has shown an industrial system that builds its own supply chain.</p>
+			</div>
+
+			<p>That word has two meanings in this story. Altman&rsquo;s transformer is the 2017 architecture. Data centers also need the electrical kind, a machine that steps grid voltage down to a usable level. By Altman&rsquo;s account, nobody yet knows how to ask a model for a new one of the first kind. An order for the second kind <a href="https://powermag.com/transformers-in-2026-shortage-scramble-or-self-inflicted-crisis/" target="_blank" rel="noopener">took about 128 weeks to fill</a> in Wood Mackenzie&rsquo;s 2025 survey.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://www.youtube.com/watch?v=iMsUcCYNKqY" target="_blank" rel="noopener">Sam Altman and John Collison, <i>Cheeky Pint</i> #39</a> (29 October 2026), with the <a href="https://cheekypint.transistor.fm/39/transcript" target="_blank" rel="noopener">full transcript</a>.</li>
+				<li><a href="https://www.forethought.org/research/will-ai-r-and-d-automation-cause-a-software-intelligence-explosion" target="_blank" rel="noopener">Daniel Eth and Tom Davidson, <i>Will AI R&amp;D automation cause a software intelligence explosion?</i></a> (2025), a readable account of r.</li>
+				<li><a href="https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/" target="_blank" rel="noopener">Google DeepMind, <i>AlphaEvolve</i></a> (2025), the source of the 0.7%, the 23% and the 1%.</li>
+				<li><a href="https://sakana.ai/dgm/" target="_blank" rel="noopener">Sakana AI, <i>The Darwin G&ouml;del Machine</i></a> (2025), and <a href="https://www.nature.com/articles/s41586-026-10265-5" target="_blank" rel="noopener">Lu et al., <i>Towards end-to-end automation of AI research</i></a> (<i>Nature</i>, 2026).</li>
+				<li><a href="https://researchonline.lse.ac.uk/id/eprint/104481" target="_blank" rel="noopener">Bloom et al., <i>Are ideas getting harder to find?</i></a> (<i>American Economic Review</i>, 2020).</li>
+				<li><a href="https://arxiv.org/abs/2512.08296" target="_blank" rel="noopener">Kim et al., <i>Towards a science of scaling agent systems</i></a> (2026).</li>
+				<li><a href="https://www.iea.org/reports/energy-and-ai/executive-summary" target="_blank" rel="noopener">International Energy Agency, <i>Energy and AI</i></a> (2025).</li>
+				<li><a href="https://cset.georgetown.edu/publication/no-permits-no-fabs/" target="_blank" rel="noopener">CSET, <i>No permits, no fabs</i></a> (2021), on how long chip factories take to build.</li>
+				<li><a href="https://github.com/karpathy/autoresearch" target="_blank" rel="noopener">Andrej Karpathy, <i>autoresearch</i></a> (2026), the code for the small loop.</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">AI research</span>
+				<span class="tag">self-improvement</span>
+				<span class="tag">infrastructure</span>
+				<span class="tag">AI evaluation</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+<script>
+/* The interactive figures. Each one's static markup is a complete state,
+   so the post reads the same with JavaScript off. */
+(function () {
+	'use strict';
+	var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	var NS = 'http://www.w3.org/2000/svg';
+	function press(group, on) {
+		Array.prototype.forEach.call(group, function (b) { b.setAttribute('aria-pressed', b === on ? 'true' : 'false'); });
+	}
+	function show(el, yes) {
+		var c = (el.getAttribute('class') || '').replace(/\s*is-hidden/g, '');
+		el.setAttribute('class', yes ? c : (c + ' is-hidden').trim());
+	}
+	function whenSeen(el, fn, threshold) {
+		if (!window.IntersectionObserver) { fn(); return; }
+		var io = new IntersectionObserver(function (es) {
+			es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); fn(); } });
+		}, { threshold: threshold || 0.35 });
+		io.observe(el);
+	}
+
+	/* ---- Reading time ----
+	   blog.js counts every word on the page, and this post's figures hold a lot
+	   of text. Count the prose at the same 220 words a minute and name the figures. */
+	var slot = document.querySelector('[data-reading-time]'), body = document.querySelector('.prose');
+	if (slot && body) {
+		var figs = body.querySelectorAll('figure').length, copy = body.cloneNode(true);
+		Array.prototype.forEach.call(copy.querySelectorAll('figure'), function (f) { f.parentNode.removeChild(f); });
+		slot.textContent = Math.round(copy.textContent.trim().split(/\s+/).length / 220) + ' min read, plus ' + figs + ' figures to play with';
+	}
+
+	/* ---- Figure 1: guess, then the terminal types what happened ---- */
+	var f1b = document.querySelectorAll('#f1-btns button');
+	if (f1b.length) {
+		var f1out = document.getElementById('f1-out'), f1say = document.getElementById('f1-say');
+		var f1lines = f1out.innerHTML.split('\n');
+		var f1typed = false;
+		f1out.innerHTML = f1lines.slice(0, 3).join('\n') + '\n<span class="cur"></span>';
+		f1say.textContent = 'Make a guess.';
+		var f1type = function () {
+			if (reduce) { f1out.innerHTML = f1lines.join('\n'); return; }
+			var i = 3;
+			var next = function () {
+				if (i >= f1lines.length) { f1out.innerHTML = f1lines.join('\n'); return; }
+				f1out.innerHTML = f1lines.slice(0, i + 1).join('\n') + '\n<span class="cur"></span>';
+				i++;
+				setTimeout(next, 700);
+			};
+			next();
+		};
+		Array.prototype.forEach.call(f1b, function (b) {
+			b.addEventListener('click', function () {
+				press(f1b, b);
+				var right = b.getAttribute('data-g') === 'limit';
+				f1say.textContent = (right ? 'Right. ' : 'That is what its makers hoped for. ') + 'In their words, “instead of making its code run faster, it simply tried to modify its own code to extend the timeout period.”';
+				if (!f1typed) { f1typed = true; f1type(); }
+			});
+		});
+	}
+
+	/* ---- Figure 2: the clip loads only when pressed ---- */
+	var f2clip = document.getElementById('f2-clip');
+	if (f2clip) {
+		f2clip.addEventListener('click', function (e) {
+			e.preventDefault();
+			var fr = document.createElement('iframe');
+			fr.src = 'https://www.youtube-nocookie.com/embed/iMsUcCYNKqY?start=1905&autoplay=1&rel=0';
+			fr.title = 'Sam Altman on Cheeky Pint, from about 31:45';
+			fr.allow = 'autoplay; encrypted-media; picture-in-picture';
+			fr.allowFullscreen = true;
+			var box = document.createElement('div');
+			box.className = 'clip';
+			box.appendChild(fr);
+			f2clip.parentNode.replaceChild(box, f2clip);
+		});
+	}
+
+	/* ---- Figure 3: dots run round the two loops ---- */
+	var f3b = document.querySelectorAll('#f3-btns button');
+	if (f3b.length) {
+		var f3pa = document.getElementById('f3-pa'), f3pb = document.getElementById('f3-pb'), f3da = document.getElementById('f3-dota'), f3db = document.getElementById('f3-dotb');
+		var S3 = {
+			a: 'Models write code and run experiments, the results improve the next model, and that model does more. This loop has started, and its gains so far come in small steps.',
+			b: 'AI helps design chips and robots help build factories, which gives more compute for the next model. An AI-proposed circuit is the one piece shown so far.',
+			both: 'Ideas run through the left loop and machines through the right. Each one feeds the next model, and the right loop has barely begun.'
+		};
+		var f3set = function (l) {
+			['a', 'b'].forEach(function (k) {
+				var on = l === 'both' || l === k;
+				['f3-l' + k, 'f3-n' + k, 'f3-dot' + k].forEach(function (id) {
+					var el = document.getElementById(id), c = (el.getAttribute('class') || '').replace(/\s*f3-dim/, '');
+					el.setAttribute('class', on ? c : (c + ' f3-dim').trim());
+				});
+			});
+			document.getElementById('f3-say').textContent = S3[l];
+		};
+		Array.prototype.forEach.call(f3b, function (b) {
+			b.addEventListener('click', function () { press(f3b, b); f3set(b.getAttribute('data-l')); });
+		});
+		if (!reduce) {
+			var la = f3pa.getTotalLength(), lb = f3pb.getTotalLength(), f3run = false;
+			var f3tick = function (t) {
+				if (f3run) {
+					var u = (t / 7000) % 1, v = (t / 12000) % 1;
+					var pa = f3pa.getPointAtLength(u * la), pb = f3pb.getPointAtLength(v * lb);
+					f3da.setAttribute('cx', pa.x); f3da.setAttribute('cy', pa.y);
+					f3db.setAttribute('cx', pb.x); f3db.setAttribute('cy', pb.y);
+				}
+				requestAnimationFrame(f3tick);
+			};
+			if (window.IntersectionObserver) {
+				new IntersectionObserver(function (es) { f3run = es[0].isIntersecting; }).observe(document.getElementById('f3'));
+			} else { f3run = true; }
+			requestAnimationFrame(f3tick);
+		}
+	}
+
+	/* ---- Figure 4: each doubling takes 2^(1/r - 1) times as long as the last ---- */
+	var f4r = document.getElementById('f4-r');
+	if (f4r) {
+		var f4line = document.getElementById('f4-line'), f4val = document.getElementById('f4-val'), f4say = document.getElementById('f4-say'), f4b = document.querySelectorAll('#f4-btns button');
+		var f4path = function (r) {
+			var m = Math.pow(2, 1 / r - 1), t = 0, d = 12, n = 0, out = [[0, 0]], done = 0;
+			while (t < 60 && n < 12) {
+				if (t + d > 60) { var f = (60 - t) / d; out.push([60, n + f]); done = n + f; break; }
+				t += d; n++; out.push([t, n]); d *= m; done = n;
+			}
+			return { m: m, n: done, top: n >= 12, d: 'M' + out.map(function (p) { return (70 + p[0] * 7.5).toFixed(1) + ',' + (270 - p[1] * 20).toFixed(1); }).join(' L') };
+		};
+		var f4go = function (r, animate) {
+			var o = f4path(r), pct = Math.round(o.m * 100);
+			f4line.setAttribute('d', o.d);
+			f4val.textContent = r.toFixed(r * 10 % 1 ? 2 : 1);
+			if (animate && !reduce) {
+				f4line.style.transition = 'none';
+				f4line.style.strokeDasharray = '1';
+				f4line.style.strokeDashoffset = '1';
+				void f4line.getBoundingClientRect();
+				f4line.style.transition = 'stroke-dashoffset 0.9s ease';
+				f4line.style.strokeDashoffset = '0';
+			} else {
+				f4line.style.strokeDasharray = '';
+				f4line.style.strokeDashoffset = '';
+			}
+			var how = r < 0.995 ? 'At r = ' + f4val.textContent + ', each doubling takes ' + pct + '% as long as the last. The loop keeps slowing, with ' + o.n.toFixed(1) + ' doublings in five years.'
+				: r <= 1.005 ? 'At r = 1, every doubling takes the same time. Progress is steady exponential growth, with 5 doublings in five years.'
+				: 'At r = ' + f4val.textContent + ', each doubling takes ' + pct + '% as long as the last. ' + (o.top ? 'The curve runs off the chart. Something physical would stop it first, and this model has no chips in it.' : 'The curve bends upward, with ' + o.n.toFixed(1) + ' doublings in five years.');
+			f4say.textContent = how;
+		};
+		f4r.addEventListener('input', function () {
+			press(f4b, null);
+			f4go(+f4r.value, false);
+		});
+		Array.prototype.forEach.call(f4b, function (b) {
+			b.addEventListener('click', function () {
+				press(f4b, b);
+				f4r.value = b.getAttribute('data-r');
+				f4go(+f4r.value, true);
+			});
+		});
+	}
+
+	/* ---- Figure 5: Amdahl's law on an imaginary project ---- */
+	var f5b = document.querySelectorAll('#f5-btns .p-btn');
+	if (f5b.length) {
+		var H5 = { 1: 6, 2: 10, 3: 50, 4: 10, 5: 4 }, ON5 = {};
+		var f5bar = document.getElementById('f5-bar'), f5x = document.getElementById('f5-x'), f5say = document.getElementById('f5-say');
+		var f5go = function (last) {
+			var total = 0, n = 0;
+			Object.keys(H5).forEach(function (k) {
+				var h = ON5[k] ? H5[k] / 10 : H5[k];
+				total += h;
+				if (ON5[k]) n++;
+				f5bar.querySelector('.p-seg[data-n="' + k + '"]').style.flexGrow = h;
+				document.querySelector('.p-h[data-n="' + k + '"]').textContent = h + (h === 1 ? ' hour' : ' hours');
+			});
+			f5bar.style.width = (total / 80 * 100) + '%';
+			var x = 80 / total;
+			f5x.innerHTML = x.toFixed(2) + '&times;';
+			var msg;
+			if (n === 0) msg = 'Press “Write the code” first, since that is where agents are strongest.';
+			else if (n === 5) msg = 'Every step is 10 times faster, so the project is too. That needs fast experiments and fast checking, and neither comes from better code.';
+			else if (ON5[3]) msg = 'Speeding up the experiment helps the most, and that step depends on chips, which are the machines loop.';
+			else if (n === 4) msg = 'Four steps are 10 times faster and the project is only ' + x.toFixed(2) + ' times faster. The experiment is holding everything back.';
+			else if (n === 1 && last === '2') msg = 'The code now takes one hour in place of ten. The whole project is only ' + x.toFixed(2) + ' times faster.';
+			else msg = 'The project is ' + x.toFixed(2) + ' times faster, and the long red block is still there.';
+			f5say.textContent = msg;
+		};
+		Array.prototype.forEach.call(f5b, function (b) {
+			b.addEventListener('click', function () {
+				var k = b.getAttribute('data-n');
+				ON5[k] = !ON5[k];
+				b.setAttribute('aria-pressed', ON5[k] ? 'true' : 'false');
+				f5go(k);
+			});
+		});
+	}
+
+	/* ---- Figure 6: one word changes where "it" looks ---- */
+	var f6b = document.querySelectorAll('#f6-btns button');
+	if (f6b.length) {
+		var f6 = document.getElementById('f6'), f6say = document.getElementById('f6-say');
+		var W6 = {
+			tired: { 0: 0.05, 1: 0.8, 2: 0.08, 3: 0.08, 4: 0.03, 5: 0.1, 6: 0.15, 8: 0.2, 9: 0.1, 10: 0.45, hit: 1 },
+			wide: { 0: 0.03, 1: 0.1, 2: 0.05, 3: 0.12, 4: 0.05, 5: 0.8, 6: 0.15, 8: 0.2, 9: 0.1, 10: 0.45, hit: 5 }
+		};
+		var f6go = function (w) {
+			var m = W6[w];
+			Array.prototype.forEach.call(f6.querySelectorAll('.att-a'), function (a) {
+				var v = m[a.getAttribute('data-i')] || 0;
+				a.style.strokeWidth = (0.6 + v * 9) + 'px';
+				a.style.opacity = 0.15 + v * 0.85;
+			});
+			Array.prototype.forEach.call(f6.querySelectorAll('.att-w'), function (t) {
+				var i = +t.getAttribute('data-i');
+				t.setAttribute('class', 'att-w' + (i === m.hit ? ' hit' : ''));
+				if (i === 10) t.textContent = w;
+			});
+			f6say.textContent = w === 'tired'
+				? 'With “tired,” the word “it” attends most to “animal.” Animals get tired.'
+				: 'With “wide,” the same word “it” attends most to “street.” One word at the far end changed what “it” means.';
+		};
+		Array.prototype.forEach.call(f6b, function (b) {
+			b.addEventListener('click', function () { press(f6b, b); f6go(b.getAttribute('data-w')); });
+		});
+		f6go('tired');
+	}
+
+	/* ---- Figure 7: the fog ----
+	   Each map hides one tall peak and a few small bumps. The optimizer only
+	   climbs what is known, and each experiment clears a narrow strip. */
+	var f7 = document.getElementById('f7');
+	if (f7) {
+		var f7land = document.getElementById('f7-land'), f7fog = document.getElementById('f7-fog'), f7probes = document.getElementById('f7-probes'), f7ball = document.getElementById('f7-ball');
+		var f7say = document.getElementById('f7-say'), f7left = document.getElementById('f7-left'), f7peak, f7bumps, f7budget, f7over, f7climbed;
+		var f7g = function (x, c, s, h) { return h * Math.exp(-Math.pow((x - c) / s, 2) / 2); };
+		var f7y = function (x) {
+			var y = f7g(x, 90, 38, 62) + f7g(x, f7peak, 16, 175);
+			f7bumps.forEach(function (b) { y += f7g(x, b[0], 22, b[1]); });
+			return 225 - y;
+		};
+		var f7draw = function () {
+			var d = 'M0,250';
+			for (var x = 0; x <= 560; x += 4) d += ' L' + x + ',' + f7y(x).toFixed(1);
+			f7land.setAttribute('d', d + ' L560,250 Z');
+		};
+		var f7new = function () {
+			f7peak = 250 + Math.random() * 280;
+			f7bumps = [];
+			for (var i = 0; i < 3; i++) f7bumps.push([190 + Math.random() * 350, 14 + Math.random() * 22]);
+			f7budget = 5; f7over = false; f7climbed = false;
+			f7draw();
+			f7fog.textContent = '';
+			f7probes.textContent = '';
+			for (var c = 170; c < 560; c += 10) {
+				var r = document.createElementNS(NS, 'rect');
+				r.setAttribute('x', c); r.setAttribute('y', 22); r.setAttribute('width', 10.5); r.setAttribute('height', 228);
+				r.setAttribute('class', 'f7-c');
+				r.setAttribute('data-x', c + 5);
+				f7fog.appendChild(r);
+			}
+			['?', '?', '?'].forEach(function (q, i) {
+				var t = document.createElementNS(NS, 'text');
+				t.setAttribute('class', 'f7-q'); t.setAttribute('x', 250 + i * 120); t.setAttribute('y', 130); t.textContent = q;
+				f7fog.appendChild(t);
+			});
+			f7ball.setAttribute('cx', 34); f7ball.setAttribute('cy', f7y(34) - 7);
+			f7left.textContent = 'Experiments left: 5';
+			f7say.textContent = 'Run the optimizer on the known hill, then spend your experiments in the fog.';
+		};
+		var f7clear = function () {
+			Array.prototype.forEach.call(f7fog.querySelectorAll('.f7-c'), function (r) { r.setAttribute('class', 'f7-c off'); });
+			Array.prototype.forEach.call(f7fog.querySelectorAll('.f7-q'), function (t) { t.style.opacity = 0; });
+		};
+		var f7probe = function (x) {
+			if (f7over || f7budget <= 0) return;
+			f7budget--;
+			Array.prototype.forEach.call(f7fog.querySelectorAll('.f7-c'), function (r) {
+				if (Math.abs(+r.getAttribute('data-x') - x) <= 15) r.setAttribute('class', 'f7-c off');
+			});
+			var m = document.createElementNS(NS, 'path');
+			m.setAttribute('class', 'ln-call');
+			m.setAttribute('d', 'M' + x + ',22 V' + f7y(x).toFixed(0));
+			f7probes.appendChild(m);
+			f7left.textContent = 'Experiments left: ' + f7budget;
+			if (Math.abs(x - f7peak) <= 22) {
+				f7over = true;
+				f7clear();
+				f7ball.setAttribute('cx', f7peak); f7ball.setAttribute('cy', f7y(f7peak) - 7);
+				f7say.textContent = 'You found it with ' + (5 - f7budget) + (f7budget === 4 ? ' experiment' : ' experiments') + '. Nobody knew where to look, and that was the expensive part.';
+			} else if (f7budget === 0) {
+				f7over = true;
+				f7clear();
+				f7say.textContent = 'Out of money. The peak was there all along, and the fog gave no clue where. Press “New map” to try again.';
+			} else {
+				var gain = 225 - f7y(x);
+				f7say.textContent = gain > 30 ? 'A rise here. It could be a small bump or the side of something big.' : 'Nothing much here. That experiment taught you where not to look.';
+			}
+		};
+		f7.addEventListener('click', function (e) {
+			var r = f7.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 560;
+			if (x > 170) f7probe(x);
+		});
+		document.getElementById('f7-new').addEventListener('click', f7new);
+		document.getElementById('f7-opt').addEventListener('click', function () {
+			if (f7over) return;
+			if (f7climbed) { f7say.textContent = 'Still on top of the known hill. The optimizer has nowhere better to go, so it stays.'; return; }
+			f7climbed = true;
+			var t0 = null, go = function (t) {
+				if (!t0) t0 = t;
+				var u = reduce ? 1 : Math.min(1, (t - t0) / 900), x = 34 + 56 * u;
+				f7ball.setAttribute('cx', x); f7ball.setAttribute('cy', f7y(x) - 7);
+				if (u < 1) requestAnimationFrame(go);
+				else f7say.textContent = 'The optimizer reached the top of the known hill. That is the 5% win, cheap and reliable. It cannot see past the fog.';
+			};
+			requestAnimationFrame(go);
+		});
+		f7new();
+	}
+
+	/* ---- Figure 8: the archive grows, then the logs show what else it did ---- */
+	var f8 = document.getElementById('f8');
+	if (f8) {
+		var f8e = f8.querySelectorAll('.d-e'), f8c = f8.querySelectorAll('.d-n'), f8hack = document.getElementById('f8-hack'), f8end = document.getElementById('f8-end'), f8say = document.getElementById('f8-say'), f8t = null;
+		var f8set = function (n) {
+			var off = function (el, i) { var c = el.getAttribute('class').replace(' d-off', ''); el.setAttribute('class', i > n ? c + ' d-off' : c); };
+			Array.prototype.forEach.call(f8c, function (el) { off(el, +el.getAttribute('data-i')); });
+			Array.prototype.forEach.call(f8e, function (el) { off(el, +el.getAttribute('data-i')); });
+			show(f8end, n >= f8c.length - 2);
+		};
+		var f8play = function () {
+			clearInterval(f8t);
+			show(f8hack, false);
+			if (reduce) { f8set(99); f8say.textContent = 'The score rose from 20.0% to 50.0%, with each version building on earlier ones in the archive.'; return; }
+			var n = 0;
+			f8set(0);
+			f8say.textContent = 'Each new version rewrites its own code. The ones that do well stay in the archive for later versions to branch from.';
+			f8t = setInterval(function () {
+				n++;
+				f8set(n);
+				if (n >= f8c.length) {
+					clearInterval(f8t);
+					f8say.textContent = 'The score rose from 20.0% to 50.0%. Now press “Inspect the logs.”';
+				}
+			}, 170);
+		};
+		show(f8hack, false);
+		f8set(0);
+		f8say.textContent = 'Press “Grow the archive.”';
+		document.getElementById('f8-grow').addEventListener('click', f8play);
+		document.getElementById('f8-look').addEventListener('click', function () {
+			clearInterval(f8t);
+			f8set(99);
+			show(f8hack, true);
+			this.setAttribute('aria-pressed', 'true');
+			f8say.textContent = 'Asked to fix their faked use of tools, some versions deleted the markers the test looked for, “despite our explicit instruction not to do so.”';
+		});
+	}
+
+	/* ---- Figure 9: agent teams ---- */
+	var f9b = document.querySelectorAll('#f9-btns button');
+	if (f9b.length) {
+		var f9 = document.getElementById('f9'), f9bar = document.getElementById('f9-bar'), f9v = document.getElementById('f9-v'), f9say = document.getElementById('f9-say');
+		Array.prototype.forEach.call(f9b, function (b) {
+			b.addEventListener('click', function () {
+				press(f9b, b);
+				var seq = b.getAttribute('data-t') === 'seq';
+				f9.setAttribute('class', seq ? 'toon f9-seq' : 'toon');
+				f9bar.setAttribute('width', seq ? 45 : 271);
+				f9bar.style.width = (seq ? 45 : 271) + 'px';
+				f9v.textContent = seq ? '−70.0%' : '+80.8%';
+				f9v.setAttribute('x', seq ? 223 : 449);
+				f9say.textContent = seq
+					? 'When each step depends on the last, splitting the work adds overhead and lets errors spread. The team did 70.0% worse than one agent.'
+					: 'When a task splits cleanly, a team can work on the parts at once. The team did 80.8% better than one agent.';
+			});
+		});
+	}
+
+	/* ---- Figure 10: count the boxes as they open ---- */
+	var f10 = document.getElementById('f10');
+	if (f10) {
+		var f10d = f10.querySelectorAll('details'), f10say = document.getElementById('f10-say');
+		Array.prototype.forEach.call(f10d, function (d) {
+			d.addEventListener('toggle', function () {
+				var n = f10.querySelectorAll('details[open]').length;
+				f10say.textContent = n <= 1
+					? 'Each box opens onto more boxes.'
+					: 'You have opened ' + n + ' of ' + f10d.length + ' boxes, and this list leaves out most of what a data center needs. Copying a program takes seconds.';
+			});
+		});
+	}
+
+	/* ---- Figure 11: the two clocks ---- */
+	var f11go = document.getElementById('f11-go');
+	if (f11go) {
+		var f11f = document.querySelectorAll('#f11 .rc-f'), f11day = document.getElementById('f11-day'), f11n = document.getElementById('f11-n');
+		var f11set = function (day) {
+			Array.prototype.forEach.call(f11f, function (f) {
+				var d = +f.getAttribute('data-d');
+				f.style.width = Math.max(Math.min(day, d) / 2920 * 100, day > 0 ? 0.6 : 0) + '%';
+			});
+			f11day.textContent = 'Day ' + Math.round(day).toLocaleString('en-US');
+			f11n.textContent = Math.round(day * 288).toLocaleString('en-US');
+		};
+		var f11run = null;
+		f11set(0);
+		f11go.addEventListener('click', function () {
+			cancelAnimationFrame(f11run);
+			if (reduce) { f11set(2920); return; }
+			var t0 = null;
+			var go = function (t) {
+				if (!t0) t0 = t;
+				var u = Math.min(1, (t - t0) / 9700);
+				f11set(2920 * u);
+				if (u < 1) f11run = requestAnimationFrame(go);
+			};
+			f11run = requestAnimationFrame(go);
+		});
+	}
+
+	/* ---- Figure 12: the rebound effect ---- */
+	var f12e = document.getElementById('f12-e');
+	if (f12e) {
+		var f12u = document.getElementById('f12-u'), f12x = document.getElementById('f12-x'), f12say2 = document.getElementById('f12-say');
+		var f12go = function () {
+			var e = +f12e.value, u = +f12u.value, x = u / e;
+			document.getElementById('f12-ev').textContent = e;
+			document.getElementById('f12-uv').textContent = u;
+			f12x.innerHTML = (x >= 10 ? x.toFixed(0) : x.toFixed(x < 1 ? 2 : 1)) + '&times;';
+			f12say2.textContent = x > 1.02
+				? 'Each answer takes ' + e + ' times less energy, and the total still rises in this sum, because use grew faster.'
+				: x < 0.98
+					? 'Efficiency wins here, and total energy falls. For that, use has to grow more slowly than efficiency improves.'
+					: 'The two cancel out exactly, so total energy stays flat.';
+		};
+		f12e.addEventListener('input', f12go);
+		f12u.addEventListener('input', f12go);
+		document.getElementById('f12-g').addEventListener('click', function () {
+			f12e.value = 33; f12u.value = 50; f12go();
+		});
+		f12go();
+	}
+
+	/* ---- Figure 13: sort the claims ---- */
+	var f13 = document.getElementById('f13');
+	if (f13) {
+		f13.className += ' quiz-js';
+		var NAMES = { d: 'Done', n: 'Not yet' };
+		var f13cards = f13.querySelectorAll('.q-card'), f13score = document.getElementById('f13-score');
+		var f13tally = function () {
+			var done = 0, hit = 0;
+			Array.prototype.forEach.call(f13cards, function (c) {
+				var g = c.getAttribute('data-guess');
+				if (g) { done++; if (g === c.getAttribute('data-answer')) hit++; }
+			});
+			f13score.textContent = 'You matched ' + hit + ' of the ' + done + (done === 1 ? ' card' : ' cards') + ' you sorted' + (done === f13cards.length ? '.' : ', with ' + (f13cards.length - done) + ' to go.');
+		};
+		f13score.textContent = 'Sort the six cards to see the verdicts.';
+		Array.prototype.forEach.call(f13cards, function (card) {
+			var btns = card.querySelectorAll('button'), you = card.querySelector('.q-you'), answer = card.getAttribute('data-answer');
+			Array.prototype.forEach.call(btns, function (b) {
+				b.addEventListener('click', function () {
+					var g = b.getAttribute('data-guess');
+					press(btns, b);
+					card.setAttribute('data-guess', g);
+					card.className = 'q-card done';
+					you.textContent = 'You said ' + NAMES[g] + '. ';
+					f13tally();
+				});
+			});
+		});
+	}
+
+	/* ---- The loop in the corner: a dot goes round as you read ---- */
+	var firstH2 = document.getElementById('loops'), postFoot = document.querySelector('.post-foot'), machH2 = document.getElementById('machines');
+	if (firstH2 && postFoot) {
+		var lm = document.createElement('div');
+		lm.className = 'loopmap off';
+		lm.setAttribute('aria-hidden', 'true');
+		lm.innerHTML = '<svg width="58" height="28" viewBox="0 0 58 28"><path d="M29,14 C24,2 3,2 3,14 C3,26 24,26 29,14 C34,2 55,2 55,14 C55,26 34,26 29,14"/><circle r="3.6" cx="29" cy="14"/></svg><span>Ideas loop</span>';
+		document.body.appendChild(lm);
+		var lmp = lm.querySelector('path'), lmc = lm.querySelector('circle'), lml = lm.querySelector('span'), lmL = lmp.getTotalLength(), lmTick = false;
+		var lmGo = function () {
+			lmTick = false;
+			var y = window.scrollY, vh = window.innerHeight;
+			var a = firstH2.getBoundingClientRect().top + y - vh * 0.6, b = postFoot.getBoundingClientRect().top + y - vh;
+			var u = Math.max(0, Math.min(1, (y - a) / (b - a)));
+			var pt = lmp.getPointAtLength(u * lmL);
+			lmc.setAttribute('cx', pt.x); lmc.setAttribute('cy', pt.y);
+			lml.textContent = machH2.getBoundingClientRect().top < vh * 0.5 ? 'Machines loop' : 'Ideas loop';
+			lm.className = 'loopmap' + (y > a && y < b + 40 ? '' : ' off');
+		};
+		window.addEventListener('scroll', function () {
+			if (!lmTick) { lmTick = true; requestAnimationFrame(lmGo); }
+		}, { passive: true });
+		lmGo();
+	}
+
+})();
+</script>
+
+</body>
+</html>
