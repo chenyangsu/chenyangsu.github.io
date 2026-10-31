@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>The hidden grammar of teamwork: Can AI learn how organizations work? | Chen-Yang Su</title>
+	<meta name="description" content="Medical errors fell 23% after nine hospitals changed how doctors hand off patients. Stanford researchers want AI to learn the grammar of teamwork." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/hidden-grammar-of-teamwork/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="The hidden grammar of teamwork: Can AI learn how organizations work?">
+	<meta property="og:description" content="Medical errors fell 23% after nine hospitals changed how doctors hand off patients. Stanford researchers want AI to learn the grammar of teamwork.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/hidden-grammar-of-teamwork/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-11-01">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="The hidden grammar of teamwork: Can AI learn how organizations work?">
+	<meta name="twitter:description" content="Medical errors fell 23% after nine hospitals changed how doctors hand off patients. Stanford researchers want AI to learn the grammar of teamwork.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The cartoons and controls in this post are inline SVG and HTML
+		   coloured with the site's tokens, so they follow the light and dark
+		   themes. With JavaScript off, every figure shows a complete static
+		   state and its caption carries the facts. Motion is skipped for
+		   readers who ask for reduced motion. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Buttons shared by the interactive figures */
+		.seg { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.seg button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 7px 15px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.seg-sm button { font-size: 13.5px; padding: 5px 12px; }
+		.seg button:hover { border-color: var(--accent); }
+		.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose .say { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); text-align: center; max-width: 520px; margin: 10px auto 0; min-height: 3em; }
+		.prose .ask { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15.5px; font-weight: 700; line-height: 1.45; color: var(--ink); text-align: center; margin: 0 0 10px; }
+		.prose .card-kick { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 12.5px; font-weight: 900; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); margin: 40px 0 -8px; }
+
+
+		
+		@media (max-width: 720px) {
+			.toon text { font-size: 16.5px; }
+			.toon .t-small { font-size: 14.5px; }
+			.toon .t-head { font-size: 13px; }
+		}
+
+
+
+		/* Figure 1: handoffs */
+		.toon .ip-c { transition: transform 0.8s cubic-bezier(.4,0,.3,1), opacity 0.5s ease; }
+		.toon .ip-c.lost { opacity: 0; }
+		.toon .ip-l { font-size: 13px; }
+		.ip-t { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; color: var(--ink); max-width: 560px; margin: 8px auto 0; }
+		.ip-r { display: grid; grid-template-columns: 170px 1fr 1fr; gap: 8px; align-items: center; margin: 5px 0; }
+		.ip-h { font-weight: 700; color: var(--ink-light); font-size: 13px; }
+		.ip-b { position: relative; display: flex; align-items: center; gap: 6px; min-height: 18px; }
+		.ip-b i { display: block; height: 16px; border-radius: 3px; }
+		.ip-b em { font-style: normal; font-weight: 700; font-variant-numeric: tabular-nums; }
+		.ip-before { background: var(--ink-light); }
+		.ip-after { background: var(--accent); }
+
+		/* Figure 2: the order of the work */
+		.prose .ro { list-style: decimal inside; max-width: 480px; margin: 0 auto 12px; padding: 0; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; }
+		.prose .ro-i { position: relative; display: block; margin: 0 0 6px; padding: 7px 90px 7px 12px; background: var(--panel-bg); border: 1.5px solid var(--tag-border); border-radius: 10px; color: var(--ink); font-weight: 700; }
+		.ro-t { display: inline; }
+		.ro-b { position: absolute; right: 6px; top: 5px; display: flex; gap: 4px; }
+		.ro-b button { width: 32px; height: 28px; font-size: 14px; border-radius: 8px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.ro-b button:hover { border-color: var(--accent); }
+		.ro-b button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.ro-bar { display: flex; gap: 3px; max-width: 480px; margin: 0 auto; height: 30px; font: 700 12.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--paper-bg); }
+		.ro-bar i { display: flex; align-items: center; justify-content: center; font-style: normal; border-radius: 4px; overflow: hidden; white-space: nowrap; transition: flex-grow 0.5s ease; flex-basis: 0; }
+		.ro-work { background: var(--accent); }
+		.ro-waste { background: var(--award); }
+
+		/* Figure 3: the podium */
+		.toon .pd-1 { fill: var(--accent); stroke: var(--ink); stroke-width: 2; }
+		.toon .pd-2 { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon .pd-3 { fill: var(--flag-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon .pd-n { font-size: 30px; font-weight: 900; fill: var(--ink); }
+		.toon .pd-t { font-weight: 700; fill: var(--ink); }
+		.toon .pd[data-g="p"] .pd-n, .toon .pd[data-g="p"] .pd-t { fill: var(--paper-bg); }
+		.toon .pd { transition: transform 0.8s cubic-bezier(.3,1.4,.5,1), opacity 0.4s ease; }
+		.toon.f3-wait .pd { transform: translateY(190px); opacity: 0; }
+		.toon .pd[data-g="s"] { transition-delay: 0.25s; }
+		.toon .pd[data-g="p"] { transition-delay: 0.5s; }
+
+		/* Figure 4: the next event */
+		.nx { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; }
+		.nx-log { display: flex; flex-wrap: wrap; gap: 5px; min-height: 30px; margin: 0 0 10px; }
+		.nx-tok { font-size: 13px; font-weight: 700; padding: 3px 9px; border-radius: 6px; background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--ink); animation: nx-in 0.3s ease both; }
+		.nx-tok:last-child { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		@keyframes nx-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+		.prose .nx-q { font-size: 13px; font-weight: 700; color: var(--ink-light); margin: 0 0 6px; }
+		.nx-b { display: grid; grid-template-columns: 150px 1fr 44px; gap: 8px; align-items: center; width: 100%; padding: 4px 6px; margin: 2px 0; border: 1px solid transparent; border-radius: 6px; background: none; font: 400 14px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink); text-align: left; }
+		button.nx-b { cursor: pointer; }
+		button.nx-b:hover { border-color: var(--accent); background: var(--tag-bg); }
+		button.nx-b:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+		.nx-t { display: block; height: 14px; background: var(--chip-bg); border-radius: 3px; overflow: hidden; }
+		.nx-t i { display: block; height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.4s ease; }
+		.nx-v { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+		@media (max-width: 720px) {
+			.ip-r { grid-template-columns: 112px 1fr 1fr; font-size: 13px; }
+			.nx-b { grid-template-columns: 112px 1fr 40px; font-size: 13px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.toon .ip-c, .ro-bar i, .toon .pd, .nx-t i { transition: none; }
+			.nx-tok { animation: none; }
+		}
+
+		/* Figure 5: the org chart and the real network */
+		.toon .og-e { stroke: var(--ink-light); stroke-width: 1.8; transition: opacity 0.4s ease; }
+		.toon .og-br { stroke: var(--gold-hl-ink); stroke-width: 3; stroke-dasharray: 6 5; }
+		.toon .og-n { transition: transform 0.8s cubic-bezier(.4,0,.3,1); }
+		.toon .og-n circle { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; }
+		.toon .og-k circle { fill: var(--gold-hl-ink); }
+		.toon .og-fade { opacity: 0; }
+
+		/* Figure 6: the hidden cause */
+		.toon .cf-grid { fill: none; stroke: var(--rule); stroke-width: 1; }
+		.toon .cf-p { transition: transform 0.9s cubic-bezier(.4,0,.3,1); }
+		.toon .cf-p circle, .toon .cf-p rect { fill: var(--ink-light); stroke: var(--paper-bg); stroke-width: 1; transition: fill 0.4s ease; }
+		.toon.cf-split .cf-e circle, .toon .cf-ke { fill: var(--accent); }
+		.toon.cf-split .cf-h rect, .toon .cf-kh { fill: var(--gold-hl-ink); }
+		.toon .cf-l { stroke-width: 3; stroke-linecap: round; }
+		.toon .cf-la { stroke: var(--ink); stroke-dasharray: 7 6; }
+		.toon .cf-le { stroke: var(--accent); }
+		.toon .cf-lh { stroke: var(--gold-hl-ink); }
+
+		/* Figure 7: the tiny twin */
+		.toon .f7-num { font-size: 26px; font-weight: 900; fill: var(--ink); font-variant-numeric: tabular-nums; }
+		.toon .f7-d { fill: var(--accent); }
+		.toon .f7-f { fill: var(--accent); transition: transform 0.28s linear; }
+
+		/* Figure 8: goals and forecasts */
+		.gl-c { display: flex; align-items: center; gap: 12px; max-width: 520px; margin: 4px auto; font: 400 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink); }
+		.gl-c label { flex: 0 0 150px; font-weight: 700; }
+		.gl-c input { flex: 1; min-width: 0; accent-color: var(--accent); height: 26px; }
+		.gl { display: flex; flex-direction: column; gap: 8px; margin: 12px 0 0; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.gl-r { display: grid; grid-template-columns: 220px 1fr 40px; gap: 10px; align-items: center; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; font-size: 14.5px; color: var(--ink); }
+		.gl-r.win { border-color: var(--accent); background: var(--tag-bg); }
+		.gl-n { font-weight: 700; line-height: 1.25; }
+		.gl-n small { display: block; font-weight: 400; font-size: 12.5px; color: var(--ink-light); }
+		.gl-t { display: block; height: 16px; background: var(--chip-bg); border-radius: 4px; overflow: hidden; }
+		.gl-t i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 4px; transition: width 0.3s ease; }
+		.gl-s { text-align: right; font-variant-numeric: tabular-nums; }
+		@media (max-width: 720px) {
+			.gl-r { grid-template-columns: 1fr 36px; }
+			.gl-n { grid-column: 1 / -1; }
+			.gl-c label { flex-basis: 118px; font-size: 13.5px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.toon .og-n, .toon .og-e, .toon .cf-p, .toon .cf-p circle, .toon .cf-p rect, .toon .f7-f, .gl-t i { transition: none; }
+		}
+
+/* Figure 9: the activity score */
+		.bz { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; display: flex; flex-direction: column; gap: 8px; }
+		.bz-r { display: grid; grid-template-columns: 230px 1fr 44px; gap: 10px; align-items: center; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 8px 12px; font-size: 14.5px; color: var(--ink); }
+		.bz-n { font-weight: 700; line-height: 1.25; }
+		.bz-n small { display: block; font-weight: 400; font-size: 12.5px; color: var(--ink-light); }
+		.bz-t { display: block; height: 18px; background: var(--chip-bg); border-radius: 4px; overflow: hidden; }
+		.bz-t i { display: block; height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.5s ease; }
+		.bz-r[data-k="b"] .bz-t i { background: var(--gold-hl-ink); }
+		.bz-v { text-align: right; font-variant-numeric: tabular-nums; }
+		.bz-j { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 10px 0 0; }
+		.bz-j button { font: 700 13.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 6px 13px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.bz-j button:hover { border-color: var(--accent); }
+		.bz-j button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.bz-j button[aria-pressed="true"] { background: var(--award); border-color: var(--award); color: var(--paper-bg); }
+		.prose figure.diagram .bz-j svg { width: 46px; height: 62px; max-width: 46px; flex: none; margin: 0; border-radius: 0; }
+		.bz-m.on { animation: bz-jig 0.25s linear infinite; }
+		@keyframes bz-jig { 25% { transform: translate(3px,-2px) rotate(3deg); } 50% { transform: translate(-3px,1px); } 75% { transform: translate(2px,2px) rotate(-3deg); } }
+
+		/* Figure 10: the shrinking crowd */
+		.toon .an-d { fill: var(--accent); transition: opacity 0.5s ease, fill 0.3s ease; }
+		.toon .an-d.off { opacity: 0.1; }
+		.toon .an-d.one { fill: var(--award); }
+
+		/* Figure 11: the ladder */
+		.toon .ld-on { fill: none; stroke: var(--good); stroke-width: 5; stroke-linecap: round; }
+		.toon .ld-off { fill: none; stroke: var(--ink-light); stroke-width: 3; stroke-dasharray: 3 7; stroke-linecap: round; }
+		.toon .ld-c { transition: transform 1.2s cubic-bezier(.3,1.2,.5,1); }
+
+		/* The chip in the corner predicts your next event. */
+		.nextchip { position: fixed; left: 14px; bottom: 16px; z-index: 150; max-width: 270px; padding: 7px 11px; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14); font: 400 12.5px/1.3 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink); transition: opacity 0.3s ease, transform 0.3s ease; }
+		.nextchip b { display: block; font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--accent); }
+		.nextchip.off { opacity: 0; transform: translateY(50px); pointer-events: none; }
+		@media (max-width: 1100px) { .nextchip { display: none; } }
+		@media (max-width: 720px) {
+			.bz-r { grid-template-columns: 1fr 40px; }
+			.bz-n { grid-column: 1 / -1; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.bz-t i, .toon .an-d, .toon .ld-c, .nextchip { transition: none; }
+			.bz-m.on { animation: none; }
+		}
+
+		@media (max-width: 720px) {
+			.toon text { font-size: 16.5px; }
+			.toon .t-small { font-size: 14.5px; }
+			.toon .t-head { font-size: 13px; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-gold { font-weight: 700; fill: var(--gold-hl-ink); }
+		.toon .t-big { font-size: 22px; font-weight: 900; fill: var(--ink); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-acc { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-call { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: 2 7; stroke-linecap: round; }
+		.toon .ln-gold { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-net { fill: none; stroke: var(--ink-light); stroke-width: 1.4; stroke-linecap: round; }
+		.toon .ln-red { fill: none; stroke: var(--award); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-g { fill: var(--good-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-y { fill: var(--flag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-r { fill: var(--warn-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .card { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .bubble { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .red { fill: var(--award); }
+		.toon .ok { fill: var(--good); }
+		.toon .is-hidden { display: none; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "The hidden grammar of teamwork: Can AI learn how organizations work?",
+		"description": "Medical errors fell 23% after nine hospitals changed how doctors hand off patients. Stanford researchers want AI to learn the grammar of teamwork.",
+		"datePublished": "2026-11-01",
+		"url": "https://chenyangsu.github.io/blog/hidden-grammar-of-teamwork/",
+		"keywords": "organizations, teamwork, prediction, privacy",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/hidden-grammar-of-teamwork/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI and organizations</p>
+
+		<h1 class="post-title">The hidden grammar of teamwork: Can AI learn how organizations work?</h1>
+
+		<p class="post-standfirst">Nine hospitals changed how doctors hand over patients at the end of a shift, and medical errors fell 23%. What changed was how information moved between people. Two Stanford researchers now propose training an AI on workplace events, the way language models train on words, to learn the patterns behind results like that one. So far it is a proposal, and it raises hard questions about prediction and privacy.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-11-01">1 November 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li><strong>How people work together can change results without changing the people.</strong> A handoff routine at nine hospitals went with 23% fewer medical errors and 30% fewer preventable harms.</li>
+				<li><strong>Collaboration predicts group performance better than individual skill does.</strong> A review of 22 studies and 5,279 people found group process to be the strongest predictor of how well a group performs across tasks.</li>
+				<li><strong>A Large Coordination Model would predict the next workplace event, the way a language model predicts the next word.</strong> The idea won a $100,000 Stanford and Google DeepMind prize. No results have been published yet.</li>
+				<li><strong>Predicting what happens next is different from knowing what to change.</strong> A model can spot that busy teams miss deadlines and still give bad advice about cancelling their meetings.</li>
+				<li><strong>The same data can help a team or score a worker.</strong> Microsoft removed individual names from a workplace score after a week of public debate in 2020. Wells Fargo discharged staff in 2024 over alleged faked keyboard activity.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>At the end of every shift in a hospital, a doctor in training hands patients over to the next doctor. Things get lost in that conversation. <a href="https://doi.org/10.1056/NEJMsa1405556" target="_blank" rel="noopener">Amy Starmer and her colleagues</a> tested a fix at nine hospitals, called I-PASS. It gave doctors a memory aid for what to say, along with training and senior doctors who watched handoffs and gave feedback. Across 10,740 patient admissions, medical errors fell from 24.5 to 18.8 per 100 admissions, a drop of 23%. Preventable harm to patients fell 30%.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f1-btns" role="group" aria-label="Choose a handoff">
+					<button type="button" data-m="usual" aria-pressed="false">The usual handoff</button>
+					<button type="button" data-m="ipass" aria-pressed="true">I-PASS</button>
+				</div>
+				<svg class="toon" id="f1" viewBox="0 0 560 234" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">Information passed along three doctors</title>
+					<desc id="f1-desc">Three cartoon doctors stand in a row. Five lettered pieces of information about a patient travel from the first doctor to the third. In a usual handoff some pieces drop away. With I-PASS all five arrive.</desc>
+					<path class="shirt" d="M66,200 Q68,138 90,134 Q112,138 114,200 Z"/><circle class="head" cx="90" cy="112" r="19"/><circle class="ink" cx="84" cy="110" r="2"/><circle class="ink" cx="96" cy="110" r="2"/><path class="ln-thin" d="M84,120 Q90,124 96,120"/><path class="ln" d="M82,148 L82,160 M98,148 L98,160"/><text class="t-small t-main" x="90" y="222" text-anchor="middle">Doctor going off shift</text><path class="shirt-y" d="M256,200 Q258,138 280,134 Q302,138 304,200 Z"/><circle class="head" cx="280" cy="112" r="19"/><circle class="ink" cx="274" cy="110" r="2"/><circle class="ink" cx="286" cy="110" r="2"/><path class="ln-thin" d="M274,120 Q280,124 286,120"/><path class="ln" d="M272,148 L272,160 M288,148 L288,160"/><text class="t-small t-main" x="280" y="222" text-anchor="middle">Next doctor</text><path class="shirt-g" d="M446,200 Q448,138 470,134 Q492,138 494,200 Z"/><circle class="head" cx="470" cy="112" r="19"/><circle class="ink" cx="464" cy="110" r="2"/><circle class="ink" cx="476" cy="110" r="2"/><path class="ln-thin" d="M464,120 Q470,124 476,120"/><path class="ln" d="M462,148 L462,160 M478,148 L478,160"/><text class="t-small t-main" x="470" y="222" text-anchor="middle">Doctor the next day</text>
+					<path class="ln-call" d="M124,120 H246 M314,120 H436"/>
+					<text class="t-head" x="280" y="26" text-anchor="middle" id="f1-tally">5 OF 5 PIECES ARRIVE</text>
+					<g class="ip-c" data-i="0" style="transform:translate(410px,74px)"><circle class="soft" r="13"/><text class="t-main ip-l" y="5" text-anchor="middle">I</text></g><g class="ip-c" data-i="1" style="transform:translate(440px,74px)"><circle class="soft" r="13"/><text class="t-main ip-l" y="5" text-anchor="middle">P</text></g><g class="ip-c" data-i="2" style="transform:translate(470px,74px)"><circle class="soft" r="13"/><text class="t-main ip-l" y="5" text-anchor="middle">A</text></g><g class="ip-c" data-i="3" style="transform:translate(500px,74px)"><circle class="soft" r="13"/><text class="t-main ip-l" y="5" text-anchor="middle">S</text></g><g class="ip-c" data-i="4" style="transform:translate(530px,74px)"><circle class="soft" r="13"/><text class="t-main ip-l" y="5" text-anchor="middle">S</text></g>
+				</svg>
+				<p class="say" id="f1-say" aria-live="polite">I-PASS gives each handoff five parts, from how sick the patient is to a read-back by the person receiving it.</p>
+				<div class="ip-t">
+					<div class="ip-r ip-h"><span class="ip-n">Per 100 admissions</span><span class="ip-b"><em>Before</em></span><span class="ip-b"><em>After</em></span></div>
+					<div class="ip-r"><span class="ip-n">Medical errors</span><span class="ip-b"><i class="ip-before" style="width:100.0%"></i><em>24.5</em></span><span class="ip-b"><i class="ip-after" style="width:76.7%"></i><em>18.8</em></span></div><div class="ip-r"><span class="ip-n">Preventable harm</span><span class="ip-b"><i class="ip-before" style="width:19.2%"></i><em>4.7</em></span><span class="ip-b"><i class="ip-after" style="width:13.5%"></i><em>3.3</em></span></div><div class="ip-r"><span class="ip-n">Harm nobody could prevent</span><span class="ip-b"><i class="ip-before" style="width:12.2%"></i><em>3.0</em></span><span class="ip-b"><i class="ip-after" style="width:11.4%"></i><em>2.8</em></span></div>
+				</div>
+				<figcaption><b>Figure 1.</b> Press the buttons. The numbers are from <a href="https://doi.org/10.1056/NEJMsa1405556" target="_blank" rel="noopener">Starmer et al. (2014)</a>, across 10,740 admissions at nine hospitals, on one scale. The drawing is illustrative, and the pieces it drops are invented.</figcaption>
+			</figure>
+
+			<p>The program taught doctors how to hand over information, and it did not teach them new medicine. The study compared hospitals before and after the change without randomly assigning them, so something else could have helped. One detail points toward the handoffs. Harm that nobody could have prevented stayed flat, at 3.0 and 2.8 events per 100 admissions.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Coordination</span>
+				<p>Coordination is the order in which work happens and how information reaches the person who can act on it. Two teams with identical skills can coordinate very differently. An organization chart shows who reports to whom, and it leaves most of this out.</p>
+			</div>
+
+			<h2 id="order">The same people can get very different results</h2>
+
+			<p>Group projects work the same way. Suppose four students each have a different strength. If the programmer builds the model before the statistician checks the data, the model gets built twice. If the writer drafts before anyone agrees on the question, the draft gets thrown away.</p>
+
+			<figure class="diagram">
+				<p class="ask">Same four students, same five jobs. Put them in an order that wastes the least time.</p>
+				<ol class="ro" id="f2"><li class="ro-i" data-k="m"><span class="ro-t">Build the model</span><span class="ro-b"><button type="button" class="ro-u" aria-label="Move Build the model earlier">&#8593;</button><button type="button" class="ro-d" aria-label="Move Build the model later">&#8595;</button></span></li><li class="ro-i" data-k="w"><span class="ro-t">Write the report</span><span class="ro-b"><button type="button" class="ro-u" aria-label="Move Write the report earlier">&#8593;</button><button type="button" class="ro-d" aria-label="Move Write the report later">&#8595;</button></span></li><li class="ro-i" data-k="q"><span class="ro-t">Agree on the question</span><span class="ro-b"><button type="button" class="ro-u" aria-label="Move Agree on the question earlier">&#8593;</button><button type="button" class="ro-d" aria-label="Move Agree on the question later">&#8595;</button></span></li><li class="ro-i" data-k="d"><span class="ro-t">Check the data</span><span class="ro-b"><button type="button" class="ro-u" aria-label="Move Check the data earlier">&#8593;</button><button type="button" class="ro-d" aria-label="Move Check the data later">&#8595;</button></span></li><li class="ro-i" data-k="r"><span class="ro-t">Review it together</span><span class="ro-b"><button type="button" class="ro-u" aria-label="Move Review it together earlier">&#8593;</button><button type="button" class="ro-d" aria-label="Move Review it together later">&#8595;</button></span></li></ol>
+				<div class="ro-bar" id="f2-bar"><i class="ro-work" style="flex-grow:10">10 days of work</i><i class="ro-waste" id="f2-waste" style="flex-grow:12">12 days redone</i></div>
+				<p class="say" id="f2-say" aria-live="polite">In this order, 12 days of work get redone. Nobody got any smarter when you fix it.</p>
+				<figcaption><b>Figure 2.</b> Press the arrows. The jobs, the days and the rules are invented to show the idea. Work gets redone when a job comes before the job it depends on.</figcaption>
+			</figure>
+
+			<p>Researchers have measured this in groups. In 2010, <a href="https://pubmed.ncbi.nlm.nih.gov/20929725/" target="_blank" rel="noopener">Anita Woolley and her colleagues</a> gave 699 people in small groups a range of tasks. Groups that did well on one task tended to do well on the others, so the authors called this shared factor collective intelligence. It was not strongly related to the average or the highest IQ in the group. It was related to how well members read each other and how evenly they took turns talking.</p>
+
+			<p>Which of these do you think predicted a group&rsquo;s performance most strongly when researchers pooled the evidence?</p>
+
+			<figure class="diagram">
+				<p class="ask">Which predicted a group&rsquo;s collective intelligence most strongly?</p>
+				<div class="seg seg-sm" id="f3-btns" role="group" aria-label="Your guess">
+					<button type="button" data-g="p" aria-pressed="false">How the group collaborates</button>
+					<button type="button" data-g="s" aria-pressed="false">The skill of its members</button>
+					<button type="button" data-g="c" aria-pressed="false">Who is in the group</button>
+				</div>
+				<svg class="toon" id="f3" viewBox="0 0 560 250" role="img" aria-labelledby="f3-title f3-desc">
+					<title id="f3-title">The order of the predictors of collective intelligence</title>
+					<desc id="f3-desc">A podium. First place is group collaboration process, second is individual skill and third is group composition.</desc>
+					<path class="ln" d="M60,230 H500"/>
+					<g class="pd" data-g="p"><rect class="pd-1" x="210" y="70" width="140" height="160" rx="4"/><text class="pd-n" x="280" y="118" text-anchor="middle">1</text><text class="t-small pd-t" x="280" y="150" text-anchor="middle">How the group</text><text class="t-small pd-t" x="280" y="168" text-anchor="middle">collaborates</text></g>
+					<g class="pd" data-g="s"><rect class="pd-2" x="70" y="120" width="140" height="110" rx="4"/><text class="pd-n" x="140" y="164" text-anchor="middle">2</text><text class="t-small pd-t" x="140" y="196" text-anchor="middle">Skill of members</text></g>
+					<g class="pd" data-g="c"><rect class="pd-3" x="350" y="160" width="140" height="70" rx="4"/><text class="pd-n" x="420" y="192" text-anchor="middle">3</text><text class="t-small pd-t" x="420" y="218" text-anchor="middle">Who is in it</text></g>
+				</svg>
+				<p class="say" id="f3-say" aria-live="polite">Collaboration process came first, then individual skill, then who was in the group.</p>
+				<figcaption><b>Figure 3.</b> Make a guess. The order is from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8166150/" target="_blank" rel="noopener">Riedl et al. (2021)</a>. The heights of the podium are not to scale, and they show only the order.</figcaption>
+			</figure>
+
+			<p>That pooled analysis, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8166150/" target="_blank" rel="noopener">by Christoph Riedl and his colleagues</a>, covered 22 studies and 5,279 people. The idea still has critics. <a href="https://doi.org/10.1037/apl0000176" target="_blank" rel="noopener">Marcus Cred&eacute; and Jacob Howardson</a> reanalysed the early data and argued that the evidence for a single group factor is weak, and Woolley&rsquo;s team disputes that. The narrower point holds up across this work. Skilled members alone do not settle how well a group performs, which I also touched on in <a href="/blog/what-makes-a-person-valuable/">When answers are cheap, what makes a person valuable?</a></p>
+
+			<h2 id="model">A language model for the workday</h2>
+
+			<p>Language models learn by predicting. Given &ldquo;The student submitted the,&rdquo; a model estimates which piece of text comes next. It checks the real answer and adjusts itself. Do that across enough text and it picks up grammar that nobody wrote down for it. Those pieces of text are called tokens, and researchers write the task as P(next token | previous tokens), the probability of the next token given everything before it.</p>
+
+			<p>In 2026, Yankai Wang, a PhD student at Stanford&rsquo;s business school, and his professor Amir Goldberg <a href="https://www.gsb.stanford.edu/insights/ai-could-uncover-hidden-ways-people-work-together" target="_blank" rel="noopener">proposed a Large Coordination Model</a> that changes what counts as a token. Wang got the idea from a paper that used the same technology to trace how one disease tends to follow another. &ldquo;You can learn a lot from predicting the next word in a sentence,&rdquo; he says. &ldquo;Here we are just replacing &lsquo;sentence&rsquo; with &lsquo;a stream of work events,&rsquo; and replacing the next word with the event that is going to happen next.&rdquo; The events would come from anonymized workplace records such as calendars and emails.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f4-btns" role="group" aria-label="What the model reads">
+					<button type="button" data-m="work" aria-pressed="true">Work events</button>
+					<button type="button" data-m="words" aria-pressed="false">Words</button>
+				</div>
+				<div class="nx" id="f4">
+					<div class="nx-log" id="f4-log"><span class="nx-tok">Question agreed</span><span class="nx-tok">Data shared</span></div>
+					<p class="nx-q" id="f4-q">Probability of the next event, given the last one</p>
+					<div class="nx-bars" id="f4-bars">
+						<div class="nx-b"><span class="nx-l">Analysis done</span><span class="nx-t"><i style="width:75%"></i></span><span class="nx-v">75%</span></div>
+						<div class="nx-b"><span class="nx-l">Draft revised</span><span class="nx-t"><i style="width:25%"></i></span><span class="nx-v">25%</span></div>
+					</div>
+				</div>
+				<p class="say" id="f4-say" aria-live="polite">Press any bar to make that the next event, and the model predicts again.</p>
+				<figcaption><b>Figure 4.</b> This is a real, very small model, running in your browser. It counts which event follows which in 12 short logs and 10 short sentences that I invented, so it looks back only one step and has never seen a real workplace. A Large Coordination Model would use a transformer, the kind of neural network behind language models, and far more history.</figcaption>
+			</figure>
+
+			<p>The proposal beat more than 200 teams to win <a href="https://hai.stanford.edu/news/researchers-worldwide-compete-to-shape-the-future-of-ai-in-organizations" target="_blank" rel="noopener">the AI for Organizations Grand Challenge</a> from Stanford and Google DeepMind. The $100,000 prize includes running the study inside DeepMind&rsquo;s own offices, with computing time and engineers. &ldquo;DeepMind has the data,&rdquo; Wang says. If it works, the model might warn a team about a bottleneck before it forms. Wang hopes it will find principles that hold when people move between companies and countries. <strong>The bet is that the patterns of good teamwork are regular enough to learn from data, the way the grammar of a language is.</strong></p>
+
+			<div class="callout">
+				<span class="callout-label">A proposal, so far</span>
+				<p>As of the August 2026 article, there are no published results. Nobody has shown that this model predicts team performance. &ldquo;We are not claiming that this will be the model of coordination,&rdquo; Wang says. Everything below about what it might do is a hope that still has to be tested.</p>
+			</div>
+
+			<h2 id="traces">Workplace traces have already shown what an org chart cannot</h2>
+
+			<p>Studying work through its digital traces is an older idea. A field called process mining <a href="https://doi.org/10.1016/j.is.2010.09.001" target="_blank" rel="noopener">has used event logs for years</a> to find where cases get stuck and to predict how long they will take. The new step is learning across many kinds of work at once.</p>
+
+			<p>One large test came by accident. When Microsoft sent everyone home in 2020, <a href="https://www.nature.com/articles/s41562-021-01196-4" target="_blank" rel="noopener">Longqi Yang and his colleagues</a> analysed the digital traces of 61,182 US employees, including their emails and calendars. Some of those employees had already been remote, which let the researchers separate the effect of a firm-wide move from the effects of the pandemic. Firm-wide remote work made the collaboration network more static and siloed, meaning people stuck to the same colleagues and had fewer links between groups.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f5-btns" role="group" aria-label="Choose a view">
+					<button type="button" data-m="chart" aria-pressed="false">The org chart</button>
+					<button type="button" data-m="talk" aria-pressed="true">Who actually talks</button>
+					<button type="button" data-m="remote" aria-pressed="false">After going remote</button>
+				</div>
+				<svg class="toon" id="f5" viewBox="0 0 560 240" role="img" aria-labelledby="f5-title f5-desc">
+					<title id="f5-title">The same ten people in three views</title>
+					<desc id="f5-desc">Ten people. The org chart shows a tree of who reports to whom. Who actually talks shows three tight groups joined by two gold people who bridge them. After going remote, the groups drift apart and the bridges disappear.</desc>
+					<g id="f5-lines"><line class="og-e" x1="90" y1="120" x2="60" y2="204"/><line class="og-e" x1="90" y1="120" x2="170" y2="184"/><line class="og-e" x1="60" y1="204" x2="170" y2="184"/><line class="og-e" x1="280" y1="92" x2="240" y2="194"/><line class="og-e" x1="280" y1="92" x2="330" y2="194"/><line class="og-e" x1="240" y1="194" x2="330" y2="194"/><line class="og-e" x1="470" y1="120" x2="420" y2="212"/><line class="og-e" x1="470" y1="120" x2="510" y2="204"/><line class="og-e" x1="420" y1="212" x2="510" y2="204"/><line class="og-e" x1="280" y1="34" x2="280" y2="92"/><line class="og-e og-br" x1="170" y1="184" x2="240" y2="194"/><line class="og-e og-br" x1="330" y1="194" x2="420" y2="212"/></g>
+					<g class="og-n" data-i="0" style="transform:translate(280px,34px)"><circle r="15"/></g><g class="og-n" data-i="1" style="transform:translate(90px,120px)"><circle r="13"/></g><g class="og-n" data-i="2" style="transform:translate(280px,92px)"><circle r="13"/></g><g class="og-n" data-i="3" style="transform:translate(470px,120px)"><circle r="13"/></g><g class="og-n" data-i="4" style="transform:translate(60px,204px)"><circle r="13"/></g><g class="og-n og-k" data-i="5" style="transform:translate(170px,184px)"><circle r="13"/></g><g class="og-n" data-i="6" style="transform:translate(240px,194px)"><circle r="13"/></g><g class="og-n og-k" data-i="7" style="transform:translate(330px,194px)"><circle r="13"/></g><g class="og-n" data-i="8" style="transform:translate(420px,212px)"><circle r="13"/></g><g class="og-n" data-i="9" style="transform:translate(510px,204px)"><circle r="13"/></g>
+				</svg>
+				<p class="say" id="f5-say" aria-live="polite">Same people, and a different shape. The two gold people carry news between groups, and the org chart does not show that job.</p>
+				<figcaption><b>Figure 5.</b> Press the buttons. The ten people and their links are invented. The real result is from <a href="https://www.nature.com/articles/s41562-021-01196-4" target="_blank" rel="noopener">Yang et al. (2022)</a>, whose network of 61,182 people became more siloed, with fewer bridges.</figcaption>
+			</figure>
+
+			<h2 id="cause">Predicting the next event is the easy part</h2>
+
+			<p>Suppose a model learns that teams with more meetings miss more deadlines. It would predict well. It would also give bad advice if the meetings were not the cause. Hard projects can need more meetings and also run late.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f6-btns" role="group" aria-label="Choose a view">
+					<button type="button" data-m="all" aria-pressed="true">All teams</button>
+					<button type="button" data-m="split" aria-pressed="false">Split by how hard the project is</button>
+					<button type="button" data-m="cut" aria-pressed="false">Cancel 3 meetings a week</button>
+				</div>
+				<svg class="toon" id="f6" viewBox="0 0 560 280" role="img" aria-labelledby="f6-title f6-desc">
+					<title id="f6-title">Meetings and lateness in 60 simulated teams</title>
+					<desc id="f6-desc">A scatter of 60 simulated teams. Across all teams, more meetings go with more days late. Split by difficulty, easy teams as circles and hard teams as squares, more meetings go with fewer days late inside each group. Cancelling meetings moves every team left and up, so lateness rises.</desc>
+					<path class="cf-grid" d="M70,232 H526 M70,192 H526 M70,152 H526 M70,112 H526 M70,72 H526 M70,32 H526"/>
+					<path class="ln-thin" d="M70,20 V232 H526"/>
+					<text class="t-small" x="62" y="236" text-anchor="end">0</text>
+					<text class="t-small" x="62" y="156" text-anchor="end">4</text>
+					<text class="t-small" x="62" y="76" text-anchor="end">8</text>
+					<text class="t-small" x="70" y="250" text-anchor="middle">0</text>
+					<text class="t-small" x="298" y="250" text-anchor="middle">6</text>
+					<text class="t-small" x="526" y="250" text-anchor="middle">12</text>
+					<text class="t-small t-main" x="298" y="272" text-anchor="middle">Meetings a week</text>
+					<text class="t-small t-main" x="16" y="130" text-anchor="middle" transform="rotate(-90 16 130)">Days late</text>
+					<g id="f6-pts"><g class="cf-p cf-e" data-k="e" data-m="2.72" data-l="2.56" style="transform:translate(173.3px,180.9px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.75" data-l="2.05" style="transform:translate(174.5px,191.0px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="1.98" data-l="2.38" style="transform:translate(145.1px,184.4px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="4.22" data-l="1.98" style="transform:translate(230.5px,192.5px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="4.14" data-l="1.90" style="transform:translate(227.3px,194.0px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.43" data-l="2.11" style="transform:translate(200.5px,189.8px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="1.17" data-l="3.30" style="transform:translate(114.4px,165.9px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.56" data-l="2.25" style="transform:translate(205.2px,186.9px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="1.14" data-l="1.75" style="transform:translate(113.3px,196.9px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.02" data-l="2.21" style="transform:translate(146.8px,187.8px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.34" data-l="2.00" style="transform:translate(196.8px,191.9px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.57" data-l="1.56" style="transform:translate(205.8px,200.7px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.34" data-l="2.27" style="transform:translate(196.9px,186.6px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.27" data-l="3.44" style="transform:translate(156.4px,163.3px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.61" data-l="2.65" style="transform:translate(207.3px,178.9px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.32" data-l="1.95" style="transform:translate(158.1px,193.1px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.62" data-l="2.22" style="transform:translate(169.6px,187.6px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.70" data-l="2.06" style="transform:translate(210.4px,190.9px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.51" data-l="1.75" style="transform:translate(165.3px,197.0px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.43" data-l="3.08" style="transform:translate(162.2px,170.3px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.11" data-l="2.61" style="transform:translate(150.2px,179.8px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.47" data-l="1.09" style="transform:translate(201.8px,210.2px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.05" data-l="2.92" style="transform:translate(186.0px,173.7px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="0.78" data-l="2.73" style="transform:translate(99.8px,177.3px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="2.88" data-l="1.70" style="transform:translate(179.6px,198.0px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.55" data-l="1.92" style="transform:translate(204.8px,193.6px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="1.39" data-l="3.21" style="transform:translate(122.8px,167.8px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.74" data-l="2.46" style="transform:translate(212.0px,182.8px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="4.58" data-l="1.81" style="transform:translate(244.2px,195.7px)"><circle r="5"/></g><g class="cf-p cf-e" data-k="e" data-m="3.13" data-l="1.32" style="transform:translate(189.0px,205.5px)"><circle r="5"/></g><g class="cf-p cf-h" data-k="h" data-m="8.74" data-l="6.90" style="transform:translate(402.1px,93.9px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="7.46" data-l="7.09" style="transform:translate(353.4px,90.3px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="6.84" data-l="8.01" style="transform:translate(329.9px,71.7px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.55" data-l="5.32" style="transform:translate(432.8px,125.5px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="6.25" data-l="8.95" style="transform:translate(307.5px,52.9px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.73" data-l="7.31" style="transform:translate(439.8px,85.8px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="5.72" data-l="7.04" style="transform:translate(287.4px,91.2px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="8.43" data-l="6.98" style="transform:translate(390.3px,92.5px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="6.66" data-l="9.32" style="transform:translate(322.9px,45.6px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.32" data-l="7.20" style="transform:translate(424.2px,88.0px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="8.29" data-l="7.99" style="transform:translate(385.2px,72.3px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.91" data-l="7.24" style="transform:translate(446.7px,87.1px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="8.62" data-l="7.90" style="transform:translate(397.7px,74.1px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="6.12" data-l="9.86" style="transform:translate(302.5px,34.8px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.15" data-l="7.59" style="transform:translate(417.6px,80.1px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="5.63" data-l="8.60" style="transform:translate(284.0px,60.1px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.01" data-l="5.80" style="transform:translate(412.4px,116.1px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="7.78" data-l="8.74" style="transform:translate(365.6px,57.3px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="6.43" data-l="9.95" style="transform:translate(314.2px,32.9px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="8.66" data-l="7.32" style="transform:translate(399.2px,85.7px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="8.39" data-l="8.11" style="transform:translate(388.8px,69.9px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="8.14" data-l="8.64" style="transform:translate(379.5px,59.3px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="7.21" data-l="7.90" style="transform:translate(343.8px,73.9px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.25" data-l="7.13" style="transform:translate(421.5px,89.3px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="6.94" data-l="9.14" style="transform:translate(333.9px,49.2px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.76" data-l="6.48" style="transform:translate(440.8px,102.5px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="6.34" data-l="8.60" style="transform:translate(311.1px,59.9px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="7.82" data-l="7.66" style="transform:translate(367.2px,78.8px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.69" data-l="6.05" style="transform:translate(438.1px,111.0px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g><g class="cf-p cf-h" data-k="h" data-m="9.51" data-l="5.95" style="transform:translate(431.5px,112.9px)"><rect x="-4.5" y="-4.5" width="9" height="9"/></g></g>
+					<line id="f6-a" class="cf-l cf-la" x1="70" y1="232" x2="526" y2="40"/>
+					<line id="f6-e" class="cf-l cf-le is-hidden"/>
+					<line id="f6-h" class="cf-l cf-lh is-hidden"/>
+					<g id="f6-key" class="is-hidden"><circle class="cf-ke" cx="86" cy="26" r="5"/><text class="t-small t-main" x="96" y="31">Easy project</text><rect class="cf-kh" x="196" y="21" width="9" height="9"/><text class="t-small t-main" x="212" y="31">Hard project</text></g>
+				</svg>
+				<p class="say" id="f6-say" aria-live="polite">Across all 60 teams, more meetings go with more days late. A model that only predicts would stop here.</p>
+				<figcaption><b>Figure 6.</b> Press the buttons in order. These 60 teams are simulated by me, and I built meetings to help inside each group, so the data have the trap in them. Each line is a least-squares fit, the straight line closest to the dots. Real data do not come with a button that reveals the hidden cause.</figcaption>
+			</figure>
+
+			<p>Prediction also has limits of its own. In one large test, <a href="https://doi.org/10.1073/pnas.1915006117" target="_blank" rel="noopener">160 teams built models</a> to predict six life outcomes for children from a very rich long-term study of families. The best predictions were not very accurate, and they were only slightly better than a simple benchmark. Human behaviour may contain less predictable pattern than the richness of the data suggests.</p>
+
+			<p>Wang also imagines a virtual replica of an organization, often called a digital twin, where researchers could try a change before making it. A twin only earns trust by predicting what happens after real changes, and only experiments can show that. The small one below follows rules I wrote, so it can only tell you what those rules imply.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f7-btns" role="group" aria-label="Choose a way of organizing">
+					<button type="button" data-m="one" aria-pressed="true">One approver for everything</button>
+					<button type="button" data-m="owners" aria-pressed="false">Two people own decisions</button>
+					<button type="button" data-m="hire" aria-pressed="false">Hire more analysts</button>
+				</div>
+				<svg class="toon" id="f7" viewBox="0 0 560 200" role="img" aria-labelledby="f7-title f7-desc">
+					<title id="f7-title">A tiny simulated team</title>
+					<desc id="f7-desc">Tasks flow from analysts to an approver and then to finished. Tasks wait in a queue in front of the approver. With one approver the queue grows. With two owners it stays short. Hiring more analysts makes the queue much longer without finishing more work.</desc>
+					<g transform="translate(70,110)"><circle class="head" cy="-20" r="16"/><path class="shirt" d="M-20,30 Q-18,-4 0,-6 Q18,-4 20,30 Z"/><text class="t-small t-main" y="52" text-anchor="middle">Analysts</text></g>
+					<g transform="translate(340,110)"><circle class="head" cy="-20" r="16"/><path class="shirt-y" d="M-20,30 Q-18,-4 0,-6 Q18,-4 20,30 Z"/><text class="t-small t-main" id="f7-who" y="52" text-anchor="middle">Approver</text></g>
+					<path class="ln-call" d="M100,110 H300 M370,110 H470"/>
+					<rect class="card" x="470" y="78" width="70" height="66" rx="6"/>
+					<text class="f7-num" id="f7-done" x="505" y="118" text-anchor="middle">10</text>
+					<text class="t-small t-main" x="505" y="164" text-anchor="middle">Finished</text>
+					<g id="f7-q"></g>
+					<g id="f7-fly"></g>
+					<text class="t-small t-main" id="f7-wait" x="210" y="40" text-anchor="middle">Waiting: 10</text>
+					<text class="t-small" id="f7-clock" x="16" y="24">Day 40</text>
+				</svg>
+				<p class="say" id="f7-say" aria-live="polite">One approver finishes 10 tasks in 40 days, and the queue keeps growing.</p>
+				<figcaption><b>Figure 7.</b> Press a button to run 40 simulated days. The rules and rates are mine. A real digital twin would have to earn trust by predicting what happens after real changes, and this one has never been tested against anything.</figcaption>
+			</figure>
+
+			<h2 id="managers">A forecast leaves the goal open</h2>
+
+			<p>Much of a manager&rsquo;s work is prediction, such as planning budgets and spotting trouble early. Goldberg and Phanish Puranam, a professor at INSEAD, argue in <a href="https://doi.org/10.1007/s41469-026-00205-y" target="_blank" rel="noopener">a 2026 paper</a> that this is exactly what AI does best, and that setting priorities is a different job. A forecast can tell you which project is most likely to publish a paper by June. It cannot tell you whether a quick paper is what your lab should want.</p>
+
+			<figure class="diagram">
+				<p class="ask">The forecast for each project stays fixed. What do you want the lab to care about?</p>
+				<div class="gl-c"><label for="f8-a">A paper by June</label><input type="range" id="f8-a" min="0" max="100" value="100"></div>
+				<div class="gl-c"><label for="f8-b">Long-term science</label><input type="range" id="f8-b" min="0" max="100" value="0"></div>
+				<div class="gl-c"><label for="f8-c">Public need</label><input type="range" id="f8-c" min="0" max="100" value="0"></div>
+				<div class="gl" id="f8"><div class="gl-r" data-k="a" data-f="85" data-v="20" data-u="15"><span class="gl-n">A quick, safe paper<small>Forecast: 85% chance of a paper by June</small></span><span class="gl-t"><i></i></span><b class="gl-s">0</b></div><div class="gl-r" data-k="b" data-f="20" data-v="90" data-u="40"><span class="gl-n">A hard open question<small>Forecast: 20% chance of a paper by June</small></span><span class="gl-t"><i></i></span><b class="gl-s">0</b></div><div class="gl-r" data-k="c" data-f="45" data-v="40" data-u="90"><span class="gl-n">An urgent public problem<small>Forecast: 45% chance of a paper by June</small></span><span class="gl-t"><i></i></span><b class="gl-s">0</b></div></div>
+				<p class="say" id="f8-say" aria-live="polite">Care only about papers, and the quick paper wins. Move the sliders, and the winner changes while the forecast stays put.</p>
+				<figcaption><b>Figure 8.</b> Drag the sliders. The three projects and all their numbers are invented. The idea that forecasting and choosing goals are separate jobs is from <a href="https://doi.org/10.1007/s41469-026-00205-y" target="_blank" rel="noopener">Goldberg and Puranam (2026)</a>.</figcaption>
+			</figure>
+
+			<p>People may also refuse to hand the job over. &ldquo;Humans will be resistant to it,&rdquo; Goldberg says, &ldquo;not simply because managers will resist their replacement, but because we won&rsquo;t culturally agree to cede that responsibility to AI.&rdquo; Their argument covers what managers do today. A machine&rsquo;s priorities are set by its designers, for now.</p>
+
+			<h2 id="watch">The same data can help a team or score a worker</h2>
+
+			<p>In 2020, Microsoft added a feature to its Productivity Score that showed employers each worker&rsquo;s name and actions over 28 days. After a week of public debate, <a href="https://www.microsoft.com/en-us/microsoft-365/blog/2020/12/01/our-commitment-to-privacy-in-microsoft-productivity-score/" target="_blank" rel="noopener">the company removed names</a> and kept only organization-wide numbers. Measured workers also respond to the measure. In 2024, <a href="https://www.bankingdive.com/news/wells-fires-employees-faking-productivity-finra/719033/" target="_blank" rel="noopener">Wells Fargo discharged more than a dozen employees</a> after reviewing allegations of &ldquo;simulation of keyboard activity creating impression of active work.&rdquo;</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f9-btns" role="group" aria-label="Choose what the dashboard scores">
+					<button type="button" data-m="msg" aria-pressed="false">Messages sent</button>
+					<button type="button" data-m="key" aria-pressed="true">Keyboard activity</button>
+					<button type="button" data-m="fix" aria-pressed="false">Problems solved</button>
+				</div>
+				<div class="bz" id="f9">
+					<div class="bz-r" data-k="a"><span class="bz-n">Worker A<small>spends the afternoon helping a colleague think</small></span><span class="bz-t"><i></i></span><b class="bz-v"></b></div>
+					<div class="bz-r" data-k="b"><span class="bz-n">Worker B<small>sends many updates, and owns a mouse jiggler</small></span><span class="bz-t"><i></i></span><b class="bz-v"></b></div>
+				</div>
+				<div class="bz-j">
+					<svg class="toon bz-m" id="f9-mouse" viewBox="0 0 60 80" width="46" height="62" aria-hidden="true"><rect class="soft" x="12" y="10" width="36" height="60" rx="18"/><path class="ln-thin" d="M30,10 V34 M12,34 H48"/></svg>
+					<button type="button" id="f9-j" aria-pressed="false">Turn on Worker B&rsquo;s jiggler</button>
+				</div>
+				<p class="say" id="f9-say" aria-live="polite">Score keyboard activity, and Worker B looks busier than Worker A. Now try the other two scores.</p>
+				<figcaption><b>Figure 9.</b> Press the buttons. Both workers and their numbers are invented. A mouse jiggler is a cheap device that keeps a computer looking active, and <a href="https://www.bankingdive.com/news/wells-fires-employees-faking-productivity-finra/719033/" target="_blank" rel="noopener">coverage of the Wells Fargo case</a> says staff were accused of faking activity. Economists call this <a href="https://en.wikipedia.org/wiki/Goodhart%27s_law" target="_blank" rel="noopener">Goodhart&rsquo;s law</a>. Once a measure becomes a target, it stops being a good measure.</figcaption>
+			</figure>
+
+			<p>Anonymizing records helps, though it protects less than it sounds like it should. <a href="https://www.nature.com/articles/srep01376" target="_blank" rel="noopener">Yves-Alexandre de Montjoye and his colleagues</a> studied phone location data on 1.5 million people and found that four points were enough to identify 95% of them. Patterns of work may be distinctive too. Few people email the finance chief at 3 a.m.</p>
+
+			<figure class="diagram">
+				<p class="ask">Names are gone from these 5,000 work records. What might a colleague already know about the person you are looking for?</p>
+				<div class="seg seg-sm" id="f10-btns" role="group" aria-label="Clues">
+					<button type="button" data-f="0.1" aria-pressed="false">Works in finance</button>
+					<button type="button" data-f="0.2" aria-pressed="false">Is in the Boston office</button>
+					<button type="button" data-f="0.1" aria-pressed="false">Often emails after midnight</button>
+					<button type="button" data-f="0.1" aria-pressed="false">Meets the finance chief on Mondays</button>
+				</div>
+				<svg class="toon" id="f10" viewBox="0 0 560 170" role="img" aria-labelledby="f10-title f10-desc">
+					<title id="f10-title">How clues shrink an anonymous crowd</title>
+					<desc id="f10-desc">One hundred dots stand for 5,000 anonymous workers. Each clue removes most of the remaining dots, until one person is left.</desc>
+					<circle class="an-d" data-i="0" cx="30" cy="30" r="9"/><circle class="an-d" data-i="1" cx="56" cy="30" r="9"/><circle class="an-d" data-i="2" cx="82" cy="30" r="9"/><circle class="an-d" data-i="3" cx="108" cy="30" r="9"/><circle class="an-d" data-i="4" cx="134" cy="30" r="9"/><circle class="an-d" data-i="5" cx="160" cy="30" r="9"/><circle class="an-d" data-i="6" cx="186" cy="30" r="9"/><circle class="an-d" data-i="7" cx="212" cy="30" r="9"/><circle class="an-d" data-i="8" cx="238" cy="30" r="9"/><circle class="an-d" data-i="9" cx="264" cy="30" r="9"/><circle class="an-d" data-i="10" cx="290" cy="30" r="9"/><circle class="an-d" data-i="11" cx="316" cy="30" r="9"/><circle class="an-d" data-i="12" cx="342" cy="30" r="9"/><circle class="an-d" data-i="13" cx="368" cy="30" r="9"/><circle class="an-d" data-i="14" cx="394" cy="30" r="9"/><circle class="an-d" data-i="15" cx="420" cy="30" r="9"/><circle class="an-d" data-i="16" cx="446" cy="30" r="9"/><circle class="an-d" data-i="17" cx="472" cy="30" r="9"/><circle class="an-d" data-i="18" cx="498" cy="30" r="9"/><circle class="an-d" data-i="19" cx="524" cy="30" r="9"/><circle class="an-d" data-i="20" cx="30" cy="56" r="9"/><circle class="an-d" data-i="21" cx="56" cy="56" r="9"/><circle class="an-d" data-i="22" cx="82" cy="56" r="9"/><circle class="an-d" data-i="23" cx="108" cy="56" r="9"/><circle class="an-d" data-i="24" cx="134" cy="56" r="9"/><circle class="an-d" data-i="25" cx="160" cy="56" r="9"/><circle class="an-d" data-i="26" cx="186" cy="56" r="9"/><circle class="an-d" data-i="27" cx="212" cy="56" r="9"/><circle class="an-d" data-i="28" cx="238" cy="56" r="9"/><circle class="an-d" data-i="29" cx="264" cy="56" r="9"/><circle class="an-d" data-i="30" cx="290" cy="56" r="9"/><circle class="an-d" data-i="31" cx="316" cy="56" r="9"/><circle class="an-d" data-i="32" cx="342" cy="56" r="9"/><circle class="an-d" data-i="33" cx="368" cy="56" r="9"/><circle class="an-d" data-i="34" cx="394" cy="56" r="9"/><circle class="an-d" data-i="35" cx="420" cy="56" r="9"/><circle class="an-d" data-i="36" cx="446" cy="56" r="9"/><circle class="an-d" data-i="37" cx="472" cy="56" r="9"/><circle class="an-d" data-i="38" cx="498" cy="56" r="9"/><circle class="an-d" data-i="39" cx="524" cy="56" r="9"/><circle class="an-d" data-i="40" cx="30" cy="82" r="9"/><circle class="an-d" data-i="41" cx="56" cy="82" r="9"/><circle class="an-d" data-i="42" cx="82" cy="82" r="9"/><circle class="an-d" data-i="43" cx="108" cy="82" r="9"/><circle class="an-d" data-i="44" cx="134" cy="82" r="9"/><circle class="an-d" data-i="45" cx="160" cy="82" r="9"/><circle class="an-d" data-i="46" cx="186" cy="82" r="9"/><circle class="an-d" data-i="47" cx="212" cy="82" r="9"/><circle class="an-d" data-i="48" cx="238" cy="82" r="9"/><circle class="an-d" data-i="49" cx="264" cy="82" r="9"/><circle class="an-d" data-i="50" cx="290" cy="82" r="9"/><circle class="an-d" data-i="51" cx="316" cy="82" r="9"/><circle class="an-d" data-i="52" cx="342" cy="82" r="9"/><circle class="an-d" data-i="53" cx="368" cy="82" r="9"/><circle class="an-d" data-i="54" cx="394" cy="82" r="9"/><circle class="an-d" data-i="55" cx="420" cy="82" r="9"/><circle class="an-d" data-i="56" cx="446" cy="82" r="9"/><circle class="an-d" data-i="57" cx="472" cy="82" r="9"/><circle class="an-d" data-i="58" cx="498" cy="82" r="9"/><circle class="an-d" data-i="59" cx="524" cy="82" r="9"/><circle class="an-d" data-i="60" cx="30" cy="108" r="9"/><circle class="an-d" data-i="61" cx="56" cy="108" r="9"/><circle class="an-d" data-i="62" cx="82" cy="108" r="9"/><circle class="an-d" data-i="63" cx="108" cy="108" r="9"/><circle class="an-d" data-i="64" cx="134" cy="108" r="9"/><circle class="an-d" data-i="65" cx="160" cy="108" r="9"/><circle class="an-d" data-i="66" cx="186" cy="108" r="9"/><circle class="an-d" data-i="67" cx="212" cy="108" r="9"/><circle class="an-d" data-i="68" cx="238" cy="108" r="9"/><circle class="an-d" data-i="69" cx="264" cy="108" r="9"/><circle class="an-d" data-i="70" cx="290" cy="108" r="9"/><circle class="an-d" data-i="71" cx="316" cy="108" r="9"/><circle class="an-d" data-i="72" cx="342" cy="108" r="9"/><circle class="an-d" data-i="73" cx="368" cy="108" r="9"/><circle class="an-d" data-i="74" cx="394" cy="108" r="9"/><circle class="an-d" data-i="75" cx="420" cy="108" r="9"/><circle class="an-d" data-i="76" cx="446" cy="108" r="9"/><circle class="an-d" data-i="77" cx="472" cy="108" r="9"/><circle class="an-d" data-i="78" cx="498" cy="108" r="9"/><circle class="an-d" data-i="79" cx="524" cy="108" r="9"/><circle class="an-d" data-i="80" cx="30" cy="134" r="9"/><circle class="an-d" data-i="81" cx="56" cy="134" r="9"/><circle class="an-d" data-i="82" cx="82" cy="134" r="9"/><circle class="an-d" data-i="83" cx="108" cy="134" r="9"/><circle class="an-d" data-i="84" cx="134" cy="134" r="9"/><circle class="an-d" data-i="85" cx="160" cy="134" r="9"/><circle class="an-d" data-i="86" cx="186" cy="134" r="9"/><circle class="an-d" data-i="87" cx="212" cy="134" r="9"/><circle class="an-d" data-i="88" cx="238" cy="134" r="9"/><circle class="an-d" data-i="89" cx="264" cy="134" r="9"/><circle class="an-d" data-i="90" cx="290" cy="134" r="9"/><circle class="an-d" data-i="91" cx="316" cy="134" r="9"/><circle class="an-d" data-i="92" cx="342" cy="134" r="9"/><circle class="an-d" data-i="93" cx="368" cy="134" r="9"/><circle class="an-d" data-i="94" cx="394" cy="134" r="9"/><circle class="an-d" data-i="95" cx="420" cy="134" r="9"/><circle class="an-d" data-i="96" cx="446" cy="134" r="9"/><circle class="an-d" data-i="97" cx="472" cy="134" r="9"/><circle class="an-d" data-i="98" cx="498" cy="134" r="9"/><circle class="an-d" data-i="99" cx="524" cy="134" r="9"/>
+				</svg>
+				<p class="say" id="f10-say" aria-live="polite">With all four clues, 5,000 anonymous records come down to one person.</p>
+				<figcaption><b>Figure 10.</b> Press the clues. The workers and the clues are invented, each clue cuts the pool by an invented share, and each dot stands for 50 people until few are left. The measured result is from <a href="https://www.nature.com/articles/srep01376" target="_blank" rel="noopener">de Montjoye et al. (2013)</a>, on phone location data.</figcaption>
+			</figure>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">Where the limits lie</span>
+				<p>The phone study used location data, so its 95% does not apply directly to calendars and emails. A rare pattern of work could still point to one person. A model built to study teams can later be used to rank individuals, and nothing in the data itself prevents that. The decision belongs to whoever runs the system and whoever holds them to account.</p>
+			</div>
+
+			<h2 id="ladder">How far the idea has come</h2>
+
+			<p>The idea has cleared the first two rungs of a long ladder, and the study is still ahead.</p>
+
+			<figure class="diagram">
+				<svg class="toon" id="f11" viewBox="0 0 560 290" role="img" aria-labelledby="f11-title f11-desc">
+					<title id="f11-title">How far the Large Coordination Model has come</title>
+					<desc id="f11-desc">A ladder with six rungs. The first two are complete, the idea described and the funding won. Four remain, training on real data, predicting unseen teams, holding across companies and improving results in experiments. A small figure stands on the second rung.</desc>
+					<path class="ln" d="M90,284 V8 M150,284 V8"/>
+					<path class="ld-on" d="M90,262 H150"/><text class="t-small t-good" x="176" y="267">The idea is described</text><path class="ld-on" d="M90,214 H150"/><text class="t-small t-good" x="176" y="219">It wins funding, against more than 200 teams</text><path class="ld-off" d="M90,166 H150"/><text class="t-small " x="176" y="171">A model is trained on real workplace events</text><path class="ld-off" d="M90,118 H150"/><text class="t-small " x="176" y="123">It predicts events in teams it has never seen</text><path class="ld-off" d="M90,70 H150"/><text class="t-small " x="176" y="75">What it learns holds across companies</text><path class="ld-off" d="M90,22 H150"/><text class="t-small " x="176" y="27">Changes it suggests improve results in real experiments</text>
+					<g id="f11-c" class="ld-c" style="transform:translate(120px,214px)"><circle class="head" cy="-30" r="11"/><path class="shirt-g" d="M-11,-2 Q-11,-18 0,-19 Q11,-18 11,-2 Z"/></g>
+				</svg>
+				<figcaption><b>Figure 11.</b> The first two rungs are from <a href="https://www.gsb.stanford.edu/insights/ai-could-uncover-hidden-ways-people-work-together" target="_blank" rel="noopener">the Stanford article</a>, and the other four are my reading of what would have to come next. The researchers may run them in a different order.</figcaption>
+			</figure>
+
+			<p>The Stanford article says that &ldquo;findings remain on the horizon.&rdquo; Meanwhile, the nine hospitals saw their 23% drop with no model at all. They used a five-letter memory aid. They added training and had senior doctors watch handoffs.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://www.gsb.stanford.edu/insights/ai-could-uncover-hidden-ways-people-work-together" target="_blank" rel="noopener">Michael McDowell, <i>AI could uncover the hidden ways people work together</i></a> (Stanford GSB, 27 August 2026), and <a href="https://hai.stanford.edu/news/researchers-worldwide-compete-to-shape-the-future-of-ai-in-organizations" target="_blank" rel="noopener">Stanford HAI on the Grand Challenge</a> (12 May 2026).</li>
+				<li><a href="https://doi.org/10.1056/NEJMsa1405556" target="_blank" rel="noopener">Starmer et al., <i>Changes in medical errors after implementation of a handoff program</i></a> (<i>New England Journal of Medicine</i>, 2014), the I-PASS study.</li>
+				<li><a href="https://pubmed.ncbi.nlm.nih.gov/20929725/" target="_blank" rel="noopener">Woolley et al., <i>Evidence for a collective intelligence factor</i></a> (<i>Science</i>, 2010), and <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8166150/" target="_blank" rel="noopener">Riedl et al., <i>Quantifying collective intelligence in human groups</i></a> (<i>PNAS</i>, 2021).</li>
+				<li><a href="https://www.nature.com/articles/s41562-021-01196-4" target="_blank" rel="noopener">Yang et al., <i>The effects of remote work on collaboration among information workers</i></a> (<i>Nature Human Behaviour</i>, 2022).</li>
+				<li><a href="https://doi.org/10.1073/pnas.1915006117" target="_blank" rel="noopener">Salganik et al., <i>Measuring the predictability of life outcomes with a scientific mass collaboration</i></a> (<i>PNAS</i>, 2020).</li>
+				<li><a href="https://doi.org/10.1007/s41469-026-00205-y" target="_blank" rel="noopener">Goldberg and Puranam, <i>Purpose not prediction: the role of managers in the age of AI</i></a> (<i>Journal of Organization Design</i>, 2026).</li>
+				<li><a href="https://www.nature.com/articles/srep01376" target="_blank" rel="noopener">de Montjoye et al., <i>Unique in the crowd</i></a> (<i>Scientific Reports</i>, 2013).</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">organizations</span>
+				<span class="tag">teamwork</span>
+				<span class="tag">prediction</span>
+				<span class="tag">privacy</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+<script>
+/* The interactive figures. Each one's static markup is a complete state,
+   so the post reads the same with JavaScript off. */
+(function () {
+	'use strict';
+	var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	var NS = 'http://www.w3.org/2000/svg';
+	function press(group, on) {
+		Array.prototype.forEach.call(group, function (b) { b.setAttribute('aria-pressed', b === on ? 'true' : 'false'); });
+	}
+	function show(el, yes) {
+		var c = (el.getAttribute('class') || '').replace(/\s*is-hidden/g, '');
+		el.setAttribute('class', yes ? c : (c + ' is-hidden').trim());
+	}
+	function whenSeen(el, fn, threshold) {
+		if (!window.IntersectionObserver) { fn(); return; }
+		var io = new IntersectionObserver(function (es) {
+			es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); fn(); } });
+		}, { threshold: threshold || 0.35 });
+		io.observe(el);
+	}
+
+	/* ---- Reading time ----
+	   blog.js counts every word on the page, and this post's figures hold a lot
+	   of text. Count the prose at the same 220 words a minute and name the figures. */
+	var slot = document.querySelector('[data-reading-time]'), body = document.querySelector('.prose');
+	if (slot && body) {
+		var figs = body.querySelectorAll('figure').length, copy = body.cloneNode(true);
+		Array.prototype.forEach.call(copy.querySelectorAll('figure'), function (f) { f.parentNode.removeChild(f); });
+		slot.textContent = Math.round(copy.textContent.trim().split(/\s+/).length / 220) + ' min read, plus ' + figs + ' figures to play with';
+	}
+
+	/* ---- Figure 1: pieces of information travel along the doctors ---- */
+	var f1b = document.querySelectorAll('#f1-btns button');
+	if (f1b.length) {
+		var f1 = document.getElementById('f1'), f1c = f1.querySelectorAll('.ip-c'), f1tally = document.getElementById('f1-tally'), f1say = document.getElementById('f1-say'), f1t = [];
+		var f1pos = function (c, x) { c.style.transform = 'translate(' + (x + (+c.getAttribute('data-i') - 2) * 30) + 'px,74px)'; };
+		var f1run = function (m) {
+			f1t.forEach(clearTimeout); f1t = [];
+			var drop1 = m === 'usual' ? [3, 4] : [], drop2 = m === 'usual' ? [2] : [];
+			Array.prototype.forEach.call(f1c, function (c) { c.setAttribute('class', 'ip-c'); f1pos(c, 90); });
+			f1tally.textContent = m === 'usual' ? 'WATCH WHAT ARRIVES' : '5 OF 5 PIECES ARRIVE';
+			var step = function (delay, x, drop) {
+				f1t.push(setTimeout(function () {
+					Array.prototype.forEach.call(f1c, function (c) {
+						if (drop.indexOf(+c.getAttribute('data-i')) >= 0) c.setAttribute('class', 'ip-c lost');
+						f1pos(c, x);
+					});
+				}, reduce ? 0 : delay));
+			};
+			step(350, 280, drop1);
+			step(1300, 470, drop2);
+			f1t.push(setTimeout(function () {
+				f1tally.textContent = m === 'usual' ? '2 OF 5 PIECES ARRIVE' : '5 OF 5 PIECES ARRIVE';
+				f1say.textContent = m === 'usual'
+					? 'A chat in a hallway, and pieces fall out. Nobody chose to lose them, and the next doctor does not know they are missing.'
+					: 'I-PASS gives each handoff five parts, from how sick the patient is to a read-back by the person receiving it.';
+			}, reduce ? 0 : 2200));
+		};
+		Array.prototype.forEach.call(f1b, function (b) {
+			b.addEventListener('click', function () { press(f1b, b); f1run(b.getAttribute('data-m')); });
+		});
+		whenSeen(f1, function () { f1run('ipass'); }, 0.5);
+	}
+
+	/* ---- Figure 2: reorder the work and count what gets redone ---- */
+	var f2 = document.getElementById('f2');
+	if (f2) {
+		var f2waste = document.getElementById('f2-waste'), f2say = document.getElementById('f2-say');
+		var f2score = function () {
+			var o = Array.prototype.map.call(f2.querySelectorAll('.ro-i'), function (l) { return l.getAttribute('data-k'); });
+			var at = function (k) { return o.indexOf(k); }, w = 0;
+			if (at('q') > at('m')) w += 4;
+			if (at('q') > at('w')) w += 3;
+			if (at('q') > at('d')) w += 1;
+			if (at('d') > at('m')) w += 3;
+			if (at('m') > at('r')) w += 2;
+			if (at('r') > at('w')) w += 2;
+			if (at('m') > at('w')) w += 2;
+			f2waste.style.flexGrow = w;
+			f2waste.textContent = w ? w + ' days redone' : '';
+			f2waste.style.display = w ? '' : 'none';
+			f2say.textContent = w === 0
+				? 'No wasted days, with the same four students and the same five jobs. The only change is the order.'
+				: 'In this order, ' + w + ' days of work get redone. Nobody needs to get any smarter to fix it.';
+		};
+		f2.addEventListener('click', function (e) {
+			var b = e.target.closest ? e.target.closest('button') : null;
+			if (!b) return;
+			var li = b.closest('.ro-i');
+			if (b.className === 'ro-u' && li.previousElementSibling) f2.insertBefore(li, li.previousElementSibling);
+			if (b.className === 'ro-d' && li.nextElementSibling) f2.insertBefore(li.nextElementSibling, li);
+			b.focus();
+			f2score();
+		});
+		f2score();
+	}
+
+	/* ---- Figure 3: guess, then the podium rises ---- */
+	var f3b = document.querySelectorAll('#f3-btns button');
+	if (f3b.length) {
+		var f3 = document.getElementById('f3'), f3say = document.getElementById('f3-say');
+		f3.setAttribute('class', 'toon f3-wait');
+		f3say.textContent = 'Make a guess.';
+		Array.prototype.forEach.call(f3b, function (b) {
+			b.addEventListener('click', function () {
+				press(f3b, b);
+				f3.setAttribute('class', 'toon');
+				f3say.textContent = (b.getAttribute('data-g') === 'p' ? 'Right. ' : 'Most people would guess skill. ') + 'Collaboration process came first, then individual skill, then who was in the group.';
+			});
+		});
+	}
+
+	/* ---- Figure 4: a tiny model that counts which token follows which ---- */
+	var f4 = document.getElementById('f4');
+	if (f4) {
+		var LOGS = {
+			work: ['Question agreed|Data shared|Analysis done|Results reviewed|Report submitted', 'Question agreed|Data shared|Analysis done|Results reviewed|Errors fixed|Report submitted', 'Question agreed|Data shared|Draft revised|Results reviewed|Report submitted', 'Question agreed|Analysis done|Draft revised|Draft revised|Draft revised|Deadline missed', 'Question agreed|Data shared|Analysis done|Draft revised|Draft revised|Meeting called|Deadline missed', 'Question agreed|Data shared|Analysis done|Results reviewed|Errors fixed|Results reviewed|Report submitted', 'Question agreed|Draft revised|Draft revised|Meeting called|Draft revised|Deadline missed', 'Question agreed|Analysis done|Results reviewed|Report submitted', 'Question agreed|Data shared|Analysis done|Meeting called|Results reviewed|Report submitted', 'Question agreed|Data shared|Analysis done|Results reviewed|Errors fixed|Report submitted', 'Question agreed|Draft revised|Meeting called|Meeting called|Deadline missed', 'Question agreed|Data shared|Analysis done|Results reviewed|Report submitted'],
+			words: ['the|student|submitted|the|report', 'the|student|read|the|paper', 'the|team|submitted|the|paper', 'the|team|checked|the|data', 'the|student|checked|the|report', 'the|team|read|the|report', 'the|student|submitted|the|data', 'a|student|read|a|paper', 'a|team|checked|the|paper', 'the|report|was|late']
+		};
+		var f4m = 'work', f4seq = [], f4log = document.getElementById('f4-log'), f4bars = document.getElementById('f4-bars'), f4q = document.getElementById('f4-q'), f4say = document.getElementById('f4-say');
+		var f4counts = {};
+		var f4train = function (m) {
+			var c = {};
+			LOGS[m].forEach(function (l) {
+				var t = l.split('|');
+				for (var i = 0; i + 1 < t.length; i++) { c[t[i]] = c[t[i]] || {}; c[t[i]][t[i + 1]] = (c[t[i]][t[i + 1]] || 0) + 1; }
+			});
+			return c;
+		};
+		var f4draw = function () {
+			f4log.textContent = '';
+			f4seq.forEach(function (t) { var s = document.createElement('span'); s.className = 'nx-tok'; s.textContent = t; f4log.appendChild(s); });
+			var last = f4seq[f4seq.length - 1], next = f4counts[last] || {}, keys = Object.keys(next), tot = keys.reduce(function (a, k) { return a + next[k]; }, 0);
+			f4bars.textContent = '';
+			f4q.textContent = keys.length ? 'Probability of the next ' + (f4m === 'work' ? 'event' : 'word') + ', given “' + last + '”' : 'The logs end here.';
+			keys.sort(function (a, b) { return next[b] - next[a]; }).forEach(function (k) {
+				var pct = Math.round(next[k] / tot * 100), b = document.createElement('button');
+				b.type = 'button'; b.className = 'nx-b';
+				b.innerHTML = '<span class="nx-l"></span><span class="nx-t"><i style="width:' + pct + '%"></i></span><span class="nx-v">' + pct + '%</span>';
+				b.querySelector('.nx-l').textContent = k;
+				b.addEventListener('click', function () { f4seq.push(k); f4draw(); });
+				f4bars.appendChild(b);
+			});
+			if (!keys.length) {
+				var again = document.createElement('button');
+				again.type = 'button'; again.className = 'nx-b'; again.textContent = 'Start again';
+				again.addEventListener('click', f4start);
+				f4bars.appendChild(again);
+			}
+			f4say.textContent = last === 'Deadline missed'
+				? 'In these logs, a deadline gets missed after drafts go round and round with no review. A real model could warn a team earlier.'
+				: last === 'Report submitted' ? 'Finished. Notice which paths got here.' : 'Press any bar to make that the next ' + (f4m === 'work' ? 'event' : 'word') + ', and the model predicts again.';
+		};
+		var f4start = function () {
+			f4counts = f4train(f4m);
+			f4seq = [f4m === 'work' ? 'Question agreed' : 'the'];
+			f4draw();
+		};
+		var f4b = document.querySelectorAll('#f4-btns button');
+		Array.prototype.forEach.call(f4b, function (b) {
+			b.addEventListener('click', function () { press(f4b, b); f4m = b.getAttribute('data-m'); f4start(); });
+		});
+		f4start();
+	}
+
+	/* ---- Figure 5: the same people in three shapes ---- */
+	var f5b = document.querySelectorAll('#f5-btns button');
+	if (f5b.length) {
+		var f5 = document.getElementById('f5'), f5n = f5.querySelectorAll('.og-n'), f5l = document.getElementById('f5-lines'), f5say = document.getElementById('f5-say');
+		var M5 = {
+			chart: { p: { 0: [280, 34], 1: [120, 118], 2: [280, 118], 3: [440, 118], 4: [70, 204], 5: [170, 204], 6: [230, 204], 7: [330, 204], 8: [390, 204], 9: [490, 204] }, e: [[0, 1], [0, 2], [0, 3], [1, 4], [1, 5], [2, 6], [2, 7], [3, 8], [3, 9]], br: [], say: 'The org chart shows who reports to whom. Everything between groups appears to run through the top.' },
+			talk: { p: { 0: [280, 34], 1: [90, 120], 4: [60, 204], 5: [170, 184], 2: [280, 92], 6: [240, 194], 7: [330, 194], 3: [470, 120], 8: [420, 212], 9: [510, 204] }, e: [[1, 4], [1, 5], [4, 5], [2, 6], [2, 7], [6, 7], [3, 8], [3, 9], [8, 9], [0, 2], [5, 6], [7, 8]], br: ['5-6', '7-8'], say: 'Same people, and a different shape. The two gold people carry news between groups, and the org chart does not show that job.' },
+			remote: { p: { 0: [280, 34], 1: [70, 120], 4: [34, 204], 5: [120, 192], 2: [280, 92], 6: [238, 194], 7: [322, 194], 3: [490, 120], 8: [448, 212], 9: [530, 204] }, e: [[1, 4], [1, 5], [4, 5], [2, 6], [2, 7], [6, 7], [3, 8], [3, 9], [8, 9], [0, 2]], br: [], say: 'The groups drift apart and the bridges go. Yang and his colleagues saw this kind of change at Microsoft when everyone went remote.' }
+		};
+		var f5go = function (m) {
+			var c = M5[m];
+			f5l.setAttribute('class', 'og-fade');
+			Array.prototype.forEach.call(f5n, function (n) {
+				var p = c.p[n.getAttribute('data-i')];
+				n.style.transform = 'translate(' + p[0] + 'px,' + p[1] + 'px)';
+				var i = n.getAttribute('data-i');
+				n.setAttribute('class', 'og-n' + (m !== 'chart' && (i === '5' || i === '7') ? ' og-k' : ''));
+			});
+			setTimeout(function () {
+				f5l.textContent = '';
+				c.e.forEach(function (e) {
+					var l = document.createElementNS(NS, 'line'), a = c.p[e[0]], b = c.p[e[1]];
+					l.setAttribute('x1', a[0]); l.setAttribute('y1', a[1]); l.setAttribute('x2', b[0]); l.setAttribute('y2', b[1]);
+					l.setAttribute('class', 'og-e' + (c.br.indexOf(e.join('-')) >= 0 ? ' og-br' : ''));
+					f5l.appendChild(l);
+				});
+				f5l.removeAttribute('class');
+			}, reduce ? 0 : 750);
+			f5say.textContent = c.say;
+		};
+		Array.prototype.forEach.call(f5b, function (b) {
+			b.addEventListener('click', function () { press(f5b, b); f5go(b.getAttribute('data-m')); });
+		});
+	}
+
+	/* ---- Figure 6: the same dots, the hidden cause ---- */
+	var f6b = document.querySelectorAll('#f6-btns button');
+	if (f6b.length) {
+		var f6 = document.getElementById('f6'), f6p = f6.querySelectorAll('.cf-p'), f6say = document.getElementById('f6-say');
+		var X6 = function (m) { return 70 + m * 38; }, Y6 = function (l) { return 232 - l * 20; };
+		var f6pts = Array.prototype.map.call(f6p, function (g) { return { g: g, k: g.getAttribute('data-k'), m: +g.getAttribute('data-m'), l: +g.getAttribute('data-l') }; });
+		var fit = function (arr, get) {
+			var n = arr.length, sx = 0, sy = 0, sxx = 0, sxy = 0;
+			arr.forEach(function (p) { var q = get(p); sx += q[0]; sy += q[1]; sxx += q[0] * q[0]; sxy += q[0] * q[1]; });
+			var b = (n * sxy - sx * sy) / (n * sxx - sx * sx), a = (sy - b * sx) / n, lo = Infinity, hi = -Infinity;
+			arr.forEach(function (p) { var x = get(p)[0]; lo = Math.min(lo, x); hi = Math.max(hi, x); });
+			return { a: a, b: b, lo: lo, hi: hi };
+		};
+		var draw6 = function (id, f) {
+			var l = document.getElementById(id);
+			l.setAttribute('x1', X6(f.lo)); l.setAttribute('y1', Y6(f.a + f.b * f.lo)); l.setAttribute('x2', X6(f.hi)); l.setAttribute('y2', Y6(f.a + f.b * f.hi));
+		};
+		var f6go = function (m) {
+			var cut = m === 'cut', split = m !== 'all';
+			var get = function (p) {
+				var slope = p.k === 'e' ? 0.35 : 0.55, x = cut ? Math.max(p.m - 3, 0) : p.m;
+				return [x, cut ? p.l + slope * (p.m - x) : p.l];
+			};
+			f6pts.forEach(function (p) { var q = get(p); p.g.style.transform = 'translate(' + X6(q[0]).toFixed(1) + 'px,' + Y6(q[1]).toFixed(1) + 'px)'; });
+			f6.setAttribute('class', split ? 'toon cf-split' : 'toon');
+			show(document.getElementById('f6-a'), !split);
+			show(document.getElementById('f6-e'), split);
+			show(document.getElementById('f6-h'), split);
+			show(document.getElementById('f6-key'), split);
+			draw6('f6-a', fit(f6pts, get));
+			draw6('f6-e', fit(f6pts.filter(function (p) { return p.k === 'e'; }), get));
+			draw6('f6-h', fit(f6pts.filter(function (p) { return p.k === 'h'; }), get));
+			f6say.textContent = m === 'all'
+				? 'Across all 60 teams, more meetings go with more days late. A model that only predicts would stop here.'
+				: m === 'split'
+					? 'Hard projects have more meetings and run later. Inside each group, the line slopes down, so more meetings go with less delay.'
+					: 'Cancel 3 meetings a week, and every team moves left and up. The prediction was fine, and the advice made things worse.';
+		};
+		Array.prototype.forEach.call(f6b, function (b) {
+			b.addEventListener('click', function () { press(f6b, b); f6go(b.getAttribute('data-m')); });
+		});
+		f6go('all');
+	}
+
+	/* ---- Figure 7: run a tiny team for 40 days ---- */
+	var f7b = document.querySelectorAll('#f7-btns button');
+	if (f7b.length) {
+		var f7q = document.getElementById('f7-q'), f7fly = document.getElementById('f7-fly'), f7done = document.getElementById('f7-done'), f7wait = document.getElementById('f7-wait'), f7clock = document.getElementById('f7-clock'), f7say = document.getElementById('f7-say'), f7who = document.getElementById('f7-who'), f7t = null, f7used = false;
+		var R7 = {
+			one: { arrive: 2, serve: 4, who: 'Approver' },
+			owners: { arrive: 2, serve: 2, who: 'Two owners' },
+			hire: { arrive: 1, serve: 4, who: 'Approver' }
+		};
+		var f7show = function (w, d, day) {
+			f7q.textContent = '';
+			for (var i = 0; i < Math.min(w, 28); i++) {
+				var c = document.createElementNS(NS, 'circle');
+				c.setAttribute('class', 'f7-d'); c.setAttribute('r', 5);
+				c.setAttribute('cx', 296 - (i % 14) * 13); c.setAttribute('cy', 92 - Math.floor(i / 14) * 14);
+				f7q.appendChild(c);
+			}
+			f7wait.textContent = 'Waiting: ' + w;
+			f7done.textContent = d;
+			f7clock.textContent = 'Day ' + day;
+		};
+		var f7run = function (m) {
+			clearInterval(f7t);
+			var r = R7[m], w = 0, d = 0, day = 0;
+			f7who.textContent = r.who;
+			var end = function () {
+				f7say.textContent = m === 'hire'
+					? 'Twice the analysts, ' + d + ' tasks finished and ' + w + ' waiting. The bottleneck was the approver, so hiring only made the line longer.'
+					: m === 'owners'
+						? 'Same analysts, ' + d + ' tasks finished and ' + w + ' waiting. Nobody works harder, and decisions stop queuing.'
+						: 'One approver finishes ' + d + ' tasks in 40 days, and ' + w + ' are still waiting.';
+			};
+			var tick = function () {
+				day++;
+				if (day % r.arrive === 0) w++;
+				if (day % r.serve === 0 && w > 0) {
+					w--; d++;
+					if (!reduce) {
+						var c = document.createElementNS(NS, 'circle');
+						c.setAttribute('class', 'f7-f'); c.setAttribute('r', 6); c.setAttribute('cx', 370); c.setAttribute('cy', 110);
+						f7fly.appendChild(c);
+						setTimeout(function () { c.style.transform = 'translateX(110px)'; }, 20);
+						setTimeout(function () { f7fly.removeChild(c); }, 300);
+					}
+				}
+				f7show(w, d, day);
+			};
+			if (reduce) { for (var i = 0; i < 40; i++) tick(); end(); return; }
+			f7say.textContent = 'Running 40 days.';
+			f7show(0, 0, 0);
+			f7t = setInterval(function () { tick(); if (day >= 40) { clearInterval(f7t); end(); } }, 110);
+		};
+		Array.prototype.forEach.call(f7b, function (b) {
+			b.addEventListener('click', function () { f7used = true; press(f7b, b); f7run(b.getAttribute('data-m')); });
+		});
+		f7show(10, 10, 40);
+		whenSeen(document.getElementById('f7'), function () { if (!f7used) f7run('one'); }, 0.5);
+	}
+
+	/* ---- Figure 8: weights choose the winner, and the forecast stays put ---- */
+	var f8a = document.getElementById('f8-a');
+	if (f8a) {
+		var f8b2 = document.getElementById('f8-b'), f8c2 = document.getElementById('f8-c'), f8box = document.getElementById('f8'), f8r = Array.prototype.slice.call(f8box.querySelectorAll('.gl-r')), f8say = document.getElementById('f8-say');
+		var f8go = function () {
+			var wa = +f8a.value, wb = +f8b2.value, wc = +f8c2.value, sum = wa + wb + wc || 1;
+			var scored = f8r.map(function (r) {
+				var v = (wa * +r.getAttribute('data-f') + wb * +r.getAttribute('data-v') + wc * +r.getAttribute('data-u')) / sum;
+				r.querySelector('.gl-t i').style.width = v + '%';
+				r.querySelector('.gl-s').textContent = Math.round(v);
+				return { r: r, v: v };
+			}).sort(function (x, y) { return y.v - x.v; });
+			scored.forEach(function (s, i) { s.r.style.order = i; s.r.className = 'gl-r' + (i === 0 ? ' win' : ''); });
+			var top = scored[0].r.querySelector('.gl-n').firstChild.textContent;
+			f8say.textContent = 'The winner is “' + top + '.” The forecast numbers are the same as before.';
+		};
+		[f8a, f8b2, f8c2].forEach(function (i) { i.addEventListener('input', f8go); });
+		f8go();
+	}
+
+/* ---- Figure 9: what the dashboard scores decides who looks good ---- */
+	var f9b = document.querySelectorAll('#f9-btns button');
+	if (f9b.length) {
+		var f9m = 'key', f9on = false, f9say = document.getElementById('f9-say'), f9j = document.getElementById('f9-j'), f9mouse = document.getElementById('f9-mouse');
+		var D9 = { msg: { a: 3, b: 20, max: 20, u: '' }, key: { a: 30, b: 70, max: 100, u: '%' }, fix: { a: 4, b: 1, max: 4, u: '' } };
+		var f9go = function () {
+			var d = D9[f9m], b = f9m === 'key' && f9on ? 100 : d.b;
+			[['a', d.a], ['b', b]].forEach(function (x) {
+				var r = document.querySelector('#f9 .bz-r[data-k="' + x[0] + '"]');
+				r.querySelector('i').style.width = (x[1] / d.max * 100) + '%';
+				r.querySelector('.bz-v').textContent = x[1] + d.u;
+			});
+			f9say.textContent = f9m === 'fix'
+				? 'Score problems solved, and Worker A wins. That is what the company wanted, and it is the hardest thing to read from a log.'
+				: f9m === 'msg'
+					? 'Score messages, and Worker B looks nearly seven times busier. A quiet afternoon of helping leaves almost no trace.'
+					: f9on
+						? 'The jiggler adds a perfect score for no work at all. The measure has become the target.'
+						: 'Score keyboard activity, and Worker B looks busier than Worker A. Now try the other two scores.';
+		};
+		Array.prototype.forEach.call(f9b, function (b) {
+			b.addEventListener('click', function () { press(f9b, b); f9m = b.getAttribute('data-m'); f9go(); });
+		});
+		f9j.addEventListener('click', function () {
+			f9on = !f9on;
+			f9j.setAttribute('aria-pressed', f9on ? 'true' : 'false');
+			f9j.textContent = (f9on ? 'Turn off' : 'Turn on') + ' Worker B’s jiggler';
+			f9mouse.setAttribute('class', 'toon bz-m' + (f9on ? ' on' : ''));
+			if (f9on) { f9m = 'key'; press(f9b, f9b[1]); }
+			f9go();
+		});
+		f9go();
+	}
+
+	/* ---- Figure 10: each clue shrinks the crowd ---- */
+	var f10b = document.querySelectorAll('#f10-btns button');
+	if (f10b.length) {
+		var f10d = document.querySelectorAll('#f10 .an-d'), f10say = document.getElementById('f10-say');
+		var f10go = function () {
+			var pool = 5000, n = 0;
+			Array.prototype.forEach.call(f10b, function (b) {
+				if (b.getAttribute('aria-pressed') === 'true') { pool *= +b.getAttribute('data-f'); n++; }
+			});
+			pool = Math.max(1, Math.round(pool));
+			var show10 = pool >= 100 ? Math.round(pool / 50) : Math.max(1, Math.min(pool, 100));
+			Array.prototype.forEach.call(f10d, function (d) {
+				var i = +d.getAttribute('data-i');
+				d.setAttribute('class', 'an-d' + (i < show10 ? (pool === 1 ? ' one' : '') : ' off'));
+			});
+			f10say.textContent = n === 0
+				? '5,000 anonymous records. Press a clue.'
+				: pool === 1
+					? 'One person is left. No name was ever in the data.'
+					: pool + ' people still fit' + (n === 1 ? ' that clue.' : ' those clues.');
+		};
+		Array.prototype.forEach.call(f10b, function (b) {
+			b.addEventListener('click', function () {
+				b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+				f10go();
+			});
+		});
+		f10go();
+	}
+
+	/* ---- Figure 11: the small figure climbs to the second rung ---- */
+	var f11 = document.getElementById('f11');
+	if (f11 && !reduce) {
+		var f11c = document.getElementById('f11-c');
+		f11c.style.transform = 'translate(120px,262px)';
+		whenSeen(f11, function () { f11c.style.transform = 'translate(120px,214px)'; }, 0.5);
+	}
+
+	/* ---- The chip in the corner: P(next event) for you, the reader ---- */
+	var heads = Array.prototype.slice.call(document.querySelectorAll('.prose h2'));
+	if (heads.length) {
+		var chip = document.createElement('div');
+		chip.className = 'nextchip off';
+		chip.setAttribute('aria-hidden', 'true');
+		chip.innerHTML = '<b>Your next event</b><span></span>';
+		document.body.appendChild(chip);
+		var chipT = chip.querySelector('span'), chipTick = false;
+		var chipGo = function () {
+			chipTick = false;
+			var vh = window.innerHeight, next = null;
+			for (var i = 0; i < heads.length; i++) { if (heads[i].getBoundingClientRect().top > vh * 0.3) { next = heads[i]; break; } }
+			var started = heads[0].getBoundingClientRect().top < vh;
+			if (next && started) chipT.textContent = next.textContent;
+			chip.className = 'nextchip' + (next && started ? '' : ' off');
+		};
+		window.addEventListener('scroll', function () {
+			if (!chipTick) { chipTick = true; requestAnimationFrame(chipGo); }
+		}, { passive: true });
+		chipGo();
+	}
+})();
+</script>
+
+</body>
+</html>
