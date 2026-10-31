@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>The hard part of AI in health care comes after the model works | Chen-Yang Su</title>
+	<meta name="description" content="Michelle Mello thought patients should hear about every AI tool, until she asked. The harder job is governing those tools, and many hospitals cannot afford it." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/the-hard-part-of-ai-in-health-care/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="The hard part of AI in health care comes after the model works">
+	<meta property="og:description" content="Michelle Mello thought patients should hear about every AI tool, until she asked. The harder job is governing those tools, and many hospitals cannot afford it.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/the-hard-part-of-ai-in-health-care/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-11-02">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="The hard part of AI in health care comes after the model works">
+	<meta name="twitter:description" content="Michelle Mello thought patients should hear about every AI tool, until she asked. The harder job is governing those tools, and many hospitals cannot afford it.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The cartoons and controls in this post are inline SVG and HTML
+		   coloured with the site's tokens, so they follow the light and dark
+		   themes. With JavaScript off, every figure shows a complete static
+		   state and its caption carries the facts. Motion is skipped for
+		   readers who ask for reduced motion. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Buttons shared by the interactive figures */
+		.seg { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.seg button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 7px 15px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.seg-sm button { font-size: 13.5px; padding: 5px 12px; }
+		.seg button:hover { border-color: var(--accent); }
+		.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose .say { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); text-align: center; max-width: 520px; margin: 10px auto 0; min-height: 3em; }
+		.prose .ask { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15.5px; font-weight: 700; line-height: 1.45; color: var(--ink); text-align: center; margin: 0 0 10px; }
+		.prose .card-kick { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 12.5px; font-weight: 900; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); margin: 40px 0 -8px; }
+
+
+				.clip { display: block; position: relative; border: 1.5px solid var(--ink); border-radius: 12px; overflow: hidden; background: var(--panel-bg); }
+		.clip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose figure .clip svg { border-radius: 0; }
+		.clip iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+		.toon .clip-bg { fill: var(--panel-bg); }
+		.toon .clip-sun { fill: var(--flag-bg); stroke: var(--gold-hl-ink); stroke-width: 2; }
+		.toon .clip-floor { fill: var(--chip-bg); }
+		.toon .clip-play { fill: var(--accent); transition: transform 0.25s ease; transform-origin: 280px 110px; }
+		.toon .clip-tri { fill: var(--paper-bg); pointer-events: none; }
+		.clip:hover .clip-play { transform: scale(1.1); }
+		.f2 { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; }
+		.f2-n + .f2-n { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--tag-border); }
+		.f2-js .f2-n { display: none; }
+		.f2-js .f2-n.on { display: block; margin-top: 0; padding-top: 0; border-top: 0; }
+		.prose .f2-q { font-size: 15.5px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; }
+		.prose .f2-by { font-size: 13px; font-weight: 700; color: var(--ink-light); margin: 6px 0 0; }
+
+		@media (max-width: 720px) {
+			.toon text { font-size: 16.5px; }
+			.toon .t-small { font-size: 14.5px; }
+			.toon .t-head { font-size: 13px; }
+		}
+
+
+
+		/* Figure 1: the pile of forms */
+		.toon .cp-s { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.4; transition: opacity 0.25s ease; }
+		.toon .cp-off { opacity: 0; }
+
+		/* Figure 3: the sorting cards */
+		.quiz { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.q-card { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px 14px; }
+		.q-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+		.prose .q-text { font-size: 15px; line-height: 1.45; color: var(--ink); margin: 0 0 10px; }
+		.q-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+		.q-btns button { font: 700 14px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 6px 13px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.q-btns button:hover { border-color: var(--accent); }
+		.q-btns button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.q-btns button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.prose .q-verdict { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 10px 0 0; padding-top: 10px; border-top: 1px dashed var(--tag-border); }
+		.q-you { font-weight: 700; color: var(--ink-light); }
+		.quiz-js .q-verdict { display: none; }
+		.quiz-js .q-card.done .q-verdict { display: block; }
+		.prose .q-score { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 900; text-align: center; color: var(--ink); margin: 12px 0 0; }
+
+		/* Figure 4: the lock on the switch */
+		.toon .g4-b { fill: var(--award); transition: fill 0.3s ease, transform 0.4s ease; transform-box: fill-box; transform-origin: bottom; }
+		.toon .g4.done .g4-b { fill: var(--good); transform: scaleY(0.2); }
+		.toon .g4-t { transition: transform 0.6s cubic-bezier(.3,1.2,.5,1); }
+		.toon .f4-tt { font-weight: 900; fill: var(--paper-bg); }
+		.toon .g4-off { fill: var(--chip-bg); stroke: var(--ink); stroke-width: 2; transition: fill 0.25s ease; }
+		.toon .g4-live { fill: var(--good); stroke: var(--ink); stroke-width: 2; }
+		.toon .g4-k { transition: cx 0.25s ease; }
+		.toon .g4-shake { animation: g4-shake 0.4s ease; }
+		@keyframes g4-shake { 25% { transform: translate(459px,104px); } 50% { transform: translate(473px,104px); } 75% { transform: translate(462px,104px); } }
+		@media (max-width: 720px) {
+			.quiz { grid-template-columns: 1fr; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.toon .cp-s, .toon .g4-b, .toon .g4-t, .toon .g4-off, .toon .g4-k { transition: none; }
+			.toon .g4-shake { animation: none; }
+		}
+
+		/* Figure 5: hospitals */
+		.toon .h5 rect { fill: var(--accent); stroke: var(--accent); stroke-width: 1.3; transition: fill 0.4s ease; }
+		.toon .h5 path { fill: none; stroke: var(--paper-bg); stroke-width: 2; transition: stroke 0.4s ease; }
+		.toon .h5.off rect { fill: transparent; stroke: var(--tag-border); }
+		.toon .h5.off path { stroke: var(--tag-border); }
+
+		/* Figure 6: accuracy */
+		.toon .j6-b { transition: width 0.8s cubic-bezier(.3,1.2,.4,1); }
+		.toon .j6-base { fill: var(--ink-light); }
+		.toon .j6-g { fill: var(--accent); }
+		.toon .j6-r { fill: var(--award); }
+		.toon .j6-v { transition: opacity 0.3s ease 0.5s; }
+		.toon.j6-wait .j6-b { width: 0; }
+		.toon.j6-wait .j6-v { opacity: 0; transition: none; }
+		.toon .f4-base { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+
+		/* Figure 7: the time budget */
+		.tm-c { display: flex; align-items: center; gap: 12px; max-width: 540px; margin: 5px auto; font: 400 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink); }
+		.tm-c label { flex: 0 0 230px; }
+		.tm-c input { flex: 1; min-width: 0; accent-color: var(--accent); height: 26px; }
+		.tm-t { position: relative; max-width: 540px; height: 28px; margin: 12px auto 4px; background: var(--chip-bg); border-radius: 6px; overflow: hidden; }
+		.tm-t i { display: block; height: 100%; background: var(--accent); transition: width 0.25s ease, background 0.25s ease; }
+		.tm-t i.over { background: var(--award); }
+		.tm-t span { position: absolute; top: 0; bottom: 0; width: 2.5px; background: var(--ink); }
+		.tm-r { display: flex; justify-content: space-between; max-width: 540px; margin: 0 auto; font: 700 13.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+
+		/* Figure 8: stop the order */
+		.toon .f8-tt { font-size: 12.5px; font-weight: 900; fill: var(--paper-bg); }
+		@media (max-width: 720px) {
+			.tm-c { flex-wrap: wrap; gap: 0 12px; }
+			.tm-c label { flex: 1 0 100%; }
+			.toon .f8-tt { font-size: 12.5px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.toon .h5 rect, .toon .h5 path, .toon .j6-b, .toon .j6-v, .tm-t i { transition: none; }
+		}
+
+/* Figure 9: who carries the risk */
+		.toon .r9 { fill: var(--award); stroke: var(--ink); stroke-width: 1.5; transition: transform 0.9s cubic-bezier(.3,1.2,.4,1); }
+
+		/* Figure 10: voluntary or required */
+		.toon .u10 { fill: var(--accent); stroke: var(--accent); stroke-width: 1.4; transition: fill 0.35s ease, stroke 0.35s ease; }
+		.toon .u10.no { fill: transparent; stroke: var(--tag-border); }
+		.toon .u10.help { fill: var(--gold-hl-ink); stroke: var(--ink); }
+
+		/* The lock in the corner opens as you finish the review. */
+		.lockchip { position: fixed; left: 14px; bottom: 16px; z-index: 150; display: flex; align-items: center; gap: 8px; padding: 6px 11px; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14); font: 700 12.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; color: var(--ink-light); font-variant-numeric: tabular-nums; transition: opacity 0.3s ease, transform 0.3s ease; }
+		.lockchip.off { opacity: 0; transform: translateY(50px); pointer-events: none; }
+		.lockchip svg { display: block; }
+		.lockchip path { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+		.lockchip rect { fill: var(--award); stroke: var(--ink); stroke-width: 1.5; }
+		.lockchip.open rect { fill: var(--good); }
+		@media (max-width: 720px) {
+			.lockchip { left: 8px; bottom: 10px; padding: 5px 8px; }
+			.lockchip span { font-size: 11.5px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.toon .r9, .toon .u10, .lockchip { transition: none; }
+		}
+
+		@media (max-width: 720px) {
+			.toon text { font-size: 16.5px; }
+			.toon .t-small { font-size: 14.5px; }
+			.toon .t-head { font-size: 13px; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-gold { font-weight: 700; fill: var(--gold-hl-ink); }
+		.toon .t-big { font-size: 22px; font-weight: 900; fill: var(--ink); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-acc { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-call { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-dasharray: 2 7; stroke-linecap: round; }
+		.toon .ln-gold { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-net { fill: none; stroke: var(--ink-light); stroke-width: 1.4; stroke-linecap: round; }
+		.toon .ln-red { fill: none; stroke: var(--award); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.4; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-g { fill: var(--good-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-y { fill: var(--flag-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .shirt-r { fill: var(--warn-bg); stroke: var(--ink); stroke-width: 2.4; stroke-linejoin: round; }
+		.toon .card { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .bubble { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .red { fill: var(--award); }
+		.toon .ok { fill: var(--good); }
+		.toon .is-hidden { display: none; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "The hard part of AI in health care comes after the model works",
+		"description": "Michelle Mello thought patients should hear about every AI tool, until she asked. The harder job is governing those tools, and many hospitals cannot afford it.",
+		"datePublished": "2026-11-02",
+		"url": "https://chenyangsu.github.io/blog/the-hard-part-of-ai-in-health-care/",
+		"keywords": "health care, AI governance, AI evaluation, health policy",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/the-hard-part-of-ai-in-health-care/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI in health care</p>
+
+		<h1 class="post-title">The hard part of AI in health care comes after the model works</h1>
+
+		<p class="post-standfirst">Michelle Mello, a Stanford professor of law and health policy, used to think patients should be told about every AI tool in their care. Then she asked them, and they wanted to know who was keeping them safe. Most AI now in hospitals handles paperwork. The harder job is deciding what to switch on and checking it afterward, and many hospitals cannot afford to do that well.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-11-02">2 November 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li><strong>Hospitals have adopted AI first for paperwork.</strong> In Mello&rsquo;s account, scribes and billing tools spread first, mainly in well-funded systems. Tools that help with diagnosis are much less common.</li>
+				<li><strong>Patients asked for safety more than for forms.</strong> Mello&rsquo;s patient panel wanted to know what the hospital would do to protect them, and she changed her mind about disclosure as a result.</li>
+				<li><strong>A human in the loop can be fooled too.</strong> In a randomized study, a biased AI made clinicians 11.3 percentage points less accurate, and explaining the AI did not clearly help.</li>
+				<li><strong>Many hospitals do not test their tools.</strong> Of US hospitals using predictive models in 2023, 61% checked accuracy on their own data and 44% checked for bias.</li>
+				<li><strong>Agents raise the stakes.</strong> When software acts by itself, a mistake can reach a patient before anyone can stop it. Mello wants AI governance to be a condition of taking part in federal health programs.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>Michelle Mello helps review AI tools for Stanford Health Care. As an ethicist, <a href="https://healthpolicy.fsi.stanford.edu/news/shp-launches-podcast-questions-reshaping-health-policy" target="_blank" rel="noopener">she said in a September 2026 interview</a>, she started out believing that &ldquo;patients should be told about everything all the time.&rdquo; Then, over the last couple of years, she talked with many patients, including a panel trained in AI that meets her team every month. In a hospital like Stanford, she points out, &ldquo;a couple dozen different tools&rdquo; might touch your care.</p>
+
+			<figure class="diagram">
+				<div class="seg" id="f1-btns">
+					<button type="button" id="f1-add">Add a form for one more AI tool</button>
+					<button type="button" id="f1-all" aria-pressed="false">Add all 24</button>
+				</div>
+				<svg class="toon" id="f1" viewBox="0 0 560 250" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">A pile of consent forms beside a hospital bed</title>
+					<desc id="f1-desc">A cartoon patient in a hospital bed looks at a growing pile of consent forms, one for each of two dozen AI tools.</desc>
+					<path class="soft" d="M30,186 H210 V222 H30 Z"/>
+					<path class="ln" d="M36,222 V238 M204,222 V238 M30,152 V222"/>
+					<rect class="card" x="40" y="168" width="52" height="20" rx="6"/>
+					<path class="shirt" d="M84,186 Q86,160 120,160 H206 V186 Z"/>
+					<circle class="head" cx="68" cy="152" r="19"/>
+					<circle class="ink" cx="62" cy="150" r="2"/><circle class="ink" cx="75" cy="150" r="2"/>
+					<path id="f1-mouth" class="ln-thin" d="M61,163 Q68,157 75,163"/>
+					<path class="ln" d="M240,226 H420 M250,226 V240 M410,226 V240"/>
+					<g id="f1-pile"><rect class="cp-s" data-i="0" x="252" y="214" width="150" height="9" rx="1.5" transform="rotate(-1 327 218)"/><rect class="cp-s" data-i="1" x="254" y="207" width="150" height="9" rx="1.5" transform="rotate(-1 329 211)"/><rect class="cp-s" data-i="2" x="255" y="200" width="150" height="9" rx="1.5" transform="rotate(2 330 204)"/><rect class="cp-s" data-i="3" x="256" y="193" width="150" height="9" rx="1.5" transform="rotate(2 331 197)"/><rect class="cp-s" data-i="4" x="253" y="186" width="150" height="9" rx="1.5" transform="rotate(1 328 190)"/><rect class="cp-s" data-i="5" x="243" y="179" width="150" height="9" rx="1.5" transform="rotate(3 318 183)"/><rect class="cp-s" data-i="6" x="250" y="172" width="150" height="9" rx="1.5" transform="rotate(3 325 176)"/><rect class="cp-s" data-i="7" x="246" y="165" width="150" height="9" rx="1.5" transform="rotate(2 321 169)"/><rect class="cp-s" data-i="8" x="243" y="158" width="150" height="9" rx="1.5" transform="rotate(-2 318 162)"/><rect class="cp-s" data-i="9" x="244" y="151" width="150" height="9" rx="1.5" transform="rotate(-1 319 155)"/><rect class="cp-s" data-i="10" x="250" y="144" width="150" height="9" rx="1.5" transform="rotate(3 325 148)"/><rect class="cp-s" data-i="11" x="246" y="137" width="150" height="9" rx="1.5" transform="rotate(0 321 141)"/><rect class="cp-s" data-i="12" x="251" y="130" width="150" height="9" rx="1.5" transform="rotate(-3 326 134)"/><rect class="cp-s" data-i="13" x="252" y="123" width="150" height="9" rx="1.5" transform="rotate(-2 327 127)"/><rect class="cp-s" data-i="14" x="243" y="116" width="150" height="9" rx="1.5" transform="rotate(2 318 120)"/><rect class="cp-s" data-i="15" x="246" y="109" width="150" height="9" rx="1.5" transform="rotate(0 321 113)"/><rect class="cp-s" data-i="16" x="247" y="102" width="150" height="9" rx="1.5" transform="rotate(-2 322 106)"/><rect class="cp-s" data-i="17" x="257" y="95" width="150" height="9" rx="1.5" transform="rotate(3 332 99)"/><rect class="cp-s" data-i="18" x="255" y="88" width="150" height="9" rx="1.5" transform="rotate(0 330 92)"/><rect class="cp-s" data-i="19" x="245" y="81" width="150" height="9" rx="1.5" transform="rotate(3 320 85)"/><rect class="cp-s" data-i="20" x="255" y="74" width="150" height="9" rx="1.5" transform="rotate(-3 330 78)"/><rect class="cp-s" data-i="21" x="245" y="67" width="150" height="9" rx="1.5" transform="rotate(1 320 71)"/><rect class="cp-s" data-i="22" x="252" y="60" width="150" height="9" rx="1.5" transform="rotate(0 327 64)"/><rect class="cp-s" data-i="23" x="245" y="53" width="150" height="9" rx="1.5" transform="rotate(-2 320 57)"/></g>
+					<text class="t-big" id="f1-n" x="490" y="120" text-anchor="middle">24</text>
+					<text class="t-small t-main" x="490" y="142" text-anchor="middle">forms</text>
+					<text class="t-small" id="f1-tool" x="330" y="26" text-anchor="middle">Sign here, here and here.</text>
+				</svg>
+				<p class="say" id="f1-say" aria-live="polite">Twenty-four tools, twenty-four forms. Patients told Mello this felt like a waiver of responsibility.</p>
+				<figcaption><b>Figure 1.</b> Press the buttons. &ldquo;A couple dozen&rdquo; is Mello&rsquo;s estimate for a hospital like Stanford. The tool names are typical examples that I chose, and the drawing is a cartoon.</figcaption>
+			</figure>
+
+			<p>Patients say things like this, in Mello&rsquo;s retelling. &ldquo;I&rsquo;m sick, I have piles of paperwork pushed at me. The last thing that is helpful in this situation is another piece of paper asking me to sign on the dotted line. It feels like a waiver of responsibility.&rdquo; The question they cared about was different. &ldquo;What is the organization going to do to keep me safe?&rdquo; Mello now saves formal consent for the highest-stakes choices, such as whether to have surgery guided by an AI robot.</p>
+
+			<p>That answer moves the work from the patient to the hospital, and it takes the conversation beyond how good the model is. <strong>The hard part of AI in health care has moved from building the model to governing it, and the hospitals that need that work most can least afford it.</strong></p>
+
+			<figure>
+				<a class="clip" id="f2-clip" href="https://www.youtube.com/watch?v=TmUCGatf3_U" target="_blank" rel="noopener" aria-label="Play the interview with Michelle Mello">
+					<svg class="toon" viewBox="0 0 560 250" aria-hidden="true">
+						<rect class="clip-bg" x="0" y="0" width="560" height="250"/>
+						<path class="ln-thin" d="M0,190 H560"/>
+						<path class="clip-floor" d="M0,190 H560 V250 H0 Z"/>
+						<path class="shirt" d="M104,190 Q106,134 128,130 Q150,134 152,190 Z"/>
+						<circle class="head" cx="128" cy="108" r="19"/>
+						<path class="ln-thin" d="M111,102 Q118,88 132,90 Q143,91 146,102"/>
+						<circle class="ink" cx="136" cy="107" r="2"/>
+						<path class="ln-thin" d="M132,117 Q138,120 142,116"/>
+						<path class="shirt-g" d="M408,190 Q410,134 432,130 Q454,134 456,190 Z"/>
+						<circle class="head" cx="432" cy="108" r="19"/>
+						<path class="ln-thin" d="M413,108 Q414,88 432,88 Q450,88 451,108"/>
+						<circle class="ink" cx="424" cy="107" r="2"/>
+						<path class="ln-thin" d="M418,117 Q424,121 430,117"/>
+						<circle class="clip-play" cx="280" cy="110" r="36"/>
+						<path class="clip-tri" d="M268,90 L300,110 L268,130 Z"/>
+						<text class="t-main" x="280" y="218" text-anchor="middle">Watch Michelle Mello explain it herself</text>
+						<text class="t-small" x="280" y="238" text-anchor="middle">Plays from YouTube. Nothing loads until you press.</text>
+					</svg>
+				</a>
+				<figcaption><b>Figure 2.</b> The full interview, from <a href="https://healthpolicy.fsi.stanford.edu/news/shp-launches-podcast-questions-reshaping-health-policy" target="_blank" rel="noopener">Stanford Health Policy</a>, with a transcript on that page. The drawing is a cartoon.</figcaption>
+			</figure>
+
+			<div class="callout callout-note">
+				<span class="callout-label">AI governance</span>
+				<p>In a hospital, AI governance is the process for deciding which tools to use, checking them before they go live and watching them afterward. It includes people who can say no. A model&rsquo;s test score is one input to that process.</p>
+			</div>
+
+			<h2 id="paperwork">The AI in hospitals is mostly doing paperwork</h2>
+
+			<p>Headlines are full of AI doctors. Before you read Mello&rsquo;s description of what hospitals are actually using, try sorting these.</p>
+
+			<figure>
+				<div class="quiz" id="f3"><div class="q-card" data-answer="w"><p class="q-text">An AI scribe that listens to a clinic visit and writes it up.</p><div class="q-btns"><button type="button" data-guess="w" aria-pressed="false">In wide use</button><button type="button" data-guess="n" aria-pressed="false">Less common</button></div><p class="q-verdict"><span class="q-you"></span><b>In wide use.</b> Mello names scribes first, among well-funded organizations.</p></div><div class="q-card" data-answer="w"><p class="q-text">A tool that handles insurance approvals and prepares bills.</p><div class="q-btns"><button type="button" data-guess="w" aria-pressed="false">In wide use</button><button type="button" data-guess="n" aria-pressed="false">Less common</button></div><p class="q-verdict"><span class="q-you"></span><b>In wide use.</b> The other big category, and one that can pay for itself.</p></div><div class="q-card" data-answer="n"><p class="q-text">A risk predictor that warns which patients may get worse.</p><div class="q-btns"><button type="button" data-guess="w" aria-pressed="false">In wide use</button><button type="button" data-guess="n" aria-pressed="false">Less common</button></div><p class="q-verdict"><span class="q-you"></span><b>Less common as a tool people chose.</b> Mello says these are not as widely implemented, though many hospitals run some model that came with their records system.</p></div><div class="q-card" data-answer="n"><p class="q-text">A tool that helps a doctor decide on a diagnosis.</p><div class="q-btns"><button type="button" data-guess="w" aria-pressed="false">In wide use</button><button type="button" data-guess="n" aria-pressed="false">Less common</button></div><p class="q-verdict"><span class="q-you"></span><b>Less common.</b> Mello says these &ldquo;might really improve quality of care,&rdquo; and they are not as widely implemented.</p></div><div class="q-card" data-answer="n"><p class="q-text">A software agent that orders treatment by itself.</p><div class="q-btns"><button type="button" data-guess="w" aria-pressed="false">In wide use</button><button type="button" data-guess="n" aria-pressed="false">Less common</button></div><p class="q-verdict"><span class="q-you"></span><b>Not yet.</b> Mostly on billboards for now, and Mello describes &ldquo;a heightened concern&rdquo; about checking these tools.</p></div></div>
+				<p class="q-score" id="f3-score" aria-live="polite"></p>
+				<figcaption><b>Figure 3.</b> Sort each card. The verdicts follow <a href="https://healthpolicy.fsi.stanford.edu/news/shp-launches-podcast-questions-reshaping-health-policy" target="_blank" rel="noopener">Mello&rsquo;s description</a> in the interview, which is one expert&rsquo;s view and has no adoption counts behind it. The &ldquo;not yet&rdquo; on agents is my wording.</figcaption>
+			</figure>
+
+			<p>&ldquo;I think we&rsquo;re very much in the early days,&rdquo; Mello says. The tools spreading fastest are scribes, which listen to a clinic visit and summarize it for the doctor, and administrative tools that handle insurance approvals and bills. The results are mixed even there. In one study, about half of patients whose doctor used a scribe reported more eye contact. &ldquo;Why is it only half?&rdquo; she asks. The tool takes notes so the doctor can stop typing.</p>
+
+			<p>The picture depends on what you count. <a href="https://doi.org/10.1377/hlthaff.2024.00842" target="_blank" rel="noopener">A 2023 survey analysed by Paige Nong and her colleagues</a> found that 65% of US hospitals used some predictive model, a program that estimates something like a patient&rsquo;s risk. Of those hospitals, 79% got models from the company that sold them their electronic health records. So models are already common in hospitals.</p>
+
+			<h2 id="lock">Stanford put a lock on the switch</h2>
+
+			<p>Stanford Health Care expected a flood of AI proposals and built a process early. A review board that people can ignore has little power, so the hospital tied the review to the moment a tool goes live. Mello calls this &ldquo;a great lever.&rdquo; Anyone with a patient-facing or otherwise risky tool has to go through the process, because &ldquo;we will not let our digital services unit turn it on until you can certify that you&rsquo;ve gone through this process.&rdquo;</p>
+
+			<figure class="diagram">
+				<p class="ask">You want to switch on a new patient-facing AI tool. Try the switch first.</p>
+				<div class="seg seg-sm" id="f4-btns" role="group" aria-label="Reviews">
+					<button type="button" data-r="1" aria-pressed="true">Does it help care?</button>
+					<button type="button" data-r="2" aria-pressed="true">Can we afford it long term?</button>
+					<button type="button" data-r="3" aria-pressed="true">What are the ethical risks?</button>
+					<button type="button" data-r="4" aria-pressed="true">What will we measure later?</button>
+				</div>
+				<svg class="toon" id="f4" viewBox="0 0 560 190" role="img" aria-labelledby="f4-title f4-desc">
+					<title id="f4-title">A review gate in front of an on switch</title>
+					<desc id="f4-desc">A tool moves through four review gates toward a padlock and a big switch. The switch stays off until all four reviews are done.</desc>
+					<path class="ln-thin" d="M30,100 H420"/>
+					<g class="g4" data-r="1"><rect class="g4-b" x="96" y="72" width="16" height="56" rx="3"/><text class="t-head" x="104" y="150" text-anchor="middle">USE</text></g>
+					<g class="g4" data-r="2"><rect class="g4-b" x="176" y="72" width="16" height="56" rx="3"/><text class="t-head" x="184" y="150" text-anchor="middle">COST</text></g>
+					<g class="g4" data-r="3"><rect class="g4-b" x="256" y="72" width="16" height="56" rx="3"/><text class="t-head" x="264" y="150" text-anchor="middle">ETHICS</text></g>
+					<g class="g4" data-r="4"><rect class="g4-b" x="336" y="72" width="16" height="56" rx="3"/><text class="t-head" x="344" y="150" text-anchor="middle">PLAN</text></g>
+					<g id="f4-tool" class="g4-t" style="transform:translate(390px,100px)"><rect class="gold" x="-20" y="-15" width="40" height="30" rx="5"/><text class="t-small f4-tt" y="5" text-anchor="middle">AI</text></g>
+					<g transform="translate(466,44)" id="f4-lock"><rect class="soft" x="-16" y="0" width="32" height="26" rx="4"/><path id="f4-sh" class="ln" d="M-9,0 V-9 Q-9,-19 0,-19 Q9,-19 9,-9"/></g>
+					<g id="f4-switch" transform="translate(466,104)"><rect id="f4-rail" class="g4-off" x="-36" y="-16" width="72" height="32" rx="16"/><circle id="f4-knob" class="card g4-k" cx="20" cy="0" r="13"/></g>
+					<text class="t-small t-main" id="f4-state" x="466" y="146" text-anchor="middle">Live</text>
+				</svg>
+				<div class="seg" style="margin-top:6px"><button type="button" id="f4-on">Turn it on</button></div>
+				<p class="say" id="f4-say" aria-live="polite">Four questions answered, so the digital services team turns it on. Then the measuring starts.</p>
+				<figcaption><b>Figure 4.</b> Press the reviews and the switch. This is my simplified picture of <a href="https://healthpolicy.fsi.stanford.edu/news/shp-launches-podcast-questions-reshaping-health-policy" target="_blank" rel="noopener">the process Mello describes</a>, and it is not an official Stanford diagram. Mello names the first three reviews and the plan to measure impact.</figcaption>
+			</figure>
+
+			<p>The aim is to &ldquo;proactively spot problems before the organization falls in love with the technology,&rdquo; Mello says. The review also forces a decision about what to measure once the tool is running, before anyone has a stake in the answer.</p>
+
+			<h2 id="testing">Many hospitals never test the tool on their own patients</h2>
+
+			<p>A model can do well in the company&rsquo;s tests and badly at your hospital, because your patients and your record-keeping differ. A widely used model for sepsis, a life-threatening reaction to infection, <a href="/blog/when-the-answer-is-cheap/">missed 67% of cases at Michigan Medicine</a>. The way to find out is local evaluation, which means testing the tool on your own data.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f5-btns" role="group" aria-label="Choose a measure">
+					<button type="button" data-n="65" aria-pressed="false">Use a predictive model</button>
+					<button type="button" data-n="40" aria-pressed="true">Test accuracy on their own data</button>
+					<button type="button" data-n="29" aria-pressed="false">Test for bias on their own data</button>
+				</div>
+				<svg class="toon" id="f5" viewBox="0 0 560 216" role="img" aria-labelledby="f5-title f5-desc">
+					<title id="f5-title">Out of every 100 US hospitals</title>
+					<desc id="f5-desc">One hundred small hospitals. In 2023, 65 used a predictive model. About 40 tested accuracy on their own data and about 29 tested for bias.</desc>
+					<text class="t-head" x="280" y="20" text-anchor="middle">OUT OF EVERY 100 US HOSPITALS</text>
+					<g class="h5" data-i="0" transform="translate(30.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="1" transform="translate(55.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="2" transform="translate(81.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="3" transform="translate(106.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="4" transform="translate(132.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="5" transform="translate(157.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="6" transform="translate(183.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="7" transform="translate(208.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="8" transform="translate(234.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="9" transform="translate(259.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="10" transform="translate(285.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="11" transform="translate(310.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="12" transform="translate(336.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="13" transform="translate(361.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="14" transform="translate(387.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="15" transform="translate(412.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="16" transform="translate(438.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="17" transform="translate(463.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="18" transform="translate(489.0,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="19" transform="translate(514.5,44)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="20" transform="translate(30.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="21" transform="translate(55.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="22" transform="translate(81.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="23" transform="translate(106.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="24" transform="translate(132.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="25" transform="translate(157.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="26" transform="translate(183.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="27" transform="translate(208.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="28" transform="translate(234.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="29" transform="translate(259.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="30" transform="translate(285.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="31" transform="translate(310.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="32" transform="translate(336.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="33" transform="translate(361.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="34" transform="translate(387.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="35" transform="translate(412.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="36" transform="translate(438.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="37" transform="translate(463.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="38" transform="translate(489.0,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="39" transform="translate(514.5,74)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="40" transform="translate(30.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="41" transform="translate(55.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="42" transform="translate(81.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="43" transform="translate(106.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="44" transform="translate(132.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="45" transform="translate(157.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="46" transform="translate(183.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="47" transform="translate(208.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="48" transform="translate(234.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="49" transform="translate(259.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="50" transform="translate(285.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="51" transform="translate(310.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="52" transform="translate(336.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="53" transform="translate(361.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="54" transform="translate(387.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="55" transform="translate(412.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="56" transform="translate(438.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="57" transform="translate(463.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="58" transform="translate(489.0,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="59" transform="translate(514.5,104)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="60" transform="translate(30.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="61" transform="translate(55.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="62" transform="translate(81.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="63" transform="translate(106.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="64" transform="translate(132.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="65" transform="translate(157.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="66" transform="translate(183.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="67" transform="translate(208.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="68" transform="translate(234.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="69" transform="translate(259.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="70" transform="translate(285.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="71" transform="translate(310.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="72" transform="translate(336.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="73" transform="translate(361.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="74" transform="translate(387.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="75" transform="translate(412.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="76" transform="translate(438.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="77" transform="translate(463.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="78" transform="translate(489.0,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="79" transform="translate(514.5,134)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="80" transform="translate(30.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="81" transform="translate(55.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="82" transform="translate(81.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="83" transform="translate(106.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="84" transform="translate(132.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="85" transform="translate(157.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="86" transform="translate(183.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="87" transform="translate(208.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="88" transform="translate(234.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="89" transform="translate(259.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="90" transform="translate(285.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="91" transform="translate(310.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="92" transform="translate(336.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="93" transform="translate(361.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="94" transform="translate(387.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="95" transform="translate(412.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="96" transform="translate(438.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="97" transform="translate(463.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="98" transform="translate(489.0,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g><g class="h5" data-i="99" transform="translate(514.5,164)"><rect x="-9" y="-9" width="18" height="18" rx="2"/><path d="M0,-5 V5 M-5,0 H5"/></g>
+					<text class="t-big h5-n" id="f5-n" x="280" y="208" text-anchor="middle">40 of 100</text>
+				</svg>
+				<p class="say" id="f5-say" aria-live="polite">Of the hospitals using models, 61% tested accuracy on their own data. That is about 40 of every 100 hospitals.</p>
+				<figcaption><b>Figure 5.</b> Press the buttons. The 65%, 61% and 44% are from <a href="https://doi.org/10.1377/hlthaff.2024.00842" target="_blank" rel="noopener">Nong et al. (2025)</a>, on a 2023 hospital survey. The 61% and 44% are shares of hospitals using models, and 40 and 29 are my arithmetic for all hospitals. Hospitals reported these themselves, and the survey does not say how well they tested.</figcaption>
+			</figure>
+
+			<p>Hospitals that built their own models and hospitals with healthy finances were more likely to test locally. Mello calls the work &ldquo;expensive and tricky.&rdquo; AI sellers argue that their tools pay for themselves, and she says that is probably true for tools that handle billing and false for many others. Asked about rural hospitals facing cuts to Medicaid, the US public insurance program for people with low incomes, she says the best answer so far is sharing. Large systems publish what they learn, so &ldquo;not everybody has to start at zero.&rdquo;</p>
+
+			<h2 id="loop">A human in the loop can be fooled too</h2>
+
+			<p>The usual safety answer is to keep a person in charge. Patients on Mello&rsquo;s panel asked for this, with a condition. They wanted a clinician reviewing the AI who had been given the time and information to do it. <a href="https://doi.org/10.1001/jama.2023.22295" target="_blank" rel="noopener">Sarah Jabbour and her colleagues</a> tested what happens when that person sees a bad model. They randomly assigned 457 clinicians to read patient cases with AI advice, and some of that advice came from a model built with a systematic bias.</p>
+
+			<figure class="diagram">
+				<p class="ask">A hospital adds an AI tool with a hidden bias, and shows clinicians an explanation of its reasoning. What happens to their accuracy?</p>
+				<div class="seg seg-sm" id="f6-btns" role="group" aria-label="Your guess">
+					<button type="button" data-g="up" aria-pressed="false">It goes up</button>
+					<button type="button" data-g="same" aria-pressed="false">The explanation rescues it</button>
+					<button type="button" data-g="down" aria-pressed="false">It falls anyway</button>
+				</div>
+				<svg class="toon" id="f6" viewBox="0 0 560 250" role="img" aria-labelledby="f6-title f6-desc">
+					<title id="f6-title">Clinician diagnostic accuracy with and without AI</title>
+					<desc id="f6-desc">Five bars. With no AI, accuracy was 73.0 percent. A good AI raised it to 75.9, and to 77.4 with an explanation. A biased AI lowered it to 61.7, and to 63.9 with an explanation.</desc>
+					<text class="t-small" x="186" y="20">Diagnostic accuracy, on a scale starting at 50%</text>
+					<g class="j6" data-k="none" transform="translate(0,34)"><text class="t-small t-main" x="176" y="19" text-anchor="end">No AI</text><rect class="j6-b j6-base" x="186" y="2" width="189.7" height="26" rx="3"/><text class="t-main j6-v" x="383.8" y="21">73.0%</text></g><g class="j6" data-k="good" transform="translate(0,74)"><text class="t-small t-main" x="176" y="19" text-anchor="end">Good AI</text><rect class="j6-b j6-g" x="186" y="2" width="213.7" height="26" rx="3"/><text class="t-main j6-v" x="407.7" y="21">75.9%</text></g><g class="j6" data-k="goode" transform="translate(0,114)"><text class="t-small t-main" x="176" y="19" text-anchor="end">Good AI, with explanation</text><rect class="j6-b j6-g" x="186" y="2" width="226.1" height="26" rx="3"/><text class="t-main j6-v" x="420.1" y="21">77.4%</text></g><g class="j6" data-k="bad" transform="translate(0,154)"><text class="t-small t-main" x="176" y="19" text-anchor="end">Biased AI</text><rect class="j6-b j6-r" x="186" y="2" width="96.5" height="26" rx="3"/><text class="t-main j6-v" x="290.5" y="21">61.7%</text></g><g class="j6" data-k="bade" transform="translate(0,194)"><text class="t-small t-main" x="176" y="19" text-anchor="end">Biased AI, with explanation</text><rect class="j6-b j6-r" x="186" y="2" width="114.7" height="26" rx="3"/><text class="t-main j6-v" x="308.7" y="21">63.9%</text></g>
+					<path class="f4-base" d="M186,30 V232"/>
+				</svg>
+				<p class="say" id="f6-say" aria-live="polite">The biased AI cost clinicians 11.3 points, and the explanation won back a difference small enough to be chance.</p>
+				<figcaption><b>Figure 6.</b> Make a guess. The changes are from <a href="https://doi.org/10.1001/jama.2023.22295" target="_blank" rel="noopener">Jabbour et al. (2023)</a>, with 457 clinicians, and the percentages are those changes added to the 73.0% baseline. The bars start at 50% so the gaps can be seen. The plausible range on the biased result, its 95% confidence interval, runs from a 7.2 to a 15.5 point drop.</figcaption>
+			</figure>
+
+			<p>A good model helped a little. A biased one hurt a lot, and showing an explanation of the model&rsquo;s reasoning did not clearly undo the harm. These were written cases and an image-based kind of explanation, so the numbers will differ on a real ward. The direction is a warning about any plan that relies on a person catching errors. Oversight also takes time.</p>
+
+			<figure class="diagram">
+				<p class="ask">A nurse has a spare hour in a shift to check AI alerts properly. How far does that hour go?</p>
+				<div class="tm-c"><label for="f7-a"><b id="f7-av">60</b> alerts a shift</label><input type="range" id="f7-a" min="5" max="200" step="5" value="60"></div>
+				<div class="tm-c"><label for="f7-s"><b id="f7-sv">90</b> seconds to check each one</label><input type="range" id="f7-s" min="10" max="240" step="10" value="90"></div>
+				<div class="tm-t"><i id="f7-bar" style="width:100%"></i><span id="f7-mark"></span></div>
+				<div class="tm-r"><span id="f7-x">90 minutes needed</span><span>60 minutes available</span></div>
+				<p class="say" id="f7-say" aria-live="polite">That needs 90 minutes, and the shift has 60. Something has to give, and usually it is the checking.</p>
+				<figcaption><b>Figure 7.</b> Drag the sliders. All of these numbers are invented for illustration, so try ones you think are realistic. The requirement behind it is from <a href="https://healthpolicy.fsi.stanford.edu/news/shp-launches-podcast-questions-reshaping-health-policy" target="_blank" rel="noopener">Mello&rsquo;s patient panel</a>, who asked that reviewers be given the time and information to do the job.</figcaption>
+			</figure>
+
+			<h2 id="agents">Agents change what can go wrong</h2>
+
+			<p>Everything above assumes a person sees the output before it reaches the patient. Mello draws the line there. Human-mediated tools make a suggestion, and someone accepts or rejects it. Agentic tools act by themselves, and they &ldquo;might get things wrong in ways that actually can physically hurt people very quickly and in a way that&rsquo;s very hard to intercept.&rdquo; She calls health care &ldquo;a little bit distinct&rdquo; from fields like human resources or investing, because the injury is physical and happens quickly.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f8-btns" role="group" aria-label="Choose a kind of tool">
+					<button type="button" data-m="suggest" aria-pressed="true">The tool suggests</button>
+					<button type="button" data-m="act" aria-pressed="false">The tool acts</button>
+				</div>
+				<svg class="toon" id="f8" viewBox="0 0 560 170" role="img" aria-labelledby="f8-title f8-desc">
+					<title id="f8-title">A wrong order on its way to a patient</title>
+					<desc id="f8-desc">A wrong order leaves the AI and travels toward a patient. When the tool suggests, it waits at a clinician. When the tool acts, it goes straight through in about a second.</desc>
+					<rect class="soft" x="20" y="56" width="74" height="56" rx="8"/><text class="t-main" x="57" y="90" text-anchor="middle">AI</text>
+					<path class="ln-thin" d="M94,84 H470"/>
+					<g id="f8-doc" transform="translate(270,84)"><circle class="head" cy="-30" r="14"/><path class="shirt" d="M-17,14 Q-15,-14 0,-16 Q15,-14 17,14 Z"/><text class="t-small t-main" y="34" text-anchor="middle">Clinician</text></g>
+					<g transform="translate(510,84)"><circle class="head" cy="-30" r="14"/><path class="shirt-g" d="M-17,14 Q-15,-14 0,-16 Q15,-14 17,14 Z"/><text class="t-small t-main" y="34" text-anchor="middle">Patient</text></g>
+					<g id="f8-t" class="f8-t" transform="translate(120,84)"><rect class="red" x="-23" y="-13" width="46" height="26" rx="5"/><text class="f8-tt" y="5" text-anchor="middle">Order</text></g>
+				</svg>
+				<div class="seg" style="margin-top:4px">
+					<button type="button" id="f8-go">Send a wrong order</button>
+					<button type="button" id="f8-stop" aria-pressed="false">Stop it</button>
+				</div>
+				<p class="say" id="f8-say" aria-live="polite">Press to send a wrong order, then try to stop it.</p>
+				<figcaption><b>Figure 8.</b> Press &ldquo;Send a wrong order,&rdquo; then &ldquo;Stop it.&rdquo; This is a game I made, and the speed is invented. The distinction between tools that suggest and tools that act is from <a href="https://healthpolicy.fsi.stanford.edu/news/shp-launches-podcast-questions-reshaping-health-policy" target="_blank" rel="noopener">Mello</a>. Your score so far is <span id="f8-score">0 of 0</span> stopped.</figcaption>
+			</figure>
+
+			<p>This changes what evaluation has to measure. Checking whether the answer is correct stops being enough once software takes actions. Reviewers also need to know what the software is allowed to do. They need to know when it must stop and ask, and whether anyone can step in before harm is done.</p>
+
+			<h2 id="liable">The person who signs is the person who pays</h2>
+
+			<p>Clinicians ask Mello one question more than any other. Am I liable if AI is involved in a mistake that hurts a patient? &ldquo;That answer is not straightforward,&rdquo; she says, &ldquo;but usually the answer is probably, yeah, you are.&rdquo;</p>
+
+			<figure class="diagram">
+				<div class="seg" id="f9-btns"><button type="button" id="f9-read">Read the fine print</button></div>
+				<svg class="toon" id="f9" viewBox="0 0 560 240" role="img" aria-labelledby="f9-title f9-desc">
+					<title id="f9-title">Who carries the risk when AI contributes to harm</title>
+					<desc id="f9-desc">Three columns of blocks stand for risk, labelled developer, hospital and clinician. Before reading the contract they look equal. After reading it, the developer's blocks have moved to the hospital and the clinician.</desc>
+					<path class="ln" d="M40,194 H520"/>
+					<rect class="r9" data-a="translate(246px,100px)" data-b="translate(76px,172px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(246px,100px)"/><rect class="r9" data-a="translate(416px,100px)" data-b="translate(76px,148px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(416px,100px)"/><rect class="r9" data-a="translate(416px,76px)" data-b="translate(76px,124px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(416px,76px)"/><rect class="r9" data-a="translate(246px,172px)" data-b="translate(246px,172px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(246px,172px)"/><rect class="r9" data-a="translate(246px,148px)" data-b="translate(246px,148px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(246px,148px)"/><rect class="r9" data-a="translate(246px,124px)" data-b="translate(246px,124px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(246px,124px)"/><rect class="r9" data-a="translate(416px,172px)" data-b="translate(416px,172px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(416px,172px)"/><rect class="r9" data-a="translate(416px,148px)" data-b="translate(416px,148px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(416px,148px)"/><rect class="r9" data-a="translate(416px,124px)" data-b="translate(416px,124px)" width="68" height="20" rx="3" x="0" y="0" style="transform:translate(416px,124px)"/>
+					<text class="t-main" x="110" y="216" text-anchor="middle">Developer</text>
+					<text class="t-main" x="280" y="216" text-anchor="middle">Hospital</text>
+					<text class="t-main" x="450" y="216" text-anchor="middle">Clinician</text>
+				</svg>
+				<p class="say" id="f9-say" aria-live="polite">Licensing agreements typically &ldquo;immunize them from liability and disclaim ordinary consumer warranties.&rdquo; The risk lands on the people using the tool.</p>
+				<figcaption><b>Figure 9.</b> Press the button. The blocks show direction only, so the counts are invented and they are not legal shares. The contract language is <a href="https://healthpolicy.fsi.stanford.edu/news/shp-launches-podcast-questions-reshaping-health-policy" target="_blank" rel="noopener">Mello&rsquo;s description</a>, and she stresses that the answer &ldquo;is not straightforward.&rdquo; Her <a href="https://doi.org/10.1056/NEJMhle2308901" target="_blank" rel="noopener">2024 article with Neel Guha</a> covers the law in more depth.</figcaption>
+			</figure>
+
+			<p>The reason is in the contracts. Developers &ldquo;typically include provisions in their licensing agreements that immunize them from liability and disclaim ordinary consumer warranties.&rdquo; In plain terms, the contract refuses the usual product guarantees. That leaves the physician or nurse, and perhaps the hospital. So a person with little insight into the tool may carry the legal risk for it, which helps explain why many clinicians are wary. She adds that clinicians are often not given much information about how to be good overseers.</p>
+
+			<h2 id="star">A gold star is optional</h2>
+
+			<p>Standards exist, and hospitals can ignore them. NIST, a federal standards agency, runs a voluntary program where AI developers can earn what Mello calls &ldquo;a gold star.&rdquo; The Joint Commission, which inspects hospitals for Medicare, the US public insurance program for older people, offers a voluntary certificate for AI governance, built with the Coalition for Health AI. &ldquo;Anything that is voluntary and costly will have uneven uptake,&rdquo; she says.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f10-btns" role="group" aria-label="Choose a rule">
+					<button type="button" data-m="vol" aria-pressed="true">Voluntary</button>
+					<button type="button" data-m="share" aria-pressed="false">Voluntary, with shared tools</button>
+					<button type="button" data-m="req" aria-pressed="false">Required for federal programs</button>
+				</div>
+				<div class="tm-c"><label for="f10-c">Cost of doing it well</label><input type="range" id="f10-c" min="1" max="10" step="1" value="6"></div>
+				<svg class="toon" id="f10" viewBox="0 0 560 190" role="img" aria-labelledby="f10-title f10-desc">
+					<title id="f10-title">Which hospitals have a governance process</title>
+					<desc id="f10-desc">Two rows of 20 dots, well-funded hospitals above and stretched hospitals below. Under voluntary rules at a high cost, many well-funded hospitals take part and few stretched ones do. Shared tools lower the cost. A requirement brings everyone in, and stretched hospitals then need help to pay.</desc>
+					<text class="t-head" x="24" y="36">WELL-FUNDED HOSPITALS</text>
+					<text class="t-head" x="24" y="116">STRETCHED HOSPITALS</text>
+					<circle class="u10 no" data-r="0" data-i="0" cx="36" cy="62" r="9.5"/><circle class="u10 no" data-r="0" data-i="1" cx="62" cy="62" r="9.5"/><circle class="u10 no" data-r="0" data-i="2" cx="88" cy="62" r="9.5"/><circle class="u10 no" data-r="0" data-i="3" cx="114" cy="62" r="9.5"/><circle class="u10 no" data-r="0" data-i="4" cx="140" cy="62" r="9.5"/><circle class="u10 no" data-r="0" data-i="5" cx="166" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="6" cx="192" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="7" cx="218" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="8" cx="244" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="9" cx="270" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="10" cx="296" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="11" cx="322" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="12" cx="348" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="13" cx="374" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="14" cx="400" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="15" cx="426" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="16" cx="452" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="17" cx="478" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="18" cx="504" cy="62" r="9.5"/><circle class="u10" data-r="0" data-i="19" cx="530" cy="62" r="9.5"/><circle class="u10 no" data-r="1" data-i="0" cx="36" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="1" cx="62" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="2" cx="88" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="3" cx="114" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="4" cx="140" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="5" cx="166" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="6" cx="192" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="7" cx="218" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="8" cx="244" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="9" cx="270" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="10" cx="296" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="11" cx="322" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="12" cx="348" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="13" cx="374" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="14" cx="400" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="15" cx="426" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="16" cx="452" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="17" cx="478" cy="142" r="9.5"/><circle class="u10 no" data-r="1" data-i="18" cx="504" cy="142" r="9.5"/><circle class="u10" data-r="1" data-i="19" cx="530" cy="142" r="9.5"/>
+					<text class="t-main" id="f10-n" x="280" y="182" text-anchor="middle">15 of 40 have a process</text>
+				</svg>
+				<p class="say" id="f10-say" aria-live="polite">Under voluntary rules, governance goes to the hospitals that can pay for it.</p>
+				<figcaption><b>Figure 10.</b> Press the rules and drag the cost. The hospitals, budgets and rules are invented to show the logic of Mello&rsquo;s point that &ldquo;anything that is voluntary and costly will have uneven uptake.&rdquo; The figure measures nothing about real hospitals. <a href="https://doi.org/10.1377/hlthaff.2024.00842" target="_blank" rel="noopener">Nong et al.</a> did find that hospitals with better finances were more likely to test their models.</figcaption>
+			</figure>
+
+			<p>Asked what she would tell Congress, Mello had one answer. Require hospitals &ldquo;to have a governance process for AI as a condition of participating in federal health programs.&rdquo; Hospitals already have to meet many such rules to take part in Medicare. &ldquo;We cannot justify an ecosystem in which hospitals can operate AI tools with very little vetting and no oversight and have no regulatory consequences.&rdquo;</p>
+
+			<div class="callout">
+				<span class="callout-label">What this rests on</span>
+				<p>Much of this essay comes from one interview with one expert, who helps run Stanford&rsquo;s process. A required process can also turn into paperwork, and it would add costs for the hospitals with the least money. The Nong survey shows who reports testing, and it cannot say how well they test.</p>
+			</div>
+
+			<p>Mello says you cannot drive for more than 30 seconds on Highway 101 without seeing a billboard promising that agentic AI will change the world. At Stanford Health Care, a patient-facing tool still stays off until someone has certified the review.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://healthpolicy.fsi.stanford.edu/news/shp-launches-podcast-questions-reshaping-health-policy" target="_blank" rel="noopener">Michelle Mello on <i>Health Policy Forum: In Conversation</i></a> (Stanford Health Policy, September 2026), with the full transcript and <a href="https://www.youtube.com/watch?v=TmUCGatf3_U" target="_blank" rel="noopener">the video</a>.</li>
+				<li><a href="https://doi.org/10.1377/hlthaff.2024.00842" target="_blank" rel="noopener">Nong et al., <i>Current use and evaluation of artificial intelligence and predictive models in US hospitals</i></a> (<i>Health Affairs</i>, 2025).</li>
+				<li><a href="https://doi.org/10.1001/jama.2023.22295" target="_blank" rel="noopener">Jabbour et al., <i>Measuring the impact of AI in the diagnosis of hospitalized patients</i></a> (<i>JAMA</i>, 2023).</li>
+				<li><a href="https://doi.org/10.1056/NEJMhle2308901" target="_blank" rel="noopener">Mello and Guha, <i>Understanding liability risk from using health care artificial intelligence tools</i></a> (<i>New England Journal of Medicine</i>, 2024).</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">health care</span>
+				<span class="tag">AI governance</span>
+				<span class="tag">AI evaluation</span>
+				<span class="tag">health policy</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+<script>
+/* The interactive figures. Each one's static markup is a complete state,
+   so the post reads the same with JavaScript off. */
+(function () {
+	'use strict';
+	var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	var NS = 'http://www.w3.org/2000/svg';
+	function press(group, on) {
+		Array.prototype.forEach.call(group, function (b) { b.setAttribute('aria-pressed', b === on ? 'true' : 'false'); });
+	}
+	function show(el, yes) {
+		var c = (el.getAttribute('class') || '').replace(/\s*is-hidden/g, '');
+		el.setAttribute('class', yes ? c : (c + ' is-hidden').trim());
+	}
+	function whenSeen(el, fn, threshold) {
+		if (!window.IntersectionObserver) { fn(); return; }
+		var io = new IntersectionObserver(function (es) {
+			es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); fn(); } });
+		}, { threshold: threshold || 0.35 });
+		io.observe(el);
+	}
+
+	/* ---- Reading time ----
+	   blog.js counts every word on the page, and this post's figures hold a lot
+	   of text. Count the prose at the same 220 words a minute and name the figures. */
+	var slot = document.querySelector('[data-reading-time]'), body = document.querySelector('.prose');
+	if (slot && body) {
+		var figs = body.querySelectorAll('figure').length, copy = body.cloneNode(true);
+		Array.prototype.forEach.call(copy.querySelectorAll('figure'), function (f) { f.parentNode.removeChild(f); });
+		slot.textContent = Math.round(copy.textContent.trim().split(/\s+/).length / 220) + ' min read, plus ' + figs + ' figures to play with';
+	}
+
+	/* ---- Figure 1: the pile of forms ---- */
+	var f1add = document.getElementById('f1-add');
+	if (f1add) {
+		var TOOLS = ['AI scribe', 'insurance approvals', 'billing codes', 'patient messages', 'scheduling', 'fall-risk score', 'sepsis alert', 'chest X-ray reader', 'discharge summary', 'staffing forecast', 'readmission score', 'drug interaction check', 'translation', 'chart search', 'pathology reader', 'stroke alert', 'lab trend monitor', 'referral triage', 'clinical trial matching', 'pressure sore risk', 'surgery planning', 'pain score', 'nurse handoff summary', 'bed planning'];
+		var f1s = document.querySelectorAll('#f1-pile .cp-s'), f1n = document.getElementById('f1-n'), f1tool = document.getElementById('f1-tool'), f1say = document.getElementById('f1-say'), f1mouth = document.getElementById('f1-mouth'), f1i = 0;
+		var f1draw = function () {
+			Array.prototype.forEach.call(f1s, function (r, i) {
+				r.setAttribute('class', 'cp-s' + (i < f1i ? '' : ' cp-off'));
+			});
+			f1n.textContent = f1i;
+			f1tool.textContent = f1i ? 'Form ' + f1i + ', ' + TOOLS[f1i - 1] : 'A patient arrives.';
+			f1mouth.setAttribute('d', f1i < 8 ? 'M61,161 Q68,165 75,161' : f1i < 16 ? 'M61,162 H75' : 'M61,163 Q68,157 75,163');
+			f1say.textContent = f1i === 0
+				? 'A hospital like Stanford might use a couple dozen tools. Press to add a form for each one.'
+				: f1i < 24
+					? 'Would you read form ' + f1i + '? You are sick, and there are more to come.'
+					: 'Twenty-four tools, twenty-four forms. Patients told Mello this felt like a waiver of responsibility.';
+			f1add.textContent = f1i >= 24 ? 'Start again' : 'Add a form for one more AI tool';
+		};
+		f1add.addEventListener('click', function () { f1i = f1i >= 24 ? 0 : f1i + 1; f1draw(); });
+		var f1all = document.getElementById('f1-all');
+		f1all.addEventListener('click', function () {
+			if (reduce) { f1i = 24; f1draw(); return; }
+			var t = setInterval(function () { f1i++; f1draw(); if (f1i >= 24) clearInterval(t); }, 70);
+		});
+		f1draw();
+	}
+
+	/* ---- Figure 2: the clip loads only when pressed ---- */
+	var f2clip = document.getElementById('f2-clip');
+	if (f2clip) {
+		f2clip.addEventListener('click', function (e) {
+			e.preventDefault();
+			var fr = document.createElement('iframe');
+			fr.src = 'https://www.youtube-nocookie.com/embed/TmUCGatf3_U?autoplay=1&rel=0';
+			fr.title = 'Michelle Mello on Health Policy Forum: In Conversation';
+			fr.allow = 'autoplay; encrypted-media; picture-in-picture';
+			fr.allowFullscreen = true;
+			var box = document.createElement('div');
+			box.className = 'clip';
+			box.appendChild(fr);
+			f2clip.parentNode.replaceChild(box, f2clip);
+		});
+	}
+
+	/* ---- Figure 3: sort the tools ---- */
+	var f3 = document.getElementById('f3');
+	if (f3) {
+		f3.className += ' quiz-js';
+		var f3cards = f3.querySelectorAll('.q-card'), f3score = document.getElementById('f3-score');
+		var f3tally = function () {
+			var done = 0, hit = 0;
+			Array.prototype.forEach.call(f3cards, function (c) {
+				var g = c.getAttribute('data-guess');
+				if (g) { done++; if (g === c.getAttribute('data-answer')) hit++; }
+			});
+			f3score.textContent = 'You matched ' + hit + ' of the ' + done + (done === 1 ? ' card' : ' cards') + ' you sorted' + (done === f3cards.length ? '.' : ', with ' + (f3cards.length - done) + ' to go.');
+		};
+		f3score.textContent = 'Sort the five cards to see what Mello says.';
+		Array.prototype.forEach.call(f3cards, function (card) {
+			var btns = card.querySelectorAll('button'), you = card.querySelector('.q-you');
+			Array.prototype.forEach.call(btns, function (b) {
+				b.addEventListener('click', function () {
+					press(btns, b);
+					card.setAttribute('data-guess', b.getAttribute('data-guess'));
+					card.className = 'q-card done';
+					you.textContent = 'You said ' + b.textContent + '. ';
+					f3tally();
+				});
+			});
+		});
+	}
+
+	/* ---- Figure 4: no reviews, no switch ---- */
+	var f4b = document.querySelectorAll('#f4-btns button');
+	if (f4b.length) {
+		var f4tool = document.getElementById('f4-tool'), f4rail = document.getElementById('f4-rail'), f4knob = document.getElementById('f4-knob'), f4sh = document.getElementById('f4-sh'), f4state = document.getElementById('f4-state'), f4say = document.getElementById('f4-say'), f4sw = document.getElementById('f4-switch'), f4on = document.getElementById('f4-on'), f4live = false;
+		var GX = [34, 142, 222, 302, 390];
+		var f4done = function () { return Array.prototype.filter.call(f4b, function (b) { return b.getAttribute('aria-pressed') === 'true'; }).length; };
+		var f4draw = function () {
+			var n = f4done();
+			Array.prototype.forEach.call(f4b, function (b) {
+				var g = document.querySelector('#f4 .g4[data-r="' + b.getAttribute('data-r') + '"]');
+				g.setAttribute('class', 'g4' + (b.getAttribute('aria-pressed') === 'true' ? ' done' : ''));
+			});
+			f4tool.style.transform = 'translate(' + GX[n] + 'px,100px)';
+			f4sh.setAttribute('d', n === 4 ? 'M-9,0 V-9 Q-9,-19 0,-19 Q9,-19 9,-11 M9,-11 L18,-20' : 'M-9,0 V-9 Q-9,-19 0,-19 Q9,-19 9,-9 V0');
+			if (n < 4 && f4live) f4live = false;
+			f4rail.setAttribute('class', f4live ? 'g4-live' : 'g4-off');
+			f4knob.setAttribute('cx', f4live ? 20 : -20);
+			f4state.textContent = f4live ? 'Live' : n === 4 ? 'Unlocked' : 'Locked';
+			f4on.textContent = f4live ? 'Turn it off' : 'Turn it on';
+		};
+		Array.prototype.forEach.call(f4b, function (b) {
+			b.setAttribute('aria-pressed', 'false');
+			b.addEventListener('click', function () {
+				b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+				f4draw();
+				var n = f4done();
+				f4say.textContent = n === 4 ? 'All four done. The switch is unlocked.' : (4 - n) + ' to go. Each question has to be answered before this tool goes near a patient.';
+			});
+		});
+		f4on.addEventListener('click', function () {
+			if (f4done() < 4) {
+				f4sw.setAttribute('class', '');
+				void f4sw.getBoundingClientRect();
+				f4sw.setAttribute('class', 'g4-shake');
+				f4say.textContent = '“We will not let our digital services unit turn it on until you can certify that you’ve gone through this process.” Press the reviews first.';
+				return;
+			}
+			f4live = !f4live;
+			f4draw();
+			f4say.textContent = f4live ? 'Live. The work moves on to measuring what the review said it would measure.' : 'Off again.';
+		});
+		f4say.textContent = 'Try the switch, then press the four reviews.';
+		f4draw();
+	}
+
+	/* ---- Figure 5: 100 hospitals ---- */
+	var f5b = document.querySelectorAll('#f5-btns button');
+	if (f5b.length) {
+		var f5h = document.querySelectorAll('#f5 .h5'), f5n = document.getElementById('f5-n'), f5say = document.getElementById('f5-say');
+		var S5 = {
+			65: 'In the 2023 survey, 65% of US hospitals used some predictive model. Of those hospitals, 79% got models from their electronic records company.',
+			40: 'Of the hospitals using models, 61% tested accuracy on their own data. That is about 40 of every 100 hospitals.',
+			29: 'Of the hospitals using models, 44% tested for bias on their own data. That is about 29 of every 100 hospitals.'
+		};
+		var go5 = function (n) {
+			Array.prototype.forEach.call(f5h, function (h) {
+				var i = +h.getAttribute('data-i');
+				h.style.transitionDelay = (reduce ? 0 : i * 0.004) + 's';
+				h.setAttribute('class', 'h5' + (i < n ? '' : ' off'));
+			});
+			f5n.textContent = n + ' of 100';
+			f5say.textContent = S5[n];
+		};
+		Array.prototype.forEach.call(f5b, function (b) {
+			b.addEventListener('click', function () { press(f5b, b); go5(+b.getAttribute('data-n')); });
+		});
+		press(f5b, f5b[0]);
+		go5(65);
+	}
+
+	/* ---- Figure 6: guess, then the bars grow ---- */
+	var f6b = document.querySelectorAll('#f6-btns button');
+	if (f6b.length) {
+		var f6 = document.getElementById('f6'), f6say = document.getElementById('f6-say');
+		f6.setAttribute('class', 'toon j6-wait');
+		f6say.textContent = 'Make a guess.';
+		Array.prototype.forEach.call(f6b, function (b) {
+			b.addEventListener('click', function () {
+				press(f6b, b);
+				f6.setAttribute('class', 'toon');
+				var g = b.getAttribute('data-g');
+				f6say.textContent = (g === 'down' ? 'Right. ' : g === 'same' ? 'That was the hope. ' : 'A good AI does raise it. ') + 'The biased AI cost clinicians 11.3 points, and the explanation won back a difference small enough to be chance.';
+			});
+		});
+	}
+
+	/* ---- Figure 7: alerts times seconds, against one spare hour ---- */
+	var f7a = document.getElementById('f7-a');
+	if (f7a) {
+		var f7s = document.getElementById('f7-s'), f7bar = document.getElementById('f7-bar'), f7mark = document.getElementById('f7-mark'), f7x = document.getElementById('f7-x'), f7say = document.getElementById('f7-say');
+		var f7go = function () {
+			var a = +f7a.value, sec = +f7s.value, need = Math.round(a * sec / 60), scale = Math.max(need, 60);
+			document.getElementById('f7-av').textContent = a;
+			document.getElementById('f7-sv').textContent = sec;
+			f7bar.style.width = (need / scale * 100) + '%';
+			f7bar.className = need > 60 ? 'over' : '';
+			f7mark.style.left = (60 / scale * 100) + '%';
+			f7x.textContent = need + ' minutes needed';
+			f7say.textContent = need > 60
+				? 'That needs ' + need + ' minutes, and the shift has 60. Something has to give. To fit the hour, each alert gets ' + Math.round(3600 / a) + ' seconds.'
+				: 'That fits, with ' + (60 - need) + ' minutes to spare. A hospital has to plan for this, because nobody finds the time by accident.';
+		};
+		f7a.addEventListener('input', f7go);
+		f7s.addEventListener('input', f7go);
+		f7go();
+	}
+
+	/* ---- Figure 8: try to stop a wrong order ---- */
+	var f8b = document.querySelectorAll('#f8-btns button');
+	if (f8b.length) {
+		var f8tk = document.getElementById('f8-t'), f8say = document.getElementById('f8-say'), f8m = 'suggest', f8run = null, f8state = 'idle', f8x = 120, f8tries = 0, f8wins = 0;
+		var f8place = function (x) { f8x = x; f8tk.setAttribute('transform', 'translate(' + x + ',84)'); };
+		var f8score = function () { document.getElementById('f8-score').textContent = f8wins + ' of ' + f8tries; };
+		var f8end = function (won, msg) {
+			cancelAnimationFrame(f8run);
+			f8state = 'idle';
+			if (won) f8wins++;
+			f8score();
+			f8say.textContent = msg;
+		};
+		var f8go = function () {
+			if (f8state === 'moving' || f8state === 'waiting') return;
+			f8tries++; f8score();
+			f8place(120);
+			f8state = 'moving';
+			var target = f8m === 'suggest' ? 232 : 470, dur = reduce ? 1 : (f8m === 'suggest' ? 900 : 950), t0 = null;
+			f8say.textContent = 'A wrong order is on its way.';
+			var step = function (t) {
+				if (!t0) t0 = t;
+				var u = Math.min(1, (t - t0) / dur);
+				f8place(120 + (target - 120) * u * u);
+				if (u < 1) { f8run = requestAnimationFrame(step); return; }
+				if (f8m === 'suggest') {
+					f8state = 'waiting';
+					f8say.textContent = 'The order waits at the clinician, who has time to look. Press “Stop it.”';
+				} else {
+					f8end(false, 'It reached the patient. Press “Send a wrong order” again and see if you can beat it.');
+				}
+			};
+			f8run = requestAnimationFrame(step);
+		};
+		document.getElementById('f8-go').addEventListener('click', f8go);
+		document.getElementById('f8-stop').addEventListener('click', function () {
+			if (f8state === 'idle') { f8say.textContent = 'Nothing to stop yet. Send an order first.'; return; }
+			var msg = f8m === 'suggest' ? 'Stopped. A suggestion waits for a person, so catching it is easy, provided that person has time.' : 'You stopped it. You also knew it was coming, you were looking at the screen and it was the only one.';
+			f8end(true, msg);
+		});
+		Array.prototype.forEach.call(f8b, function (b) {
+			b.addEventListener('click', function () {
+				press(f8b, b);
+				f8m = b.getAttribute('data-m');
+				cancelAnimationFrame(f8run);
+				f8state = 'idle';
+				f8place(120);
+				f8say.textContent = f8m === 'suggest' ? 'Press to send a wrong order, then try to stop it.' : 'Now the tool acts by itself. Send the order, then press “Stop it” as fast as you can.';
+			});
+		});
+	}
+
+/* ---- Figure 9: read the fine print ---- */
+	var f9read = document.getElementById('f9-read');
+	if (f9read) {
+		var f9r = document.querySelectorAll('#f9 .r9'), f9say = document.getElementById('f9-say'), f9after = false;
+		var f9set = function () {
+			Array.prototype.forEach.call(f9r, function (r, i) {
+				r.style.transitionDelay = (reduce ? 0 : (i < 3 ? i * 0.12 : 0)) + 's';
+				r.style.transform = r.getAttribute(f9after ? 'data-a' : 'data-b');
+			});
+			f9read.textContent = f9after ? 'Before the fine print' : 'Read the fine print';
+			f9say.textContent = f9after
+				? 'Licensing agreements typically “immunize them from liability and disclaim ordinary consumer warranties.” The risk lands on the people using the tool.'
+				: 'Before reading the contract, you might assume the maker of the tool shares the risk.';
+		};
+		f9read.addEventListener('click', function () { f9after = !f9after; f9set(); });
+		f9set();
+	}
+
+	/* ---- Figure 10: the same hospitals under different rules ---- */
+	var f10b = document.querySelectorAll('#f10-btns button');
+	if (f10b.length) {
+		var f10m = 'vol', f10c = document.getElementById('f10-c'), f10d = document.querySelectorAll('#f10 .u10'), f10n = document.getElementById('f10-n'), f10say = document.getElementById('f10-say');
+		var f10go = function () {
+			var cost = +f10c.value * (f10m === 'share' ? 0.4 : 1), yes = 0, help = 0;
+			Array.prototype.forEach.call(f10d, function (d) {
+				var r = +d.getAttribute('data-r'), i = +d.getAttribute('data-i');
+				var budget = r === 0 ? 3 + i * 0.55 : 0.5 + i * 0.3;
+				var can = budget >= cost;
+				var cls = 'u10';
+				if (f10m === 'req') { yes++; if (!can) { cls += ' help'; help++; } }
+				else if (can) yes++;
+				else cls += ' no';
+				d.setAttribute('class', cls);
+			});
+			f10n.textContent = yes + ' of 40 have a process';
+			f10say.textContent = f10m === 'req'
+				? (help ? 'Everyone takes part, and the ' + help + ' gold hospitals would need help to pay. Mello’s proposal leaves that question open.' : 'Everyone takes part, and at this cost everyone can pay.')
+				: f10m === 'share'
+					? 'Shared checklists and shared results cut the cost, so more hospitals can take part. This is the sharing Mello describes.'
+					: 'Under voluntary rules, governance goes to the hospitals that can pay for it.';
+		};
+		Array.prototype.forEach.call(f10b, function (b) {
+			b.addEventListener('click', function () { press(f10b, b); f10m = b.getAttribute('data-m'); f10go(); });
+		});
+		f10c.addEventListener('input', f10go);
+		f10go();
+	}
+
+	/* ---- The lock in the corner opens at the end of the review ---- */
+	var lkHeads = Array.prototype.slice.call(document.querySelectorAll('.prose h2')).filter(function (h) { return h.id; });
+	if (lkHeads.length) {
+		var lk = document.createElement('div');
+		lk.className = 'lockchip off';
+		lk.setAttribute('aria-hidden', 'true');
+		lk.innerHTML = '<svg width="20" height="26" viewBox="0 0 20 26"><path d="M5,12 V7 Q5,2 10,2 Q15,2 15,7 V12"/><rect x="2" y="12" width="16" height="12" rx="2.5"/></svg><span></span>';
+		document.body.appendChild(lk);
+		var lkP = lk.querySelector('path'), lkT = lk.querySelector('span'), lkTick = false, lkFoot = document.querySelector('.post-foot');
+		var lkGo = function () {
+			lkTick = false;
+			var vh = window.innerHeight, n = 0;
+			lkHeads.forEach(function (h) { if (h.getBoundingClientRect().top < vh * 0.6) n++; });
+			var done = n >= lkHeads.length;
+			lkT.textContent = done ? 'Review done. Cleared to go live.' : 'Sections reviewed, ' + n + ' of ' + lkHeads.length;
+			lkP.setAttribute('d', done ? 'M5,12 V7 Q5,2 10,2 Q13,2 14.5,4' : 'M5,12 V7 Q5,2 10,2 Q15,2 15,7 V12');
+			var footTop = lkFoot.getBoundingClientRect().top;
+			lk.className = 'lockchip' + (done ? ' open' : '') + (n > 0 && footTop > vh * 0.9 ? '' : ' off');
+		};
+		window.addEventListener('scroll', function () {
+			if (!lkTick) { lkTick = true; requestAnimationFrame(lkGo); }
+		}, { passive: true });
+		lkGo();
+	}
+})();
+</script>
+
+</body>
+</html>
