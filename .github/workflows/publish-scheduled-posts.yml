@@ -1,16 +1,30 @@
 # Merges a branch named scheduled/YYYY-MM-DD into main on that date, Pacific time.
+# The branch is deleted only once the post is live, so a later run can finish the job.
 name: Publish scheduled posts
 
 on:
   schedule:
-    - cron: '7 15 31 10 *'  # 31 October, 08:07 Pacific (PDT)
-    - cron: '7 16 1 11 *'   # 1 November, 08:07 Pacific (PST)
-    - cron: '7 16 2 11 *'   # 2 November, 08:07 Pacific (PST)
+    - cron: '*/15 3-5 31 10 *'  # Temporary rehearsal, evening of 30 October Pacific
+    # 08:07 Pacific, then retries at 10:37, 13:17 and 16:47, since GitHub can drop a run.
+    - cron: '7 15 31 10 *'    # 31 October (PDT)
+    - cron: '37 17 31 10 *'
+    - cron: '17 20 31 10 *'
+    - cron: '47 23 31 10 *'
+    - cron: '7 16 1 11 *'     # 1 November (PST)
+    - cron: '37 18 1 11 *'
+    - cron: '17 21 1 11 *'
+    - cron: '47 0 2 11 *'
+    - cron: '7 16 2 11 *'     # 2 November (PST)
+    - cron: '37 18 2 11 *'
+    - cron: '17 21 2 11 *'
+    - cron: '47 0 3 11 *'
   workflow_dispatch:
 
 permissions:
   contents: write
   pages: write
+
+concurrency: publish-scheduled-posts
 
 jobs:
   publish:
@@ -32,11 +46,30 @@ jobs:
           git config user.email "chenyangsu@users.noreply.github.com"
           git merge --no-edit "origin/$branch"
           git push origin HEAD:main
-          git push origin --delete "$branch"
-          echo "merged=true" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
       - name: Ask Pages to build
-        if: steps.merge.outputs.merged == 'true'
+        if: steps.merge.outputs.branch
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api -X POST "repos/${{ github.repository }}/pages/builds"
+      - name: Confirm it is live, then delete the branch
+        if: steps.merge.outputs.branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ steps.merge.outputs.branch }}
+        run: |
+          sha=$(git rev-parse HEAD)
+          post=$(git show --name-only --diff-filter=A --format= "origin/$BRANCH" -- 'blog/*/index.html')
+          url="https://chenyangsu.github.io/${post%index.html}?run=$GITHUB_RUN_ID"
+          for i in $(seq 1 40); do
+            build=$(gh api "repos/$GITHUB_REPOSITORY/pages/builds/latest" --jq '"\(.commit) \(.status)"' || true)
+            if [ "$build" = "$sha built" ] && { [ -z "$post" ] || curl -sfo /dev/null "$url"; }; then
+              echo "Live: $sha ${post:-no new post}"
+              git push origin --delete "$BRANCH"
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "Not live after 20 minutes: $BRANCH, last build: $build"
+          exit 1
