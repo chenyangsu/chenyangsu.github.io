@@ -4,7 +4,6 @@ name: Publish scheduled posts
 
 on:
   schedule:
-    - cron: '*/15 3-5 31 10 *'  # Temporary rehearsal, evening of 30 October Pacific
     # 08:07 Pacific, then retries at 10:37, 13:17 and 16:47, since GitHub can drop a run.
     - cron: '7 15 31 10 *'    # 31 October (PDT)
     - cron: '37 17 31 10 *'
