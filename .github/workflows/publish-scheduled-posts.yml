@@ -5,6 +5,7 @@ on:
   schedule:
     - cron: '7 15 31 10 *'  # 31 October, 08:07 Pacific (PDT)
     - cron: '7 16 1 11 *'   # 1 November, 08:07 Pacific (PST)
+    - cron: '7 16 2 11 *'   # 2 November, 08:07 Pacific (PST)
   workflow_dispatch:
 
 permissions:
