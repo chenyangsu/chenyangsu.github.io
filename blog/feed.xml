@@ -9,6 +9,18 @@
 		<managingEditor>cysu@stanford.edu (Chen-Yang Su)</managingEditor>
 
 		<item>
+			<title>The hidden grammar of teamwork: Can AI learn how organizations work?</title>
+			<link>https://chenyangsu.github.io/blog/hidden-grammar-of-teamwork/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/hidden-grammar-of-teamwork/</guid>
+			<pubDate>Sun, 01 Nov 2026 12:00:00 +0000</pubDate>
+			<category>organizations</category>
+			<category>teamwork</category>
+			<category>prediction</category>
+			<category>privacy</category>
+			<description>Nine hospitals changed how doctors hand over patients at the end of a shift, and medical errors fell 23%. What changed was how information moved between people. Two Stanford researchers now propose training an AI on workplace events, the way language models train on words, to learn the patterns behind results like that one. So far it is a proposal, and it raises hard questions about prediction and privacy.</description>
+		</item>
+
+		<item>
 			<title>What happens when AI starts improving itself?</title>
 			<link>https://chenyangsu.github.io/blog/when-ai-starts-improving-itself/</link>
 			<guid isPermaLink="true">https://chenyangsu.github.io/blog/when-ai-starts-improving-itself/</guid>
