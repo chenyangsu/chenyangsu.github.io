@@ -165,7 +165,7 @@ h3 {
 	font-size: 14px;
 }
 .funders-label { color: var(--ink-light); }
-.bio .funders a.funder {
+.bio .funders .funder {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
