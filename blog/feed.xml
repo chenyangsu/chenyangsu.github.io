@@ -9,6 +9,18 @@
 		<managingEditor>cysu@stanford.edu (Chen-Yang Su)</managingEditor>
 
 		<item>
+			<title>AI is making cyberattacks cheaper, faster, and more accessible</title>
+			<link>https://chenyangsu.github.io/blog/ai-is-making-cyberattacks-cheaper/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/ai-is-making-cyberattacks-cheaper/</guid>
+			<pubDate>Tue, 03 Nov 2026 17:29:19 +0000</pubDate>
+			<category>AI</category>
+			<category>cybersecurity</category>
+			<category>software security</category>
+			<category>AI agents</category>
+			<description>A student club's website can become worth attacking even when its code does not change. AI lowers the labor cost of trying. Interactive models show how attack budgets, patch timing, and tool permissions change the outcome, and what incident reports and benchmarks actually establish.</description>
+		</item>
+
+		<item>
 			<title>The hard part of AI in health care comes after the model works</title>
 			<link>https://chenyangsu.github.io/blog/the-hard-part-of-ai-in-health-care/</link>
 			<guid isPermaLink="true">https://chenyangsu.github.io/blog/the-hard-part-of-ai-in-health-care/</guid>

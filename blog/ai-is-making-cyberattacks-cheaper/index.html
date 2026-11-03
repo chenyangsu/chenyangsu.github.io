@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI is making cyberattacks cheaper, faster, and more accessible | Chen-Yang Su</title>
+<meta name="description" content="AI can make an unchanged weakness worth attacking. Explore the economics of cyberattacks, the evidence behind the claims, and what safer software requires.">
+<link rel="canonical" href="https://chenyangsu.github.io/blog/ai-is-making-cyberattacks-cheaper/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI is making cyberattacks cheaper, faster, and more accessible">
+<meta property="og:description" content="The app did not change. The cost of attacking it did. An interactive guide to AI and the economics of cybersecurity.">
+<meta property="og:url" content="https://chenyangsu.github.io/blog/ai-is-making-cyberattacks-cheaper/">
+<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+<meta property="article:published_time" content="2026-11-03">
+<meta property="article:author" content="Chen-Yang Su">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AI is making cyberattacks cheaper, faster, and more accessible">
+<meta name="twitter:description" content="The app did not change. The cost of attacking it did. An interactive guide to AI and the economics of cybersecurity.">
+<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+<link rel="icon" href="/images/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&amp;family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/main.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script src="/assets/theme.js"></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI is making cyberattacks cheaper, faster, and more accessible","description":"AI can make an unchanged weakness worth attacking. Explore the economics, the evidence, and what safer software requires.","datePublished":"2026-11-03","url":"https://chenyangsu.github.io/blog/ai-is-making-cyberattacks-cheaper/","author":{"@type":"Person","name":"Chen-Yang Su","url":"https://chenyangsu.github.io/"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://chenyangsu.github.io/blog/ai-is-making-cyberattacks-cheaper/"}}
+</script>
+<style>
+/* Native figures follow the site's theme. All examples have readable static defaults. */
+.cyber figure { margin: 32px 0 38px; }
+.cyber .lab { padding: 22px; border: 1px solid var(--tag-border); border-radius: 12px; background: var(--panel-bg); font: 15px/1.5 'Lato', Arial, sans-serif; }
+.cyber .lab p { font: inherit; margin: 10px 0; }
+.cyber .lab .eyebrow { margin: 0 0 8px; color: var(--accent); font: 900 11px/1.4 'Lato', Arial, sans-serif; letter-spacing: 1.6px; text-transform: uppercase; }
+.cyber .lab h3 { margin: 0 0 15px; font-size: 20px; line-height: 1.3; color: var(--ink); }
+.cyber .toon { display: block; width: 100%; height: auto; border-radius: 0; }
+.toon text { font: 15px 'Lato', Arial, sans-serif; fill: var(--ink); }
+.toon .small { font-size: 12px; fill: var(--ink-light); }
+.toon .bold { font-weight: 900; }
+.toon .blue { fill: var(--accent); }
+.toon .gold { fill: var(--gold-hl-ink); }
+.toon .line { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.toon .paper { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2; }
+.toon .tint { fill: var(--tag-bg); stroke: var(--accent); stroke-width: 2; }
+.toon .warm { fill: var(--flag-bg); stroke: var(--gold-hl-ink); stroke-width: 2; }
+.cyber .js-controls { display: none; }
+.cyber.enhanced .js-controls { display: flex; }
+.cyber .controls { flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.cyber button { font: 700 14px/1.35 'Lato', Arial, sans-serif; padding: 9px 13px; border-radius: 8px; background: var(--paper-bg); color: var(--ink); border: 1px solid var(--tag-border); cursor: pointer; min-height: 40px; }
+.cyber button:hover { border-color: var(--accent); }
+.cyber button[aria-pressed="true"] { background: var(--accent); color: var(--paper-bg); border-color: var(--accent); }
+.cyber button:focus-visible, .cyber input:focus-visible, .cyber summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.cyber .slider-row { align-items: center; gap: 12px; margin: 14px 0; flex-wrap: wrap; }
+.slider-row label { flex: 0 0 185px; font-weight: 700; }
+.slider-row input { flex: 1 1 100px; min-width: 0; accent-color: var(--accent); height: 32px; cursor: pointer; }
+.slider-row output { width: 55px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 900; }
+.cyber .lab .result { font: 900 26px/1.3 'Lato', Arial, sans-serif; color: var(--accent-dark); margin: 14px 0 4px; font-variant-numeric: tabular-nums; }
+.cyber .math { border-top: 1px dashed var(--tag-border); padding-top: 12px; color: var(--ink-light); font-variant-numeric: tabular-nums; }
+.cyber .bar-track { height: 28px; background: var(--chip-bg); border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
+.cyber .bar-fill { height: 100%; background: var(--accent); width: 25%; transition: width .25s ease; }
+.cyber .lab .reference { color: var(--ink-light); font-size: 13px; }
+.cyber .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.cyber .compare > div { padding: 14px; background: var(--paper-bg); border: 1px solid var(--rule); border-radius: 8px; }
+.cyber .compare b { display: block; font-size: 25px; color: var(--accent-dark); }
+.cyber .compare span { font-size: 13px; color: var(--ink-light); }
+.cyber .bench-row { display: grid; grid-template-columns: 140px 1fr 68px; align-items: center; gap: 12px; margin: 16px 0; }
+.cyber .bench-row .bar-fill { width: 12.1951%; }
+.cyber .bench-row.mythos .bar-fill { background: var(--gold-hl-ink); width: 13.6585%; }
+.cyber .bench-row strong { text-align: right; }
+.cyber .axis { display: flex; justify-content: space-between; margin: -7px 80px 0 152px; font-size: 11px; color: var(--ink-light); }
+.cyber .bench-label { font-size: 13px; font-weight: 700; }
+.cyber .patch-timeline { position: relative; height: 108px; margin: 25px 8px 8px; }
+.cyber .rail { position: absolute; top: 42px; left: 0; width: 100%; height: 4px; background: var(--rule); }
+.cyber .exposure { position: absolute; top: 35px; left: 8.333333%; width: 58.333333%; height: 18px; background: var(--flag-bg); border: 1px solid var(--gold-hl-ink); }
+.cyber .marker { position: absolute; left: 0; top: 40px; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); transform: translateX(-4px); }
+.cyber .marker span { position: absolute; top: -29px; left: -6px; white-space: nowrap; font-size: 12px; font-weight: 700; }
+.cyber .marker.ready { left: 8.333333%; background: var(--award); }
+.cyber .marker.ready span { top: 21px; color: var(--award); }
+.cyber .marker.patch { left: 66.666667%; background: var(--accent); }
+.cyber .marker.patch span { top: -50px; color: var(--accent); }
+.cyber .tick { position: absolute; top: 85px; font-size: 11px; color: var(--ink-light); }
+.cyber .tick.end { right: 0; }
+.cyber .supply-map { position: relative; margin: 20px 0; }
+.cyber .map-node { border: 1.5px solid var(--tag-border); padding: 12px; border-radius: 8px; text-align: center; background: var(--paper-bg); }
+.cyber .map-node b { display: block; }
+.cyber .map-node small { color: var(--ink-light); }
+.cyber .map-arrow { text-align: center; color: var(--accent); font-size: 25px; line-height: 1.4; }
+.cyber .map-root { max-width: 280px; margin: auto; border-color: var(--gold-hl-ink); background: var(--flag-bg); }
+.cyber .map-leaves { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.cyber .production { border-color: var(--award); }
+.cyber .production.blocked { border-style: dashed; border-color: var(--ink-light); background: var(--chip-bg); }
+.cyber .map-node .badge { display: block; font-size: 12px; font-weight: 900; color: var(--award); margin-top: 4px; }
+.cyber .production.blocked .badge { color: var(--ink-light); }
+.cyber .quiz-item + .quiz-item { border-top: 1px solid var(--rule); padding-top: 18px; margin-top: 18px; }
+.cyber .quiz-item > p:first-child { font-weight: 700; }
+.cyber .answer { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--ink-light); }
+.cyber.enhanced .quiz-item:not(.answered) .answer { display: none; }
+.cyber details { border-bottom: 1px solid var(--rule); padding: 12px 0; }
+.cyber summary { cursor: pointer; font-family: 'Lato', Arial, sans-serif; font-size: 16px; font-weight: 700; }
+.cyber details p { font-size: 17px; margin: 10px 0; }
+.cyber .sources { font-size: 15.5px; }
+.cyber .sources li { margin-bottom: 10px; }
+@media (max-width: 540px) {
+ .cyber .lab { padding: 16px; }
+ .slider-row label { flex-basis: 100%; }
+ .cyber .bench-row { grid-template-columns: 96px 1fr 49px; gap: 8px; }
+ .cyber .axis { margin-left: 104px; margin-right: 57px; }
+ .cyber .bench-label { font-size: 12px; }
+ .cyber .lab .result { font-size: 23px; }
+ .cyber .map-leaves { gap: 8px; }
+ .cyber .map-node { padding: 10px 7px; font-size: 13px; }
+ .cyber .toon text { font-size: 17px; }
+ .cyber .toon .small { font-size: 14px; }
+ .cyber .compare { gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .cyber .bar-fill { transition: none; } }
+@media print { .cyber .js-controls { display: none !important; } .cyber.enhanced .quiz-item .answer { display: block; } .cyber .lab { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+<div class="page page-post">
+<article>
+<p class="crumbs"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a></p>
+<p class="post-kicker">AI · Cybersecurity</p>
+<h1 class="post-title">AI is making cyberattacks cheaper, faster, and more accessible</h1>
+<p class="post-standfirst">A software weakness can stay exactly the same and become more dangerous. Lower the cost of attacking it, and more people can afford to try.</p>
+<p class="post-byline"><b>Chen-Yang Su</b><span class="dot">&middot;</span><time datetime="2026-11-03">3 November 2026</time><span class="dot">&middot;</span><span data-reading-time>&nbsp;</span></p>
+<div class="takeaways"><span class="takeaways-label">Main takeaways</span><ul>
+<li><strong>Cheaper attempts change which targets are worth attacking.</strong> AI can reduce the labor needed to understand software and adapt tools.</li>
+<li><strong>Speed, access, and capability are different changes.</strong> Real incidents and controlled benchmarks provide evidence for different parts of the story.</li>
+<li><strong>Defenders can change the same calculation.</strong> Faster fixes and narrower permissions reduce the opportunities an attacker can use.</li>
+</ul></div>
+<div class="prose cyber" id="cyber-article">
+<p>Your student club has a website. It holds event registrations and runs on a few donated cloud credits. You built it over a weekend with an AI coding assistant.</p>
+<p>Imagine that it contains a bug that could expose the cloud account. Finding and using the bug would take an attacker a full afternoon. Your little website might not be worth the effort.</p>
+<p>Now imagine that software can do most of that work in minutes. The website has not changed. Neither has the bug. <strong>The attack has become cheaper.</strong> Your account could become worth targeting for its computing credits, even if nobody cares about the club.</p>
+<p>This is a hypothetical example, but it gives us a useful question to ask about AI and cybersecurity: what happens when an attack that used to require scarce expertise becomes affordable at scale?</p>
+
+<figure id="same-bug">
+<div class="lab">
+<p class="eyebrow">01 / The change in one picture</p>
+<svg class="toon" viewBox="0 0 560 285" role="img" aria-labelledby="opening-title opening-desc">
+<title id="opening-title">The same app, with a lower cost to investigate it</title><desc id="opening-desc">A student stands beside an event-registration app. A human investigator faces a costly afternoon of work. An AI-assisted investigator faces a lower labor cost. The app and its weakness stay the same. This is a hypothetical illustration.</desc>
+<path d="M20 240 Q280 246 540 240" class="line" opacity=".2"/>
+<g transform="translate(28 67)"><circle cx="35" cy="27" r="22" class="paper"/><path d="M15 18q7-29 35-8M28 29h1m13 0h1m-12 11q6 4 11-1" class="line"/><path d="M14 65q21-22 43 0l8 62H6z" class="tint"/><path d="M17 127l-3 45m37-45 7 45M8 76l-8 36m57-34 26 17" class="line"/><text x="35" y="201" text-anchor="middle" class="small">You built it.</text></g>
+<rect x="142" y="77" width="153" height="132" rx="9" class="paper"/><path d="M142 101h153" class="line"/><circle cx="156" cy="89" r="3" fill="var(--accent)"/><circle cx="167" cy="89" r="3" fill="var(--gold-hl-ink)"/><text x="218" y="126" text-anchor="middle" class="bold">Club sign-ups</text><rect x="160" y="140" width="117" height="18" rx="4" class="tint"/><rect x="160" y="166" width="80" height="18" rx="4" class="warm"/><path d="M265 196v-12a8 8 0 0 0-16 0v12m-3 0h22" class="line"/>
+<text x="218" y="237" text-anchor="middle" class="small">Same app. Same bug.</text>
+<path d="M313 112h30m-7-5 7 5-7 5m-23 60h30m-7-5 7 5-7 5" class="line"/>
+<rect x="359" y="71" width="181" height="65" rx="9" class="paper"/><text x="375" y="95" class="bold">Human labor</text><text x="375" y="118" class="small">An afternoon of effort</text>
+<rect x="359" y="157" width="181" height="65" rx="9" class="warm"/><text x="375" y="181" class="bold">AI-assisted labor</text><text x="375" y="204" class="small">A lower cost to try</text>
+<text x="280" y="30" text-anchor="middle" class="blue bold">The attacker’s calculation changes.</text>
+</svg>
+</div>
+<figcaption><strong>Figure 1.</strong> A hypothetical student app. The change is in the attacker's effort, not the underlying software. No measured time or success rate is implied.</figcaption>
+</figure>
+
+<h2>A cheaper attempt can make an old weakness worth finding</h2>
+<p>Start with a simple economic model. An attacker compares the expected benefit of an attempt with its cost. If an attempt has a 10% chance of returning $100, its expected gross return is $10. An attempt costing $20 loses money on average. An attempt costing $2 has a positive expected return, before other costs.</p>
+<p>These numbers are invented. The relationship is the point: <strong>reducing the cost can change whether the same target is worth attacking.</strong> The attacker does not need a better vulnerability for that to happen.</p>
+<p>There are two ways activity could increase. An existing operator can afford more attempts with the same budget. Other people may start attempting attacks when the required skills and startup effort fall. The second effect depends on people choosing to enter; it does not follow automatically from a faster tool.</p>
+
+<figure id="budget-lab">
+<div class="lab">
+<p class="eyebrow">02 / Try the economics</p><h3>What can a fixed budget buy?</h3>
+<p>Hold the budget at <strong>$1,000</strong>. Change the cost of one attempt, then change its chance of success.</p>
+<div class="js-controls slider-row"><label for="cost">Cost per attempt</label><input id="cost" type="range" min="5" max="100" step="5" value="10"><output id="cost-value" for="cost">$10</output></div>
+<div class="js-controls slider-row"><label for="success">Success per attempt</label><input id="success" type="range" min="0" max="20" step="1" value="10"><output id="success-value" for="success">10%</output></div>
+<div class="compare"><div><b id="attempt-count">100</b><span>attempts the budget can buy</span></div><div><b id="expected-count">10</b><span>expected successful attempts</span></div></div>
+<p class="result" id="budget-result" aria-live="polite" aria-atomic="true">10 expected successes</p>
+<div class="bar-track" aria-hidden="true"><div class="bar-fill" id="budget-bar"></div></div>
+<p class="reference">Bar scale: 0–40 expected successful attempts.</p>
+<p class="math" id="budget-math">$1,000 ÷ $10 = 100 attempts; 100 × 10% = 10 expected successes.</p>
+<p><strong>Try this:</strong> set cost to $100 and success to 10%. Then set cost to $10 and success to 1%. Both give an expectation of one success.</p>
+</div>
+<figcaption><strong>Figure 2.</strong> A hypothetical budget model, not attack data. Attempts = floor(budget ÷ cost); expected successful attempts = attempts × success probability. An expectation can be fractional. Each attempt has the selected probability; this is not a count of distinct breached organizations. It omits setup costs, detection, limited targets, and changes in attacker behavior.</figcaption>
+</figure>
+
+<p>Cheaper tools therefore do not guarantee more successful breaches. They could produce many more failed attempts. Defenders could also reduce the probability of success enough to offset the increase. To understand what is actually happening, we need observations as well as a model.</p>
+
+<h2>The observed change is in the work between steps</h2>
+<p>A cyberattack involves several kinds of work. <em>Reconnaissance</em> means learning about a target. A <em>vulnerability</em> is a weakness that could permit an unauthorized action. An <em>exploit</em> is a way to use that weakness. <em>Credentials</em>, such as passwords and access tokens, can provide another route in.</p>
+<p>Automation in attacks predates language models. What an AI agent can add is help with unfamiliar code and the transitions between tasks: interpreting an error, modifying a script, choosing another tool, and trying again. An agent is a model connected to tools and a loop that lets it act on results.</p>
+<p>In a campaign observed in Q2 2026, Google's Threat Intelligence Group reported that attackers compromised a cloud resource and then planned, built, and ran an agent-enabled credential-harvesting campaign in under six hours. AI handled parts of the scanning workflow and troubleshooting. The report appeared on <a href="https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai">8 September</a>.</p>
+<p>That is evidence of a fast, AI-assisted operation. It does not show how long the same operators would have taken without AI, or that AI caused the initial cloud compromise.</p>
+<p>In a <a href="https://x.com/nikesharora/status/2117052005617434847">post dated 2 November UTC</a>, Palo Alto Networks CEO Nikesh Arora wrote: “attacks are not becoming more sophisticated, it's the same attacks, faster and by a lot more people.” That describes one mechanism well. It is too broad as a description of every change in AI's offensive abilities.</p>
+<p>Anthropic's <a href="https://www.anthropic.com/threat-intelligence-report-september-2026">September misuse report</a> also describes individuals and groups using AI to coordinate work across targets. These are selected cases visible to a model provider. They support the existence of the mechanism; they are not a representative census of attackers.</p>
+
+<h2>New capabilities and wider access are separate developments</h2>
+<p>Some models are also getting better at difficult technical tasks. In April, Anthropic <a href="https://www.anthropic.com/research/mythos-preview">reported strong exploit-development results for Claude Mythos Preview</a> and initially limited access through Project Glasswing. That concerns what a model can do.</p>
+<p>By September, a second issue was clear: who could obtain similar capabilities. <em>Open-weight</em> means a model's learned parameters are available for others to download and run. It does not imply that all training data or development code is public, or that running the model is free.</p>
+<p>NIST's Center for AI Standards and Innovation <a href="https://www.nist.gov/news-events/news/2026/09/caisis-assessment-zais-glm-53-cyber-capabilities">assessed Z.ai's GLM-5.3</a> as the most cyber-capable open-weight model released at the time. It still placed the model about four months behind the US frontier on its aggregate cybersecurity measure. That is a comparison across evaluations, not a forecast of when the gap will close.</p>
+<p>Anthropic's <a href="https://www.anthropic.com/research/glm-5-3-and-the-spread-of-advanced-cyber-capabilities">separate evaluation</a> found similar performance for GLM-5.3 and Mythos Preview on one exploit-development benchmark. Similarity on one test does not establish equal overall capability.</p>
+
+<figure id="benchmark">
+<div class="lab">
+<p class="eyebrow">03 / Read the denominator</p><h3>Working exploits in a controlled test</h3>
+<p>ExploitBench: known bugs in Chrome's V8 engine, tested against offline targets.</p>
+<div class="bench-row"><span class="bench-label">GLM-5.3<br>Open weights</span><div class="bar-track" aria-hidden="true"><div class="bar-fill"></div></div><strong>12.2%</strong></div>
+<div class="bench-row mythos"><span class="bench-label">Mythos Preview<br>Restricted access</span><div class="bar-track" aria-hidden="true"><div class="bar-fill"></div></div><strong>13.7%</strong></div>
+<div class="axis" aria-hidden="true"><span>0%</span><span>50%</span><span>100%</span></div>
+<div class="controls js-controls" role="group" aria-label="Benchmark explanation"><button type="button" aria-pressed="true" data-bench="rates">Read percentages</button><button type="button" aria-pressed="false" data-bench="counts">Count attempts</button></div>
+<p id="benchmark-note" aria-live="polite" aria-atomic="true">GLM-5.3: 50 of 410 attempts (12.2%). Mythos Preview: 56 of 410 (13.7%). The denominator counts attempts, not internet sites.</p>
+</div>
+<figcaption><strong>Figure 3.</strong> Anthropic's reported results: 50 of 410 attempts for GLM-5.3 and 56 of 410 for Mythos Preview, over 41 selected V8 vulnerabilities. Both bars use a 0–100% scale. Repeated attempts on selected bugs do not measure the fraction of real systems a model can compromise. <a href="https://www.anthropic.com/research/glm-5-3-and-the-spread-of-advanced-cyber-capabilities">Source and methods.</a></figcaption>
+</figure>
+
+<div class="callout callout-note"><span class="callout-label">Three different questions</span><p><strong>Speed:</strong> how much work can an operator complete in an hour? <strong>Capability:</strong> which tasks can the model solve? <strong>Access:</strong> who can obtain and run it? Progress on one can matter even when the other two stay fixed.</p></div>
+
+<h2>The defender is running a clock, too</h2>
+<p>Many attacks still have ordinary entry points. Verizon's <a href="https://www.verizon.com/business/resources/reports/dbir/">2026 Data Breach Investigations Report</a> says software vulnerability exploitation accounted for 31% of breaches in its reporting dataset, ahead of credential abuse. Its incident period was November 2024 through October 2025. Those dates make it useful background, not a measure of the effect of the 2026 models above.</p>
+<p>A <em>patch</em> is a software update that fixes a problem. Once a flaw becomes known, attackers may investigate it while the organizations using the software test and install the fix. Faster attacker work can shorten the time available to act.</p>
+<p>In the example below, a hypothetical attack becomes usable six hours after disclosure. Move the time when the defender installs the fix. The gap between those events is the exposure window in this simplified case.</p>
+
+<figure id="patch-clock">
+<div class="lab">
+<p class="eyebrow">04 / Move the defender's clock</p><h3>How long does this path stay open?</h3>
+<div class="js-controls slider-row"><label for="patch">Fix installed after disclosure</label><input id="patch" type="range" min="0" max="72" value="48" step="1"><output id="patch-value" for="patch">48 h</output></div>
+<div class="patch-timeline" role="img" aria-label="Hypothetical timeline: disclosure at hour zero, attack ready at hour six, fix installed at hour 48, leaving 42 hours of exposure." id="timeline">
+<div class="rail"></div><div class="exposure" id="exposure"></div><div class="marker"><span>Disclosure</span></div><div class="marker ready"><span>Attack ready: 6 h</span></div><div class="marker patch" id="patch-marker"><span id="patch-label">Fix: 48 h</span></div><span class="tick">0 hours</span><span class="tick end">72 hours</span>
+</div>
+<p class="result" id="window-result" aria-live="polite" aria-atomic="true">42 hours of exposure</p>
+<p id="window-note">48 − 6 = 42 hours. Installing the fix sooner reduces this window.</p>
+</div>
+<figcaption><strong>Figure 4.</strong> An invented timeline, in hours after public disclosure. Window = max(0, fix time − attack-ready time). The six-hour setting is a teaching assumption unrelated to the GTIG campaign. This model assumes a complete fix, no earlier compromise, and no other route in. It is not a measurement of real patching times.</figcaption>
+</figure>
+
+<p>Patching earlier closes this particular route sooner. It does not undo an intrusion that already happened. That is why organizations also investigate evidence of access, monitor systems, and revoke credentials when needed.</p>
+
+<h2>A trusted tool can carry the attack across a boundary</h2>
+<p>Your club app probably depends on libraries, a hosting provider, and a development extension. Those tools can carry permissions: access to files, repository contents, or deployment credentials. An attacker may reach you through one of them.</p>
+<p>CISA's <a href="https://content.govdelivery.com/accounts/USDHSCISA/bulletins/419668f">May 2026 bulletin about Nx Console</a> describes a poisoned development extension delivered through automatic updates. CISA reported that the compromise reached a GitHub employee's device and led to theft from internal repositories. The bulletin establishes a supply-chain route; it does not establish that AI caused the incident.</p>
+<p>A <em>supply-chain attack</em> compromises something the target depends on. Its impact depends on what that dependency can reach. In the illustration, change the permissions held by an already compromised tool.</p>
+
+<figure id="supply-chain">
+<div class="lab">
+<p class="eyebrow">05 / Follow the permissions</p><h3>One compromised tool. How far can it reach?</h3>
+<div class="controls js-controls" role="group" aria-label="Tool permissions"><button type="button" aria-pressed="true" data-access="broad">Broad access</button><button type="button" aria-pressed="false" data-access="restricted">Restricted access</button></div>
+<div class="supply-map" role="img" aria-label="A compromised development tool can access a disposable workspace and, with broad credentials, the production account. Restricting those credentials blocks the illustrated production route." id="permission-map">
+<div class="map-node map-root"><b>Compromised tool</b><small>Trusted extension or coding agent</small></div><div class="map-arrow" aria-hidden="true">↓</div>
+<div class="map-leaves"><div class="map-node"><b>Disposable workspace</b><small>Code and test data</small><span class="badge">Accessible in both cases</span></div><div class="map-node production" id="production-node"><b>Production account</b><small>Real records and cloud credits</small><span class="badge" id="production-badge">Accessible with broad credentials</span></div></div>
+</div>
+<p id="supply-result" aria-live="polite" aria-atomic="true">With broad credentials, the compromised tool can reach production as well as the workspace.</p>
+</div>
+<figcaption><strong>Figure 5.</strong> A hypothetical permission map, not a reconstruction of Nx Console. Restricted mode gives this tool only a disposable workspace and no production credentials or alternate production route. It illustrates how limiting permissions can contain one compromise, without making the tool or the workspace safe.</figcaption>
+</figure>
+
+<p>AI agents add a related problem. They read repository files, tool responses, and external documents. An attacker can put instructions in that content and try to make the agent treat them as commands from its user. This is <em>prompt injection</em>: untrusted information attempts to become an instruction.</p>
+<p>Google's <a href="https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai">September report</a> documents malicious files aimed at coding assistants, as well as attempts to manipulate AI security scanners. A model's ability to read a file should not itself grant the file's author authority over the model's tools.</p>
+
+<h2>For a student building an app, “it works” is only the first test</h2>
+<p>Return to the club website. Suppose it correctly saves a registration and displays a confirmation. That checks the happy path. It does not tell you whether one member can read another member's private information.</p>
+<p><em>Authentication</em> asks who you are. <em>Authorization</em> asks what you are allowed to do. A functioning login screen can coexist with broken authorization. An AI-generated app needs both checked.</p>
+<p>Several defensive choices follow from the mechanisms we have examined:</p>
+<details><summary>Reduce opportunities: know what is exposed and keep it maintained</summary><p>For your own app, list the public services and software dependencies. Apply relevant fixes. CISA's <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">Known Exploited Vulnerabilities catalog</a> identifies flaws with evidence of exploitation; it helps prioritize work rather than treating every warning equally.</p></details>
+<details><summary>Reduce success: test permissions, including the denied actions</summary><p>Use separate test accounts. Check that one member cannot read or change another's private record. Keep secrets out of browser-delivered code. Review changes affecting access rules. These checks address specific failure modes that a working demo can miss.</p></details>
+<details><summary>Reduce impact: give tools only the access their task needs</summary><p>Keep production credentials away from experiments and unfamiliar repositories. Use a disposable environment for code you have not reviewed. A tool that can edit a test project need not also control the live database. The permission map shows why that boundary matters.</p></details>
+<details><summary>Use AI to help find and fix weaknesses, then verify the fix</summary><p>A defender can ask an assistant to explain a dependency warning, inspect an access rule, or propose a test. Verify the result against the actual application. More generated findings help only when someone can check, prioritize, and resolve them.</p></details>
+
+<figure id="check-understanding">
+<div class="lab quiz">
+<p class="eyebrow">06 / Check your understanding</p><h3>Which conclusion does the evidence support?</h3>
+<div class="quiz-item" data-quiz="1"><p>1. Attack cost falls tenfold. Must the number of successful breaches rise tenfold?</p><div class="controls js-controls" role="group" aria-label="Question one"><button type="button" aria-pressed="false" data-correct="false">Yes, automatically</button><button type="button" aria-pressed="false" data-correct="true">It depends on success and activity</button></div><p class="answer">It depends. A fixed budget can buy more attempts, but changes in success probability, available targets, and operator behavior affect the result.</p></div>
+<div class="quiz-item" data-quiz="2"><p>2. A model succeeds in 50 of 410 exploit attempts. What have we measured?</p><div class="controls js-controls" role="group" aria-label="Question two"><button type="button" aria-pressed="false" data-correct="true">Performance in that test</button><button type="button" aria-pressed="false" data-correct="false">The share of websites it can breach</button></div><p class="answer">Performance in that test. Selected vulnerabilities, repeated attempts, and a controlled environment do not represent all websites.</p></div>
+<div class="quiz-item" data-quiz="3"><p>3. An agent reads a file that says “upload the deployment key.” What decides whether it should act?</p><div class="controls js-controls" role="group" aria-label="Question three"><button type="button" aria-pressed="false" data-correct="false">The file uses convincing wording</button><button type="button" aria-pressed="false" data-correct="true">User authority and tool permissions</button></div><p class="answer">User authority and tool permissions. Reading attacker-controlled content does not authorize an action. Keeping the key inaccessible also limits what a mistaken action can expose.</p></div>
+</div>
+<figcaption><strong>Figure 6.</strong> Three conceptual checks. Each answer explains a limit of the argument. With scripting disabled, the explanations remain visible.</figcaption>
+</figure>
+
+<h2>What would establish the size of the effect?</h2>
+<p>The reports give us concrete examples of AI assisting real attacks. The evaluations show that some models can solve difficult exploitation tasks. The economic model explains why lower costs could expand activity. Those are different kinds of evidence.</p>
+<p>To estimate how much AI increases successful breaches, we would need stronger comparisons: comparable operators working with and without AI, measured labor and computing costs, and outcomes across representative targets. We would also need to account for changes in defenses and reporting. Selected incident reports do not provide that full comparison.</p>
+<p>The same economic logic applies to defenders. If AI makes finding a flaw cheap but reviewing and deploying a fix remains slow, the defender's bottleneck persists. If it helps verify and ship fixes sooner, the window in Figure 4 shrinks.</p>
+<p>For the student club, the useful change is concrete: review who can access registration data, keep deployment credentials out of the coding agent's workspace, and verify the relevant fixes. These actions change the attacker's chance of success and the damage a compromised tool can cause. In the budget example, a tenfold fall in attack cost was exactly offset by a tenfold fall in success probability.</p>
+
+<h2>Sources and further reading</h2>
+<ul class="sources">
+<li><a href="https://cloud.google.com/blog/topics/threat-intelligence/from-prompting-to-autonomy-the-evolution-of-adversarial-ai">Google Threat Intelligence Group, 8 September 2026.</a> Observed operations and attacks aimed at AI tools.</li>
+<li><a href="https://www.anthropic.com/threat-intelligence-report-september-2026">Anthropic's September 2026 misuse report.</a> Selected operations involving its services.</li>
+<li><a href="https://www.anthropic.com/research/mythos-preview">Anthropic's Mythos Preview assessment, 7 April 2026.</a> Capability evaluation and access restrictions.</li>
+<li><a href="https://www.nist.gov/news-events/news/2026/09/caisis-assessment-zais-glm-53-cyber-capabilities">NIST CAISI's GLM-5.3 assessment, 17 September 2026.</a> An independent evaluation across four cyber benchmarks.</li>
+<li><a href="https://www.anthropic.com/research/glm-5-3-and-the-spread-of-advanced-cyber-capabilities">Anthropic's GLM-5.3 evaluation, 29 September 2026.</a> ExploitBench results and test conditions.</li>
+<li><a href="https://www.verizon.com/business/resources/reports/dbir/">Verizon's 2026 DBIR.</a> Breach entry routes and the reporting period.</li>
+<li><a href="https://content.govdelivery.com/accounts/USDHSCISA/bulletins/419668f">CISA's Nx Console bulletin, 28 May 2026.</a> A documented software supply-chain compromise.</li>
+</ul>
+</div><!-- /.prose -->
+<footer class="post-foot"><div class="tags"><span class="tag">AI</span><span class="tag">cybersecurity</span><span class="tag">software security</span><span class="tag">AI agents</span></div><p><a href="/blog/">&larr; All posts</a></p></footer>
+</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script>
+(function () {
+ 'use strict';
+ var root = document.getElementById('cyber-article');
+ function byId(id) { return document.getElementById(id); }
+ function format(n) { return Number(n.toFixed(2)).toLocaleString('en-US'); }
+ function updateBudget() {
+  var cost = Number(byId('cost').value), rate = Number(byId('success').value);
+  var attempts = Math.floor(1000 / cost), expected = attempts * rate / 100;
+  byId('cost-value').textContent = '$' + cost;
+  byId('success-value').textContent = rate + '%';
+  byId('attempt-count').textContent = format(attempts);
+  byId('expected-count').textContent = format(expected);
+  byId('budget-result').textContent = format(expected) + (expected === 1 ? ' expected success' : ' expected successes');
+  byId('budget-bar').style.width = (expected / 40 * 100) + '%';
+  byId('budget-math').textContent = '$1,000 ÷ $' + cost + ' = ' + format(1000/cost) + ' (rounded down: ' + attempts + ' attempts); ' + attempts + ' × ' + rate + '% = ' + format(expected) + ' expected successes.';
+ }
+ ['cost','success'].forEach(function (id) { byId(id).addEventListener('input', updateBudget); });
+ function updatePatch() {
+  var patch = Number(byId('patch').value), window = Math.max(0, patch - 6);
+  byId('patch-value').textContent = patch + ' h';
+  byId('patch-marker').style.left = (patch/72*100) + '%';
+  byId('patch-label').textContent = 'Fix: ' + patch + ' h';
+  byId('patch-label').style.transform = patch > 58 ? 'translateX(-65%)' : '';
+  byId('exposure').style.width = (window/72*100) + '%';
+  byId('window-result').textContent = window + (window === 1 ? ' hour of exposure' : ' hours of exposure');
+  byId('window-note').textContent = patch <= 6 ? 'The fix is installed by the time this attack is ready. This route has no exposure window under the stated assumptions.' : patch + ' − 6 = ' + window + ' hours. Installing the fix sooner reduces this window.';
+  byId('timeline').setAttribute('aria-label', 'Hypothetical timeline: disclosure at hour zero, attack ready at hour six, fix installed at hour ' + patch + ', leaving ' + window + ' hours of exposure.');
+ }
+ byId('patch').addEventListener('input', updatePatch);
+ function select(button, selector) { root.querySelectorAll(selector).forEach(function (b) { b.setAttribute('aria-pressed', String(b === button)); }); }
+ root.querySelectorAll('[data-bench]').forEach(function (b) { b.addEventListener('click', function () {
+  select(b, '[data-bench]');
+  byId('benchmark-note').textContent = b.dataset.bench === 'counts' ? 'GLM-5.3: 50 of 410 attempts succeeded; 360 did not. Mythos Preview: 56 of 410 succeeded; 354 did not. These are repeated attempts across 41 selected bugs.' : 'GLM-5.3: 12.2%. Mythos Preview: 13.7%. These are success rates for this benchmark, not the percentage of internet sites the models can breach.';
+ }); });
+ root.querySelectorAll('[data-access]').forEach(function (b) { b.addEventListener('click', function () {
+  select(b, '[data-access]');
+  var restricted = b.dataset.access === 'restricted';
+  byId('production-node').classList.toggle('blocked', restricted);
+  byId('production-badge').textContent = restricted ? 'No production route granted' : 'Accessible with broad credentials';
+  byId('supply-result').textContent = restricted ? 'The tool can still compromise the workspace, but cannot reach production through the permissions shown here.' : 'With broad credentials, the compromised tool can reach production as well as the workspace.';
+  byId('permission-map').setAttribute('aria-label', byId('supply-result').textContent);
+ }); });
+ root.querySelectorAll('.quiz-item').forEach(function (card) {
+  var answer = card.querySelector('.answer'), explanation = answer.textContent;
+  answer.setAttribute('aria-live', 'polite'); answer.setAttribute('aria-atomic', 'true');
+  card.querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () {
+   card.querySelectorAll('button').forEach(function (other) { other.setAttribute('aria-pressed', String(other === b)); });
+   card.classList.add('answered');
+   answer.textContent = (b.dataset.correct === 'true' ? 'Correct. ' : 'Try again. ') + explanation;
+  }); });
+ });
+ updateBudget(); updatePatch();
+ root.classList.add('enhanced');
+})();
+</script>
+<script src="/assets/blog.js"></script>
+</body>
+</html>
