@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>How far above the best human is a superintelligence? | Chen-Yang Su</title>
+	<meta name="description" content="Forecasters define superintelligence with one number. Its lead over the best human is twice the best human's lead over the median professional." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/how-far-above-the-best-human/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="How far above the best human is a superintelligence?">
+	<meta property="og:description" content="Forecasters define superintelligence with one number. Its lead over the best human is twice the best human's lead over the median professional.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/how-far-above-the-best-human/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-11-04">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="How far above the best human is a superintelligence?">
+	<meta name="twitter:description" content="Forecasters define superintelligence with one number. Its lead over the best human is twice the best human's lead over the median professional.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The drawings and controls in this post are inline SVG and HTML
+		   coloured with the site's tokens, so they follow the light and dark
+		   themes. With JavaScript off, every figure shows a complete static
+		   state and its caption carries the facts. Motion is skipped for
+		   readers who ask for reduced motion. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Buttons shared by the figures */
+		.seg { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.seg button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 7px 15px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.seg-sm button { font-size: 13.5px; padding: 5px 12px; }
+		.seg button:hover { border-color: var(--accent); }
+		.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose .say { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); text-align: center; max-width: 520px; margin: 10px auto 0; min-height: 3em; }
+		.prose .ask { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15.5px; font-weight: 700; line-height: 1.45; color: var(--ink); text-align: center; margin: 0 0 10px; }
+
+		/* Figure 1: the guess */
+		.toon .f1-area { fill: var(--tag-bg); }
+		.toon .f1-line { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linejoin: round; }
+		.toon .f1-pin { fill: none; stroke: var(--ink-light); stroke-width: 1.5; stroke-dasharray: 3 5; }
+		.toon .f1-brace { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .f1-brace2 { stroke: var(--award); }
+		#f1 .f1-fade { transition: opacity 0.6s ease; }
+		#f1 .f1-off { opacity: 0; }
+
+		/* Figure 2: the rarity calculator */
+		.rr { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px 16px; }
+		.rr-ctl { display: flex; align-items: center; gap: 12px; margin: 0 0 6px; }
+		.rr-ctl input { flex: 1; min-width: 0; accent-color: var(--accent); height: 28px; }
+		.prose .rr-lab { font-size: 15px; line-height: 1.45; color: var(--ink); text-align: center; margin: 0 0 12px; }
+		.rr-lab b { font-variant-numeric: tabular-nums; }
+		.rr-top { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 14px; text-align: center; }
+		.rr-t { background: var(--paper-bg); border: 1.5px solid var(--tag-border); border-radius: 10px; padding: 8px 10px 10px; }
+		.rr-t.rr-asi { border-color: var(--award); }
+		.rr-k { display: block; font-size: 12.5px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-dark); }
+		.rr-asi .rr-k { color: var(--award); }
+		.rr-t b { display: block; font-size: 26px; font-weight: 900; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.2; }
+		.rr-t span { display: block; font-size: 14.5px; color: var(--ink); font-variant-numeric: tabular-nums; }
+		.rr-t sup { font-size: 0.7em; }
+		.rr-scale { position: relative; margin: 6px 0 0; }
+		.rr-row { display: grid; grid-template-columns: 92px 1fr; gap: 8px; align-items: center; margin: 6px 0; font-size: 13.5px; font-weight: 700; color: var(--ink); }
+		.rr-track { position: relative; height: 18px; background: var(--chip-bg); border-radius: 4px; }
+		.rr-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--accent); transition: width 0.5s ease; }
+		.rr-asi-row .rr-fill { background: var(--award); }
+		.rr-refs { position: relative; height: 50px; margin-left: 100px; font-size: 12px; color: var(--ink-light); }
+		.rr-ref { position: absolute; top: 0; border-left: 1.5px dashed var(--ink-light); height: 14px; }
+		.rr-ref span { position: absolute; top: 15px; white-space: nowrap; line-height: 1.25; }
+		.rr-ref.rr-r1 span { left: -4px; }
+		.rr-ref.rr-r2 span { right: -4px; text-align: right; }
+		.prose .rr-note { font-size: 13px; line-height: 1.4; color: var(--ink-light); margin: 2px 0 0; text-align: center; }
+
+		/* Figure 3: the sorting cards */
+		.quiz { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.q-card { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px 14px; }
+		.prose .q-text { font-size: 15.5px; font-weight: 700; line-height: 1.4; color: var(--ink); margin: 0 0 10px; }
+		.q-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+		.q-btns button { font: 700 14px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 6px 13px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.q-btns button:hover { border-color: var(--accent); }
+		.q-btns button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.q-btns button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.prose .q-verdict { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 10px 0 0; padding-top: 10px; border-top: 1px dashed var(--tag-border); }
+		.q-you { font-weight: 700; color: var(--ink-light); }
+		.quiz-js .q-verdict { display: none; }
+		.quiz-js .q-card.done .q-verdict { display: block; }
+		.prose .q-score { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 900; text-align: center; color: var(--ink); margin: 12px 0 0; min-height: 1.4em; }
+
+		/* Figure 4: uneven profiles */
+		.toon .f4-axis { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+		.toon .f4-best { fill: none; stroke: var(--ink-light); stroke-width: 1.8; stroke-dasharray: 6 6; }
+		.toon .f4-asi { fill: none; stroke: var(--award); stroke-width: 2.6; }
+		.toon .f4-bar { fill: var(--accent); }
+		.toon .f4-bar.f4-hit { fill: var(--good); }
+
+		/* Figure 5: the ladder */
+		.lad { display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: start; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.prose figure.diagram .lad svg { max-width: 200px; }
+		.toon .lad-rail { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+		.toon .lad-rung { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+		.toon .lad-on { stroke: var(--accent); stroke-width: 5; }
+		#f5-bot { transition: transform 0.6s cubic-bezier(.3,1.3,.4,1); }
+		.lad-d { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px 14px; }
+		.lad-js .lad-d { display: none; }
+		.lad-js .lad-d.on { display: block; }
+		.lad-d + .lad-d { margin-top: 10px; }
+		.lad-js .lad-d + .lad-d { margin-top: 0; }
+		.prose .lad-n { font-size: 17px; font-weight: 900; color: var(--ink); margin: 0 0 6px; }
+		.lad-n span { font-weight: 700; color: var(--accent); margin-right: 6px; }
+		.prose .lad-q { font-size: 14.5px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; font-style: italic; }
+		.prose .lad-p { font-size: 14.5px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; }
+		.prose .lad-f { font-size: 13.5px; line-height: 1.45; color: var(--ink-light); margin: 0; font-variant-numeric: tabular-nums; }
+		.lad-f b { color: var(--ink); }
+
+		/* Figure 6: the forecasts */
+		.toon .f6-grid { fill: none; stroke: var(--rule); stroke-width: 1; }
+		.toon .f6-axis { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+		.toon .f6-today { fill: none; stroke: var(--award); stroke-width: 1.8; stroke-dasharray: 4 5; }
+		.toon .f6-rng { fill: var(--tag-bg); stroke: var(--tag-border); stroke-width: 1; }
+		.toon .f6-m { stroke: var(--ink); stroke-width: 1.6; transition: opacity 0.3s ease; }
+		.toon .f6-ac { fill: var(--accent); }
+		.toon .f6-ted { fill: var(--gold-hl-ink); }
+		.toon .f6-asi { fill: var(--award); }
+		.toon .f6-old { fill: var(--paper-bg); stroke: var(--award); stroke-width: 2; }
+		#f6 .f6-dim { opacity: 0.18; }
+
+		@media (max-width: 720px) {
+			.toon text { font-size: 16.5px; }
+			.toon .t-small { font-size: 14.5px; }
+			.toon .t-head { font-size: 13px; }
+			.quiz { grid-template-columns: 1fr; }
+			.rr-top { grid-template-columns: 1fr; }
+			.rr-t b { font-size: 22px; }
+			.rr-row { grid-template-columns: 74px 1fr; }
+			.rr-refs { margin-left: 82px; height: 86px; }
+			.rr-ref.rr-r2 span { top: 50px; }
+			.rr-ref.rr-r2 { height: 50px; }
+			.lad { grid-template-columns: 1fr; }
+			.prose figure.diagram .lad svg { max-width: 150px; }
+			#f6 .t-small { font-size: 18px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			#f1 .f1-fade, .rr-fill, #f5-bot, .toon .f6-m { transition: none; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-gold { font-weight: 700; fill: var(--gold-hl-ink); }
+		.toon .t-big { font-size: 30px; font-weight: 900; fill: var(--ink); }
+		.toon .ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .head { fill: var(--paper-bg); stroke: var(--ink); stroke-width: 2.2; }
+		.toon .shirt { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2.2; stroke-linejoin: round; }
+		.toon .shirt-g { fill: var(--good-bg); stroke: var(--ink); stroke-width: 2.2; stroke-linejoin: round; }
+		.toon .shirt-y { fill: var(--flag-bg); stroke: var(--ink); stroke-width: 2.2; stroke-linejoin: round; }
+		.toon .shirt-r { fill: var(--warn-bg); stroke: var(--ink); stroke-width: 2.2; stroke-linejoin: round; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .gold { fill: var(--gold-hl-ink); stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; }
+		.toon .ink { fill: var(--ink); }
+		.toon .acc { fill: var(--accent); }
+		.toon .red { fill: var(--award); }
+		.toon .is-hidden { display: none; }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "How far above the best human is a superintelligence?",
+		"description": "Forecasters define superintelligence with one number. Its lead over the best human is twice the best human's lead over the median professional.",
+		"datePublished": "2026-11-04",
+		"url": "https://chenyangsu.github.io/blog/how-far-above-the-best-human/",
+		"keywords": "AI research, superintelligence, forecasting, AI safety",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/how-far-above-the-best-human/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI research</p>
+
+		<h1 class="post-title">How far above the best human is a superintelligence?</h1>
+
+		<p class="post-standfirst">The forecasters behind AI 2027 define superintelligence with one sentence and one number. Its lead over the best human must be twice the best human&rsquo;s lead over the median professional, at almost every job that can be done on a computer. On a bell curve, that puts it three times as far from the middle as the best person in the field.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-11-04">4 November 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li><strong>The definition has a number in it.</strong> An artificial superintelligence, or ASI, leads the best human by twice the gap between the best human and the median professional.</li>
+				<li><strong>The gap is measured on a bell curve.</strong> If the best human sits 4 standard deviations above the median, an ASI sits at 12. About one trained person in 5.6&nbsp;&times;&nbsp;10<sup>32</sup> would be that good.</li>
+				<li><strong>&ldquo;Cognitive tasks&rdquo; means work done through a computer.</strong> The test is whether the system could fully automate 95% of remote-work jobs in the United States.</li>
+				<li><strong>Being superhuman at one game does not count.</strong> Deep Blue beat the world chess champion in 1997 and could do nothing else.</li>
+				<li><strong>The forecasters disagree on timing by more than four years.</strong> In August 2026, Daniel Kokotajlo&rsquo;s median for ASI was March 2029 and Eli Lifland&rsquo;s was July 2033, both assuming nobody slows AI down on purpose.</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>On 30 September 2026, Daniel Kokotajlo testified before a subcommittee of the US Senate. He used to forecast AI at OpenAI, and he now leads the AI Futures Project, a small research nonprofit. He <a href="https://blog.aifutures.org/p/senate-testimony-sept-2026" target="_blank" rel="noopener">told the senators</a> that Anthropic and OpenAI were &ldquo;racing each other towards superintelligence,&rdquo; which he described as &ldquo;AI systems that are better than the best humans at everything, while also being faster and cheaper.&rdquo;</p>
+
+			<p>That works well in a five-minute speech. His team also keeps a written definition, and it is much stricter. It fits in one sentence and contains a number. The number puts superintelligence far beyond the best humans.</p>
+
+			<figure class="diagram">
+				<p class="ask">The best human in a field sits 4 steps from the middle of the bell curve. Where would a superintelligence sit?</p>
+				<div class="seg" id="f1-btns" role="group" aria-label="Your guess">
+					<button type="button" data-g="past" aria-pressed="false">Just past the best human</button>
+					<button type="button" data-g="twice" aria-pressed="false">Twice as far out</button>
+					<button type="button" data-g="three" aria-pressed="false">Three times as far out</button>
+				</div>
+				<svg class="toon" id="f1" viewBox="0 0 560 320" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">Where a superintelligence sits on the bell curve</title>
+					<desc id="f1-desc">A bell curve of skill among trained professionals. The median professional stands at zero, the best human at 4 standard deviations, and the superintelligence at 12. The gap from the median to the best human is 4. The gap from the best human to the superintelligence is twice that, 8.</desc>
+					<path id="f1-area" class="f1-area" d="M40.0,227.7 L45.4,227.5 L50.9,227.0 L56.3,226.3 L61.8,225.0 L67.2,223.1 L72.7,220.2 L78.1,216.1 L83.6,210.3 L89.0,202.7 L94.4,193.0 L99.9,181.4 L105.3,168.2 L110.8,153.8 L116.2,139.2 L121.7,125.5 L127.1,113.8 L132.6,105.2 L138.0,100.6 L143.4,100.5 L148.9,104.8 L154.3,113.2 L159.8,124.7 L165.2,138.4 L170.7,153.0 L176.1,167.4 L181.6,180.7 L187.0,192.4 L192.4,202.2 L197.9,209.9 L203.3,215.8 L208.8,220.0 L214.2,223.0 L219.7,224.9 L225.1,226.2 L230.6,227.0 L236.0,227.4 L241.4,227.7 L246.9,227.9 L257.8,228.0 L530,228 Z"/>
+					<path id="f1-line" class="f1-line" d="M40.0,227.7 L45.4,227.5 L50.9,227.0 L56.3,226.3 L61.8,225.0 L67.2,223.1 L72.7,220.2 L78.1,216.1 L83.6,210.3 L89.0,202.7 L94.4,193.0 L99.9,181.4 L105.3,168.2 L110.8,153.8 L116.2,139.2 L121.7,125.5 L127.1,113.8 L132.6,105.2 L138.0,100.6 L143.4,100.5 L148.9,104.8 L154.3,113.2 L159.8,124.7 L165.2,138.4 L170.7,153.0 L176.1,167.4 L181.6,180.7 L187.0,192.4 L192.4,202.2 L197.9,209.9 L203.3,215.8 L208.8,220.0 L214.2,223.0 L219.7,224.9 L225.1,226.2 L230.6,227.0 L236.0,227.4 L241.4,227.7 L246.9,227.9 L257.8,228.0 L530,228"/>
+					<path class="ln-thin" d="M40,228 H530"/>
+					<g id="f1-ticks"><text class="t-small" x="140.9" y="247" text-anchor="middle">0</text><text class="t-small" x="198.5" y="247" text-anchor="middle">2</text><text class="t-small" x="256.2" y="247" text-anchor="middle">4</text><text class="t-small" x="313.8" y="247" text-anchor="middle">6</text><text class="t-small" x="371.5" y="247" text-anchor="middle">8</text><text class="t-small" x="429.1" y="247" text-anchor="middle">10</text><text class="t-small" x="486.8" y="247" text-anchor="middle">12</text></g>
+					<text class="t-small" x="285" y="310" text-anchor="middle">Standard deviations above the median</text>
+					<!-- The median professional -->
+					<g id="f1-med" transform="translate(140.9,0)">
+						<text class="t-small t-main" x="0" y="16" text-anchor="middle">Median</text>
+						<circle class="head" cx="0" cy="36" r="10"/>
+						<path class="shirt" d="M-12,72 Q-11,52 0,50 Q11,52 12,72 Z"/>
+						<path class="f1-pin" d="M0,76 V98"/>
+					</g>
+					<!-- The best human -->
+					<g id="f1-best" transform="translate(256.2,0)">
+						<text class="t-small t-main" x="0" y="126" text-anchor="middle">Best human</text>
+						<circle class="head" cx="0" cy="146" r="10"/>
+						<path class="shirt-y" d="M-12,182 Q-11,162 0,160 Q11,162 12,182 Z"/>
+						<circle class="gold" cx="0" cy="171" r="4"/>
+						<path class="f1-pin" d="M0,186 V226"/>
+					</g>
+					<!-- The question mark, shown before the guess -->
+					<g id="f1-q" class="f1-fade f1-off"><text class="t-big" x="505" y="190" text-anchor="middle">?</text></g>
+					<!-- The superintelligence -->
+					<g id="f1-asi" class="f1-fade" transform="translate(486.8,0)">
+						<text class="t-small t-red" x="0" y="122" text-anchor="middle">ASI</text>
+						<path class="ln-thin" d="M0,134 V128"/><circle class="red" cx="0" cy="127" r="3"/>
+						<rect class="soft" x="-12" y="134" width="24" height="22" rx="5"/>
+						<rect class="acc" x="-7" y="141" width="4" height="5"/><rect class="acc" x="3" y="141" width="4" height="5"/>
+						<rect class="shirt-r" x="-12" y="160" width="24" height="22" rx="4"/>
+						<path class="f1-pin" d="M0,186 V226"/>
+					</g>
+					<!-- The two gaps -->
+					<g id="f1-braces" class="f1-fade">
+						<path id="f1-b1" class="f1-brace" d="M140.9,262 v6 H256.2 v-6"/>
+						<text id="f1-b1t" class="t-small t-main" x="198.5" y="286" text-anchor="middle">gap = 4</text>
+						<path id="f1-b2" class="f1-brace f1-brace2" d="M256.2,262 v6 H486.8 v-6"/>
+						<text id="f1-b2t" class="t-small t-red" x="371.5" y="286" text-anchor="middle">2 &times; gap = 8</text>
+					</g>
+				</svg>
+				<p class="say" id="f1-say" aria-live="polite">Three times as far from the middle. The best human leads the median by 4, so the superintelligence must lead the best human by 8, which puts it at 12.</p>
+				<figcaption><b>Figure 1.</b> Make a guess. The rule comes from the AI Futures Project&rsquo;s <a href="https://blog.aifutures.org/p/ai-futures-model-dec-2025-update" target="_blank" rel="noopener">December 2025 model</a>. Putting the best human at 4 is an example, and the people are cartoons.</figcaption>
+			</figure>
+
+			<h2 id="sentence">The sentence, one piece at a time</h2>
+
+			<p>Here is the definition, from the model the team <a href="https://blog.aifutures.org/p/ai-futures-model-dec-2025-update" target="_blank" rel="noopener">published in December 2025</a>.</p>
+
+			<blockquote><p>&ldquo;The gap between an ASI and the best humans is 2x greater than the gap between the best humans and the median professional, at virtually all cognitive tasks.&rdquo;</p></blockquote>
+
+			<p>ASI stands for artificial superintelligence. The median professional is the person in the middle of a field, with half the people who do that job above them and half below. The best humans are the people at the very top. The definition takes the distance from the middle to the top and asks the ASI to sit twice that distance above the top.</p>
+
+			<p>Eleven years earlier, the philosopher Nick Bostrom offered a looser one. In his 2014 book <a href="https://en.wikipedia.org/wiki/Superintelligence:_Paths,_Dangers,_Strategies" target="_blank" rel="noopener"><i>Superintelligence</i></a>, he described &ldquo;any intellect that greatly exceeds the cognitive performance of humans in virtually all domains of interest.&rdquo; The words &ldquo;greatly exceeds&rdquo; leave the size of the lead to the reader. The newer definition puts a number on it, which forecasters need if they are going to say when a milestone has been reached.</p>
+
+			<h2 id="ruler">A ruler with no ceiling</h2>
+
+			<p>A distance needs a ruler, and the obvious ruler breaks near the top. Imagine a test on which the median radiologist spots 80 of 100 tumours and the best radiologist spots 95. The gap is 15 tumours. Twice that gap above the best would be 125 tumours out of 100, which cannot happen. Any score with a maximum runs out before it can describe something far better than us.</p>
+
+			<p>The AI Futures team uses a ruler without a maximum. They imagine taking everyone who has taken the SAT and training each of them to do the job professionally. Those people are lined up by skill, and each person&rsquo;s place in the line becomes a position on a bell curve, counted in standard deviations from the middle.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Standard deviation</span>
+				<p>A standard deviation, or SD, is the typical distance between a person and the middle of a bell curve. About 68% of people fall within 1&nbsp;SD of the middle. Only one person in 741 is more than 3&nbsp;SDs above it. A distance counted in SDs is also called a z-score, and the middle of the curve is at zero.</p>
+			</div>
+
+			<p>The fixed group of trained SAT-takers means the middle of the curve is defined the same way in every field. In the team&rsquo;s words, they &ldquo;standardize the population that is trained to do the task because otherwise the ASI requirement might be quite different depending on the population size and competence levels of the profession.&rdquo;</p>
+
+			<p>The team&rsquo;s first version of the rule, in the <a href="https://ai-2027.com/research/takeoff-forecast" target="_blank" rel="noopener">AI 2027 takeoff forecast</a> of April 2025, counted the gap for AI researchers in doublings of the value of their work. The December 2025 model moved to the bell curve. Both versions ask for a lead twice the size of the best human&rsquo;s lead over the median.</p>
+
+			<h2 id="far">Three times as far out is beyond anyone who has lived</h2>
+
+			<p>On this ruler the rule becomes simple arithmetic. The median sits at zero. If the best human sits at 4&nbsp;SDs, the gap is 4, so the ASI must sit 8&nbsp;SDs above the best human, at 12. Whatever number you choose for the best human, the ASI sits at three times that number.</p>
+
+			<p>Twelve does not sound much bigger than 4. On a bell curve it is. The tail of the curve thins out faster and faster, so each extra SD makes a person rarer by a bigger factor than the one before. One trained person in 31,574 is more than 4&nbsp;SDs above the middle. At 12&nbsp;SDs the figure is one in about 5.6&nbsp;&times;&nbsp;10<sup>32</sup>, which is 56 followed by 31 zeros.</p>
+
+			<p><strong>By this definition, a superintelligence sits three times as far from the middle of the bell curve as the best human, at a level that no person who has ever lived would be expected to reach.</strong> About 117 billion people have ever been born, <a href="https://www.prb.org/news/how-many-people-have-ever-lived-on-earth/" target="_blank" rel="noopener">according to the Population Reference Bureau</a>. Train every one of them for the job and the expected number at 12&nbsp;SDs is still far below one.</p>
+
+			<figure class="diagram">
+				<div class="rr" id="f2">
+					<div class="seg seg-sm" id="f2-btns" role="group" aria-label="How rare is the best human?">
+						<button type="button" data-l="3" aria-pressed="false">Best of 1,000</button>
+						<button type="button" data-l="4.4993354" aria-pressed="true">Best of 31,574</button>
+						<button type="button" data-l="6" aria-pressed="false">Best of 1 million</button>
+						<button type="button" data-l="9.90309" aria-pressed="false">Best of 8 billion</button>
+					</div>
+					<div class="rr-ctl"><input type="range" id="f2-range" min="2" max="9.90309" step="any" value="4.4993354" aria-label="How many trained people the best human is the best of, on a log scale"></div>
+					<p class="rr-lab" id="f2-lab">The best human in the field is the best of <b>31,574</b> trained people.</p>
+					<div class="rr-top">
+						<div class="rr-t"><span class="rr-k">Best human</span><b id="f2-zb">4.0 SD</b><span id="f2-ob">1 in 31,574</span></div>
+						<div class="rr-t rr-asi"><span class="rr-k">ASI, three times as far</span><b id="f2-za">12.0 SD</b><span id="f2-oa">1 in 5.6 &times; 10<sup>32</sup></span></div>
+					</div>
+					<div class="rr-scale">
+						<div class="rr-row"><span>Best human</span><span class="rr-track"><span class="rr-fill" id="f2-fb" style="width:5%"></span></span></div>
+						<div class="rr-row rr-asi-row"><span>ASI</span><span class="rr-track"><span class="rr-fill" id="f2-fa" style="width:36.4%"></span></span></div>
+						<div class="rr-refs">
+							<span class="rr-ref rr-r1" style="left:12.3%"><span>117 billion people<br>ever born</span></span>
+							<span class="rr-ref rr-r2" style="left:88.9%"><span>10<sup>80</sup> atoms in the<br>observable universe</span></span>
+						</div>
+					</div>
+					<p class="rr-note">Bar length counts the zeros in the odds. Each step along it multiplies the odds by 10.</p>
+				</div>
+				<figcaption><b>Figure 2.</b> Drag the slider or press a button. The odds come from a normal bell curve, the ruler the definition uses. How rare the best human is differs from field to field, so the slider is for exploring. The comparisons are sourced in the text.</figcaption>
+			</figure>
+
+			<p>The far end of the slider is the extreme case. If the best human in a field were the single most skilled of all <a href="https://www.un.org/en/dayof8billion" target="_blank" rel="noopener">8 billion people alive</a>, they would sit about 6.3&nbsp;SDs above the middle. The ASI would sit near 19, where the odds are about one in 10<sup>80</sup>. That is roughly the number of atoms <a href="https://en.wikipedia.org/wiki/Observable_universe" target="_blank" rel="noopener">estimated to exist in the observable universe</a>.</p>
+
+			<h2 id="cognitive">&ldquo;Cognitive tasks&rdquo; means jobs done from a laptop</h2>
+
+			<p>The second half of the sentence, &ldquo;virtually all cognitive tasks,&rdquo; also has a precise meaning. A cognitive task is thinking work, and the team turns the phrase into a test. An ASI would, &ldquo;if dropped into present day &amp; given the resources of a large tech company &amp; three months to prep, be able to fully automate 95% of remote work jobs in the US&rdquo; at the level of the 2x gap.</p>
+
+			<p>Two things follow from that wording. The test covers remote work, so a job that needs hands on site, such as a plumber&rsquo;s, is outside it, and an ASI needs no robot body to qualify. The test also asks what a system could do with three months of preparation. A lab could have an ASI that has not yet replaced anyone.</p>
+
+			<figure class="diagram">
+				<p class="ask">Does each task fall inside the remote-work test?</p>
+				<div class="quiz" id="f3">
+					<div class="q-card" data-a="in"><p class="q-text">Reading a chest X-ray for a hospital</p><div class="q-btns"><button type="button" data-v="in" aria-pressed="false">Inside</button><button type="button" data-v="out" aria-pressed="false">Outside</button></div><p class="q-verdict"><b>Inside.</b> The work is looking at an image on a screen and writing a report.</p></div>
+					<div class="q-card" data-a="out"><p class="q-text">Fixing a burst pipe</p><div class="q-btns"><button type="button" data-v="in" aria-pressed="false">Inside</button><button type="button" data-v="out" aria-pressed="false">Outside</button></div><p class="q-verdict"><b>Outside.</b> It needs hands in the house, and the definition asks for no robot body.</p></div>
+					<div class="q-card" data-a="in"><p class="q-text">Writing the code for a phone app</p><div class="q-btns"><button type="button" data-v="in" aria-pressed="false">Inside</button><button type="button" data-v="out" aria-pressed="false">Outside</button></div><p class="q-verdict"><b>Inside.</b> Programming is the first job on the team&rsquo;s list of milestones.</p></div>
+					<div class="q-card" data-a="out"><p class="q-text">Cutting someone&rsquo;s hair</p><div class="q-btns"><button type="button" data-v="in" aria-pressed="false">Inside</button><button type="button" data-v="out" aria-pressed="false">Outside</button></div><p class="q-verdict"><b>Outside.</b> A haircut happens in the room with scissors.</p></div>
+					<div class="q-card" data-a="in"><p class="q-text">Proving a new theorem in mathematics</p><div class="q-btns"><button type="button" data-v="in" aria-pressed="false">Inside</button><button type="button" data-v="out" aria-pressed="false">Outside</button></div><p class="q-verdict"><b>Inside.</b> A proof is written and checked on paper or on a screen.</p></div>
+					<div class="q-card" data-a="in"><p class="q-text">Negotiating a contract over video calls</p><div class="q-btns"><button type="button" data-v="in" aria-pressed="false">Inside</button><button type="button" data-v="out" aria-pressed="false">Outside</button></div><p class="q-verdict"><b>Inside.</b> Persuading people counts as cognitive work when it happens through a screen.</p></div>
+				</div>
+				<p class="q-score" id="f3-score" aria-live="polite"></p>
+				<figcaption><b>Figure 3.</b> Sort the tasks. The definition&rsquo;s test covers remote-work jobs, and this sorting is my reading of it.</figcaption>
+			</figure>
+
+			<h2 id="every">Superhuman at one thing is not enough</h2>
+
+			<p>Machines have beaten the best humans at single games for decades. In 1997, IBM&rsquo;s Deep Blue <a href="https://www.ibm.com/history/deep-blue" target="_blank" rel="noopener">beat Garry Kasparov</a>, the reigning world chess champion, in a six-game match. In March 2016, DeepMind&rsquo;s AlphaGo <a href="https://deepmind.google/research/alphago/" target="_blank" rel="noopener">beat Lee Sedol</a>, the winner of 18 world Go titles, by four games to one in Seoul. Neither program could do anything else. Deep Blue could not have written an email.</p>
+
+			<p>&ldquo;Virtually all&rdquo; is the phrase that rules such systems out, because the 2x lead has to hold across 95% of remote jobs. A system can be far ahead of us on most tasks and still fall short on the rest. A 2023 study of more than 700 consultants at Boston Consulting Group called this uneven pattern a <a href="https://mitsloan.mit.edu/ideas-made-to-matter/how-generative-ai-can-boost-highly-skilled-workers-productivity" target="_blank" rel="noopener">&ldquo;jagged technological frontier&rdquo;</a>. On a task inside GPT-4&rsquo;s abilities, consultants who used it did nearly 40% better than those who did not. On a task built to fall just outside its abilities, they did worse.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f4-btns" role="group" aria-label="Choose a system">
+					<button type="button" data-s="0" aria-pressed="false">A chess engine</button>
+					<button type="button" data-s="1" aria-pressed="false">An uneven system</button>
+					<button type="button" data-s="2" aria-pressed="true">An ASI</button>
+				</div>
+				<svg class="toon" id="f4" viewBox="0 0 560 300" role="img" aria-labelledby="f4-title f4-desc">
+					<title id="f4-title">Skill profiles against the ASI line</title>
+					<desc id="f4-desc">Bars show a made-up system's skill on eight tasks in standard deviations above the median. A dashed line marks the best human at 4 and a red line marks the ASI level at 12. The ASI clears the red line on all eight tasks.</desc>
+					<path class="f4-axis" d="M64,40 V240 H548"/>
+					<text class="t-small" x="56" y="245" text-anchor="end">0</text>
+					<text class="t-small" x="56" y="183" text-anchor="end">4</text>
+					<text class="t-small" x="56" y="122" text-anchor="end">8</text>
+					<text class="t-small" x="56" y="60" text-anchor="end">12</text>
+					<text class="t-small" transform="translate(20,140) rotate(-90)" text-anchor="middle">SD above the median</text>
+					<g id="f4-bars"><rect class="f4-bar f4-hit" x="77.3" width="34" y="40.0" height="200.0" rx="3"></rect><rect class="f4-bar f4-hit" x="137.8" width="34" y="46.2" height="193.8" rx="3"></rect><rect class="f4-bar f4-hit" x="198.3" width="34" y="50.8" height="189.2" rx="3"></rect><rect class="f4-bar f4-hit" x="258.8" width="34" y="43.1" height="196.9" rx="3"></rect><rect class="f4-bar f4-hit" x="319.3" width="34" y="40.0" height="200.0" rx="3"></rect><rect class="f4-bar f4-hit" x="379.8" width="34" y="49.2" height="190.8" rx="3"></rect><rect class="f4-bar f4-hit" x="440.3" width="34" y="52.3" height="187.7" rx="3"></rect><rect class="f4-bar f4-hit" x="500.8" width="34" y="47.7" height="192.3" rx="3"></rect></g>
+					<path class="f4-best" d="M64,178.5 H548"/>
+					<path class="f4-asi" d="M64,55.4 H548"/>
+					<path class="f4-best" d="M150,16 H186"/><text class="t-small t-main" x="194" y="21">Best human (example)</text>
+					<path class="f4-asi" d="M360,16 H396"/><text class="t-small t-red" x="404" y="21">ASI line</text>
+					<g id="f4-labels"><text class="t-small t-main" x="94.3" y="262" text-anchor="middle">Chess</text><text class="t-small t-main" x="154.8" y="262" text-anchor="middle">Coding</text><text class="t-small t-main" x="215.3" y="262" text-anchor="middle">Law</text><text class="t-small t-main" x="275.8" y="262" text-anchor="middle">X-rays</text><text class="t-small t-main" x="336.3" y="262" text-anchor="middle">Maths</text><text class="t-small t-main" x="396.8" y="262" text-anchor="middle">Essays</text><text class="t-small t-main" x="457.3" y="262" text-anchor="middle">Sales</text><text class="t-small t-main" x="517.8" y="262" text-anchor="middle">Taxes</text></g>
+				</svg>
+				<p class="say" id="f4-say" aria-live="polite">Clears the ASI line on 8 of 8 tasks, so it passes the 95% test.</p>
+				<figcaption><b>Figure 4.</b> Press the buttons. The bar heights are made up to show how the rule works, and the best human&rsquo;s position at 4 is an example.</figcaption>
+			</figure>
+
+			<p>The team also names a lower milestone for systems that only match the best of us. A TED-AI, short for top-human-expert-dominating AI, is &ldquo;at least as good as top human experts at virtually all cognitive tasks.&rdquo; Kokotajlo&rsquo;s phrase to the Senate, &ldquo;better than the best humans at everything,&rdquo; sounds closer to this milestone. In the written definitions, ASI is the step after it.</p>
+
+			<h2 id="ladder">The ladder below the top rung</h2>
+
+			<p>The team&rsquo;s model expects AI to climb five milestones, and it expects AI research to do most of the climbing. In the first stage, AI takes over the programming at AI companies. In the second, it also takes over research taste, which the team describes as &ldquo;setting research directions, selecting experiments, and learning from experiments.&rdquo; In the third, AI does all of the research on itself, and the model asks how much faster each round makes the next. An earlier post here, <a href="/blog/when-ai-starts-improving-itself/">What happens when AI starts improving itself?</a>, looks at how far that loop has got.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f5-btns" role="group" aria-label="Choose a rung">
+					<button type="button" data-r="0" aria-pressed="true">1. AC</button>
+					<button type="button" data-r="1" aria-pressed="false">2. SAR</button>
+					<button type="button" data-r="2" aria-pressed="false">3. SIAR</button>
+					<button type="button" data-r="3" aria-pressed="false">4. TED-AI</button>
+					<button type="button" data-r="4" aria-pressed="false">5. ASI</button>
+				</div>
+				<div class="lad" id="f5">
+					<svg class="toon" viewBox="0 0 200 330" role="img" aria-labelledby="f5-title">
+						<title id="f5-title">A ladder of five milestones, from automated coder at the bottom to superintelligence at the top</title>
+						<path class="lad-rail" d="M50,20 V320 M150,20 V320"/>
+						<path class="lad-rung" data-r="0" d="M50,280 H150"/>
+						<path class="lad-rung" data-r="1" d="M50,225 H150"/>
+						<path class="lad-rung" data-r="2" d="M50,170 H150"/>
+						<path class="lad-rung" data-r="3" d="M50,115 H150"/>
+						<path class="lad-rung" data-r="4" d="M50,60 H150"/>
+						<text class="t-small t-main" x="100" y="274" text-anchor="middle">AC</text>
+						<text class="t-small t-main" x="100" y="219" text-anchor="middle">SAR</text>
+						<text class="t-small t-main" x="100" y="164" text-anchor="middle">SIAR</text>
+						<text class="t-small t-main" x="100" y="109" text-anchor="middle">TED-AI</text>
+						<text class="t-small t-red" x="100" y="54" text-anchor="middle">ASI</text>
+						<g id="f5-bot">
+							<path class="ln-thin" d="M175,248 V242"/><circle class="red" cx="175" cy="241" r="3"/>
+							<rect class="soft" x="164" y="248" width="22" height="20" rx="5"/>
+							<rect class="acc" x="169" y="254" width="4" height="5"/><rect class="acc" x="177" y="254" width="4" height="5"/>
+							<rect class="shirt-r" x="164" y="271" width="22" height="18" rx="4"/>
+							<path class="ln" d="M164,276 L150,282"/>
+						</g>
+					</svg>
+					<div class="lad-ds">
+						<div class="lad-d on" data-r="0">
+							<p class="lad-n"><span>1</span>Automated coder (AC)</p>
+							<p class="lad-q">&ldquo;An AC can fully automate an AGI project&rsquo;s coding work, replacing the project&rsquo;s entire coding staff.&rdquo;</p>
+							<p class="lad-p">An AGI project is a company trying to build AI that can do almost everything. At this rung, AI writes all of that company&rsquo;s code.</p>
+							<p class="lad-f">Median dates, August 2026: <b>Kokotajlo Nov 2027</b> &middot; <b>Halstead Jan 2029</b> &middot; <b>Lifland Jan 2030</b></p>
+						</div>
+						<div class="lad-d" data-r="1">
+							<p class="lad-n"><span>2</span>Superhuman AI researcher (SAR)</p>
+							<p class="lad-q">&ldquo;A SAR can fully automate AI R&amp;D, making all human researchers obsolete.&rdquo;</p>
+							<p class="lad-p">Coding is only half of research. This rung adds research taste, the judgment about which experiment to run next, at the level of the company&rsquo;s best researcher.</p>
+							<p class="lad-f">The August 2026 charts give no date for this rung.</p>
+						</div>
+						<div class="lad-d" data-r="2">
+							<p class="lad-n"><span>3</span>Superintelligent AI researcher (SIAR)</p>
+							<p class="lad-q">&ldquo;The gap between a SIAR and the top AGI project human researcher is 2x greater than the gap between the top AGI project human researcher and the median researcher.&rdquo;</p>
+							<p class="lad-p">The same 2x rule as ASI, applied only to AI research and measured against the researchers at one company.</p>
+							<p class="lad-f">The August 2026 charts give no date for this rung.</p>
+						</div>
+						<div class="lad-d" data-r="3">
+							<p class="lad-n"><span>4</span>Top-human-expert-dominating AI (TED-AI)</p>
+							<p class="lad-q">&ldquo;A TED-AI is at least as good as top human experts at virtually all cognitive tasks.&rdquo;</p>
+							<p class="lad-p">The skill spreads from AI research to almost every remote job, at the level of the best human in each one.</p>
+							<p class="lad-f">Median dates, August 2026: <b>Kokotajlo Nov 2028</b> &middot; <b>Halstead Apr 2031</b> &middot; <b>Lifland Jul 2032</b></p>
+						</div>
+						<div class="lad-d" data-r="4">
+							<p class="lad-n"><span>5</span>Artificial superintelligence (ASI)</p>
+							<p class="lad-q">&ldquo;The gap between an ASI and the best humans is 2x greater than the gap between the best humans and the median professional, at virtually all cognitive tasks.&rdquo;</p>
+							<p class="lad-p">The top rung. Three times as far from the middle of the bell curve as the best human, across almost every remote job.</p>
+							<p class="lad-f">Median dates, August 2026: <b>Kokotajlo Mar 2029</b> &middot; <b>Lifland Jul 2033</b></p>
+						</div>
+					</div>
+				</div>
+				<figcaption><b>Figure 5.</b> Climb the ladder. Definitions are from the <a href="https://blog.aifutures.org/p/ai-futures-model-dec-2025-update" target="_blank" rel="noopener">December 2025 model</a> and dates are the medians in the chart captions of the <a href="https://blog.aifutures.org/p/q25-2026-timelines-update-uplift" target="_blank" rel="noopener">August 2026 update</a>. The robot is a cartoon.</figcaption>
+			</figure>
+
+			<h2 id="when">The forecasters disagree by more than four years</h2>
+
+			<p>In August 2026 the model&rsquo;s authors <a href="https://blog.aifutures.org/p/q25-2026-timelines-update-uplift" target="_blank" rel="noopener">updated their forecasts</a>. Kokotajlo&rsquo;s median for ASI was March 2029. His co-author Eli Lifland put his median at July 2033. A median is the date by which the forecaster thinks the milestone is as likely to have happened as not. Both expected the automated coder first, Kokotajlo in November 2027 and Lifland in January 2030.</p>
+
+			<p>These forecasts are &ldquo;conditional on things going as fast as is technically feasible,&rdquo; which means they assume no government steps in to slow AI down. In July 2026 the same group published <a href="https://blog.aifutures.org/p/ai-2040-plan-a" target="_blank" rel="noopener"><i>AI 2040: Plan A</i></a>, a scenario in which the US and Chinese governments do step in. Superintelligence arrives in 2040 in that story. Without the intervention, the authors write, &ldquo;it would have happened much sooner (in 2030, to be precise).&rdquo;</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f6-btns" role="group" aria-label="Choose a milestone">
+					<button type="button" data-m="ac" aria-pressed="false">Automated coder</button>
+					<button type="button" data-m="ted" aria-pressed="false">TED-AI</button>
+					<button type="button" data-m="asi" aria-pressed="true">ASI</button>
+				</div>
+				<svg class="toon" id="f6" viewBox="0 0 560 312" role="img" aria-labelledby="f6-title f6-desc">
+					<title id="f6-title">Median forecast dates for three milestones</title>
+					<desc id="f6-desc">A timeline from 2026 to 2036. The April 2025 AI 2027 forecast put ASI at April 2028. In August 2026, Kokotajlo's medians were automated coder November 2027, TED-AI November 2028 and ASI March 2029. Halstead's were automated coder January 2029 and TED-AI April 2031. Lifland's were automated coder January 2030, TED-AI July 2032 and ASI July 2033. Shaded bars show the 80% ranges for the automated coder.</desc>
+					<g id="f6-grid"><path class="f6-grid" d="M110,40 V232"></path><text class="t-small" x="110" y="250" text-anchor="middle">2026</text><path class="f6-grid" d="M194,40 V232"></path><text class="t-small" x="194" y="250" text-anchor="middle">2028</text><path class="f6-grid" d="M278,40 V232"></path><text class="t-small" x="278" y="250" text-anchor="middle">2030</text><path class="f6-grid" d="M362,40 V232"></path><text class="t-small" x="362" y="250" text-anchor="middle">2032</text><path class="f6-grid" d="M446,40 V232"></path><text class="t-small" x="446" y="250" text-anchor="middle">2034</text><path class="f6-grid" d="M530,40 V232"></path><text class="t-small" x="530" y="250" text-anchor="middle">2036</text><path class="f6-today" d="M146.8,40 V232"></path></g>
+					<path class="f6-axis" d="M110,232 H530"/>
+					<text class="t-small t-main" x="102" y="58" text-anchor="end">AI 2027</text>
+					<text class="t-small" x="102" y="80" text-anchor="end">Apr 2025</text>
+					<text class="t-small t-main" x="102" y="115" text-anchor="end">Kokotajlo</text>
+					<text class="t-small t-main" x="102" y="160" text-anchor="end">Halstead</text>
+					<text class="t-small t-main" x="102" y="205" text-anchor="end">Lifland</text>
+					<g id="f6-marks"><path class="f6-m f6-old" d="M206.3,57 l9,9 l-9,9 l-9,-9 Z"></path><rect class="f6-rng f6-dim" x="153.8" y="105" width="136.5" height="10" rx="3"></rect><circle class="f6-m f6-ac f6-dim" cx="188.8" cy="110" r="7"></circle><rect class="f6-m f6-ted f6-dim" x="224.3" y="103.5" width="13" height="13"></rect><path class="f6-m f6-asi" d="M244.7,101 l9,9 l-9,9 l-9,-9 Z"></path><rect class="f6-rng f6-dim" x="153.8" y="150" width="376.2" height="10" rx="3"></rect><path class="ln-thin f6-dim" d="M522,150 L530,155 L522,160"></path><text class="t-small f6-dim" x="530" y="176" text-anchor="end">to 2050</text><circle class="f6-m f6-ac f6-dim" cx="237.8" cy="155" r="7"></circle><rect class="f6-m f6-ted f6-dim" x="325.8" y="148.5" width="13" height="13"></rect><rect class="f6-rng f6-dim" x="171.2" y="195" width="358.8" height="10" rx="3"></rect><path class="ln-thin f6-dim" d="M522,195 L530,200 L522,205"></path><text class="t-small f6-dim" x="530" y="221" text-anchor="end">to 2070</text><circle class="f6-m f6-ac f6-dim" cx="279.8" cy="200" r="7"></circle><rect class="f6-m f6-ted f6-dim" x="378.3" y="193.5" width="13" height="13"></rect><path class="f6-m f6-asi" d="M426.8,191 l9,9 l-9,9 l-9,-9 Z"></path></g>
+					<g transform="translate(110,276)">
+						<circle class="f6-m f6-ac" cx="6" cy="-5" r="6"/><text class="t-small" x="18" y="0">Automated coder</text>
+						<rect class="f6-m f6-ted" x="176" y="-11" width="12" height="12"/><text class="t-small" x="194" y="0">TED-AI</text>
+						<path class="f6-m f6-asi" d="M290,-13 L298,-5 L290,3 L282,-5 Z"/><text class="t-small" x="306" y="0">ASI</text>
+						<rect class="f6-rng" x="0" y="17" width="24" height="10" rx="3"/><text class="t-small" x="32" y="27">80% range for the automated coder</text>
+					</g>
+				</svg>
+				<p class="say" id="f6-say" aria-live="polite">Medians for ASI: Kokotajlo March 2029, Lifland July 2033. The April 2025 forecast said April 2028. Halstead&rsquo;s ASI date is not in the August charts.</p>
+				<figcaption><b>Figure 6.</b> Press the buttons. Medians and 80% ranges are from the chart captions in the <a href="https://blog.aifutures.org/p/q25-2026-timelines-update-uplift" target="_blank" rel="noopener">August 2026 update</a>, and the April 2025 date is from the <a href="https://ai-2027.com/research/takeoff-forecast" target="_blank" rel="noopener">AI 2027 takeoff forecast</a>. An 80% range is the span the forecaster gives an 80% chance of containing the date. The red dashed line marks this post&rsquo;s date.</figcaption>
+			</figure>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">Forecasts built on judgment</span>
+				<p>These dates move. The April 2025 forecast put the ASI median at April 2028, assuming a superhuman coder arrived in March 2027. By August 2026 the team judged that reality was &ldquo;going about 70-90% as fast as AI 2027 predicted,&rdquo; and their medians sat later than the 2025 forecast. They have also added a warning to the 2025 forecast. &ldquo;This forecast relies substantially on intuitive judgment, and involves high levels of uncertainty.&rdquo;</p>
+			</div>
+
+			<h2 id="leaves-out">What the definition does not measure</h2>
+
+			<p>Every part of the definition measures ability. None of it says what the system wants or whether it does what its makers ask. That question belongs to AI alignment, the work of making AI systems pursue the goals people intend for them. Kokotajlo told the senators, &ldquo;Today&rsquo;s AIs sometimes pursue goals other than the ones they were given, and sometimes hide that they are doing so.&rdquo;</p>
+
+			<div class="callout">
+				<span class="callout-label">Who checks the answer</span>
+				<p>The bell-curve ruler assumes someone can rank an AI&rsquo;s work against human work. At 4&nbsp;SDs, the best human can still judge a colleague. A system at 12&nbsp;SDs would be graded by people at least 8&nbsp;SDs below it, and the definition leaves open how they would tell whether it had crossed the line.</p>
+			</div>
+
+			<p>The lowest rung will be tested first. An automated coder would do all of the programming at an AI company. Kokotajlo&rsquo;s median for it is November 2027, a year after this post, and Lifland&rsquo;s is January 2030.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://blog.aifutures.org/p/ai-futures-model-dec-2025-update" target="_blank" rel="noopener">AI Futures Project, <i>AI Futures Model: Dec 2025 Update</i></a> (31 December 2025). The definitions, with footnotes on the bell-curve ruler.</li>
+				<li><a href="https://blog.aifutures.org/p/q25-2026-timelines-update-uplift" target="_blank" rel="noopener">AI Futures Project, <i>Q2.5 2026 Timelines Update</i></a> (16 August 2026). The forecasts in Figure 6.</li>
+				<li><a href="https://www.aifuturesmodel.com/" target="_blank" rel="noopener">The AI Futures Model</a>, an interactive version where you can change the inputs.</li>
+				<li><a href="https://ai-2027.com/research/takeoff-forecast" target="_blank" rel="noopener">Daniel Kokotajlo and Eli Lifland, <i>AI 2027 takeoff forecast</i></a> (April 2025). The first version of the milestones.</li>
+				<li><a href="https://www.hsgac.senate.gov/wp-content/uploads/Daniel-Kokotajlo-Testimony.pdf" target="_blank" rel="noopener">Daniel Kokotajlo, written testimony to the US Senate</a> (30 September 2026).</li>
+				<li><a href="https://blog.aifutures.org/p/ai-2040-plan-a" target="_blank" rel="noopener">AI Futures Project, <i>AI 2040: Plan A</i></a> (9 July 2026). A scenario in which superintelligence is delayed to 2040.</li>
+				<li><a href="https://en.wikipedia.org/wiki/Superintelligence:_Paths,_Dangers,_Strategies" target="_blank" rel="noopener">Nick Bostrom, <i>Superintelligence: Paths, Dangers, Strategies</i></a> (2014).</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">AI research</span>
+				<span class="tag">superintelligence</span>
+				<span class="tag">forecasting</span>
+				<span class="tag">AI safety</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+<script>
+/* The interactive figures. Each one's static markup is a complete state,
+   so the post reads the same with JavaScript off. */
+(function () {
+	'use strict';
+	var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	var NS = 'http://www.w3.org/2000/svg';
+	function press(group, on) {
+		Array.prototype.forEach.call(group, function (b) { b.setAttribute('aria-pressed', b === on ? 'true' : 'false'); });
+	}
+	function el(tag, attrs, text) {
+		var e = document.createElementNS(NS, tag);
+		for (var k in attrs) e.setAttribute(k, attrs[k]);
+		if (text !== undefined) e.textContent = text;
+		return e;
+	}
+	function cls(e, name, on) {
+		var c = (e.getAttribute('class') || '').split(/\s+/).filter(function (x) { return x && x !== name; });
+		if (on) c.push(name);
+		e.setAttribute('class', c.join(' '));
+	}
+	function tween(ms, step, done) {
+		if (reduce) { step(1); if (done) done(); return; }
+		var t0 = null;
+		function f(t) {
+			if (t0 === null) t0 = t;
+			var p = Math.min(1, (t - t0) / ms), e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+			step(e);
+			if (p < 1) requestAnimationFrame(f); else if (done) done();
+		}
+		requestAnimationFrame(f);
+	}
+
+	/* ---- The bell curve ----
+	   log10 of the share above z, from the Numerical Recipes erfc approximation
+	   (relative error under 1.2e-7), taken in log form so it never underflows. */
+	function log10Q(z) {
+		var x = z / Math.SQRT2, t = 1 / (1 + 0.5 * x);
+		var ln = Math.log(t) - x * x - 1.26551223 + t * (1.00002368 + t * (0.37409196 + t * (0.09678418 + t * (-0.18628806 + t * (0.27886807 + t * (-1.13520398 + t * (1.48851587 + t * (-0.82215223 + t * 0.17087277))))))));
+		return (ln + Math.log(0.5)) / Math.LN10;
+	}
+	/* The z at which one person in 10^L is above. */
+	function zFor(L) {
+		var lo = 0, hi = 40;
+		for (var i = 0; i < 80; i++) { var m = (lo + hi) / 2; if (-log10Q(m) < L) lo = m; else hi = m; }
+		return (lo + hi) / 2;
+	}
+	function bigNum(L) {
+		var n = Math.pow(10, L);
+		if (L < 6) return Math.round(n).toLocaleString('en-US');
+		if (L < 9) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + ' million';
+		if (L < 12) return (n / 1e9).toFixed(1).replace(/\.0$/, '') + ' billion';
+		var e = Math.floor(L), m = Math.pow(10, L - e);
+		if (m >= 9.95) { e += 1; m = 1; }
+		return m.toFixed(1) + ' &times; 10<sup>' + e + '</sup>';
+	}
+
+	/* ---- Reading time ----
+	   blog.js counts every word on the page, and the figures hold a lot of
+	   text. Count the prose at 220 words a minute and name the figures. */
+	var slot = document.querySelector('[data-reading-time]'), body = document.querySelector('.prose');
+	if (slot && body) {
+		var figs = body.querySelectorAll('figure').length, copy = body.cloneNode(true);
+		Array.prototype.forEach.call(copy.querySelectorAll('figure'), function (f) { f.parentNode.removeChild(f); });
+		slot.textContent = Math.round(copy.textContent.trim().split(/\s+/).length / 220) + ' min read, plus ' + figs + ' figures to play with';
+	}
+
+	/* ---- Figure 1: guess, then the axis zooms out to show the ASI ---- */
+	var f1b = document.querySelectorAll('#f1-btns button');
+	if (f1b.length) {
+		var X0 = 40, X1 = 530, BASE = 228, PEAK = 128, ZMIN = -3.5;
+		var f1line = document.getElementById('f1-line'), f1area = document.getElementById('f1-area');
+		var f1ticks = document.getElementById('f1-ticks'), f1say = document.getElementById('f1-say');
+		var f1med = document.getElementById('f1-med'), f1best = document.getElementById('f1-best');
+		var f1asi = document.getElementById('f1-asi'), f1q = document.getElementById('f1-q'), f1br = document.getElementById('f1-braces');
+		var f1done = false;
+		var f1draw = function (zmax) {
+			var sx = function (z) { return X0 + (z - ZMIN) / (zmax - ZMIN) * (X1 - X0); };
+			var d = '';
+			for (var i = 0; i <= 120; i++) {
+				var z = ZMIN + (zmax - ZMIN) * i / 120;
+				d += (i ? ' L' : 'M') + sx(z).toFixed(1) + ',' + (BASE - PEAK * Math.exp(-z * z / 2)).toFixed(1);
+			}
+			f1line.setAttribute('d', d);
+			f1area.setAttribute('d', d + ' L' + X1 + ',' + BASE + ' L' + X0 + ',' + BASE + ' Z');
+			while (f1ticks.firstChild) f1ticks.removeChild(f1ticks.firstChild);
+			var stepT = zmax > 9 ? 2 : 1;
+			for (var t = 0; t <= zmax; t += stepT) f1ticks.appendChild(el('text', { 'class': 't-small', x: sx(t).toFixed(1), y: 247, 'text-anchor': 'middle' }, String(t)));
+			f1med.setAttribute('transform', 'translate(' + sx(0).toFixed(1) + ',0)');
+			f1best.setAttribute('transform', 'translate(' + sx(4).toFixed(1) + ',0)');
+			f1asi.setAttribute('transform', 'translate(' + sx(12).toFixed(1) + ',0)');
+			var a = sx(0).toFixed(1), b = sx(4).toFixed(1), c = sx(12).toFixed(1);
+			document.getElementById('f1-b1').setAttribute('d', 'M' + a + ',262 v6 H' + b + ' v-6');
+			document.getElementById('f1-b1t').setAttribute('x', ((+a + +b) / 2).toFixed(1));
+			document.getElementById('f1-b2').setAttribute('d', 'M' + b + ',262 v6 H' + c + ' v-6');
+			document.getElementById('f1-b2t').setAttribute('x', ((+b + +c) / 2).toFixed(1));
+		};
+		/* Start zoomed in on the part of the curve people picture. */
+		f1draw(6);
+		cls(f1asi, 'f1-off', true); cls(f1br, 'f1-off', true); cls(f1q, 'f1-off', false);
+		f1say.textContent = 'Make a guess.';
+		var f1msg = {
+			three: 'Right. The best human leads the median by 4, so the superintelligence must lead the best human by 8. That puts it at 12, three times as far from the middle.',
+			twice: 'Close. Twice is the size of the second gap. The best human leads the median by 4, so the superintelligence leads the best human by 8 and sits at 12, three times as far from the middle.',
+			past: 'Much further. The best human leads the median by 4, so the superintelligence leads the best human by 8 and sits at 12, three times as far from the middle.'
+		};
+		Array.prototype.forEach.call(f1b, function (b) {
+			b.addEventListener('click', function () {
+				press(f1b, b);
+				f1say.textContent = f1msg[b.getAttribute('data-g')];
+				if (f1done) return;
+				f1done = true;
+				cls(f1q, 'f1-off', true);
+				tween(1400, function (e) { f1draw(6 + (13.5 - 6) * e); }, function () {
+					cls(f1asi, 'f1-off', false); cls(f1br, 'f1-off', false);
+				});
+			});
+		});
+	}
+
+	/* ---- Figure 2: how rare is the best human, and how rare is three times as far ---- */
+	var f2r = document.getElementById('f2-range');
+	if (f2r) {
+		var f2b = document.querySelectorAll('#f2-btns button'), MAXD = 90;
+		var f2set = function (L) {
+			var zb = zFor(L), za = 3 * zb, La = -log10Q(za);
+			document.getElementById('f2-lab').innerHTML = 'The best human in the field is the best of <b>' + bigNum(L) + '</b> trained people.';
+			document.getElementById('f2-zb').textContent = zb.toFixed(1) + ' SD';
+			document.getElementById('f2-ob').innerHTML = '1 in ' + bigNum(L);
+			document.getElementById('f2-za').textContent = za.toFixed(1) + ' SD';
+			document.getElementById('f2-oa').innerHTML = '1 in ' + bigNum(La);
+			document.getElementById('f2-fb').style.width = Math.min(100, L / MAXD * 100).toFixed(1) + '%';
+			document.getElementById('f2-fa').style.width = Math.min(100, La / MAXD * 100).toFixed(1) + '%';
+			Array.prototype.forEach.call(f2b, function (b) { b.setAttribute('aria-pressed', Math.abs(+b.getAttribute('data-l') - L) < 0.02 ? 'true' : 'false'); });
+		};
+		f2r.addEventListener('input', function () { f2set(+f2r.value); });
+		Array.prototype.forEach.call(f2b, function (b) {
+			b.addEventListener('click', function () { f2r.value = b.getAttribute('data-l'); f2set(+b.getAttribute('data-l')); });
+		});
+		f2set(+f2r.value);
+	}
+
+	/* ---- Figure 3: sort the tasks ---- */
+	var f3 = document.getElementById('f3');
+	if (f3) {
+		f3.className += ' quiz-js';
+		var f3cards = f3.querySelectorAll('.q-card'), f3score = document.getElementById('f3-score');
+		Array.prototype.forEach.call(f3cards, function (card) {
+			var bs = card.querySelectorAll('button'), v = card.querySelector('.q-verdict');
+			Array.prototype.forEach.call(bs, function (b) {
+				b.addEventListener('click', function () {
+					press(bs, b);
+					var right = b.getAttribute('data-v') === card.getAttribute('data-a');
+					card.setAttribute('data-right', right ? '1' : '0');
+					var old = v.querySelector('.q-you');
+					if (old) old.parentNode.removeChild(old);
+					var you = document.createElement('span');
+					you.className = 'q-you';
+					you.textContent = right ? 'You matched it. ' : 'Not quite. ';
+					v.insertBefore(you, v.firstChild);
+					card.className = 'q-card done';
+					var done = f3.querySelectorAll('.q-card.done'), ok = f3.querySelectorAll('.q-card[data-right="1"]');
+					f3score.textContent = done.length === f3cards.length ? 'You matched ' + ok.length + ' of ' + f3cards.length + '.' : '';
+				});
+			});
+		});
+	}
+
+	/* ---- Figure 4: uneven profiles against the ASI line ---- */
+	var f4 = document.getElementById('f4');
+	if (f4) {
+		var TASKS = ['Chess', 'Coding', 'Law', 'X-rays', 'Maths', 'Essays', 'Sales', 'Taxes'];
+		var PROF = [
+			[12.6, 0, 0, 0, 0, 0, 0, 0],
+			[12.5, 12.3, 6.2, 9.4, 12.2, 3.1, 1.6, 12.1],
+			[13, 12.6, 12.3, 12.8, 13, 12.4, 12.2, 12.5]
+		];
+		var NAMES = ['The chess engine', 'The uneven system', 'The ASI'];
+		var Y0 = 240, PER = 200 / 13, colW = (548 - 64) / TASKS.length;
+		var gb = document.getElementById('f4-bars'), gl = document.getElementById('f4-labels'), bars = [];
+		while (gb.firstChild) gb.removeChild(gb.firstChild);
+		while (gl.firstChild) gl.removeChild(gl.firstChild);
+		TASKS.forEach(function (t, i) {
+			var cx = 64 + colW * (i + 0.5);
+			var r = el('rect', { 'class': 'f4-bar', x: (cx - 17).toFixed(1), width: 34, y: Y0, height: 0, rx: 3 });
+			gb.appendChild(r); bars.push(r);
+			gl.appendChild(el('text', { 'class': 't-small t-main', x: cx.toFixed(1), y: 262, 'text-anchor': 'middle' }, t));
+		});
+		var cur = [0, 0, 0, 0, 0, 0, 0, 0];
+		var f4b = document.querySelectorAll('#f4-btns button'), f4say = document.getElementById('f4-say');
+		var f4set = function (s) {
+			var from = cur.slice(), to = PROF[s];
+			tween(700, function (e) {
+				bars.forEach(function (r, i) {
+					var v = from[i] + (to[i] - from[i]) * e, h = v * PER;
+					r.setAttribute('y', (Y0 - h).toFixed(1)); r.setAttribute('height', h.toFixed(1));
+					cur[i] = v;
+				});
+			});
+			var hits = 0, above = 0;
+			bars.forEach(function (r, i) { var hit = to[i] >= 12; if (hit) hits++; if (to[i] > 4) above++; cls(r, 'f4-hit', hit); });
+			f4say.textContent = NAMES[s] + ' clears the ASI line on ' + hits + ' of 8 tasks' + (hits === 8 ? ', so it passes the 95% test.' : (above === hits ? ' and cannot do the rest. Not an ASI.' : ' and beats the best human on ' + above + '. Still not an ASI.'));
+		};
+		Array.prototype.forEach.call(f4b, function (b) {
+			b.addEventListener('click', function () { press(f4b, b); f4set(+b.getAttribute('data-s')); });
+		});
+		f4set(2);
+	}
+
+	/* ---- Figure 5: the ladder ---- */
+	var f5 = document.getElementById('f5');
+	if (f5) {
+		f5.className += ' lad-js';
+		var RUNG_Y = [280, 225, 170, 115, 60];
+		var f5b = document.querySelectorAll('#f5-btns button'), f5bot = document.getElementById('f5-bot');
+		var f5d = f5.querySelectorAll('.lad-d'), f5r = f5.querySelectorAll('.lad-rung');
+		var f5set = function (r) {
+			Array.prototype.forEach.call(f5d, function (d) { d.className = 'lad-d' + (+d.getAttribute('data-r') === r ? ' on' : ''); });
+			Array.prototype.forEach.call(f5r, function (p) { cls(p, 'lad-on', +p.getAttribute('data-r') === r); });
+			f5bot.style.transform = 'translateY(' + (RUNG_Y[r] - 280) + 'px)';
+		};
+		Array.prototype.forEach.call(f5b, function (b) {
+			b.addEventListener('click', function () { press(f5b, b); f5set(+b.getAttribute('data-r')); });
+		});
+		f5set(0);
+	}
+
+	/* ---- Figure 6: the forecasts ---- */
+	var f6 = document.getElementById('f6');
+	if (f6) {
+		var YX = function (y) { return 110 + (y - 2026) * 42; };
+		var ym = function (y, m) { return y + (m - 0.5) / 12; };
+		var grid = document.getElementById('f6-grid'), marks = document.getElementById('f6-marks');
+		while (grid.firstChild) grid.removeChild(grid.firstChild);
+		while (marks.firstChild) marks.removeChild(marks.firstChild);
+		for (var yr = 2026; yr <= 2036; yr += 2) {
+			grid.appendChild(el('path', { 'class': 'f6-grid', d: 'M' + YX(yr) + ',40 V232' }));
+			grid.appendChild(el('text', { 'class': 't-small', x: YX(yr), y: 250, 'text-anchor': 'middle' }, String(yr)));
+		}
+		var today = YX(ym(2026, 11));
+		grid.appendChild(el('path', { 'class': 'f6-today', d: 'M' + today.toFixed(1) + ',40 V232' }));
+		var ROWS = [
+			{ y: 66, asi: ym(2028, 4), old: true },
+			{ y: 110, ac: ym(2027, 11), lo: ym(2027, 1), hi: ym(2030, 4), ted: ym(2028, 11), asi: ym(2029, 3) },
+			{ y: 155, ac: ym(2029, 1), lo: ym(2027, 1), hi: 2050, hiLab: 'to 2050', ted: ym(2031, 4) },
+			{ y: 200, ac: ym(2030, 1), lo: ym(2027, 6), hi: 2070, hiLab: 'to 2070', ted: ym(2032, 7), asi: ym(2033, 7) }
+		];
+		var byM = { ac: [], ted: [], asi: [] }, RIGHT = 530;
+		ROWS.forEach(function (r) {
+			if (r.ac) {
+				var x1 = YX(r.lo), x2 = Math.min(RIGHT, YX(r.hi));
+				var rng = el('rect', { 'class': 'f6-rng', x: x1.toFixed(1), y: r.y - 5, width: (x2 - x1).toFixed(1), height: 10, rx: 3 });
+				marks.appendChild(rng); byM.ac.push(rng);
+				if (r.hiLab) {
+					var arr = el('path', { 'class': 'ln-thin', d: 'M' + (RIGHT - 8) + ',' + (r.y - 5) + ' L' + RIGHT + ',' + r.y + ' L' + (RIGHT - 8) + ',' + (r.y + 5) });
+					var lab = el('text', { 'class': 't-small', x: RIGHT, y: r.y + 21, 'text-anchor': 'end' }, r.hiLab);
+					marks.appendChild(arr); marks.appendChild(lab); byM.ac.push(arr, lab);
+				}
+				var c = el('circle', { 'class': 'f6-m f6-ac', cx: YX(r.ac).toFixed(1), cy: r.y, r: 7 });
+				marks.appendChild(c); byM.ac.push(c);
+			}
+			if (r.ted) {
+				var x = YX(r.ted);
+				var s = el('rect', { 'class': 'f6-m f6-ted', x: (x - 6.5).toFixed(1), y: r.y - 6.5, width: 13, height: 13 });
+				marks.appendChild(s); byM.ted.push(s);
+			}
+			if (r.asi) {
+				var xa = YX(r.asi);
+				var dmd = el('path', { 'class': 'f6-m ' + (r.old ? 'f6-old' : 'f6-asi'), d: 'M' + xa.toFixed(1) + ',' + (r.y - 9) + ' l9,9 l-9,9 l-9,-9 Z' });
+				marks.appendChild(dmd); byM.asi.push(dmd);
+			}
+		});
+		var MSG = {
+			ac: 'Medians for the automated coder: Kokotajlo November 2027, Halstead January 2029, Lifland January 2030. Their 80% ranges stretch to 2030, 2050 and 2070.',
+			ted: 'Medians for TED-AI: Kokotajlo November 2028, Halstead April 2031, Lifland July 2032.',
+			asi: 'Medians for ASI: Kokotajlo March 2029, Lifland July 2033. The April 2025 forecast said April 2028. Halstead’s ASI date is not in the August charts.'
+		};
+		var f6b = document.querySelectorAll('#f6-btns button'), f6say = document.getElementById('f6-say');
+		var f6set = function (m) {
+			Object.keys(byM).forEach(function (k) { byM[k].forEach(function (e) { cls(e, 'f6-dim', k !== m); }); });
+			f6say.textContent = MSG[m];
+		};
+		Array.prototype.forEach.call(f6b, function (b) {
+			b.addEventListener('click', function () { press(f6b, b); f6set(b.getAttribute('data-m')); });
+		});
+		f6set('asi');
+	}
+})();
+</script>
+
+</body>
+</html>
