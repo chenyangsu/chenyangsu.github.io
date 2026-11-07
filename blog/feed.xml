@@ -9,6 +9,18 @@
 		<managingEditor>cysu@stanford.edu (Chen-Yang Su)</managingEditor>
 
 		<item>
+			<title>How much is AI speeding up AI research?</title>
+			<link>https://chenyangsu.github.io/blog/ai-speeding-up-ai-research/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/ai-speeding-up-ai-research/</guid>
+			<pubDate>Thu, 05 Nov 2026 12:00:00 +0000</pubDate>
+			<category>AI research</category>
+			<category>AI evaluation</category>
+			<category>AI safety</category>
+			<category>benchmarks</category>
+			<description>For eleven weeks, a team from the nonprofit METR worked through Anthropic’s internal data to measure how fast its AI models are improving. Their best guess is that, on tasks with clear right answers, the models now improve about twice as fast as they did before October 2025. They think most of the extra speed comes from Anthropic’s staff using AI in their research. Anthropic redacted more than half of the evidence METR found most informative.</description>
+		</item>
+
+		<item>
 			<title>How far above the best human is a superintelligence?</title>
 			<link>https://chenyangsu.github.io/blog/how-far-above-the-best-human/</link>
 			<guid isPermaLink="true">https://chenyangsu.github.io/blog/how-far-above-the-best-human/</guid>
