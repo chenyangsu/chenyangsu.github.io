@@ -9,6 +9,18 @@
 		<managingEditor>cysu@stanford.edu (Chen-Yang Su)</managingEditor>
 
 		<item>
+			<title>What does it take for AI to make a scientific discovery?</title>
+			<link>https://chenyangsu.github.io/blog/ai-scientific-discovery/</link>
+			<guid isPermaLink="true">https://chenyangsu.github.io/blog/ai-scientific-discovery/</guid>
+			<pubDate>Fri, 06 Nov 2026 12:00:00 +0000</pubDate>
+			<category>AI for science</category>
+			<category>scientific modeling</category>
+			<category>neuroscience</category>
+			<category>human genetics</category>
+			<description>Hodgkin and Huxley’s 1952 model of the nerve impulse includes a fourth power that simpler equations could not replace. An AI agent that writes and fits equations like theirs would also need to report what failed and which other models fit just as well.</description>
+		</item>
+
+		<item>
 			<title>How much is AI speeding up AI research?</title>
 			<link>https://chenyangsu.github.io/blog/ai-speeding-up-ai-research/</link>
 			<guid isPermaLink="true">https://chenyangsu.github.io/blog/ai-speeding-up-ai-research/</guid>
