@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>How much is AI speeding up AI research? | Chen-Yang Su</title>
+	<meta name="description" content="METR spent eleven weeks with Anthropic's data. Its best guess is that Anthropic's models now gain on benchmarks about twice as fast as before October 2025." />
+	<link rel="canonical" href="https://chenyangsu.github.io/blog/ai-speeding-up-ai-research/" />
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="How much is AI speeding up AI research?">
+	<meta property="og:description" content="METR spent eleven weeks with Anthropic's data. Its best guess is that Anthropic's models now gain on benchmarks about twice as fast as before October 2025.">
+	<meta property="og:url" content="https://chenyangsu.github.io/blog/ai-speeding-up-ai-research/">
+	<meta property="og:image" content="https://chenyangsu.github.io/images/me.jpg">
+	<meta property="article:published_time" content="2026-11-05">
+	<meta property="article:author" content="Chen-Yang Su">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="How much is AI speeding up AI research?">
+	<meta name="twitter:description" content="METR spent eleven weeks with Anthropic's data. Its best guess is that Anthropic's models now gain on benchmarks about twice as fast as before October 2025.">
+	<meta name="twitter:image" content="https://chenyangsu.github.io/images/me.jpg">
+
+	<link rel="icon" href="/images/favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="/images/favicon.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/main.css">
+	<link rel="stylesheet" href="/assets/blog.css">
+	<script src="/assets/theme.js"></script>
+
+	<style>
+		/* The drawings and controls in this post are inline SVG and HTML
+		   coloured with the site's tokens, so they follow the light and dark
+		   themes. With JavaScript off, every figure shows a complete static
+		   state and its caption carries the facts. Motion is skipped for
+		   readers who ask for reduced motion. */
+		.prose figure.diagram svg { max-width: 560px; margin: 0 auto; border-radius: 0; }
+
+		/* Buttons shared by the figures */
+		.seg { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.seg button { font: 700 14.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 7px 15px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.seg-sm button { font-size: 13.5px; padding: 5px 12px; }
+		.seg button:hover { border-color: var(--accent); }
+		.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.prose .say { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; line-height: 1.5; color: var(--ink); text-align: center; max-width: 520px; margin: 10px auto 0; min-height: 3em; }
+		.prose .ask { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15.5px; font-weight: 700; line-height: 1.45; color: var(--ink); text-align: center; margin: 0 0 10px; }
+		.prose .read { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 13.5px; line-height: 1.4; color: var(--ink-light); text-align: center; margin: 4px 0 0; min-height: 1.4em; font-variant-numeric: tabular-nums; }
+
+		/* Shared chart marks */
+		.toon .grid { fill: none; stroke: var(--rule); stroke-width: 1; }
+		.toon .axis { fill: none; stroke: var(--ink-light); stroke-width: 1.4; }
+		.toon .old { fill: none; stroke: var(--ink-light); stroke-width: 2.4; stroke-linecap: round; }
+		.toon .old-dash { fill: none; stroke: var(--ink-light); stroke-width: 2.2; stroke-dasharray: 5 6; stroke-linecap: round; }
+		.toon .new { fill: none; stroke: var(--ink); stroke-width: 2.8; stroke-linecap: round; }
+		.toon .brk { fill: none; stroke: var(--ink-light); stroke-width: 1.2; stroke-dasharray: 2 4; }
+		.toon .p-pub { fill: var(--accent); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .p-int { fill: var(--gold-hl-ink); stroke: var(--paper-bg); stroke-width: 1.5; }
+		.toon .p-old { fill: var(--paper-bg); stroke: var(--accent); stroke-width: 1.8; }
+		.toon .pt { cursor: pointer; }
+		.toon .pt:hover .p-pub, .toon .pt:hover .p-int, .toon .pt:hover .p-old, .toon .pt.on .p-pub, .toon .pt.on .p-int, .toon .pt.on .p-old { stroke: var(--ink); stroke-width: 2; }
+		.toon .miss { fill: none; stroke: var(--award); stroke-width: 2; stroke-dasharray: 3 3; }
+		.toon .held { fill: var(--chip-bg); }
+		.toon .reveal { transition: opacity 0.5s ease; }
+		.toon .gone { opacity: 0; pointer-events: none; }
+
+		/* Figure 1: the timeline */
+		.toon .tl-bar { fill: var(--tag-bg); stroke: var(--accent); stroke-width: 1.8; }
+		.toon .tl-bar2 { fill: var(--flag-bg); stroke: var(--gold-hl-ink); stroke-width: 1.8; }
+		#f1-bar2 { transition: width 0.9s cubic-bezier(.3,1.2,.5,1); }
+		#f1-bot { transition: transform 0.9s cubic-bezier(.3,1.2,.5,1); }
+
+		/* Figure 2: benchmark curves */
+		.toon .c-easy { fill: none; stroke: var(--good); stroke-width: 2.6; }
+		.toon .c-mid { fill: none; stroke: var(--accent); stroke-width: 2.6; }
+		.toon .c-hard { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2.6; stroke-dasharray: 9 4; }
+		.toon .d-easy { fill: var(--good); }
+		.toon .d-mid { fill: var(--accent); }
+		.toon .d-hard { fill: var(--gold-hl-ink); }
+		.toon .cap { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-dasharray: 4 4; }
+		.toon .full { fill: var(--chip-bg); }
+		.sc { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.sc-ctl { display: flex; align-items: center; gap: 12px; margin: 4px 0 6px; }
+		.sc-ctl input { flex: 1; min-width: 0; accent-color: var(--accent); height: 28px; }
+		.sc-ctl b { font-size: 15px; min-width: 9.5em; text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+		.sc-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 8px 0 0; }
+		.sc-chip { border: 1.5px solid var(--tag-border); border-radius: 10px; padding: 6px 8px; text-align: center; background: var(--panel-bg); }
+		.sc-chip span { display: block; font-size: 12.5px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; }
+		.sc-chip b { display: block; font-size: 22px; font-weight: 900; color: var(--ink); font-variant-numeric: tabular-nums; }
+		.sc-easy span { color: var(--good); }
+		.sc-mid span { color: var(--accent); }
+		.sc-hard span { color: var(--gold-hl-ink); }
+		.sc-chip.is-full { border-style: dashed; }
+		.sc-chip.is-full b { color: var(--ink-light); }
+
+		/* Figure 5: forest plot */
+		.fp { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px 14px; }
+		.fp-head { display: grid; grid-template-columns: 46% 1fr; gap: 10px; font-size: 12.5px; font-weight: 900; letter-spacing: 0.8px; text-transform: uppercase; color: var(--accent-dark); margin: 10px 0 4px; }
+		.fp-row { display: grid; grid-template-columns: 46% 1fr; gap: 10px; align-items: center; padding: 3px 0; transition: opacity 0.3s ease; }
+		.fp-lab { font-size: 13.5px; line-height: 1.3; color: var(--ink); }
+		.fp-lab b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+		.fp-tr { position: relative; height: 20px; }
+		.fp-ref { position: absolute; top: -3px; bottom: -3px; border-left: 1.5px solid var(--ink-light); }
+		.fp-ref.fp-main { border-left: 1.5px dashed var(--accent); }
+		.fp-ci { position: absolute; top: 9px; height: 2.5px; background: var(--ink); border-radius: 2px; }
+		.fp-dot { position: absolute; top: 4px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--accent); border: 1.5px solid var(--paper-bg); }
+		.fp-row.fp-std .fp-dot { background: var(--ink); }
+		.fp-row.fp-noci .fp-dot { background: var(--paper-bg); border: 2px solid var(--accent); }
+		.fp-dim { opacity: 0.22; }
+		.fp-axis { position: relative; height: 34px; margin-left: calc(46% + 10px); font-size: 12px; color: var(--ink-light); }
+		.fp-axis span { position: absolute; top: 2px; transform: translateX(-50%); font-variant-numeric: tabular-nums; }
+		.fp-axis em { position: absolute; top: 18px; left: 0; right: 0; text-align: center; font-style: normal; }
+
+		/* Figure 6: sorting cards */
+		.quiz { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; }
+		.q-card { background: var(--panel-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px 14px; }
+		.prose .q-text { font-size: 15px; font-weight: 700; line-height: 1.42; color: var(--ink); margin: 0 0 4px; }
+		.prose .q-who { font-size: 13px; color: var(--ink-light); margin: 0 0 10px; }
+		.q-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+		.q-btns button { font: 700 13.5px 'Lato', 'Helvetica Neue', Arial, sans-serif; padding: 5px 11px; border-radius: 999px; border: 1.5px solid var(--tag-border); background: var(--paper-bg); color: var(--ink); cursor: pointer; }
+		.q-btns button:hover { border-color: var(--accent); }
+		.q-btns button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+		.q-btns button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--paper-bg); }
+		.prose .q-verdict { font-size: 14.5px; line-height: 1.45; color: var(--ink); margin: 10px 0 0; padding-top: 10px; border-top: 1px dashed var(--tag-border); }
+		.q-you { font-weight: 700; color: var(--ink-light); }
+		.quiz-js .q-verdict { display: none; }
+		.quiz-js .q-card.done .q-verdict { display: block; }
+		.prose .q-score { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 900; text-align: center; color: var(--ink); margin: 12px 0 0; min-height: 1.4em; }
+
+		/* Figure 7: help and progress */
+		.toon .h-line { fill: none; stroke: var(--gold-hl-ink); stroke-width: 2.8; stroke-linejoin: round; }
+		.toon .base { fill: none; stroke: var(--ink-light); stroke-width: 1.8; stroke-dasharray: 5 6; }
+		.toon .arrive { fill: none; stroke: var(--award); stroke-width: 1.4; stroke-dasharray: 3 4; }
+
+		/* Figure 8: the redacted report */
+		.doc { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; background: var(--paper-bg); border: 1.5px solid var(--tag-border); border-radius: 6px; padding: 16px 18px 12px; box-shadow: 3px 3px 0 var(--rule); }
+		.prose .doc-h { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--accent-dark); margin: 0 0 10px; }
+		.doc-row { display: grid; grid-template-columns: 40% 1fr; gap: 12px; align-items: center; padding: 8px 0; border-top: 1px solid var(--rule); }
+		.doc-k { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+		.doc-v { font-size: 14px; color: var(--ink); line-height: 1.35; position: relative; }
+		.doc-bar { display: inline-block; height: 1.05em; vertical-align: -2px; background: var(--ink); border-radius: 2px; }
+		.doc-seen { display: none; font-weight: 700; color: var(--good); }
+		.doc-seen.part { color: var(--gold-hl-ink); }
+		.doc.metr .doc-pub { display: none; }
+		.doc.metr .doc-seen { display: inline; }
+		.prose .doc-sum { font-size: 14px; font-weight: 700; color: var(--ink); text-align: center; margin: 10px 0 0; }
+
+		@media (max-width: 720px) {
+			.toon text { font-size: 18px; }
+			.toon .t-small { font-size: 17px; }
+			.toon .t-head { font-size: 15px; }
+			.sc-chip span { font-size: 11.5px; letter-spacing: 0.4px; }
+			.quiz { grid-template-columns: 1fr; }
+			.sc-chip b { font-size: 19px; }
+			.sc-ctl b { min-width: 0; }
+			.fp-head { grid-template-columns: 1fr; margin-top: 14px; }
+			.fp-row { grid-template-columns: 1fr; gap: 2px; padding: 5px 0; }
+			.fp-axis { margin-left: 0; }
+			.doc-row { grid-template-columns: 1fr; gap: 4px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			#f1-bar2, #f1-bot, .toon .reveal, .fp-row { transition: none; }
+		}
+
+		/* Shared drawing classes */
+		.toon text { font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif; font-size: 15px; fill: var(--ink-light); }
+		.toon .t-main { font-weight: 700; fill: var(--ink); }
+		.toon .t-small { font-size: 13px; }
+		.toon .t-head { font-size: 12.5px; font-weight: 900; letter-spacing: 1px; fill: var(--accent-dark); }
+		.toon .t-red { font-weight: 700; fill: var(--award); }
+		.toon .t-blue { font-weight: 700; fill: var(--accent); }
+		.toon .t-good { font-weight: 700; fill: var(--good); }
+		.toon .t-gold { font-weight: 700; fill: var(--gold-hl-ink); }
+		.toon .t-big { font-size: 30px; font-weight: 900; fill: var(--ink); }
+		.toon .ln-thin { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+		.toon .soft { fill: var(--tag-bg); stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+		.toon .acc { fill: var(--accent); }
+		.toon .red { fill: var(--award); }
+		.toon .goldf { fill: var(--gold-hl-ink); }
+	</style>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "How much is AI speeding up AI research?",
+		"description": "METR spent eleven weeks with Anthropic's data. Its best guess is that Anthropic's models now gain on benchmarks about twice as fast as before October 2025.",
+		"datePublished": "2026-11-05",
+		"url": "https://chenyangsu.github.io/blog/ai-speeding-up-ai-research/",
+		"keywords": "AI research, AI evaluation, AI safety, benchmarks",
+		"author": { "@type": "Person", "name": "Chen-Yang Su", "url": "https://chenyangsu.github.io/" },
+		"mainEntityOfPage": { "@type": "WebPage", "@id": "https://chenyangsu.github.io/blog/ai-speeding-up-ai-research/" }
+	}
+	</script>
+</head>
+
+<body>
+
+<nav class="topnav">
+	<div class="topnav-inner">
+		<a class="brand" href="/">Chen-Yang Su</a>
+		<div class="nav-links">
+			<a href="/#about">About</a>
+			<a href="/#news">News</a>
+			<a href="/#publications">Publications</a>
+			<a href="/#talks">Talks</a>
+			<a href="/#awards">Awards</a>
+			<a href="/#experience">Experience</a>
+			<a href="/#service">Teaching &amp; Service</a>
+			<a href="/#personal">Personal</a>
+			<a href="/#motivation">Motivation</a>
+			<a href="/blog/" class="active">Blog</a>
+			<a href="/#contact">Contact</a>
+		</div>
+	</div>
+</nav>
+
+<div class="page page-post">
+
+	<article>
+
+		<p class="crumbs"><a href="/">Home</a> <span class="sep">/</span> <a href="/blog/">Blog</a></p>
+
+		<p class="post-kicker">AI research</p>
+
+		<h1 class="post-title">How much is AI speeding up AI research?</h1>
+
+		<p class="post-standfirst">For eleven weeks, a team from the nonprofit METR worked through Anthropic&rsquo;s internal data to measure how fast its AI models are improving. Their best guess is that, on tasks with clear right answers, the models now improve about twice as fast as they did before October 2025. They think most of the extra speed comes from Anthropic&rsquo;s staff using AI in their research. Anthropic redacted more than half of the evidence METR found most informative.</p>
+
+		<p class="post-byline">
+			<b>Chen-Yang Su</b>
+			<span class="dot">&middot;</span>
+			<time datetime="2026-11-05">5 November 2026</time>
+			<span class="dot">&middot;</span>
+			<span data-reading-time>&nbsp;</span>
+		</p>
+
+		<div class="takeaways">
+			<span class="takeaways-label">Main takeaways</span>
+			<ul>
+				<li><strong>The benchmark trend bent in October 2025.</strong> Before then, Anthropic&rsquo;s models gained about 15 points a year on a score that combines many AI tests. After it, they gained about 29, which is 1.9 times the old speed.</li>
+				<li><strong>More computing power does not explain it.</strong> METR is confident the speed-up did not come from faster growth in the computing power used for training. Its guess is that about 80% of the extra speed in October 2026 came from AI.</li>
+				<li><strong>Staff polls put AI&rsquo;s help at 12 times.</strong> The benchmark speed-up is 1.9. A one-time boost lifts progress once, so what matters to METR is how fast the help keeps growing.</li>
+				<li><strong>The answer depends on analysis choices.</strong> One assumption about how hard benchmark questions are moves it anywhere from 1.1 to 2.9. Public models alone, from every company, show almost no acceleration.</li>
+				<li><strong>Readers have to lean on METR&rsquo;s judgment.</strong> By METR&rsquo;s own count, the public report describes the results of 1 of the 7 kinds of evidence it reviewed. METR wrote that the public must rely on its judgment &ldquo;much more than would be ideal.&rdquo;</li>
+			</ul>
+		</div>
+
+		<div class="prose">
+
+			<p>&ldquo;It is hard to see how I am not being 3x more productive,&rdquo; a researcher at Anthropic told an interviewer. &ldquo;I feel like I have postdocs and grad students, and we are working towards a larger project.&rdquo;</p>
+
+			<p>The interviewer worked for METR, a nonprofit that <a href="https://metr.org/about" target="_blank" rel="noopener">studies whether the companies building the most advanced AI agents</a> are on track to lose control of them. An agent is a program that uses an AI model to carry out tasks by itself. Anthropic, which makes the Claude models, is one of those companies. From 12 August to 29 October 2026, a METR team worked on Anthropic laptops with what it calls &ldquo;unprecedented access&rdquo; to internal data. Its question was whether AI is now speeding up the work of building AI, and it <a href="https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/" target="_blank" rel="noopener">published its answer</a> on 5 November.</p>
+
+			<p>If AI is speeding up AI research, a better model helps build the next one sooner, and that one helps build the one after it sooner still. METR&rsquo;s report warns that this &ldquo;could lead to a sudden emergence of extreme and risky capabilities.&rdquo; I wrote about the loop in <a href="/blog/when-ai-starts-improving-itself/">What happens when AI starts improving itself?</a>, and at the time I could find no outside check of the companies&rsquo; own numbers. This report is one.</p>
+
+			<figure class="diagram">
+				<p class="ask">From October 2023 to October 2025, Anthropic&rsquo;s models went from Claude 2.1 to Claude Sonnet 4.5. How long did the same amount of progress take next?</p>
+				<div class="seg" id="f1-btns" role="group" aria-label="Your guess">
+					<button type="button" data-g="2" aria-pressed="false">About two years</button>
+					<button type="button" data-g="1.5" aria-pressed="false">About 18 months</button>
+					<button type="button" data-g="1" aria-pressed="false">About one year</button>
+				</div>
+				<svg class="toon" id="f1" viewBox="0 0 560 210" role="img" aria-labelledby="f1-title f1-desc">
+					<title id="f1-title">Two years of progress, then the same amount in one year</title>
+					<desc id="f1-desc">A timeline from October 2023 to October 2027. The first bar covers the two years from October 2023 to October 2025, Claude 2.1 to Claude Sonnet 4.5. The second bar covers the same amount of benchmark progress, from October 2025 to about October 2026.</desc>
+					<path class="ln-thin" d="M40,176 H520"/>
+					<g class="t-small">
+						<path class="ln-thin" d="M40,172 v8 M160,172 v8 M280,172 v8 M400,172 v8 M520,172 v8"/>
+						<text class="t-small" x="40" y="198" text-anchor="middle">Oct 2023</text>
+						<text class="t-small" x="160" y="198" text-anchor="middle">Oct 2024</text>
+						<text class="t-small" x="280" y="198" text-anchor="middle">Oct 2025</text>
+						<text class="t-small" x="400" y="198" text-anchor="middle">Oct 2026</text>
+						<text class="t-small" x="520" y="198" text-anchor="middle">Oct 2027</text>
+					</g>
+					<text class="t-small t-blue" x="40" y="30">Claude 2.1 &rarr; Claude Sonnet 4.5</text>
+					<rect class="tl-bar" x="40" y="40" width="240" height="34" rx="8"/>
+					<text class="t-main" x="160" y="62" text-anchor="middle">2 years</text>
+					<text class="t-small t-gold" x="280" y="104">The same amount of progress again</text>
+					<rect id="f1-bar2" class="tl-bar2" x="280" y="114" width="124" height="34" rx="8"/>
+					<text id="f1-lab2" class="t-main" x="342" y="136" text-anchor="middle">about 1 year</text>
+					<g id="f1-bot" transform="translate(404,0)">
+						<path class="ln-thin" d="M14,121 V115"/><circle class="red" cx="14" cy="114" r="2.6"/>
+						<rect class="soft" x="4" y="121" width="20" height="18" rx="4"/>
+						<rect class="acc" x="8.5" y="127" width="3.5" height="4"/><rect class="acc" x="16" y="127" width="3.5" height="4"/>
+					</g>
+				</svg>
+				<p class="say" id="f1-say" aria-live="polite">About one year. On METR&rsquo;s benchmark measure, Anthropic appears to have made as much progress from October 2025 to October 2026 as in the two years before.</p>
+				<figcaption><b>Figure 1.</b> Make a guess. METR made the comparison, writing that Anthropic &ldquo;appears to have made as much progress on benchmarks in the past year as they did between October 2023 and October 2025 (roughly, Claude 2.1 to Sonnet 4.5).&rdquo; The robot is a cartoon.</figcaption>
+			</figure>
+
+			<h2 id="two-years">Two years of progress in one year</h2>
+
+			<p>METR&rsquo;s main evidence is a single score that combines many tests, which the next section explains. Before October 2025, Anthropic&rsquo;s models gained about 15 points a year on it. After that they gained about 29.</p>
+
+			<div class="callout callout-note">
+				<span class="callout-label">Acceleration</span>
+				<p>Acceleration is the new speed of progress divided by the old speed. An acceleration of 2 means two years of old progress now happen in one year. For a score that climbs a steady number of points each year, it is the ratio of points per year, so 29 divided by 15 gives about 1.9. For anything that multiplies, METR compares growth over the same span of time. A quantity that used to triple every year and now grows ninefold has an acceleration of 2, because tripling twice gives nine.</p>
+			</div>
+
+			<p>Most of the METR staff on the project believe that Anthropic is &ldquo;likely improving the capabilities of their models on well-specified tasks at around twice the rate&rdquo; of March 2024 to October 2025, and they &ldquo;would not be surprised&rdquo; if the true figure were closer to 1.3 or 3. A well-specified task has a clear answer that a program or another AI model can grade.</p>
+
+			<h2 id="one-score">One score for many tests</h2>
+
+			<p>A benchmark is a fixed set of test questions with known answers, used to score AI models. Benchmarks fill up. Once a model answers nearly every question correctly, a better model has no room left to show it. The research group Epoch AI <a href="https://arxiv.org/abs/2512.00193" target="_blank" rel="noopener">built a way around this</a> called the Epoch Capabilities Index, or ECI. It places models and benchmarks on one scale, so a model from 2024 and a model from 2026 can be compared even if they never sat the same test.</p>
+
+			<p>Each model gets one capability number. Each benchmark gets a difficulty number, plus a second number for how sharply scores on it rise. A model&rsquo;s predicted score on a benchmark follows an <a href="https://github.com/epoch-research/eci-public" target="_blank" rel="noopener">S-shaped curve</a> of the gap between its capability and the benchmark&rsquo;s difficulty, and it reaches 50% where the two are equal. Anthropic runs its own version, AECI (Anthropic&rsquo;s ECI), on a mix of its internal benchmarks and public ones, and METR recomputed it with Epoch&rsquo;s public code. The numbers have no natural unit. Anthropic <a href="https://assets.claude.com/e1080d6bf5ae2018ea3c2f414064be03232f5be5.pdf" target="_blank" rel="noopener">pins the scale</a> by setting Claude 3.5 Sonnet, from June 2024, at 130.</p>
+
+			<figure class="diagram">
+				<div class="sc" id="f2">
+					<div class="seg seg-sm" id="f2-btns" role="group" aria-label="Pick a model">
+						<button type="button" data-c="124.8" aria-pressed="false">Claude 3 Opus &middot; 125</button>
+						<button type="button" data-c="147.8" aria-pressed="true">Claude Sonnet 4.5 &middot; 148</button>
+						<button type="button" data-c="178.6" aria-pressed="false">Model 4 &middot; 179</button>
+					</div>
+					<div class="sc-ctl"><input type="range" id="f2-range" min="105" max="195" step="0.1" value="147.8" aria-label="Model capability on the AECI scale"><b id="f2-val">Capability 148</b></div>
+					<svg class="toon" id="f2-svg" viewBox="0 0 560 270" role="img" aria-labelledby="f2-title f2-desc">
+						<title id="f2-title">Expected scores on three benchmarks of different difficulty</title>
+						<desc id="f2-desc">Three S-shaped curves show the predicted score on an easy, a medium and a hard benchmark as model capability rises from 100 to 200. A dashed vertical line marks the chosen model. At a capability of 148 the easy test is nearly full and the hard test is near zero, so only the medium test separates nearby models.</desc>
+						<g id="f2-plot"><rect class="full" x="58" y="18" width="488" height="21"></rect><rect class="full" x="58" y="207" width="488" height="21"></rect><text class="t-small" x="64" y="54">above 90%: nearly full</text><text class="t-small" x="540" y="201" text-anchor="end">below 10%: near zero</text><path class="grid" d="M58,228 H546"></path><text class="t-small" x="50" y="232.5" text-anchor="end">0%</text><path class="grid" d="M58,175.5 H546"></path><text class="t-small" x="50" y="180" text-anchor="end">25%</text><path class="grid" d="M58,123 H546"></path><text class="t-small" x="50" y="127.5" text-anchor="end">50%</text><path class="grid" d="M58,70.5 H546"></path><text class="t-small" x="50" y="75" text-anchor="end">75%</text><path class="grid" d="M58,18 H546"></path><text class="t-small" x="50" y="22.5" text-anchor="end">100%</text><text class="t-small" x="58" y="248" text-anchor="middle">100</text><text class="t-small" x="180" y="248" text-anchor="middle">125</text><text class="t-small" x="302" y="248" text-anchor="middle">150</text><text class="t-small" x="424" y="248" text-anchor="middle">175</text><text class="t-small" x="546" y="248" text-anchor="middle">200</text><path class="axis" d="M58,18 V228 H546"></path><text class="t-small" x="302" y="268" text-anchor="middle">Model capability (AECI)</text><text class="t-small" transform="translate(14,123) rotate(-90)" text-anchor="middle">Predicted score</text><path class="c-easy" d="M58.0,218.0 L62.9,216.8 L67.8,215.5 L72.6,214.0 L77.5,212.4 L82.4,210.5 L87.3,208.5 L92.2,206.3 L97.0,203.8 L101.9,201.1 L106.8,198.2 L111.7,195.0 L116.6,191.5 L121.4,187.8 L126.3,183.7 L131.2,179.4 L136.1,174.8 L141.0,169.9 L145.8,164.7 L150.7,159.2 L155.6,153.6 L160.5,147.7 L165.4,141.7 L170.2,135.5 L175.1,129.3 L180.0,123.0 L184.9,116.7 L189.8,110.5 L194.6,104.3 L199.5,98.3 L204.4,92.4 L209.3,86.8 L214.2,81.3 L219.0,76.1 L223.9,71.2 L228.8,66.6 L233.7,62.3 L238.6,58.2 L243.4,54.5 L248.3,51.0 L253.2,47.8 L258.1,44.9 L263.0,42.2 L267.8,39.7 L272.7,37.5 L277.6,35.5 L282.5,33.6 L287.4,32.0 L292.2,30.5 L297.1,29.2 L302.0,28.0 L306.9,26.9 L311.8,25.9 L316.6,25.0 L321.5,24.3 L326.4,23.6 L331.3,23.0 L336.2,22.4 L341.0,21.9 L345.9,21.5 L350.8,21.1 L355.7,20.8 L360.6,20.4 L365.4,20.2 L370.3,19.9 L375.2,19.7 L380.1,19.5 L385.0,19.4 L389.8,19.2 L394.7,19.1 L399.6,18.9 L404.5,18.8 L409.4,18.7 L414.2,18.7 L419.1,18.6 L424.0,18.5 L428.9,18.5 L433.8,18.4 L438.6,18.4 L443.5,18.3 L448.4,18.3 L453.3,18.3 L458.2,18.2 L463.0,18.2 L467.9,18.2 L472.8,18.2 L477.7,18.1 L482.6,18.1 L487.4,18.1 L492.3,18.1 L497.2,18.1 L502.1,18.1 L507.0,18.1 L511.8,18.1 L516.7,18.1 L521.6,18.0 L526.5,18.0 L531.4,18.0 L536.2,18.0 L541.1,18.0 L546.0,18.0"></path><text class="t-small t-good" x="188" y="127">Easy test</text><path class="c-mid" d="M58.0,227.5 L62.9,227.4 L67.8,227.3 L72.6,227.3 L77.5,227.2 L82.4,227.1 L87.3,226.9 L92.2,226.8 L97.0,226.6 L101.9,226.5 L106.8,226.3 L111.7,226.1 L116.6,225.8 L121.4,225.6 L126.3,225.2 L131.2,224.9 L136.1,224.5 L141.0,224.1 L145.8,223.6 L150.7,223.0 L155.6,222.4 L160.5,221.7 L165.4,221.0 L170.2,220.1 L175.1,219.1 L180.0,218.0 L184.9,216.8 L189.8,215.5 L194.6,214.0 L199.5,212.4 L204.4,210.5 L209.3,208.5 L214.2,206.3 L219.0,203.8 L223.9,201.1 L228.8,198.2 L233.7,195.0 L238.6,191.5 L243.4,187.8 L248.3,183.7 L253.2,179.4 L258.1,174.8 L263.0,169.9 L267.8,164.7 L272.7,159.2 L277.6,153.6 L282.5,147.7 L287.4,141.7 L292.2,135.5 L297.1,129.3 L302.0,123.0 L306.9,116.7 L311.8,110.5 L316.6,104.3 L321.5,98.3 L326.4,92.4 L331.3,86.8 L336.2,81.3 L341.0,76.1 L345.9,71.2 L350.8,66.6 L355.7,62.3 L360.6,58.2 L365.4,54.5 L370.3,51.0 L375.2,47.8 L380.1,44.9 L385.0,42.2 L389.8,39.7 L394.7,37.5 L399.6,35.5 L404.5,33.6 L409.4,32.0 L414.2,30.5 L419.1,29.2 L424.0,28.0 L428.9,26.9 L433.8,25.9 L438.6,25.0 L443.5,24.3 L448.4,23.6 L453.3,23.0 L458.2,22.4 L463.0,21.9 L467.9,21.5 L472.8,21.1 L477.7,20.8 L482.6,20.4 L487.4,20.2 L492.3,19.9 L497.2,19.7 L502.1,19.5 L507.0,19.4 L511.8,19.2 L516.7,19.1 L521.6,18.9 L526.5,18.8 L531.4,18.7 L536.2,18.7 L541.1,18.6 L546.0,18.5"></path><text class="t-small t-blue" x="310" y="127">Medium test</text><path class="c-hard" d="M58.0,228.0 L62.9,228.0 L67.8,228.0 L72.6,228.0 L77.5,228.0 L82.4,228.0 L87.3,227.9 L92.2,227.9 L97.0,227.9 L101.9,227.9 L106.8,227.9 L111.7,227.9 L116.6,227.9 L121.4,227.9 L126.3,227.9 L131.2,227.8 L136.1,227.8 L141.0,227.8 L145.8,227.8 L150.7,227.7 L155.6,227.7 L160.5,227.7 L165.4,227.6 L170.2,227.6 L175.1,227.5 L180.0,227.5 L184.9,227.4 L189.8,227.3 L194.6,227.3 L199.5,227.2 L204.4,227.1 L209.3,226.9 L214.2,226.8 L219.0,226.6 L223.9,226.5 L228.8,226.3 L233.7,226.1 L238.6,225.8 L243.4,225.6 L248.3,225.2 L253.2,224.9 L258.1,224.5 L263.0,224.1 L267.8,223.6 L272.7,223.0 L277.6,222.4 L282.5,221.7 L287.4,221.0 L292.2,220.1 L297.1,219.1 L302.0,218.0 L306.9,216.8 L311.8,215.5 L316.6,214.0 L321.5,212.4 L326.4,210.5 L331.3,208.5 L336.2,206.3 L341.0,203.8 L345.9,201.1 L350.8,198.2 L355.7,195.0 L360.6,191.5 L365.4,187.8 L370.3,183.7 L375.2,179.4 L380.1,174.8 L385.0,169.9 L389.8,164.7 L394.7,159.2 L399.6,153.6 L404.5,147.7 L409.4,141.7 L414.2,135.5 L419.1,129.3 L424.0,123.0 L428.9,116.7 L433.8,110.5 L438.6,104.3 L443.5,98.3 L448.4,92.4 L453.3,86.8 L458.2,81.3 L463.0,76.1 L467.9,71.2 L472.8,66.6 L477.7,62.3 L482.6,58.2 L487.4,54.5 L492.3,51.0 L497.2,47.8 L502.1,44.9 L507.0,42.2 L511.8,39.7 L516.7,37.5 L521.6,35.5 L526.5,33.6 L531.4,32.0 L536.2,30.5 L541.1,29.2 L546.0,28.0"></path><text class="t-small t-gold" x="432" y="127">Hard test</text><path class="cap" d="M291.3,18 V228"></path><circle class="d-easy" r="6.5" stroke="var(--paper-bg)" stroke-width="1.5" cx="291.3" cy="30.8"></circle><circle class="d-mid" r="6.5" stroke="var(--paper-bg)" stroke-width="1.5" cx="291.3" cy="136.8"></circle><circle class="d-hard" r="6.5" stroke="var(--paper-bg)" stroke-width="1.5" cx="291.3" cy="220.3"></circle></g><!--end f2-plot-->
+					</svg>
+					<div class="sc-chips">
+						<div class="sc-chip sc-easy is-full" id="f2-ce"><span>Easy test</span><b>94%</b></div>
+						<div class="sc-chip sc-mid" id="f2-cm"><span>Medium test</span><b>43%</b></div>
+						<div class="sc-chip sc-hard is-full" id="f2-ch"><span>Hard test</span><b>4%</b></div>
+					</div>
+				</div>
+				<p class="say" id="f2-say" aria-live="polite">Claude Sonnet 4.5 sits at 148. The easy test is nearly full and the hard test is still near zero. Only the medium test shows much difference between nearby models.</p>
+				<figcaption><b>Figure 2.</b> Drag the slider or press a model. The S-shaped curve is the assumption AECI makes. The three benchmarks and their difficulties are made up, and the model positions are real AECI scores read off METR&rsquo;s chart.</figcaption>
+			</figure>
+
+			<p>A test tells nearby models apart only on the steep middle of its curve, which is why the index needs tests of many difficulties. Model 4, an internal model from late 2026, scores above 50% on all 15 benchmarks it was tested on. Nine months earlier, Claude Opus 4.6 still scored below 50% on many of its benchmarks. The authors write that this shortage of hard tests &ldquo;makes us somewhat nervous about our ability to measure AECI now and in the future.&rdquo; So far the estimate holds up. It stays at 1.9 when each benchmark stops counting once scores on it reach 85%.</p>
+
+			<h2 id="bend">The line bends in October 2025</h2>
+
+			<p>METR plotted AECI for Anthropic&rsquo;s models against the date each became available to most Anthropic employees. That date often comes before a public release. It also let METR include models that never left the company. Some are snapshots, saved versions of a model from during its development, and three are separate models that the report numbers Model 2 to Model 4.</p>
+
+			<p>Then it fit two straight lines that meet at one point, called a breakpoint, and let the data choose the breakpoint&rsquo;s date. It landed on 7 October 2025.</p>
+
+			<figure class="diagram">
+				<p class="ask">If the old pace had held, Model 4 would score about 165. What did it score?</p>
+				<div class="seg" id="f3-btns" role="group" aria-label="Your guess for Model 4">
+					<button type="button" data-g="165" aria-pressed="false">About 165</button>
+					<button type="button" data-g="172" aria-pressed="false">About 172</button>
+					<button type="button" data-g="179" aria-pressed="false">About 179</button>
+				</div>
+				<svg class="toon" id="f3" viewBox="0 0 560 380" role="img" aria-labelledby="f3-title f3-desc">
+					<title id="f3-title">AECI of Anthropic models from early 2024 to October 2026</title>
+					<desc id="f3-desc">AECI of Anthropic models by the date most staff could use them. Claude 3 Opus scores about 125 in early 2024. The fitted line rises 15 points a year until 7 October 2025 and 29 points a year after. Model 4 scores 178.6 in late September 2026, about 14 points above where the old trend would have put it.</desc>
+					<g id="f3-plot"><path class="grid" d="M58,312 H546"></path><text class="t-small" x="50" y="316.5" text-anchor="end">120</text><path class="grid" d="M58,270.15384615384613 H546"></path><text class="t-small" x="50" y="274.65384615384613" text-anchor="end">130</text><path class="grid" d="M58,228.30769230769232 H546"></path><text class="t-small" x="50" y="232.80769230769232" text-anchor="end">140</text><path class="grid" d="M58,186.46153846153845 H546"></path><text class="t-small" x="50" y="190.96153846153845" text-anchor="end">150</text><path class="grid" d="M58,144.6153846153846 H546"></path><text class="t-small" x="50" y="149.1153846153846" text-anchor="end">160</text><path class="grid" d="M58,102.76923076923075 H546"></path><text class="t-small" x="50" y="107.26923076923075" text-anchor="end">170</text><path class="grid" d="M58,60.923076923076906 H546"></path><text class="t-small" x="50" y="65.4230769230769" text-anchor="end">180</text><path class="axis" d="M58,312 v5"></path><text class="t-small" x="58" y="333" text-anchor="start">Jan 2024</text><path class="axis" d="M142.66730219256436,312 v5"></path><text class="t-small" x="142.66730219256436" y="333" text-anchor="middle">Jul</text><path class="axis" d="M228.2650142993327,312 v5"></path><text class="t-small" x="228.2650142993327" y="333" text-anchor="middle">Jan 2025</text><path class="axis" d="M312.46711153479504,312 v5"></path><text class="t-small" x="312.46711153479504" y="333" text-anchor="middle">Jul</text><path class="axis" d="M398.0648236415634,312 v5"></path><text class="t-small" x="398.0648236415634" y="333" text-anchor="middle">Jan 2026</text><path class="axis" d="M482.26692087702577,312 v5"></path><text class="t-small" x="482.26692087702577" y="333" text-anchor="middle">Jul</text><path class="axis" d="M58,40 V312 H546"></path><text class="t-small" transform="translate(16,176) rotate(-90)" text-anchor="middle">AECI</text><text class="t-small" x="302" y="356" text-anchor="middle">Date most Anthropic staff could use the model</text><g transform="translate(64,22)"><circle class="p-pub" cx="0" cy="-4" r="5.5"></circle><text class="t-small" x="9" y="0">public</text><path class="p-int" d="M66,-11 l7,7 l-7,7 l-7,-7 Z"></path><text class="t-small" x="78" y="0">internal</text><circle class="p-old" cx="146" cy="-4" r="5"></circle><text class="t-small" x="155" y="0">public, not the best</text></g><path class="brk" d="M358.0571973307912,40 V312"></path><text class="t-small" x="352.0571973307912" y="302" text-anchor="end">7 Oct 2025</text><path class="old" d="M85.44709246901812,290.37928668456794 L358.0571973307912,187.25661538461537"></path><path class="old-dash" d="M358.0571973307912,187.25661538461537 L522.2745471877979,125.13664444795452"></path><text class="t-small t-main" x="276.6463298379409" y="244.05263497077868" text-anchor="middle">+15 a year</text><text class="t-small" x="398.0648236415634" y="192.12257147370087">old pace continued</text><g class="reveal" id="f3-late"><path class="new" d="M358.0571973307912,187.25661538461537 L522.2745471877979,68.84042078660562"></path><text class="t-small t-main" x="388.25166825548143" y="141.3882344021481" text-anchor="end">+29 a year</text><text class="t-small t-gold" x="512.2745471877979" y="52.7815384615385" text-anchor="end">Model 4: 178.6</text><g class="pt" tabindex="0" data-n="Claude Opus 4.5, 19 Nov 2025, AECI 152.4"><circle class="p-pub" cx="378.0610104861773" cy="176.41846153846151" r="6"></circle><title>Claude Opus 4.5, 19 Nov 2025, AECI 152.4</title></g><g class="pt" tabindex="0" data-n="Claude Opus 4.6, 24 Jan 2026, AECI 157.3"><circle class="p-pub" cx="408.7645376549094" cy="155.91384615384612" r="6"></circle><title>Claude Opus 4.6, 24 Jan 2026, AECI 157.3</title></g><g class="pt" tabindex="0" data-n="Mythos Preview, early snapshot, 24 Feb 2026, AECI 162.4"><path class="p-int" d="M423.18589132507145,127.07230769230767 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Mythos Preview, early snapshot, 24 Feb 2026, AECI 162.4</title></g><g class="pt" tabindex="0" data-n="Mythos Preview, 1 Apr 2026, AECI 165.7"><path class="p-int" d="M439.9332697807436,113.26307692307697 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Mythos Preview, 1 Apr 2026, AECI 165.7</title></g><g class="pt" tabindex="0" data-n="Claude Mythos 5, 1 Jun 2026, AECI 168.7"><circle class="p-pub" cx="468.3107721639657" cy="108.20923076923083" r="6"></circle><title>Claude Mythos 5, 1 Jun 2026, AECI 168.7</title></g><g class="pt" tabindex="0" data-n="Model 2, early snapshot, 10 Jul 2026, AECI 171.8"><path class="p-int" d="M486.45376549094374,87.73692307692303 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 2, early snapshot, 10 Jul 2026, AECI 171.8</title></g><g class="pt" tabindex="0" data-n="Model 2, 7 Aug 2026, AECI 174.1"><path class="p-int" d="M499.4795042897998,78.11230769230772 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 2, 7 Aug 2026, AECI 174.1</title></g><g class="pt" tabindex="0" data-n="Model 3, early snapshot, 9 Sep 2026, AECI 176.4"><path class="p-int" d="M514.8312678741659,68.4876923076923 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 3, early snapshot, 9 Sep 2026, AECI 176.4</title></g><g class="pt" tabindex="0" data-n="Model 3, 22 Sep 2026, AECI 177.0"><path class="p-int" d="M520.878932316492,65.97692307692307 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 3, 22 Sep 2026, AECI 177.0</title></g><g class="pt" tabindex="0" data-n="Model 4, 25 Sep 2026, AECI 178.6"><path class="p-int" d="M522.2745471877979,59.2815384615385 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 4, 25 Sep 2026, AECI 178.6</title></g><g class="pt" tabindex="0" data-n="Claude Opus 4.7, 10 Apr 2026, AECI 160.5"><circle class="p-old" cx="444.1201143946616" cy="142.52307692307693" r="5"></circle><title>Claude Opus 4.7, 10 Apr 2026, AECI 160.5</title></g><g class="pt" tabindex="0" data-n="Claude Opus 4.8, 19 May 2026, AECI 163.5"><circle class="p-old" cx="462.26310772163964" cy="129.9692307692308" r="5"></circle><title>Claude Opus 4.8, 19 May 2026, AECI 163.5</title></g><g class="pt" tabindex="0" data-n="Claude Opus 5, 17 Jul 2026, AECI 169.4"><circle class="p-old" cx="489.7102001906578" cy="105.27999999999997" r="5"></circle><title>Claude Opus 5, 17 Jul 2026, AECI 169.4</title></g><g class="pt" tabindex="0" data-n="Claude Mythos 5.1, 7 Aug 2026, AECI 172.6"><circle class="p-old" cx="499.4795042897998" cy="91.88923076923078" r="5"></circle><title>Claude Mythos 5.1, 7 Aug 2026, AECI 172.6</title></g><g class="pt" tabindex="0" data-n="Claude Opus 5.5, 9 Sep 2026, AECI 174.7"><circle class="p-old" cx="514.8312678741659" cy="83.10153846153852" r="5"></circle><title>Claude Opus 5.5, 9 Sep 2026, AECI 174.7</title></g></g><g class="pt" tabindex="0" data-n="Claude 3 Opus, 29 Feb 2024, AECI 124.8"><circle class="p-pub" cx="85.44709246901812" cy="291.9138461538462" r="6"></circle><title>Claude 3 Opus, 29 Feb 2024, AECI 124.8</title></g><g class="pt" tabindex="0" data-n="Claude 3.5 Sonnet, 16 Jun 2024, AECI 130.1"><circle class="p-pub" cx="135.68922783603432" cy="269.73538461538465" r="6"></circle><title>Claude 3.5 Sonnet, 16 Jun 2024, AECI 130.1</title></g><g class="pt" tabindex="0" data-n="Claude 3.5 Sonnet (new), 10 Oct 2024, AECI 133.3"><circle class="p-pub" cx="189.65300285986655" cy="256.34461538461534" r="6"></circle><title>Claude 3.5 Sonnet (new), 10 Oct 2024, AECI 133.3</title></g><g class="pt" tabindex="0" data-n="Claude 3.7 Sonnet, 19 Feb 2025, AECI 141.8"><circle class="p-pub" cx="251.0600571973308" cy="220.77538461538455" r="6"></circle><title>Claude 3.7 Sonnet, 19 Feb 2025, AECI 141.8</title></g><g class="pt" tabindex="0" data-n="Claude Opus 4, 19 May 2025, AECI 144.9"><circle class="p-pub" cx="292.4632983794089" cy="207.8030769230769" r="6"></circle><title>Claude Opus 4, 19 May 2025, AECI 144.9</title></g><g class="pt" tabindex="0" data-n="Claude Sonnet 4.5, 22 Sep 2025, AECI 147.8"><circle class="p-pub" cx="351.0791229742612" cy="195.66769230769228" r="6"></circle><title>Claude Sonnet 4.5, 22 Sep 2025, AECI 147.8</title></g><g class="reveal gone" id="f3-q"><text class="t-big" x="522.2745471877979" y="90.21538461538461" text-anchor="middle">?</text></g></g><!--end f3-plot-->
+				</svg>
+				<p class="read" id="f3-read" aria-live="polite">Hover over or tap a point to see the model.</p>
+				<p class="say" id="f3-say" aria-live="polite">Model 4 scored 178.6. After 7 October 2025 the fitted line climbs 29 points a year, against 15 before.</p>
+				<figcaption><b>Figure 3.</b> Make a guess, then hover over or tap the points. Blue dots are public models, gold diamonds are models and snapshots used only inside Anthropic, and open circles are public models that were not Anthropic&rsquo;s best at the time. Points were read off <a href="https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/" target="_blank" rel="noopener">METR&rsquo;s chart</a> by a script, and refitting them reproduces METR&rsquo;s slopes of 15 and 29 points a year (15.4 and 29.3 in my refit) and its 7 October 2025 breakpoint.</figcaption>
+			</figure>
+
+			<p>Model 4 scored 178.6, about 14 points above the old line. The 95% confidence interval around the 1.9, the range of values the data are consistent with, runs from 1.5 to 2.8. It counts only the noise in each model&rsquo;s score, and METR notes that it leaves out the uncertainty over which models go into the fit.</p>
+
+			<p>Anthropic publishes this kind of chart in its system cards, the technical reports released with each model. The <a href="https://assets.claude.com/e1080d6bf5ae2018ea3c2f414064be03232f5be5.pdf" target="_blank" rel="noopener">card for Claude Haiku 5.5</a> shows a similar bend, fitted at September 2025, with an acceleration of 1.7. METR&rsquo;s figure is higher mainly because it adds the newer models that Anthropic has not released.</p>
+
+			<h2 id="jump">A one-time jump would leave a different mark</h2>
+
+			<p>A bend is one way to read these points. Anthropic&rsquo;s earlier system cards raised another. Perhaps one model, Claude Mythos Preview, jumped ahead once, and progress then went back to its old speed.</p>
+
+			<p>METR checked which story better predicts models it had not yet used. It fit each story to the models up to Claude Mythos 5, from June 2026, and then compared each line with the five internal snapshots that came after. Points kept out of a fit like this are called held-out data. A line can match past points by luck, so predicting new ones is the harder test.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f4-btns" role="group" aria-label="Pick a story">
+					<button type="button" data-s="jump" aria-pressed="false">Story 1: a one-time jump</button>
+					<button type="button" data-s="bend" aria-pressed="true">Story 2: a permanent bend</button>
+				</div>
+				<div class="seg seg-sm">
+					<button type="button" id="f4-rev" aria-pressed="true">Hide the five later models</button>
+				</div>
+				<svg class="toon" id="f4" viewBox="0 0 560 380" role="img" aria-labelledby="f4-title f4-desc">
+					<title id="f4-title">Two stories fitted through Claude Mythos 5, tested on five later models</title>
+					<desc id="f4-desc">Anthropic models up to Claude Mythos 5 are used to fit two lines. The one-time jump line keeps a slope of about 16 points a year with a step of 6.5 points at Mythos Preview. The bend line rises from about 15 to about 32 points a year from late October 2025. The five later internal snapshots sit closer to the bend line.</desc>
+					<g id="f4-plot"><rect class="held" x="477.1496663489037" y="40" width="68.85033365109632" height="272"></rect><path class="grid" d="M58,312 H546"></path><text class="t-small" x="50" y="316.5" text-anchor="end">120</text><path class="grid" d="M58,270.15384615384613 H546"></path><text class="t-small" x="50" y="274.65384615384613" text-anchor="end">130</text><path class="grid" d="M58,228.30769230769232 H546"></path><text class="t-small" x="50" y="232.80769230769232" text-anchor="end">140</text><path class="grid" d="M58,186.46153846153845 H546"></path><text class="t-small" x="50" y="190.96153846153845" text-anchor="end">150</text><path class="grid" d="M58,144.6153846153846 H546"></path><text class="t-small" x="50" y="149.1153846153846" text-anchor="end">160</text><path class="grid" d="M58,102.76923076923075 H546"></path><text class="t-small" x="50" y="107.26923076923075" text-anchor="end">170</text><path class="grid" d="M58,60.923076923076906 H546"></path><text class="t-small" x="50" y="65.4230769230769" text-anchor="end">180</text><path class="axis" d="M58,312 v5"></path><text class="t-small" x="58" y="333" text-anchor="start">Jan 2024</text><path class="axis" d="M142.66730219256436,312 v5"></path><text class="t-small" x="142.66730219256436" y="333" text-anchor="middle">Jul</text><path class="axis" d="M228.2650142993327,312 v5"></path><text class="t-small" x="228.2650142993327" y="333" text-anchor="middle">Jan 2025</text><path class="axis" d="M312.46711153479504,312 v5"></path><text class="t-small" x="312.46711153479504" y="333" text-anchor="middle">Jul</text><path class="axis" d="M398.0648236415634,312 v5"></path><text class="t-small" x="398.0648236415634" y="333" text-anchor="middle">Jan 2026</text><path class="axis" d="M482.26692087702577,312 v5"></path><text class="t-small" x="482.26692087702577" y="333" text-anchor="middle">Jul</text><path class="axis" d="M58,40 V312 H546"></path><text class="t-small" transform="translate(16,176) rotate(-90)" text-anchor="middle">AECI</text><text class="t-small" x="302" y="356" text-anchor="middle">Date most Anthropic staff could use the model</text><text class="t-small t-main" x="540" y="302" text-anchor="end">held out</text><g transform="translate(64,22)"><circle class="p-pub" cx="0" cy="-4" r="5.5"></circle><text class="t-small" x="9" y="0">public</text><path class="p-int" d="M66,-11 l7,7 l-7,7 l-7,-7 Z"></path><text class="t-small" x="78" y="0">internal</text></g><path class="new" d="M85.44709246901812,290.39234749644606 L367.8265014299333,183.57415384615385 L525.0657769304099,58.57256041699577"></path><text class="t-small t-main" x="390.1563393708294" y="149.8224482704154" text-anchor="end">bend: 15, then 32 a year</text><g class="pt" tabindex="0" data-n="Claude 3 Opus, 29 Feb 2024, AECI 124.8"><circle class="p-pub" cx="85.44709246901812" cy="291.9138461538462" r="6"></circle><title>Claude 3 Opus, 29 Feb 2024, AECI 124.8</title></g><g class="pt" tabindex="0" data-n="Claude 3.5 Sonnet, 16 Jun 2024, AECI 130.1"><circle class="p-pub" cx="135.68922783603432" cy="269.73538461538465" r="6"></circle><title>Claude 3.5 Sonnet, 16 Jun 2024, AECI 130.1</title></g><g class="pt" tabindex="0" data-n="Claude 3.5 Sonnet (new), 10 Oct 2024, AECI 133.3"><circle class="p-pub" cx="189.65300285986655" cy="256.34461538461534" r="6"></circle><title>Claude 3.5 Sonnet (new), 10 Oct 2024, AECI 133.3</title></g><g class="pt" tabindex="0" data-n="Claude 3.7 Sonnet, 19 Feb 2025, AECI 141.8"><circle class="p-pub" cx="251.0600571973308" cy="220.77538461538455" r="6"></circle><title>Claude 3.7 Sonnet, 19 Feb 2025, AECI 141.8</title></g><g class="pt" tabindex="0" data-n="Claude Opus 4, 19 May 2025, AECI 144.9"><circle class="p-pub" cx="292.4632983794089" cy="207.8030769230769" r="6"></circle><title>Claude Opus 4, 19 May 2025, AECI 144.9</title></g><g class="pt" tabindex="0" data-n="Claude Sonnet 4.5, 22 Sep 2025, AECI 147.8"><circle class="p-pub" cx="351.0791229742612" cy="195.66769230769228" r="6"></circle><title>Claude Sonnet 4.5, 22 Sep 2025, AECI 147.8</title></g><g class="pt" tabindex="0" data-n="Claude Opus 4.5, 19 Nov 2025, AECI 152.4"><circle class="p-pub" cx="378.0610104861773" cy="176.41846153846151" r="6"></circle><title>Claude Opus 4.5, 19 Nov 2025, AECI 152.4</title></g><g class="pt" tabindex="0" data-n="Claude Opus 4.6, 24 Jan 2026, AECI 157.3"><circle class="p-pub" cx="408.7645376549094" cy="155.91384615384612" r="6"></circle><title>Claude Opus 4.6, 24 Jan 2026, AECI 157.3</title></g><g class="pt" tabindex="0" data-n="Mythos Preview, early snapshot, 24 Feb 2026, AECI 162.4"><path class="p-int" d="M423.18589132507145,127.07230769230767 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Mythos Preview, early snapshot, 24 Feb 2026, AECI 162.4</title></g><g class="pt" tabindex="0" data-n="Mythos Preview, 1 Apr 2026, AECI 165.7"><path class="p-int" d="M439.9332697807436,113.26307692307697 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Mythos Preview, 1 Apr 2026, AECI 165.7</title></g><g class="pt" tabindex="0" data-n="Claude Mythos 5, 1 Jun 2026, AECI 168.7"><circle class="p-pub" cx="468.3107721639657" cy="108.20923076923083" r="6"></circle><title>Claude Mythos 5, 1 Jun 2026, AECI 168.7</title></g><path class="miss" d="M486.45376549094374,89.26821797504343 V95.23692307692303"></path><g class="pt" tabindex="0" data-n="Model 2, early snapshot, 10 Jul 2026, AECI 171.8"><path class="p-int" d="M486.45376549094374,87.73692307692303 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 2, early snapshot, 10 Jul 2026, AECI 171.8</title></g><path class="miss" d="M499.4795042897998,78.91305638919607 V85.61230769230772"></path><g class="pt" tabindex="0" data-n="Model 2, 7 Aug 2026, AECI 174.1"><path class="p-int" d="M499.4795042897998,78.11230769230772 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 2, 7 Aug 2026, AECI 174.1</title></g><path class="miss" d="M514.8312678741659,66.7087588058759 V75.9876923076923"></path><g class="pt" tabindex="0" data-n="Model 3, early snapshot, 9 Sep 2026, AECI 176.4"><path class="p-int" d="M514.8312678741659,68.4876923076923 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 3, early snapshot, 9 Sep 2026, AECI 176.4</title></g><path class="miss" d="M520.878932316492,61.901005212446705 V73.47692307692307"></path><g class="pt" tabindex="0" data-n="Model 3, 22 Sep 2026, AECI 177.0"><path class="p-int" d="M520.878932316492,65.97692307692307 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 3, 22 Sep 2026, AECI 177.0</title></g><path class="miss" d="M522.2745471877979,60.79152361396311 V66.7815384615385"></path><g class="pt" tabindex="0" data-n="Model 4, 25 Sep 2026, AECI 178.6"><path class="p-int" d="M522.2745471877979,59.2815384615385 l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z"></path><title>Model 4, 25 Sep 2026, AECI 178.6</title></g></g><!--end f4-plot-->
+				</svg>
+				<p class="say" id="f4-say" aria-live="polite">The bend line misses the five later models by a typical 1.9 points. The jump line misses by 3.9, about twice as much.</p>
+				<figcaption><b>Figure 4.</b> Pick a story, then show the later models. The red dashes are each prediction&rsquo;s miss. I refit both lines to the points read off METR&rsquo;s chart, and they reproduce the typical misses METR reports, <a href="https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/" target="_blank" rel="noopener">1.9 and 3.9 AECI points</a>.</figcaption>
+			</figure>
+
+			<p>The bend missed a typical held-out model by 1.9 AECI points, and the jump by 3.9. METR repeated the test on many copies of the data, each made by drawing models at random from the real set with repeats allowed. This is called the bootstrap. The bend had the smaller miss in 81% of the copies. In METR&rsquo;s reading, the newer models make a lasting change in slope look more likely than a single jump.</p>
+
+			<h2 id="assumption">One assumption moves the answer from 1.1 to 2.9</h2>
+
+			<p>METR ran 18 robustness checks, each repeating the estimate with one analysis choice changed. Most kept the answer between 1.9 and 2.2. Counting different snapshots of each model gave that range, and so did adding or dropping benchmarks.</p>
+
+			<p>One choice moved the answer a lot. The S-shaped curve is itself an assumption about how a benchmark&rsquo;s questions are spread between easy and hard. If many benchmarks hold a small group of questions far easier than the rest, such as ones a model can guess, the acceleration falls to 1.1. A small group far harder than the rest pushes it to 2.9. Most versions fit the data about equally well, and METR writes that it has no &ldquo;strong a priori reasons to prefer one.&rdquo; It kept the standard curve because Epoch and Anthropic use it.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f5-btns" role="group" aria-label="Highlight a group of choices">
+					<button type="button" data-g="all" aria-pressed="true">All</button>
+					<button type="button" data-g="link" aria-pressed="false">Curve shape</button>
+					<button type="button" data-g="snap" aria-pressed="false">Which snapshots</button>
+					<button type="button" data-g="bench" aria-pressed="false">Which tests</button>
+					<button type="button" data-g="reg" aria-pressed="false">Penalty</button>
+					<button type="button" data-g="other" aria-pressed="false">Other estimates</button>
+				</div>
+				<div class="fp" id="f5">
+					<div id="f5-rows"><div class="fp-head" data-g="main"><span>METR’s main estimate</span><span></span></div><div class="fp-row fp-std" data-g="main"><span class="fp-lab">Standard S-curve, all choices as published <b>1.9 [1.5–2.8]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:38.76%;width:calc(70.51% - 38.76%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-head" data-g="link"><span>Shape of the S-curve</span><span></span></div><div class="fp-row " data-g="link"><span class="fp-lab">Fewer very easy and very hard questions (probit) <b>1.8 [1.3–2.7]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:31.49%;width:calc(68.66% - 31.49%)"></span><span class="fp-dot" style="left:48.04%"></span></span></div><div class="fp-row " data-g="link"><span class="fp-lab">A few questions far easier than the rest <b>1.1 [0.8–1.5]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:6.79%;width:calc(38.76% - 6.79%)"></span><span class="fp-dot" style="left:22.99%"></span></span></div><div class="fp-row " data-g="link"><span class="fp-lab">A few questions far harder than the rest <b>2.9 [2.1–4.9]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:55.88%;width:calc(98.97% - 55.88%)"></span><span class="fp-dot" style="left:72.29%"></span></span></div><div class="fp-row " data-g="link"><span class="fp-lab">More very easy and very hard questions (cauchit) <b>2.8 [2.0–4.1]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:53.40%;width:calc(89.91% - 53.40%)"></span><span class="fp-dot" style="left:70.51%"></span></span></div><div class="fp-row " data-g="link"><span class="fp-lab">The mix learned from the data <b>2.6 [1.8–4.1]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:48.04%;width:calc(89.91% - 48.04%)"></span><span class="fp-dot" style="left:66.74%"></span></span></div><div class="fp-head" data-g="snap"><span>Which snapshots of each model</span><span></span></div><div class="fp-row " data-g="snap"><span class="fp-lab">Only the best snapshot of each model <b>1.9 [1.4–2.8]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:35.25%;width:calc(70.51% - 35.25%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-row " data-g="snap"><span class="fp-lab">Only the first snapshot of each model <b>2.2 [1.3–3.2]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:31.49%;width:calc(77.30% - 31.49%)"></span><span class="fp-dot" style="left:58.24%"></span></span></div><div class="fp-row " data-g="snap"><span class="fp-lab">A subset of models, reasons redacted <b>1.9 [1.4–3.3]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:35.25%;width:calc(78.87% - 35.25%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-row " data-g="snap"><span class="fp-lab">Every snapshot <b>1.9 [1.4–2.6]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:35.25%;width:calc(66.74% - 35.25%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-head" data-g="bench"><span>Which benchmarks</span><span></span></div><div class="fp-row " data-g="bench"><span class="fp-lab">Drop tests that use images <b>2.2 [1.7–3.5]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:45.13%;width:calc(81.86% - 45.13%)"></span><span class="fp-dot" style="left:58.24%"></span></span></div><div class="fp-row " data-g="bench"><span class="fp-lab">Only tests Claude labelled relevant to AI research <b>2.0 [1.5–2.9]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:38.76%;width:calc(72.29% - 38.76%)"></span><span class="fp-dot" style="left:53.40%"></span></span></div><div class="fp-row " data-g="bench"><span class="fp-lab">Drop tests that fall as models improve <b>1.9 [1.6–2.8]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:42.05%;width:calc(70.51% - 42.05%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-row " data-g="bench"><span class="fp-lab">Drop tests the S-curve fits badly <b>1.9 [1.4–2.6]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:35.25%;width:calc(66.74% - 35.25%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-row " data-g="bench"><span class="fp-lab">Stop using a test once it passes 85% <b>1.9 [1.4–2.3]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:35.25%;width:calc(60.50% - 35.25%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-head" data-g="reg"><span>Penalty on extreme values</span><span></span></div><div class="fp-row " data-g="reg"><span class="fp-lab">A 10 times weaker penalty <b>1.9 [1.4–2.8]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:35.25%;width:calc(70.51% - 35.25%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-row " data-g="reg"><span class="fp-lab">A 10 times stronger penalty <b>2.1 [1.6–3.0]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:42.05%;width:calc(74.02% - 42.05%)"></span><span class="fp-dot" style="left:55.88%"></span></span></div><div class="fp-row " data-g="reg"><span class="fp-lab">No penalty <b>1.9 [1.4–2.8]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:35.25%;width:calc(70.51% - 35.25%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-row " data-g="reg"><span class="fp-lab">A penalty toward a straight trend over time <b>1.9 [1.4–2.8]</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-ci" style="left:35.25%;width:calc(70.51% - 35.25%)"></span><span class="fp-dot" style="left:50.79%"></span></span></div><div class="fp-head" data-g="other"><span>Other data and estimates</span><span></span></div><div class="fp-row fp-noci" data-g="other"><span class="fp-lab">Add other companies’ public models <b>1.4</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-dot" style="left:34.89%"></span></span></div><div class="fp-row fp-noci" data-g="other"><span class="fp-lab">Public models only, from every company <b>1.1</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-dot" style="left:22.52%"></span></span></div><div class="fp-row fp-noci" data-g="other"><span class="fp-lab">Epoch’s public index, public models only <b>0.99</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-dot" style="left:17.63%"></span></span></div><div class="fp-row fp-noci" data-g="other"><span class="fp-lab">Anthropic’s Haiku 5.5 system card <b>1.7</b></span><span class="fp-tr"><span class="fp-ref" style="left:18.14%"></span><span class="fp-ref fp-main" style="left:50.79%"></span><span class="fp-dot" style="left:45.13%"></span></span></div></div><!--end f5-rows-->
+					<div class="fp-axis" id="f5-axis"><span style="left:6.79%">0.8</span><span style="left:18.14%">1</span><span style="left:38.76%">1.5</span><span style="left:53.40%">2</span><span style="left:74.02%">3</span><span style="left:88.65%">4</span><em>Acceleration, log scale</em></div><!--end f5-axis-->
+				</div>
+				<p class="say" id="f5-say" aria-live="polite">Every one of METR&rsquo;s 18 checks shows some acceleration, from 1.1 to 2.9. Public models alone, from every company, show almost none.</p>
+				<figcaption><b>Figure 5.</b> Press a group to bring its rows forward. Each of METR&rsquo;s checks changes one choice in its analysis and shows the estimate with its 95% confidence interval, from the tables in <a href="https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/" target="_blank" rel="noopener">METR&rsquo;s appendix</a>. The scale is logarithmic, which gives each doubling the same width. The solid line marks 1, no speed-up, and the dashed line marks METR&rsquo;s main estimate. Open circles have no published interval. The last group comes from METR&rsquo;s comparison charts and Anthropic&rsquo;s Haiku 5.5 system card.</figcaption>
+			</figure>
+
+			<p>Adding other companies&rsquo; public models gives a lower answer, 1.4. Before late 2025, models from companies such as OpenAI and Google had the top AECI scores most of the time, so they set the old trend. Anthropic&rsquo;s models set the new one. One reading is that Anthropic was behind in 2025, so its own old trend was unusually slow and 1.4 is the fairer figure. The other is that rivals&rsquo; earlier models were tuned to do well on benchmarks, which makes their old trend too steep and leaves 1.9 closer.</p>
+
+			<p>Public models alone show almost no bend. Counting only released models from every company, dated by public release, the estimate is 1.09 on AECI and 0.99 on Epoch&rsquo;s public index. METR traces most of the gap to two choices, looking at Anthropic&rsquo;s models only and adding the ones it has not released. Summing up the benchmark evidence, METR wrote that it &ldquo;would be surprised&rdquo; to learn of no acceleration at all, or of one above 3.</p>
+
+			<h2 id="cause">METR credits about 80% of the extra speed to AI</h2>
+
+			<p>A faster trend does not say what made it faster. Anthropic could have hired more researchers. It could also have spent more on compute, the computing power used to train each model. METR received what it calls &ldquo;convincing evidence&rdquo; that the speed-up did not come from faster growth in training compute.</p>
+
+			<p>The evidence itself was redacted.</p>
+
+			<p>On the other causes METR found no decisive evidence, and Anthropic&rsquo;s own staff disagreed with each other. Two of the researchers interviewed named hiring. The team&rsquo;s guess is that causes other than AI &ldquo;likely played a large role&rdquo; in late 2025, and that &ldquo;perhaps &asymp;80%&rdquo; of the extra speed by October 2026 comes from AI.</p>
+
+			<p>Interviews were one line of evidence. METR and Anthropic staff asked researchers how much AI had sped up progress in their own area. The notes then went to Claude, Anthropic&rsquo;s model, with a request to sort each person by whether they supported an acceleration of 2 or more. Five of the 11 researchers supported it or leaned that way. Claude coded two as no and the other four as unclear. The model under study sorted the evidence about itself.</p>
+
+			<figure class="diagram">
+				<p class="ask">Does each researcher support an acceleration of 2 or more from AI? Sort them, then see how Claude sorted them.</p>
+				<div class="quiz" id="f6">
+					<div class="q-card" data-a="yes"><p class="q-text">&ldquo;I would definitely endorse &gt;2 years of progress in 1 year and I don&rsquo;t think 4 is crazy.&rdquo;</p><p class="q-who">Researcher A</p><div class="q-btns"><button type="button" data-v="yes" aria-pressed="false">2x or more</button><button type="button" data-v="unclear" aria-pressed="false">Unclear</button><button type="button" data-v="no" aria-pressed="false">Against</button></div><p class="q-verdict"><b>Claude&rsquo;s call: yes.</b> The same researcher also said, &ldquo;IMO the bulk of the effect is recent models.&rdquo;</p></div>
+					<div class="q-card" data-a="yes"><p class="q-text">&ldquo;I&rsquo;ve seen us discovering very promising directions ~entirely because people can spam 10 ideas at [agent-scaffold] and see what sticks.&rdquo;</p><p class="q-who">Researcher E</p><div class="q-btns"><button type="button" data-v="yes" aria-pressed="false">2x or more</button><button type="button" data-v="unclear" aria-pressed="false">Unclear</button><button type="button" data-v="no" aria-pressed="false">Against</button></div><p class="q-verdict"><b>Claude&rsquo;s call: leans yes.</b> An agent scaffold is the software that lets a model run tasks by itself. The name of Anthropic&rsquo;s was redacted.</p></div>
+					<div class="q-card" data-a="unclear"><p class="q-text">&ldquo;Claude lets researchers try many things quickly, most of which won&rsquo;t work. &hellip;&rdquo;</p><p class="q-who">Researcher G</p><div class="q-btns"><button type="button" data-v="yes" aria-pressed="false">2x or more</button><button type="button" data-v="unclear" aria-pressed="false">Unclear</button><button type="button" data-v="no" aria-pressed="false">Against</button></div><p class="q-verdict"><b>Claude&rsquo;s call: unclear.</b> In Anthropic&rsquo;s notes, this researcher also named Claude and hiring as the two biggest contributors.</p></div>
+					<div class="q-card" data-a="unclear"><p class="q-text">&ldquo;I think it&rsquo;s true [that] we&rsquo;re now trying a lot more experiments at the same time because of claudification.&rdquo;</p><p class="q-who">Researcher H</p><div class="q-btns"><button type="button" data-v="yes" aria-pressed="false">2x or more</button><button type="button" data-v="unclear" aria-pressed="false">Unclear</button><button type="button" data-v="no" aria-pressed="false">Against</button></div><p class="q-verdict"><b>Claude&rsquo;s call: unclear.</b> This is the researcher&rsquo;s only quote in the table.</p></div>
+					<div class="q-card" data-a="no"><p class="q-text">&ldquo;IMO [hiring is] probably the biggest reason&hellip;&rdquo;</p><p class="q-who">Researcher K</p><div class="q-btns"><button type="button" data-v="yes" aria-pressed="false">2x or more</button><button type="button" data-v="unclear" aria-pressed="false">Unclear</button><button type="button" data-v="no" aria-pressed="false">Against</button></div><p class="q-verdict"><b>Claude&rsquo;s call: no.</b> This is the researcher&rsquo;s only quote in the table.</p></div>
+					<div class="q-card" data-a="no"><p class="q-text">&ldquo;Guesses 15-20% is due to AI. Don&rsquo;t believe in self-reported productivity increase.&rdquo;</p><p class="q-who">Researcher L</p><div class="q-btns"><button type="button" data-v="yes" aria-pressed="false">2x or more</button><button type="button" data-v="unclear" aria-pressed="false">Unclear</button><button type="button" data-v="no" aria-pressed="false">Against</button></div><p class="q-verdict"><b>Claude&rsquo;s call: no.</b> The same researcher also said, &ldquo;One impact is SWE acceleration, which is extremely substantial.&rdquo; SWE stands for software engineering.</p></div>
+				</div>
+				<p class="q-score" id="f6-score" aria-live="polite"></p>
+				<figcaption><b>Figure 6.</b> Sort the quotes. All six are from the interview table in <a href="https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/" target="_blank" rel="noopener">METR&rsquo;s report</a>, where square brackets mark words added or replaced in the report&rsquo;s version of the notes. Each verdict is the label Claude gave that person after reading all of their quotes. The first button covers Claude&rsquo;s yes and leans-yes labels.</figcaption>
+			</figure>
+
+			<p><strong>METR&rsquo;s best reading is that Anthropic now makes about two years of its old benchmark progress in one year, and that its staff&rsquo;s use of AI is the main reason.</strong></p>
+
+			<h2 id="twelve">Staff polls put the speed-up at 12 times</h2>
+
+			<p>Anthropic also polls its staff on its internal chat, where people vote with emoji reactions on how much the latest model speeds up their work. The average answer for Model 4 was about 12 times. METR calls this &ldquo;only very loose evidence,&rdquo; because the people who answer are not a random sample and the answers reflect &ldquo;fairly low-effort consideration.&rdquo;</p>
+
+			<p>Self-reports can run ahead of measurements. In <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">a 2025 experiment</a> by METR, 16 experienced open-source developers worked on 246 real tasks, each randomly assigned to allow AI tools or not. With AI they took 19% longer. Afterwards they believed AI had made them 20% faster.</p>
+
+			<p>Even an accurate 12 would not mean progress 12 times faster. Ideas get harder to find as the easy ones are used up. Doubling the density of computer chips now takes more than 18 times as many researchers as in the early 1970s, according to <a href="https://www.aeaweb.org/articles?id=10.1257/aer.20180338" target="_blank" rel="noopener">a 2020 study</a>. So steady progress needs research effort that keeps growing. A fixed boost to every researcher raises the level of effort once, and progress steps up and then continues at its old pace. In METR&rsquo;s words, &ldquo;We thus care most about whether we see a large change in the growth rate of individual uplift, not the absolute level.&rdquo; Uplift is METR&rsquo;s word for how much AI speeds up one person&rsquo;s work.</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f7-btns" role="group" aria-label="Pick a kind of AI help">
+					<button type="button" data-m="none" aria-pressed="false">No AI help</button>
+					<button type="button" data-m="once" aria-pressed="false">A one-time 4x boost</button>
+					<button type="button" data-m="grow" aria-pressed="true">Help that doubles every year</button>
+				</div>
+				<svg class="toon" id="f7" viewBox="0 0 560 360" role="img" aria-labelledby="f7-title f7-desc">
+					<title id="f7-title">A one-time boost gives a step, growing help gives a bend</title>
+					<desc id="f7-desc">Two panels share a time axis of six made-up years. The top panel shows AI help, which starts in year 3. The bottom panel shows progress. With help that doubles every year, progress climbs 30 units a year from year 3 instead of 15.</desc>
+					<g id="f7-plot"><text class="t-head" x="66" y="18">AI HELP</text><path class="grid" d="M66,108 H540"></path><text class="t-small" x="58" y="112.5" text-anchor="end">1x</text><path class="grid" d="M66,82 H540"></path><text class="t-small" x="58" y="86.5" text-anchor="end">2x</text><path class="grid" d="M66,56 H540"></path><text class="t-small" x="58" y="60.5" text-anchor="end">4x</text><path class="grid" d="M66,30 H540"></path><text class="t-small" x="58" y="34.5" text-anchor="end">8x</text><path class="axis" d="M66,30 V108 H540"></path><text class="t-head" x="66" y="138">PROGRESS</text><path class="grid" d="M66,300 H540"></path><text class="t-small" x="58" y="304.5" text-anchor="end">0</text><path class="grid" d="M66,267.8571428571429 H540"></path><text class="t-small" x="58" y="272.3571428571429" text-anchor="end">30</text><path class="grid" d="M66,235.71428571428572 H540"></path><text class="t-small" x="58" y="240.21428571428572" text-anchor="end">60</text><path class="grid" d="M66,203.57142857142856 H540"></path><text class="t-small" x="58" y="208.07142857142856" text-anchor="end">90</text><path class="grid" d="M66,171.42857142857144 H540"></path><text class="t-small" x="58" y="175.92857142857144" text-anchor="end">120</text><path class="axis" d="M66,150 V300 H540"></path><text class="t-small" x="66" y="320" text-anchor="middle">Year 0</text><text class="t-small" x="145" y="320" text-anchor="middle">Year 1</text><text class="t-small" x="224" y="320" text-anchor="middle">Year 2</text><text class="t-small" x="303" y="320" text-anchor="middle">Year 3</text><text class="t-small" x="382" y="320" text-anchor="middle">Year 4</text><text class="t-small" x="461" y="320" text-anchor="middle">Year 5</text><text class="t-small" x="540" y="320" text-anchor="middle">Year 6</text><path class="arrive" d="M303,30 V300"></path><text class="t-small t-red" x="309" y="42">AI help arrives</text><path class="h-line" d="M66.0,108.0 L66.8,108.0 L67.6,108.0 L68.4,108.0 L69.2,108.0 L70.0,108.0 L70.7,108.0 L71.5,108.0 L72.3,108.0 L73.1,108.0 L73.9,108.0 L74.7,108.0 L75.5,108.0 L76.3,108.0 L77.1,108.0 L77.8,108.0 L78.6,108.0 L79.4,108.0 L80.2,108.0 L81.0,108.0 L81.8,108.0 L82.6,108.0 L83.4,108.0 L84.2,108.0 L85.0,108.0 L85.8,108.0 L86.5,108.0 L87.3,108.0 L88.1,108.0 L88.9,108.0 L89.7,108.0 L90.5,108.0 L91.3,108.0 L92.1,108.0 L92.9,108.0 L93.7,108.0 L94.4,108.0 L95.2,108.0 L96.0,108.0 L96.8,108.0 L97.6,108.0 L98.4,108.0 L99.2,108.0 L100.0,108.0 L100.8,108.0 L101.5,108.0 L102.3,108.0 L103.1,108.0 L103.9,108.0 L104.7,108.0 L105.5,108.0 L106.3,108.0 L107.1,108.0 L107.9,108.0 L108.7,108.0 L109.5,108.0 L110.2,108.0 L111.0,108.0 L111.8,108.0 L112.6,108.0 L113.4,108.0 L114.2,108.0 L115.0,108.0 L115.8,108.0 L116.6,108.0 L117.3,108.0 L118.1,108.0 L118.9,108.0 L119.7,108.0 L120.5,108.0 L121.3,108.0 L122.1,108.0 L122.9,108.0 L123.7,108.0 L124.5,108.0 L125.3,108.0 L126.0,108.0 L126.8,108.0 L127.6,108.0 L128.4,108.0 L129.2,108.0 L130.0,108.0 L130.8,108.0 L131.6,108.0 L132.4,108.0 L133.1,108.0 L133.9,108.0 L134.7,108.0 L135.5,108.0 L136.3,108.0 L137.1,108.0 L137.9,108.0 L138.7,108.0 L139.5,108.0 L140.3,108.0 L141.1,108.0 L141.8,108.0 L142.6,108.0 L143.4,108.0 L144.2,108.0 L145.0,108.0 L145.8,108.0 L146.6,108.0 L147.4,108.0 L148.2,108.0 L148.9,108.0 L149.7,108.0 L150.5,108.0 L151.3,108.0 L152.1,108.0 L152.9,108.0 L153.7,108.0 L154.5,108.0 L155.3,108.0 L156.1,108.0 L156.8,108.0 L157.6,108.0 L158.4,108.0 L159.2,108.0 L160.0,108.0 L160.8,108.0 L161.6,108.0 L162.4,108.0 L163.2,108.0 L164.0,108.0 L164.8,108.0 L165.5,108.0 L166.3,108.0 L167.1,108.0 L167.9,108.0 L168.7,108.0 L169.5,108.0 L170.3,108.0 L171.1,108.0 L171.9,108.0 L172.7,108.0 L173.4,108.0 L174.2,108.0 L175.0,108.0 L175.8,108.0 L176.6,108.0 L177.4,108.0 L178.2,108.0 L179.0,108.0 L179.8,108.0 L180.6,108.0 L181.3,108.0 L182.1,108.0 L182.9,108.0 L183.7,108.0 L184.5,108.0 L185.3,108.0 L186.1,108.0 L186.9,108.0 L187.7,108.0 L188.5,108.0 L189.2,108.0 L190.0,108.0 L190.8,108.0 L191.6,108.0 L192.4,108.0 L193.2,108.0 L194.0,108.0 L194.8,108.0 L195.6,108.0 L196.3,108.0 L197.1,108.0 L197.9,108.0 L198.7,108.0 L199.5,108.0 L200.3,108.0 L201.1,108.0 L201.9,108.0 L202.7,108.0 L203.5,108.0 L204.3,108.0 L205.0,108.0 L205.8,108.0 L206.6,108.0 L207.4,108.0 L208.2,108.0 L209.0,108.0 L209.8,108.0 L210.6,108.0 L211.4,108.0 L212.2,108.0 L212.9,108.0 L213.7,108.0 L214.5,108.0 L215.3,108.0 L216.1,108.0 L216.9,108.0 L217.7,108.0 L218.5,108.0 L219.3,108.0 L220.1,108.0 L220.8,108.0 L221.6,108.0 L222.4,108.0 L223.2,108.0 L224.0,108.0 L224.8,108.0 L225.6,108.0 L226.4,108.0 L227.2,108.0 L227.9,108.0 L228.7,108.0 L229.5,108.0 L230.3,108.0 L231.1,108.0 L231.9,108.0 L232.7,108.0 L233.5,108.0 L234.3,108.0 L235.1,108.0 L235.8,108.0 L236.6,108.0 L237.4,108.0 L238.2,108.0 L239.0,108.0 L239.8,108.0 L240.6,108.0 L241.4,108.0 L242.2,108.0 L243.0,108.0 L243.8,108.0 L244.5,108.0 L245.3,108.0 L246.1,108.0 L246.9,108.0 L247.7,108.0 L248.5,108.0 L249.3,108.0 L250.1,108.0 L250.9,108.0 L251.7,108.0 L252.4,108.0 L253.2,108.0 L254.0,108.0 L254.8,108.0 L255.6,108.0 L256.4,108.0 L257.2,108.0 L258.0,108.0 L258.8,108.0 L259.6,108.0 L260.3,108.0 L261.1,108.0 L261.9,108.0 L262.7,108.0 L263.5,108.0 L264.3,108.0 L265.1,108.0 L265.9,108.0 L266.7,108.0 L267.4,108.0 L268.2,108.0 L269.0,108.0 L269.8,108.0 L270.6,108.0 L271.4,108.0 L272.2,108.0 L273.0,108.0 L273.8,108.0 L274.6,108.0 L275.4,108.0 L276.1,108.0 L276.9,108.0 L277.7,108.0 L278.5,108.0 L279.3,108.0 L280.1,108.0 L280.9,108.0 L281.7,108.0 L282.5,108.0 L283.3,108.0 L284.0,108.0 L284.8,108.0 L285.6,108.0 L286.4,108.0 L287.2,108.0 L288.0,108.0 L288.8,108.0 L289.6,108.0 L290.4,108.0 L291.1,108.0 L291.9,108.0 L292.7,108.0 L293.5,108.0 L294.3,108.0 L295.1,108.0 L295.9,108.0 L296.7,108.0 L297.5,108.0 L298.3,108.0 L299.1,108.0 L299.8,108.0 L300.6,108.0 L301.4,108.0 L302.2,108.0 L303.0,108.0 L303.8,107.7 L304.6,107.5 L305.4,107.2 L306.2,107.0 L306.9,106.7 L307.7,106.4 L308.5,106.2 L309.3,105.9 L310.1,105.7 L310.9,105.4 L311.7,105.1 L312.5,104.9 L313.3,104.6 L314.1,104.4 L314.9,104.1 L315.6,103.8 L316.4,103.6 L317.2,103.3 L318.0,103.1 L318.8,102.8 L319.6,102.5 L320.4,102.3 L321.2,102.0 L322.0,101.8 L322.8,101.5 L323.5,101.2 L324.3,101.0 L325.1,100.7 L325.9,100.5 L326.7,100.2 L327.5,99.9 L328.3,99.7 L329.1,99.4 L329.9,99.2 L330.7,98.9 L331.4,98.6 L332.2,98.4 L333.0,98.1 L333.8,97.9 L334.6,97.6 L335.4,97.3 L336.2,97.1 L337.0,96.8 L337.8,96.6 L338.6,96.3 L339.3,96.0 L340.1,95.8 L340.9,95.5 L341.7,95.3 L342.5,95.0 L343.3,94.7 L344.1,94.5 L344.9,94.2 L345.7,94.0 L346.4,93.7 L347.2,93.4 L348.0,93.2 L348.8,92.9 L349.6,92.7 L350.4,92.4 L351.2,92.1 L352.0,91.9 L352.8,91.6 L353.6,91.4 L354.3,91.1 L355.1,90.8 L355.9,90.6 L356.7,90.3 L357.5,90.1 L358.3,89.8 L359.1,89.5 L359.9,89.3 L360.7,89.0 L361.5,88.8 L362.3,88.5 L363.0,88.2 L363.8,88.0 L364.6,87.7 L365.4,87.5 L366.2,87.2 L367.0,86.9 L367.8,86.7 L368.6,86.4 L369.4,86.2 L370.2,85.9 L370.9,85.6 L371.7,85.4 L372.5,85.1 L373.3,84.9 L374.1,84.6 L374.9,84.3 L375.7,84.1 L376.5,83.8 L377.3,83.6 L378.1,83.3 L378.8,83.0 L379.6,82.8 L380.4,82.5 L381.2,82.3 L382.0,82.0 L382.8,81.7 L383.6,81.5 L384.4,81.2 L385.2,81.0 L385.9,80.7 L386.7,80.4 L387.5,80.2 L388.3,79.9 L389.1,79.7 L389.9,79.4 L390.7,79.1 L391.5,78.9 L392.3,78.6 L393.1,78.4 L393.9,78.1 L394.6,77.8 L395.4,77.6 L396.2,77.3 L397.0,77.1 L397.8,76.8 L398.6,76.5 L399.4,76.3 L400.2,76.0 L401.0,75.8 L401.8,75.5 L402.5,75.2 L403.3,75.0 L404.1,74.7 L404.9,74.5 L405.7,74.2 L406.5,73.9 L407.3,73.7 L408.1,73.4 L408.9,73.2 L409.6,72.9 L410.4,72.6 L411.2,72.4 L412.0,72.1 L412.8,71.9 L413.6,71.6 L414.4,71.3 L415.2,71.1 L416.0,70.8 L416.8,70.6 L417.6,70.3 L418.3,70.0 L419.1,69.8 L419.9,69.5 L420.7,69.3 L421.5,69.0 L422.3,68.7 L423.1,68.5 L423.9,68.2 L424.7,68.0 L425.4,67.7 L426.2,67.4 L427.0,67.2 L427.8,66.9 L428.6,66.7 L429.4,66.4 L430.2,66.1 L431.0,65.9 L431.8,65.6 L432.6,65.4 L433.4,65.1 L434.1,64.8 L434.9,64.6 L435.7,64.3 L436.5,64.1 L437.3,63.8 L438.1,63.5 L438.9,63.3 L439.7,63.0 L440.5,62.8 L441.3,62.5 L442.0,62.2 L442.8,62.0 L443.6,61.7 L444.4,61.5 L445.2,61.2 L446.0,60.9 L446.8,60.7 L447.6,60.4 L448.4,60.2 L449.1,59.9 L449.9,59.6 L450.7,59.4 L451.5,59.1 L452.3,58.9 L453.1,58.6 L453.9,58.3 L454.7,58.1 L455.5,57.8 L456.3,57.6 L457.1,57.3 L457.8,57.0 L458.6,56.8 L459.4,56.5 L460.2,56.3 L461.0,56.0 L461.8,55.7 L462.6,55.5 L463.4,55.2 L464.2,55.0 L464.9,54.7 L465.7,54.4 L466.5,54.2 L467.3,53.9 L468.1,53.7 L468.9,53.4 L469.7,53.1 L470.5,52.9 L471.3,52.6 L472.1,52.4 L472.9,52.1 L473.6,51.8 L474.4,51.6 L475.2,51.3 L476.0,51.1 L476.8,50.8 L477.6,50.5 L478.4,50.3 L479.2,50.0 L480.0,49.8 L480.8,49.5 L481.5,49.2 L482.3,49.0 L483.1,48.7 L483.9,48.5 L484.7,48.2 L485.5,47.9 L486.3,47.7 L487.1,47.4 L487.9,47.2 L488.6,46.9 L489.4,46.6 L490.2,46.4 L491.0,46.1 L491.8,45.9 L492.6,45.6 L493.4,45.3 L494.2,45.1 L495.0,44.8 L495.8,44.6 L496.6,44.3 L497.3,44.0 L498.1,43.8 L498.9,43.5 L499.7,43.3 L500.5,43.0 L501.3,42.7 L502.1,42.5 L502.9,42.2 L503.7,42.0 L504.4,41.7 L505.2,41.4 L506.0,41.2 L506.8,40.9 L507.6,40.7 L508.4,40.4 L509.2,40.1 L510.0,39.9 L510.8,39.6 L511.6,39.4 L512.4,39.1 L513.1,38.8 L513.9,38.6 L514.7,38.3 L515.5,38.1 L516.3,37.8 L517.1,37.5 L517.9,37.3 L518.7,37.0 L519.5,36.8 L520.3,36.5 L521.0,36.2 L521.8,36.0 L522.6,35.7 L523.4,35.5 L524.2,35.2 L525.0,34.9 L525.8,34.7 L526.6,34.4 L527.4,34.2 L528.1,33.9 L528.9,33.6 L529.7,33.4 L530.5,33.1 L531.3,32.9 L532.1,32.6 L532.9,32.3 L533.7,32.1 L534.5,31.8 L535.3,31.6 L536.0,31.3 L536.8,31.0 L537.6,30.8 L538.4,30.5 L539.2,30.3 L540.0,30.0"></path><path class="base" d="M66,300 L540,203.57142857142856"></path><path class="new" d="M66.0,300.0 L66.8,299.8 L67.6,299.7 L68.4,299.5 L69.2,299.4 L70.0,299.2 L70.7,299.0 L71.5,298.9 L72.3,298.7 L73.1,298.6 L73.9,298.4 L74.7,298.2 L75.5,298.1 L76.3,297.9 L77.1,297.8 L77.8,297.6 L78.6,297.4 L79.4,297.3 L80.2,297.1 L81.0,296.9 L81.8,296.8 L82.6,296.6 L83.4,296.5 L84.2,296.3 L85.0,296.1 L85.8,296.0 L86.5,295.8 L87.3,295.7 L88.1,295.5 L88.9,295.3 L89.7,295.2 L90.5,295.0 L91.3,294.9 L92.1,294.7 L92.9,294.5 L93.7,294.4 L94.4,294.2 L95.2,294.1 L96.0,293.9 L96.8,293.7 L97.6,293.6 L98.4,293.4 L99.2,293.3 L100.0,293.1 L100.8,292.9 L101.5,292.8 L102.3,292.6 L103.1,292.4 L103.9,292.3 L104.7,292.1 L105.5,292.0 L106.3,291.8 L107.1,291.6 L107.9,291.5 L108.7,291.3 L109.5,291.2 L110.2,291.0 L111.0,290.8 L111.8,290.7 L112.6,290.5 L113.4,290.4 L114.2,290.2 L115.0,290.0 L115.8,289.9 L116.6,289.7 L117.3,289.6 L118.1,289.4 L118.9,289.2 L119.7,289.1 L120.5,288.9 L121.3,288.8 L122.1,288.6 L122.9,288.4 L123.7,288.3 L124.5,288.1 L125.3,287.9 L126.0,287.8 L126.8,287.6 L127.6,287.5 L128.4,287.3 L129.2,287.1 L130.0,287.0 L130.8,286.8 L131.6,286.7 L132.4,286.5 L133.1,286.3 L133.9,286.2 L134.7,286.0 L135.5,285.9 L136.3,285.7 L137.1,285.5 L137.9,285.4 L138.7,285.2 L139.5,285.1 L140.3,284.9 L141.1,284.7 L141.8,284.6 L142.6,284.4 L143.4,284.3 L144.2,284.1 L145.0,283.9 L145.8,283.8 L146.6,283.6 L147.4,283.4 L148.2,283.3 L148.9,283.1 L149.7,283.0 L150.5,282.8 L151.3,282.6 L152.1,282.5 L152.9,282.3 L153.7,282.2 L154.5,282.0 L155.3,281.8 L156.1,281.7 L156.8,281.5 L157.6,281.4 L158.4,281.2 L159.2,281.0 L160.0,280.9 L160.8,280.7 L161.6,280.6 L162.4,280.4 L163.2,280.2 L164.0,280.1 L164.8,279.9 L165.5,279.8 L166.3,279.6 L167.1,279.4 L167.9,279.3 L168.7,279.1 L169.5,278.9 L170.3,278.8 L171.1,278.6 L171.9,278.5 L172.7,278.3 L173.4,278.1 L174.2,278.0 L175.0,277.8 L175.8,277.7 L176.6,277.5 L177.4,277.3 L178.2,277.2 L179.0,277.0 L179.8,276.9 L180.6,276.7 L181.3,276.5 L182.1,276.4 L182.9,276.2 L183.7,276.1 L184.5,275.9 L185.3,275.7 L186.1,275.6 L186.9,275.4 L187.7,275.3 L188.5,275.1 L189.2,274.9 L190.0,274.8 L190.8,274.6 L191.6,274.4 L192.4,274.3 L193.2,274.1 L194.0,274.0 L194.8,273.8 L195.6,273.6 L196.3,273.5 L197.1,273.3 L197.9,273.2 L198.7,273.0 L199.5,272.8 L200.3,272.7 L201.1,272.5 L201.9,272.4 L202.7,272.2 L203.5,272.0 L204.3,271.9 L205.0,271.7 L205.8,271.6 L206.6,271.4 L207.4,271.2 L208.2,271.1 L209.0,270.9 L209.8,270.8 L210.6,270.6 L211.4,270.4 L212.2,270.3 L212.9,270.1 L213.7,269.9 L214.5,269.8 L215.3,269.6 L216.1,269.5 L216.9,269.3 L217.7,269.1 L218.5,269.0 L219.3,268.8 L220.1,268.7 L220.8,268.5 L221.6,268.3 L222.4,268.2 L223.2,268.0 L224.0,267.9 L224.8,267.7 L225.6,267.5 L226.4,267.4 L227.2,267.2 L227.9,267.1 L228.7,266.9 L229.5,266.7 L230.3,266.6 L231.1,266.4 L231.9,266.3 L232.7,266.1 L233.5,265.9 L234.3,265.8 L235.1,265.6 L235.8,265.4 L236.6,265.3 L237.4,265.1 L238.2,265.0 L239.0,264.8 L239.8,264.6 L240.6,264.5 L241.4,264.3 L242.2,264.2 L243.0,264.0 L243.8,263.8 L244.5,263.7 L245.3,263.5 L246.1,263.4 L246.9,263.2 L247.7,263.0 L248.5,262.9 L249.3,262.7 L250.1,262.6 L250.9,262.4 L251.7,262.2 L252.4,262.1 L253.2,261.9 L254.0,261.8 L254.8,261.6 L255.6,261.4 L256.4,261.3 L257.2,261.1 L258.0,260.9 L258.8,260.8 L259.6,260.6 L260.3,260.5 L261.1,260.3 L261.9,260.1 L262.7,260.0 L263.5,259.8 L264.3,259.7 L265.1,259.5 L265.9,259.3 L266.7,259.2 L267.4,259.0 L268.2,258.9 L269.0,258.7 L269.8,258.5 L270.6,258.4 L271.4,258.2 L272.2,258.1 L273.0,257.9 L273.8,257.7 L274.6,257.6 L275.4,257.4 L276.1,257.3 L276.9,257.1 L277.7,256.9 L278.5,256.8 L279.3,256.6 L280.1,256.4 L280.9,256.3 L281.7,256.1 L282.5,256.0 L283.3,255.8 L284.0,255.6 L284.8,255.5 L285.6,255.3 L286.4,255.2 L287.2,255.0 L288.0,254.8 L288.8,254.7 L289.6,254.5 L290.4,254.4 L291.1,254.2 L291.9,254.0 L292.7,253.9 L293.5,253.7 L294.3,253.6 L295.1,253.4 L295.9,253.2 L296.7,253.1 L297.5,252.9 L298.3,252.8 L299.1,252.6 L299.8,252.4 L300.6,252.3 L301.4,252.1 L302.2,251.9 L303.0,251.8 L303.8,251.5 L304.6,251.1 L305.4,250.8 L306.2,250.5 L306.9,250.2 L307.7,249.9 L308.5,249.5 L309.3,249.2 L310.1,248.9 L310.9,248.6 L311.7,248.3 L312.5,247.9 L313.3,247.6 L314.1,247.3 L314.9,247.0 L315.6,246.6 L316.4,246.3 L317.2,246.0 L318.0,245.7 L318.8,245.4 L319.6,245.0 L320.4,244.7 L321.2,244.4 L322.0,244.1 L322.8,243.8 L323.5,243.4 L324.3,243.1 L325.1,242.8 L325.9,242.5 L326.7,242.1 L327.5,241.8 L328.3,241.5 L329.1,241.2 L329.9,240.9 L330.7,240.5 L331.4,240.2 L332.2,239.9 L333.0,239.6 L333.8,239.3 L334.6,238.9 L335.4,238.6 L336.2,238.3 L337.0,238.0 L337.8,237.6 L338.6,237.3 L339.3,237.0 L340.1,236.7 L340.9,236.4 L341.7,236.0 L342.5,235.7 L343.3,235.4 L344.1,235.1 L344.9,234.8 L345.7,234.4 L346.4,234.1 L347.2,233.8 L348.0,233.5 L348.8,233.1 L349.6,232.8 L350.4,232.5 L351.2,232.2 L352.0,231.9 L352.8,231.5 L353.6,231.2 L354.3,230.9 L355.1,230.6 L355.9,230.3 L356.7,229.9 L357.5,229.6 L358.3,229.3 L359.1,229.0 L359.9,228.6 L360.7,228.3 L361.5,228.0 L362.3,227.7 L363.0,227.4 L363.8,227.0 L364.6,226.7 L365.4,226.4 L366.2,226.1 L367.0,225.8 L367.8,225.4 L368.6,225.1 L369.4,224.8 L370.2,224.5 L370.9,224.1 L371.7,223.8 L372.5,223.5 L373.3,223.2 L374.1,222.9 L374.9,222.5 L375.7,222.2 L376.5,221.9 L377.3,221.6 L378.1,221.3 L378.8,220.9 L379.6,220.6 L380.4,220.3 L381.2,220.0 L382.0,219.6 L382.8,219.3 L383.6,219.0 L384.4,218.7 L385.2,218.4 L385.9,218.0 L386.7,217.7 L387.5,217.4 L388.3,217.1 L389.1,216.8 L389.9,216.4 L390.7,216.1 L391.5,215.8 L392.3,215.5 L393.1,215.1 L393.9,214.8 L394.6,214.5 L395.4,214.2 L396.2,213.9 L397.0,213.5 L397.8,213.2 L398.6,212.9 L399.4,212.6 L400.2,212.3 L401.0,211.9 L401.8,211.6 L402.5,211.3 L403.3,211.0 L404.1,210.6 L404.9,210.3 L405.7,210.0 L406.5,209.7 L407.3,209.4 L408.1,209.0 L408.9,208.7 L409.6,208.4 L410.4,208.1 L411.2,207.8 L412.0,207.4 L412.8,207.1 L413.6,206.8 L414.4,206.5 L415.2,206.1 L416.0,205.8 L416.8,205.5 L417.6,205.2 L418.3,204.9 L419.1,204.5 L419.9,204.2 L420.7,203.9 L421.5,203.6 L422.3,203.3 L423.1,202.9 L423.9,202.6 L424.7,202.3 L425.4,202.0 L426.2,201.6 L427.0,201.3 L427.8,201.0 L428.6,200.7 L429.4,200.4 L430.2,200.0 L431.0,199.7 L431.8,199.4 L432.6,199.1 L433.4,198.7 L434.1,198.4 L434.9,198.1 L435.7,197.8 L436.5,197.5 L437.3,197.1 L438.1,196.8 L438.9,196.5 L439.7,196.2 L440.5,195.9 L441.3,195.5 L442.0,195.2 L442.8,194.9 L443.6,194.6 L444.4,194.3 L445.2,193.9 L446.0,193.6 L446.8,193.3 L447.6,193.0 L448.4,192.6 L449.1,192.3 L449.9,192.0 L450.7,191.7 L451.5,191.4 L452.3,191.0 L453.1,190.7 L453.9,190.4 L454.7,190.1 L455.5,189.8 L456.3,189.4 L457.1,189.1 L457.8,188.8 L458.6,188.5 L459.4,188.1 L460.2,187.8 L461.0,187.5 L461.8,187.2 L462.6,186.9 L463.4,186.5 L464.2,186.2 L464.9,185.9 L465.7,185.6 L466.5,185.3 L467.3,184.9 L468.1,184.6 L468.9,184.3 L469.7,184.0 L470.5,183.6 L471.3,183.3 L472.1,183.0 L472.9,182.7 L473.6,182.4 L474.4,182.0 L475.2,181.7 L476.0,181.4 L476.8,181.1 L477.6,180.8 L478.4,180.4 L479.2,180.1 L480.0,179.8 L480.8,179.5 L481.5,179.1 L482.3,178.8 L483.1,178.5 L483.9,178.2 L484.7,177.9 L485.5,177.5 L486.3,177.2 L487.1,176.9 L487.9,176.6 L488.6,176.3 L489.4,175.9 L490.2,175.6 L491.0,175.3 L491.8,175.0 L492.6,174.6 L493.4,174.3 L494.2,174.0 L495.0,173.7 L495.8,173.4 L496.6,173.0 L497.3,172.7 L498.1,172.4 L498.9,172.1 L499.7,171.8 L500.5,171.4 L501.3,171.1 L502.1,170.8 L502.9,170.5 L503.7,170.1 L504.4,169.8 L505.2,169.5 L506.0,169.2 L506.8,168.9 L507.6,168.5 L508.4,168.2 L509.2,167.9 L510.0,167.6 L510.8,167.3 L511.6,166.9 L512.4,166.6 L513.1,166.3 L513.9,166.0 L514.7,165.6 L515.5,165.3 L516.3,165.0 L517.1,164.7 L517.9,164.4 L518.7,164.0 L519.5,163.7 L520.3,163.4 L521.0,163.1 L521.8,162.8 L522.6,162.4 L523.4,162.1 L524.2,161.8 L525.0,161.5 L525.8,161.1 L526.6,160.8 L527.4,160.5 L528.1,160.2 L528.9,159.9 L529.7,159.5 L530.5,159.2 L531.3,158.9 L532.1,158.6 L532.9,158.3 L533.7,157.9 L534.5,157.6 L535.3,157.3 L536.0,157.0 L536.8,156.6 L537.6,156.3 L538.4,156.0 L539.2,155.7 L540.0,155.4"></path><text class="t-small t-main" x="536" y="145.35714285714286" text-anchor="end">30 a year</text><text class="t-small" x="413.6" y="253.28571428571428">without AI</text></g><!--end f7-plot-->
+				</svg>
+				<p class="say" id="f7-say" aria-live="polite">Help that doubles every year adds a second doubling of effort each year. Progress climbs 30 units a year instead of 15, an acceleration of 2.</p>
+				<figcaption><b>Figure 7.</b> Press the buttons. Everything here is made up to show the logic. This toy calculation assumes research effort doubles every year without AI and that each doubling adds the same 15 units of progress, which is one way to model ideas getting harder to find.</figcaption>
+			</figure>
+
+			<p>The self-reports have grown fast, from 1.2 times for Claude 3.7 Sonnet in a targeted survey in early 2025 to 12 times for Model 4 in the chat polls. METR&rsquo;s fitted trend has the reported speed-up multiplying by 3.9 each year. Growing help predicts a bend and a one-time boost predicts a step, the same two shapes METR compared in Figure 4. The bend predicted the later models better, though that test cannot say what caused it.</p>
+
+			<h2 id="bottlenecks">Nothing found that would slow it within a year</h2>
+
+			<p>A bottleneck is a limited input that caps how fast the whole process can go. One researcher told METR they were &ldquo;now only bottlenecked on ideas &amp; compute, no longer bottlenecked on code.&rdquo; METR looked for limits that could slow progress in the next 12 months, such as a shortage of computing power for experiments or of training data, and found none. The authors are not confident in this. Their view &ldquo;changed several times as we got more detailed information,&rdquo; and Anthropic redacted their analysis of several specific bottlenecks.</p>
+
+			<p>Having found no such limit, METR sees &ldquo;a significant risk that further capabilities progress could lead to even faster acceleration over the coming year.&rdquo; For now the speed-up comes from researchers using AI as a tool. The report says AI cannot yet make &ldquo;highly significant and fully autonomous contributions&rdquo; to the most important parts of training a model, though researchers described &ldquo;signs of life.&rdquo;</p>
+
+			<h2 id="redacted">Most of the strongest evidence is blacked out</h2>
+
+			<p>Under the contract, Anthropic could remove any non-public information from the public report. It &ldquo;redacted a majority of the evidence we found most informative,&rdquo; METR writes. Anthropic described the redactions as &ldquo;aimed at removing confidential information that could accelerate other AI developers.&rdquo;</p>
+
+			<figure class="diagram">
+				<div class="seg seg-sm" id="f8-btns" role="group" aria-label="Choose a view">
+					<button type="button" data-v="metr" aria-pressed="false">What METR saw</button>
+					<button type="button" data-v="pub" aria-pressed="true">What the public report shows</button>
+				</div>
+				<div class="doc" id="f8">
+					<p class="doc-h">Full report, about 100 pages</p>
+					<div class="doc-row"><span class="doc-k">Benchmark scores of internal models</span><span class="doc-v"><span class="doc-pub">AECI grew 1.9 times as fast after October 2025.</span><span class="doc-seen">Shared with METR</span></span></div>
+					<div class="doc-row"><span class="doc-k">Key intermediate measures</span><span class="doc-v"><span class="doc-pub"><span class="doc-bar" style="width:92%" role="img" aria-label="redacted"></span></span><span class="doc-seen">Shared with METR</span></span></div>
+					<div class="doc-row"><span class="doc-k">Estimates of algorithmic progress</span><span class="doc-v"><span class="doc-pub"><span class="doc-bar" style="width:78%" role="img" aria-label="redacted"></span></span><span class="doc-seen">Shared with METR</span></span></div>
+					<div class="doc-row"><span class="doc-k">Evidence of AI&rsquo;s contribution</span><span class="doc-v"><span class="doc-pub">Staff polls and interviews <span class="doc-bar" style="width:38%" role="img" aria-label="partly redacted"></span></span><span class="doc-seen">Shared with METR</span></span></div>
+					<div class="doc-row"><span class="doc-k">Measurements of key research inputs</span><span class="doc-v"><span class="doc-pub"><span class="doc-bar" style="width:86%" role="img" aria-label="redacted"></span></span><span class="doc-seen part">Mostly shared with METR</span></span></div>
+					<div class="doc-row"><span class="doc-k">Bottlenecks and forecasts</span><span class="doc-v"><span class="doc-pub"><span class="doc-bar" style="width:70%" role="img" aria-label="redacted"></span></span><span class="doc-seen part">Partly shared with METR</span></span></div>
+					<div class="doc-row"><span class="doc-k">Interviews with staff</span><span class="doc-v"><span class="doc-pub">Quotes from 11 researchers <span class="doc-bar" style="width:34%" role="img" aria-label="partly redacted"></span></span><span class="doc-seen">Shared with METR</span></span></div>
+					<p class="doc-sum" id="f8-sum" aria-live="polite">By METR&rsquo;s own count, the public report describes the results of 1 of the 7 kinds of evidence, 2 in part and 4 not at all.</p>
+				</div>
+				<figcaption><b>Figure 8.</b> Switch the view. The seven kinds of evidence and their status come from the table in <a href="https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/" target="_blank" rel="noopener">METR&rsquo;s process section</a>. The black bars stand for redactions, and their lengths are decoration.</figcaption>
+			</figure>
+
+			<p>METR filled in a checklist for outside evaluations, the <a href="https://aievaluatorforum.org/initiatives/minimum-operating-conditions" target="_blank" rel="noopener">AEF-1</a> from the AI Evaluator Forum. One item asks whether the evaluator shared enough of its methods for others to review the results, and METR answered &ldquo;No.&rdquo; In the report&rsquo;s words, &ldquo;the public has to rely on METR&rsquo;s judgment much more than would be ideal.&rdquo;</p>
+
+			<div class="callout callout-warn">
+				<span class="callout-label">Other facts to weigh</span>
+				<ul>
+					<li>The contract also covered a check of how Anthropic splits its computing power between making models more capable and safety work. Anthropic removed that part midway, before METR reached any conclusions, and said it would revisit it later.</li>
+					<li>METR took no payment. Anthropic supplied the laptops, plus free use of Claude, which METR spent mostly on data analysis.</li>
+					<li>Claude worked on both sides. METR says Claude was deeply involved in the majority of the data analysis it received and of its own analysis. Checking against the human interviews, METR found no sign that this skewed the results.</li>
+				</ul>
+			</div>
+
+			<div class="callout">
+				<span class="callout-label">Where METR could be wrong</span>
+				<p>The estimate could be too low if growth is still speeding up, which some of the redacted evidence suggests. It could also be too low if benchmarks understate real effects. Epoch&rsquo;s math scores have not sped up much. Yet in September 2026 an internal OpenAI system produced what OpenAI <a href="https://openai.com/index/navier-stokes-solution/" target="_blank" rel="noopener">calls a solution</a> to the Navier&ndash;Stokes problem, one of seven math problems that carry a $1 million Millennium Prize.</p>
+				<p>It would be too high if causes other than AI explain most of the bend. The speed-up might also hold only on well-specified tasks, and Anthropic&rsquo;s models grew more slowly than the industry&rsquo;s best before late 2025, so part of the bend may be a catch-up.</p>
+			</div>
+
+			<p>METR says that access at the level of an Anthropic employee, able to read documents on demand and sit in on internal debates, &ldquo;would enable a significantly deeper assessment.&rdquo; Its main measure has a second limit. Model 4 already scores above 50% on all 15 benchmarks it was tested on.</p>
+
+			<h2>Further reading</h2>
+
+			<ul>
+				<li><a href="https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/" target="_blank" rel="noopener">METR, <i>Independent Assessment of AI R&amp;D Acceleration at Anthropic in October 2026</i></a> (5 November 2026). The report, with the robustness tables and the interview quotes.</li>
+				<li><a href="https://metr.org/blog/2026-11-05-rd-section-anthropic-risk-report-august-2026-review/" target="_blank" rel="noopener">METR&rsquo;s review of the AI R&amp;D section of Anthropic&rsquo;s August 2026 Risk Report</a> (5 November 2026). The companion piece from the same engagement.</li>
+				<li><a href="https://metr.org/blog/2026-10-14-ai-rd-acceleration-assessment-proposal/" target="_blank" rel="noopener">METR, <i>How an assessor could investigate evidence of acceleration from the automation of AI R&amp;D</i></a> (14 October 2026). The questions the assessment set out to answer.</li>
+				<li><a href="https://arxiv.org/abs/2512.00193" target="_blank" rel="noopener">Epoch AI, <i>A Rosetta Stone for AI Benchmarks</i></a> (2025). The method behind the capabilities index.</li>
+				<li><a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR, <i>Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity</i></a> (10 July 2025). The experiment where developers felt faster and were slower.</li>
+				<li><a href="https://assets.claude.com/e1080d6bf5ae2018ea3c2f414064be03232f5be5.pdf" target="_blank" rel="noopener">Anthropic, <i>Claude Haiku 5.5 System Card</i></a>. Anthropic&rsquo;s own AECI chart, with both the jump and the bend.</li>
+				<li><a href="https://arxiv.org/abs/2609.36054" target="_blank" rel="noopener"><i>What if automating AI R&amp;D triggers an intelligence explosion?</i></a> (September 2026). The risk the report is about, cited in its executive summary.</li>
+				<li><a href="https://www.aeaweb.org/articles?id=10.1257/aer.20180338" target="_blank" rel="noopener">Nicholas Bloom, Charles Jones, John Van Reenen and Michael Webb, <i>Are Ideas Getting Harder to Find?</i></a> (<i>American Economic Review</i>, 2020). The evidence that research gets harder as it goes.</li>
+			</ul>
+
+		</div><!-- /.prose -->
+
+		<div class="post-foot">
+			<div class="tags">
+				<span class="tag">AI research</span>
+				<span class="tag">AI evaluation</span>
+				<span class="tag">AI safety</span>
+				<span class="tag">benchmarks</span>
+			</div>
+			<nav class="post-nav" aria-label="Post navigation">
+				<a href="/blog/">&larr; All posts</a>
+				<a class="js-email" href="/#contact">Reply by email</a>
+			</nav>
+		</div>
+
+	</article>
+
+	<footer class="footer">
+		<p class="footer-main">&copy; <span id="yr">2026</span> <b>Chen-Yang Su</b></p>
+		<p class="fineprint">
+			<a href="/">Home</a> &middot;
+			<a href="/blog/">Blog</a> &middot;
+			<a href="https://github.com/chenyangsu">GitHub</a> &middot;
+			<a href="https://scholar.google.com/citations?user=KJGE-kYAAAAJ&amp;hl=en">Google Scholar</a>
+		</p>
+	</footer>
+
+</div>
+
+<button id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 1.5v2M12 20.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M1.5 12h2M20.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"></path></svg></button>
+<button id="backToTop" aria-label="Back to top" title="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></button>
+
+<script src="/assets/blog.js"></script>
+<script>
+/* The interactive figures. Each one's static markup is a complete state,
+   so the post reads the same with JavaScript off. Figures 2, 3, 4, 5 and 7
+   are drawn by the functions below; scripts/bake_static.js saves their
+   final state into the markup. */
+(function () {
+	'use strict';
+	var NS = 'http://www.w3.org/2000/svg';
+	var BAKE = /[?&]bake\b/.test(location.search);
+	function press(group, on) {
+		Array.prototype.forEach.call(group, function (b) { b.setAttribute('aria-pressed', b === on ? 'true' : 'false'); });
+	}
+	function el(tag, attrs, text) {
+		var e = document.createElementNS(NS, tag);
+		for (var k in attrs) e.setAttribute(k, attrs[k]);
+		if (text !== undefined) e.textContent = text;
+		return e;
+	}
+	function clear(g) { while (g.firstChild) g.removeChild(g.firstChild); }
+	function f1(x) { return x.toFixed(1); }
+	var DAY = 864e5, YR = 365.25 * DAY;
+	function D(s) { var p = s.split('-'); return Date.UTC(+p[0], p[1] - 1, +p[2]); }
+	var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	function nice(s) { var p = s.split('-'); return +p[2] + ' ' + MON[p[1] - 1] + ' ' + p[0]; }
+
+	/* ---- Data read off METR's AECI chart (sources/digitized.json) ---- */
+	var PTS = [
+		['Claude 3 Opus', '2024-02-29', 124.8, 'pub'],
+		['Claude 3.5 Sonnet', '2024-06-16', 130.1, 'pub'],
+		['Claude 3.5 Sonnet (new)', '2024-10-10', 133.3, 'pub'],
+		['Claude 3.7 Sonnet', '2025-02-19', 141.8, 'pub'],
+		['Claude Opus 4', '2025-05-19', 144.9, 'pub'],
+		['Claude Sonnet 4.5', '2025-09-22', 147.8, 'pub'],
+		['Claude Opus 4.5', '2025-11-19', 152.4, 'pub'],
+		['Claude Opus 4.6', '2026-01-24', 157.3, 'pub'],
+		['Mythos Preview, early snapshot', '2026-02-24', 162.4, 'int'],
+		['Mythos Preview', '2026-04-01', 165.7, 'int'],
+		['Claude Mythos 5', '2026-06-01', 168.7, 'pub'],
+		['Model 2, early snapshot', '2026-07-10', 171.8, 'int'],
+		['Model 2', '2026-08-07', 174.1, 'int'],
+		['Model 3, early snapshot', '2026-09-09', 176.4, 'int'],
+		['Model 3', '2026-09-22', 177.0, 'int'],
+		['Model 4', '2026-09-25', 178.6, 'int'],
+		['Claude Opus 4.7', '2026-04-10', 160.5, 'old'],
+		['Claude Opus 4.8', '2026-05-19', 163.5, 'old'],
+		['Claude Opus 5', '2026-07-17', 169.4, 'old'],
+		['Claude Mythos 5.1', '2026-08-07', 172.6, 'old'],
+		['Claude Opus 5.5', '2026-09-09', 174.7, 'old']
+	];
+
+	/* An AECI chart frame shared by Figures 3 and 4 */
+	function frame(g, o) {
+		var X0 = D('2024-01-01'), X1 = D('2026-11-15'), L = 58, R = 546, T = 40, B = 312, Y0 = 120, Y1 = 185;
+		var X = function (d) { return L + (d - X0) / (X1 - X0) * (R - L); };
+		var Y = function (v) { return B - (v - Y0) / (Y1 - Y0) * (B - T); };
+		if (o && o.held) g.appendChild(el('rect', { 'class': 'held', x: X(D('2026-06-20')), y: T, width: R - X(D('2026-06-20')), height: B - T }));
+		for (var v = 120; v <= 180; v += 10) {
+			g.appendChild(el('path', { 'class': 'grid', d: 'M' + L + ',' + Y(v) + ' H' + R }));
+			g.appendChild(el('text', { 'class': 't-small', x: L - 8, y: Y(v) + 4.5, 'text-anchor': 'end' }, String(v)));
+		}
+		[['2024-01-01', 'Jan 2024'], ['2024-07-01', 'Jul'], ['2025-01-01', 'Jan 2025'], ['2025-07-01', 'Jul'], ['2026-01-01', 'Jan 2026'], ['2026-07-01', 'Jul']].forEach(function (t, i) {
+			var x = X(D(t[0]));
+			g.appendChild(el('path', { 'class': 'axis', d: 'M' + x + ',' + B + ' v5' }));
+			g.appendChild(el('text', { 'class': 't-small', x: x, y: B + 21, 'text-anchor': i === 0 ? 'start' : 'middle' }, t[1]));
+		});
+		g.appendChild(el('path', { 'class': 'axis', d: 'M' + L + ',' + T + ' V' + B + ' H' + R }));
+		g.appendChild(el('text', { 'class': 't-small', transform: 'translate(16,' + ((T + B) / 2) + ') rotate(-90)', 'text-anchor': 'middle' }, 'AECI'));
+		g.appendChild(el('text', { 'class': 't-small', x: (L + R) / 2, y: B + 44, 'text-anchor': 'middle' }, 'Date most Anthropic staff could use the model'));
+		return { X: X, Y: Y, L: L, R: R, T: T, B: B };
+	}
+	function legend(g, x, y, noOld) {
+		var lg = el('g', { transform: 'translate(' + x + ',' + y + ')' });
+		lg.appendChild(el('circle', { 'class': 'p-pub', cx: 0, cy: -4, r: 5.5 }));
+		lg.appendChild(el('text', { 'class': 't-small', x: 9, y: 0 }, 'public'));
+		lg.appendChild(el('path', { 'class': 'p-int', d: 'M66,-11 l7,7 l-7,7 l-7,-7 Z' }));
+		lg.appendChild(el('text', { 'class': 't-small', x: 78, y: 0 }, 'internal'));
+		if (!noOld) {
+			lg.appendChild(el('circle', { 'class': 'p-old', cx: 146, cy: -4, r: 5 }));
+			lg.appendChild(el('text', { 'class': 't-small', x: 155, y: 0 }, 'public, not the best'));
+		}
+		g.appendChild(lg);
+	}
+	function mark(g, f, p, cls) {
+		var x = f.X(D(p[1])), y = f.Y(p[2]);
+		var m = el('g', { 'class': 'pt' + (cls ? ' ' + cls : ''), tabindex: '0', 'data-n': p[0] + ', ' + nice(p[1]) + ', AECI ' + f1(p[2]) });
+		if (p[3] === 'int') m.appendChild(el('path', { 'class': 'p-int', d: 'M' + x + ',' + (y - 7.5) + ' l7.5,7.5 l-7.5,7.5 l-7.5,-7.5 Z' }));
+		else if (p[3] === 'old') m.appendChild(el('circle', { 'class': 'p-old', cx: x, cy: y, r: 5 }));
+		else m.appendChild(el('circle', { 'class': 'p-pub', cx: x, cy: y, r: 6 }));
+		m.appendChild(el('title', {}, p[0] + ', ' + nice(p[1]) + ', AECI ' + f1(p[2])));
+		g.appendChild(m);
+		return m;
+	}
+	function readout(svg, line) {
+		function show(e) {
+			var t = e.target.closest ? e.target.closest('.pt') : null;
+			if (!t) return;
+			Array.prototype.forEach.call(svg.querySelectorAll('.pt.on'), function (q) { q.classList.remove('on'); });
+			t.classList.add('on');
+			line.textContent = t.getAttribute('data-n');
+		}
+		svg.addEventListener('mouseover', show);
+		svg.addEventListener('click', show);
+		svg.addEventListener('focusin', show);
+	}
+
+	/* ---- Figure 1: the timeline guess ---- */
+	var f1b = document.querySelectorAll('#f1-btns button');
+	if (f1b.length) {
+		var bar2 = document.getElementById('f1-bar2'), lab2 = document.getElementById('f1-lab2'), bot = document.getElementById('f1-bot'), say1 = document.getElementById('f1-say');
+		var setBar = function (yrs) { var w = yrs * 120; bar2.setAttribute('width', w); bot.setAttribute('transform', 'translate(' + (280 + w) + ',0)'); lab2.setAttribute('x', 280 + w / 2); };
+		bar2.style.transition = 'none'; setBar(0.02); lab2.textContent = ''; say1.textContent = 'Pick a guess.';
+		bar2.getBoundingClientRect(); bar2.style.transition = '';
+		Array.prototype.forEach.call(f1b, function (b) {
+			b.addEventListener('click', function () {
+				press(f1b, b);
+				var g = +b.getAttribute('data-g');
+				setBar(g); lab2.textContent = g === 1 ? 'about 1 year' : (g === 2 ? '2 years?' : '18 months?');
+				var right = g === 1;
+				setTimeout(function () {
+					setBar(1.03); lab2.textContent = 'about 1 year';
+					say1.textContent = (right ? 'Right. ' : 'It took about one year. ') + 'On METR’s benchmark measure, Anthropic appears to have made as much progress from October 2025 to October 2026 as in the two years before.';
+				}, right ? 0 : 1100);
+			});
+		});
+	}
+
+	/* ---- Figure 2: S-curves ---- */
+	var f2r = document.getElementById('f2-range');
+	if (f2r) {
+		var g2 = document.getElementById('f2-plot'), K = 0.12, DIFF = [125, 150, 175], CL = ['easy', 'mid', 'hard'], NM = ['Easy', 'Medium', 'Hard'];
+		var L2 = 58, R2 = 546, T2 = 18, B2 = 228;
+		var X2 = function (c) { return L2 + (c - 100) / 100 * (R2 - L2); }, Y2 = function (s) { return B2 - s * (B2 - T2); };
+		var sig = function (c, d) { return 1 / (1 + Math.exp(-K * (c - d))); };
+		var capLine, dots = [];
+		var draw2 = function () {
+			clear(g2);
+			g2.appendChild(el('rect', { 'class': 'full', x: L2, y: Y2(1), width: R2 - L2, height: Y2(0.9) - Y2(1) }));
+			g2.appendChild(el('rect', { 'class': 'full', x: L2, y: Y2(0.1), width: R2 - L2, height: Y2(0) - Y2(0.1) }));
+			g2.appendChild(el('text', { 'class': 't-small', x: L2 + 6, y: Y2(0.9) + 15 }, 'above 90%: nearly full'));
+			g2.appendChild(el('text', { 'class': 't-small', x: R2 - 6, y: Y2(0.1) - 6, 'text-anchor': 'end' }, 'below 10%: near zero'));
+			[0, 0.25, 0.5, 0.75, 1].forEach(function (s) {
+				g2.appendChild(el('path', { 'class': 'grid', d: 'M' + L2 + ',' + Y2(s) + ' H' + R2 }));
+				g2.appendChild(el('text', { 'class': 't-small', x: L2 - 8, y: Y2(s) + 4.5, 'text-anchor': 'end' }, Math.round(s * 100) + '%'));
+			});
+			[100, 125, 150, 175, 200].forEach(function (c) {
+				g2.appendChild(el('text', { 'class': 't-small', x: X2(c), y: B2 + 20, 'text-anchor': 'middle' }, String(c)));
+			});
+			g2.appendChild(el('path', { 'class': 'axis', d: 'M' + L2 + ',' + T2 + ' V' + B2 + ' H' + R2 }));
+			g2.appendChild(el('text', { 'class': 't-small', x: (L2 + R2) / 2, y: B2 + 40, 'text-anchor': 'middle' }, 'Model capability (AECI)'));
+			g2.appendChild(el('text', { 'class': 't-small', transform: 'translate(14,' + ((T2 + B2) / 2) + ') rotate(-90)', 'text-anchor': 'middle' }, 'Predicted score'));
+			DIFF.forEach(function (d, i) {
+				var pth = '';
+				for (var c = 100; c <= 200; c += 1) pth += (c === 100 ? 'M' : ' L') + X2(c).toFixed(1) + ',' + Y2(sig(c, d)).toFixed(1);
+				g2.appendChild(el('path', { 'class': 'c-' + CL[i], d: pth }));
+				g2.appendChild(el('text', { 'class': 't-small t-' + ['good', 'blue', 'gold'][i], x: X2(d) + 8, y: Y2(0.5) + (i === 1 ? 4 : 4) }, NM[i] + ' test'));
+			});
+			capLine = el('path', { 'class': 'cap', d: '' });
+			g2.appendChild(capLine);
+			dots = DIFF.map(function (d, i) { var c = el('circle', { 'class': 'd-' + CL[i], r: 6.5, stroke: 'var(--paper-bg)', 'stroke-width': 1.5 }); g2.appendChild(c); return c; });
+		};
+		var chips = [document.getElementById('f2-ce'), document.getElementById('f2-cm'), document.getElementById('f2-ch')];
+		var say2 = document.getElementById('f2-say'), val2 = document.getElementById('f2-val'), f2b = document.querySelectorAll('#f2-btns button');
+		var NAMES = { '124.8': 'Claude 3 Opus', '147.8': 'Claude Sonnet 4.5', '178.6': 'Model 4' };
+		var set2 = function (c) {
+			capLine.setAttribute('d', 'M' + X2(c).toFixed(1) + ',' + T2 + ' V' + B2);
+			var s = DIFF.map(function (d) { return sig(c, d); }), top = [], low = [], mid = [];
+			s.forEach(function (v, i) {
+				dots[i].setAttribute('cx', X2(c).toFixed(1)); dots[i].setAttribute('cy', Y2(v).toFixed(1));
+				chips[i].querySelector('b').textContent = Math.round(v * 100) + '%';
+				chips[i].classList.toggle('is-full', v >= 0.9 || v <= 0.1);
+				(v >= 0.9 ? top : (v <= 0.1 ? low : mid)).push(NM[i].toLowerCase());
+			});
+			val2.textContent = 'Capability ' + Math.round(c);
+			var and = function (a) { return a.join(' and '); };
+			var parts = [];
+			if (top.length) parts.push('the ' + and(top) + ' test' + (top.length > 1 ? 's are' : ' is') + ' nearly full');
+			if (low.length) parts.push('the ' + and(low) + ' test' + (low.length > 1 ? 's are' : ' is') + ' still near zero');
+			var msg = parts.length ? parts.join(' and ') + '. ' : '';
+			msg = msg.charAt(0).toUpperCase() + msg.slice(1);
+			if (mid.length === 1) msg += 'Only the ' + mid[0] + ' test shows much difference between nearby models.';
+			else if (mid.length === 0) msg += 'None of the three tests shows much difference between nearby models.';
+			else if (mid.length === 3) msg += 'All three tests still show differences between nearby models.';
+			else msg += 'The ' + and(mid) + ' tests still show differences between nearby models.';
+			var who = NAMES[String(c)] ? NAMES[String(c)] + ' sits at ' + Math.round(c) + '. ' : 'A model at ' + Math.round(c) + '. ';
+			say2.textContent = who + msg;
+		};
+		draw2();
+		set2(+f2r.value);
+		f2r.addEventListener('input', function () { press(f2b, null); set2(+f2r.value); });
+		Array.prototype.forEach.call(f2b, function (b) {
+			b.addEventListener('click', function () { press(f2b, b); f2r.value = b.getAttribute('data-c'); set2(+b.getAttribute('data-c')); });
+		});
+	}
+
+	/* ---- Figure 3: the bend ---- */
+	var g3 = document.getElementById('f3-plot');
+	if (g3) {
+		var TB = D('2025-10-07'), M4 = D('2026-09-25'), A0 = 149.81, S1 = 15.36, S2 = 29.28;
+		var tr = function (d, s) { return A0 + s * (d - TB) / YR; };
+		var draw3 = function (open) {
+			clear(g3);
+			var f = frame(g3);
+			legend(g3, f.L + 6, 22);
+			g3.appendChild(el('path', { 'class': 'brk', d: 'M' + f.X(TB) + ',' + f.T + ' V' + f.B }));
+			g3.appendChild(el('text', { 'class': 't-small', x: f.X(TB) - 6, y: f.B - 10, 'text-anchor': 'end' }, '7 Oct 2025'));
+			var d0 = D('2024-02-29');
+			g3.appendChild(el('path', { 'class': 'old', d: 'M' + f.X(d0) + ',' + f.Y(tr(d0, S1)) + ' L' + f.X(TB) + ',' + f.Y(A0) }));
+			g3.appendChild(el('path', { 'class': 'old-dash', d: 'M' + f.X(TB) + ',' + f.Y(A0) + ' L' + f.X(M4) + ',' + f.Y(tr(M4, S1)) }));
+			g3.appendChild(el('text', { 'class': 't-small t-main', x: f.X(D('2025-04-15')), y: f.Y(tr(D('2025-04-15'), S1)) + 26, 'text-anchor': 'middle' }, '+15 a year'));
+			g3.appendChild(el('text', { 'class': 't-small', x: f.X(D('2026-01-01')), y: f.Y(tr(D('2026-01-01'), S1)) + 20 }, 'old pace continued'));
+			var late = el('g', { 'class': 'reveal' + (open ? '' : ' gone'), id: 'f3-late' });
+			late.appendChild(el('path', { 'class': 'new', d: 'M' + f.X(TB) + ',' + f.Y(A0) + ' L' + f.X(M4) + ',' + f.Y(tr(M4, S2)) }));
+			late.appendChild(el('text', { 'class': 't-small t-main', x: f.X(D('2026-01-10')) - 14, y: f.Y(tr(D('2026-01-10'), S2)) - 14, 'text-anchor': 'end' }, '+29 a year'));
+			late.appendChild(el('text', { 'class': 't-small t-gold', x: f.X(M4) - 10, y: f.Y(178.6) - 14, 'text-anchor': 'end' }, 'Model 4: 178.6'));
+			g3.appendChild(late);
+			PTS.forEach(function (p) {
+				var after = D(p[1]) > TB;
+				mark(after ? late : g3, f, p);
+			});
+			var q = el('g', { 'class': 'reveal' + (open ? ' gone' : ''), id: 'f3-q' });
+			q.appendChild(el('text', { 'class': 't-big', x: f.X(M4), y: f.Y(173), 'text-anchor': 'middle' }, '?'));
+			g3.appendChild(q);
+		};
+		var svg3 = document.getElementById('f3'), say3 = document.getElementById('f3-say'), f3b = document.querySelectorAll('#f3-btns button');
+		draw3(BAKE);
+		readout(svg3, document.getElementById('f3-read'));
+		if (!BAKE) say3.textContent = 'Pick a guess. The dashed line continues the old pace of 15 points a year.';
+		Array.prototype.forEach.call(f3b, function (b) {
+			b.addEventListener('click', function () {
+				press(f3b, b);
+				document.getElementById('f3-late').classList.remove('gone');
+				document.getElementById('f3-q').classList.add('gone');
+				var g = b.getAttribute('data-g');
+				var lead = g === '179' ? 'Right. ' : (g === '165' ? 'Higher than the old pace. ' : 'Higher still. ');
+				say3.textContent = lead + 'Model 4 scored 178.6. After 7 October 2025 the fitted line climbs 29 points a year, against 15 before.';
+			});
+		});
+	}
+
+	/* ---- Figure 4: jump or bend, tested on held-out models ---- */
+	var g4 = document.getElementById('f4-plot');
+	if (g4) {
+		var FRONT = PTS.filter(function (p) { return p[3] !== 'old'; });
+		var K4 = FRONT.map(function (p) { return p[0]; }).indexOf('Claude Mythos 5') + 1;
+		var TK = D('2025-10-28'), AK = 150.69, KS1 = 15.36, KS2 = 32.28;
+		var TJ = D('2026-02-24'), AJ = 157.10, JS = 16.35, JJ = 6.51;
+		var bend = function (d) { return AK + (d < TK ? KS1 : KS2) * (d - TK) / YR; };
+		var jump = function (d) { return AJ + JS * (d - TJ) / YR + (d >= TJ ? JJ : 0); };
+		var st4 = { s: 'bend', rev: true };
+		var say4 = document.getElementById('f4-say');
+		var draw4 = function () {
+			clear(g4);
+			var f = frame(g4, { held: true });
+			g4.appendChild(el('text', { 'class': 't-small t-main', x: f.R - 6, y: f.B - 10, 'text-anchor': 'end' }, 'held out'));
+			legend(g4, f.L + 6, 22, true);
+			var d0 = D('2024-02-29'), d1 = D('2026-10-01'), pth;
+			if (st4.s === 'bend') {
+				pth = 'M' + f.X(d0) + ',' + f.Y(bend(d0)) + ' L' + f.X(TK) + ',' + f.Y(bend(TK)) + ' L' + f.X(d1) + ',' + f.Y(bend(d1));
+			} else {
+				pth = 'M' + f.X(d0) + ',' + f.Y(jump(d0)) + ' L' + f.X(TJ) + ',' + f.Y(jump(TJ - 1)) + ' M' + f.X(TJ) + ',' + f.Y(jump(TJ)) + ' L' + f.X(d1) + ',' + f.Y(jump(d1));
+				g4.appendChild(el('path', { 'class': 'brk', d: 'M' + f.X(TJ) + ',' + f.Y(jump(TJ - 1)) + ' V' + f.Y(jump(TJ)) }));
+			}
+			g4.appendChild(el('path', { 'class': 'new', d: pth }));
+			g4.appendChild(el('text', { 'class': 't-small t-main', x: f.X(D('2025-12-15')), y: f.Y(st4.s === 'bend' ? bend(D('2025-12-15')) : jump(D('2025-12-15'))) - 16, 'text-anchor': 'end' }, st4.s === 'bend' ? 'bend: 15, then 32 a year' : 'jump at Mythos Preview'));
+			FRONT.forEach(function (p, i) {
+				if (i >= K4) {
+					if (!st4.rev) return;
+					var x = f.X(D(p[1])), pr = st4.s === 'bend' ? bend(D(p[1])) : jump(D(p[1]));
+					g4.appendChild(el('path', { 'class': 'miss', d: 'M' + x + ',' + f.Y(pr) + ' V' + f.Y(p[2]) }));
+				}
+				mark(g4, f, p);
+			});
+			var msg = st4.s === 'bend' ? 'Fit only to models up to Mythos 5, the bend line rises from about 15 to about 32 points a year in late October 2025.' : 'Fit only to models up to Mythos 5, the jump line steps up 6.5 points at Mythos Preview and keeps a slope of about 16 points a year.';
+			if (st4.rev) msg = st4.s === 'bend' ? 'The bend line misses the five later models by a typical 1.9 points. The jump line misses by 3.9, about twice as much.' : 'The jump line misses the five later models by a typical 3.9 points. The bend line misses by 1.9.';
+			say4.textContent = msg;
+		};
+		var f4b = document.querySelectorAll('#f4-btns button'), f4r = document.getElementById('f4-rev');
+		if (!BAKE) { st4.s = 'jump'; st4.rev = false; press(f4b, f4b[0]); f4r.setAttribute('aria-pressed', 'false'); f4r.textContent = 'Show the five later models'; }
+		draw4();
+		Array.prototype.forEach.call(f4b, function (b) {
+			b.addEventListener('click', function () { press(f4b, b); st4.s = b.getAttribute('data-s'); draw4(); });
+		});
+		f4r.addEventListener('click', function () {
+			st4.rev = !st4.rev; f4r.setAttribute('aria-pressed', st4.rev ? 'true' : 'false');
+			f4r.textContent = st4.rev ? 'Hide the five later models' : 'Show the five later models';
+			draw4();
+		});
+	}
+
+	/* ---- Figure 5: the robustness checks ---- */
+	var rows5 = document.getElementById('f5-rows');
+	if (rows5) {
+		var LO = Math.log(0.7), HI = Math.log(5);
+		var P5 = function (v) { return ((Math.log(v) - LO) / (HI - LO) * 100).toFixed(2) + '%'; };
+		var G5 = [
+			['main', 'METR&rsquo;s main estimate', [['Standard S-curve, all choices as published', 1.9, 1.5, 2.8, 'fp-std']]],
+			['link', 'Shape of the S-curve', [
+				['Fewer very easy and very hard questions (probit)', 1.8, 1.3, 2.7],
+				['A few questions far easier than the rest', 1.1, 0.8, 1.5],
+				['A few questions far harder than the rest', 2.9, 2.1, 4.9],
+				['More very easy and very hard questions (cauchit)', 2.8, 2.0, 4.1],
+				['The mix learned from the data', 2.6, 1.8, 4.1]]],
+			['snap', 'Which snapshots of each model', [
+				['Only the best snapshot of each model', 1.9, 1.4, 2.8],
+				['Only the first snapshot of each model', 2.2, 1.3, 3.2],
+				['A subset of models, reasons redacted', 1.9, 1.4, 3.3],
+				['Every snapshot', 1.9, 1.4, 2.6]]],
+			['bench', 'Which benchmarks', [
+				['Drop tests that use images', 2.2, 1.7, 3.5],
+				['Only tests Claude labelled relevant to AI research', 2.0, 1.5, 2.9],
+				['Drop tests that fall as models improve', 1.9, 1.6, 2.8],
+				['Drop tests the S-curve fits badly', 1.9, 1.4, 2.6],
+				['Stop using a test once it passes 85%', 1.9, 1.4, 2.3]]],
+			['reg', 'Penalty on extreme values', [
+				['A 10 times weaker penalty', 1.9, 1.4, 2.8],
+				['A 10 times stronger penalty', 2.1, 1.6, 3.0],
+				['No penalty', 1.9, 1.4, 2.8],
+				['A penalty toward a straight trend over time', 1.9, 1.4, 2.8]]],
+			['other', 'Other data and estimates', [
+				['Add other companies&rsquo; public models', 1.39, null, null, 'fp-noci'],
+				['Public models only, from every company', 1.09, null, null, 'fp-noci'],
+				['Epoch&rsquo;s public index, public models only', 0.99, null, null, 'fp-noci'],
+				['Anthropic&rsquo;s Haiku 5.5 system card', 1.7, null, null, 'fp-noci']]]
+		];
+		var html = '';
+		G5.forEach(function (gr) {
+			html += '<div class="fp-head" data-g="' + gr[0] + '"><span>' + gr[1] + '</span><span></span></div>';
+			gr[2].forEach(function (r) {
+				var ci = r[2] === null ? '' : ' [' + r[2].toFixed(1) + '&ndash;' + r[3].toFixed(1) + ']', num = r[1] < 1 ? r[1].toFixed(2) : r[1].toFixed(1);
+				html += '<div class="fp-row ' + (r[4] || '') + '" data-g="' + gr[0] + '"><span class="fp-lab">' + r[0] + ' <b>' + num + ci + '</b></span><span class="fp-tr">' +
+					'<span class="fp-ref" style="left:' + P5(1) + '"></span><span class="fp-ref fp-main" style="left:' + P5(1.9) + '"></span>' +
+					(r[2] === null ? '' : '<span class="fp-ci" style="left:' + P5(r[2]) + ';width:calc(' + P5(r[3]) + ' - ' + P5(r[2]) + ')"></span>') +
+					'<span class="fp-dot" style="left:' + P5(r[1]) + '"></span></span></div>';
+			});
+		});
+		rows5.innerHTML = html;
+		var ax = '';
+		[0.8, 1, 1.5, 2, 3, 4].forEach(function (v) { ax += '<span style="left:' + P5(v) + '">' + v + '</span>'; });
+		ax += '<em>Acceleration, log scale</em>';
+		document.getElementById('f5-axis').innerHTML = ax;
+		var SAY5 = {
+			all: 'Every one of METR&rsquo;s 18 checks shows some acceleration, from 1.1 to 2.9. Public models alone, from every company, show almost none.',
+			link: 'The shape of the S-curve moves the estimate from 1.1 to 2.9, the widest swing in the report.',
+			snap: 'Counting different snapshots of each model keeps the estimate between 1.9 and 2.2.',
+			bench: 'Adding or dropping benchmarks keeps the estimate between 1.9 and 2.2.',
+			reg: 'The penalty stops the fit from bending to match random scatter. Changing it leaves the estimate between 1.9 and 2.1.',
+			other: 'Adding other companies&rsquo; public models gives 1.4. Public models alone, from every company, give about 1, no acceleration. Anthropic&rsquo;s Haiku 5.5 card, without the newest internal models, says 1.7.'
+		};
+		var say5 = document.getElementById('f5-say'), f5b = document.querySelectorAll('#f5-btns button');
+		Array.prototype.forEach.call(f5b, function (b) {
+			b.addEventListener('click', function () {
+				press(f5b, b);
+				var g = b.getAttribute('data-g');
+				Array.prototype.forEach.call(rows5.querySelectorAll('[data-g]'), function (r) {
+					var keep = g === 'all' || r.getAttribute('data-g') === g || r.getAttribute('data-g') === 'main';
+					r.classList.toggle('fp-dim', !keep);
+				});
+				say5.innerHTML = SAY5[g];
+			});
+		});
+	}
+
+	/* ---- Figure 6: sorting the interviews ---- */
+	var f6 = document.getElementById('f6');
+	if (f6) {
+		f6.classList.add('quiz-js');
+		var cards = f6.querySelectorAll('.q-card'), score6 = document.getElementById('f6-score');
+		var LAB = { yes: '2x or more', unclear: 'Unclear', no: 'Against' };
+		var tally = function () {
+			var done = 0, hit = 0;
+			Array.prototype.forEach.call(cards, function (c) { if (c.classList.contains('done')) { done++; if (c.getAttribute('data-you') === c.getAttribute('data-a')) hit++; } });
+			score6.textContent = done === cards.length ? 'You matched Claude on ' + hit + ' of ' + cards.length + '.' : '';
+		};
+		Array.prototype.forEach.call(cards, function (c) {
+			var bs = c.querySelectorAll('button'), v = c.querySelector('.q-verdict');
+			var base = v.innerHTML;
+			Array.prototype.forEach.call(bs, function (b) {
+				b.addEventListener('click', function () {
+					press(bs, b);
+					c.setAttribute('data-you', b.getAttribute('data-v'));
+					c.classList.add('done');
+					v.innerHTML = '<span class="q-you">You said: ' + LAB[b.getAttribute('data-v')] + '.</span> ' + base;
+					tally();
+				});
+			});
+		});
+	}
+
+	/* ---- Figure 7: a one-time boost or growing help ---- */
+	var g7 = document.getElementById('f7-plot');
+	if (g7) {
+		var L7 = 66, R7 = 540, HT = 30, HB = 108, PT = 150, PB = 300, START = 3;
+		var X7 = function (t) { return L7 + t / 6 * (R7 - L7); };
+		var YH = function (l2) { return HB - l2 / 3 * (HB - HT); };
+		var YP = function (v) { return PB - v / 140 * (PB - PT); };
+		var help = function (m, t) { return t < START || m === 'none' ? 0 : (m === 'once' ? 2 : t - START); };
+		var prog = function (m, t) { return 15 * (t + help(m, t)); };
+		var say7 = document.getElementById('f7-say');
+		var SAY7 = {
+			none: 'Effort doubles every year and each doubling adds 15 units, so progress climbs a steady 15 units a year.',
+			once: 'The boost lifts progress by 30 units at once. After that the line climbs 15 a year again, so the acceleration is back to 1.',
+			grow: 'Help that doubles every year adds a second doubling of effort each year. Progress climbs 30 units a year instead of 15, an acceleration of 2.'
+		};
+		var draw7 = function (m) {
+			clear(g7);
+			g7.appendChild(el('text', { 'class': 't-head', x: L7, y: HT - 12 }, 'AI HELP'));
+			[[0, '1x'], [1, '2x'], [2, '4x'], [3, '8x']].forEach(function (t) {
+				g7.appendChild(el('path', { 'class': 'grid', d: 'M' + L7 + ',' + YH(t[0]) + ' H' + R7 }));
+				g7.appendChild(el('text', { 'class': 't-small', x: L7 - 8, y: YH(t[0]) + 4.5, 'text-anchor': 'end' }, t[1]));
+			});
+			g7.appendChild(el('path', { 'class': 'axis', d: 'M' + L7 + ',' + HT + ' V' + HB + ' H' + R7 }));
+			g7.appendChild(el('text', { 'class': 't-head', x: L7, y: PT - 12 }, 'PROGRESS'));
+			[0, 30, 60, 90, 120].forEach(function (v) {
+				g7.appendChild(el('path', { 'class': 'grid', d: 'M' + L7 + ',' + YP(v) + ' H' + R7 }));
+				g7.appendChild(el('text', { 'class': 't-small', x: L7 - 8, y: YP(v) + 4.5, 'text-anchor': 'end' }, String(v)));
+			});
+			g7.appendChild(el('path', { 'class': 'axis', d: 'M' + L7 + ',' + PT + ' V' + PB + ' H' + R7 }));
+			for (var t = 0; t <= 6; t++) g7.appendChild(el('text', { 'class': 't-small', x: X7(t), y: PB + 20, 'text-anchor': 'middle' }, 'Year ' + t));
+			g7.appendChild(el('path', { 'class': 'arrive', d: 'M' + X7(START) + ',' + HT + ' V' + PB }));
+			g7.appendChild(el('text', { 'class': 't-small t-red', x: X7(START) + 6, y: HT + 12 }, 'AI help arrives'));
+			var hp = '', pp = '', i, tt;
+			for (i = 0; i <= 600; i++) {
+				tt = i / 100;
+				if (m === 'once' && Math.abs(tt - START) < 1e-9) { hp += ' L' + X7(tt).toFixed(1) + ',' + YH(0).toFixed(1); pp += ' L' + X7(tt).toFixed(1) + ',' + YP(prog('none', tt)).toFixed(1); }
+				hp += (i ? ' L' : 'M') + X7(tt).toFixed(1) + ',' + YH(help(m, tt)).toFixed(1);
+				pp += (i ? ' L' : 'M') + X7(tt).toFixed(1) + ',' + YP(prog(m, tt)).toFixed(1);
+			}
+			g7.appendChild(el('path', { 'class': 'h-line', d: hp }));
+			if (m !== 'none') g7.appendChild(el('path', { 'class': 'base', d: 'M' + X7(0) + ',' + YP(0) + ' L' + X7(6) + ',' + YP(90) }));
+			g7.appendChild(el('path', { 'class': 'new', d: pp }));
+			var end = prog(m, 6);
+			g7.appendChild(el('text', { 'class': 't-small t-main', x: X7(6) - 4, y: YP(end) - 10, 'text-anchor': 'end' }, m === 'grow' ? '30 a year' : '15 a year'));
+			if (m !== 'none') g7.appendChild(el('text', { 'class': 't-small', x: X7(4.4), y: YP(66) + 24 }, 'without AI'));
+			say7.textContent = SAY7[m];
+		};
+		var f7b = document.querySelectorAll('#f7-btns button');
+		var m7 = BAKE ? 'grow' : 'none';
+		press(f7b, f7b[['none', 'once', 'grow'].indexOf(m7)]);
+		draw7(m7);
+		Array.prototype.forEach.call(f7b, function (b) {
+			b.addEventListener('click', function () { press(f7b, b); draw7(b.getAttribute('data-m')); });
+		});
+	}
+
+	/* ---- Figure 8: the redacted report ---- */
+	var f8 = document.getElementById('f8');
+	if (f8) {
+		var f8b = document.querySelectorAll('#f8-btns button'), sum8 = document.getElementById('f8-sum');
+		Array.prototype.forEach.call(f8b, function (b) {
+			b.addEventListener('click', function () {
+				press(f8b, b);
+				var metr = b.getAttribute('data-v') === 'metr';
+				f8.classList.toggle('metr', metr);
+				sum8.textContent = metr ? 'By METR\u2019s table, 5 of the 7 kinds of evidence were shared with it, 1 mostly and 1 in part.' : 'By METR\u2019s own count, the public report describes the results of 1 of the 7 kinds of evidence, 2 in part and 4 not at all.';
+			});
+		});
+	}
+
+	/* ---- Reading time ----
+	   blog.js counts every word on the page, and the figures hold a lot of
+	   text. Count the prose at 220 words a minute and name the figures. */
+	var slot = document.querySelector('[data-reading-time]'), body = document.querySelector('.prose');
+	if (slot && body) {
+		var figs = body.querySelectorAll('figure').length, copy = body.cloneNode(true);
+		Array.prototype.forEach.call(copy.querySelectorAll('figure'), function (f) { f.parentNode.removeChild(f); });
+		slot.textContent = Math.round(copy.textContent.trim().split(/\s+/).length / 220) + ' min read, plus ' + figs + ' figures to play with';
+	}
+})();
+</script>
+
+</body>
+</html>
